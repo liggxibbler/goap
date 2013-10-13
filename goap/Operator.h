@@ -1,6 +1,8 @@
 #ifndef _GOAP_OPERATOR_H_
 #define _GOAP_OPERATOR_H_
 
+#include "Common.h"
+
 namespace GOAP
 {
 	class Object;
@@ -8,20 +10,6 @@ namespace GOAP
 
 	class Operator
 	{
-	public:
-		enum Layout
-		{
-			/*
-			O for Object
-			A for Attribute
-			V for Value
-			B indicates the boolean that can negate the result
-			*/
-			OAVB,	// O has attrib A with query V e.g. O.height == 160
-			OOAB,	// O1 and O2 have attribute A compared e.g. O1.weight > O2.weight
-			OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. O1.strength > O2.weight
-			OOB		// O1 and O2 have object level relationship e.g. O1 owns O2
-		};
 	public:
 		Operator();
 		Operator(const Operator& other);
