@@ -2,8 +2,6 @@
 #define _GOAP_ABSTRACT_CONDITION_H_
 
 #include "Common.h"
-#include "Operator.h"
-#include <queue>
 
 namespace GOAP
 {
@@ -23,7 +21,7 @@ namespace GOAP
 
 	private:
 		OperatorLayoutType m_layout;
-		Operator* m_operator;
+		OperatorType m_operatorType;
 		ObjectType* m_objectTypeParams;
 		AttributeType* m_attribParams;
 		bool m_negate;

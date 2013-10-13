@@ -49,6 +49,16 @@ namespace GOAP
 		OP_SEMANTIC_TYPE_INSTRUMENT = 0x0000,
 		OP_SEMANTIC_TYPE_OBJECT
 	};
+
+	enum OperatorType
+	{
+		OPER_TYPE_ATTIRB = 0x0000,
+		
+		OPER_TYPE_GREATER,
+		OPER_TYPE_EQUAL,
+
+		OPER_TYPE_OWNS,
+	};
 }
 
 #endif

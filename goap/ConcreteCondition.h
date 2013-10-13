@@ -2,6 +2,7 @@
 #define _GOAP_CONCRETE_CONDITION_H_
 
 #include "AbstractCondition.h"
+#include "Object.h"
 
 namespace GOAP
 {

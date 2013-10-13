@@ -1,5 +1,8 @@
 #include <iostream>
-#include "Stab.h"
+#include "Common.h"
+#include "ConcreteCondition.h"
+#include "SemanticCondition.h"
+#include "Operator.h"
 
 using namespace std;
 using namespace GOAP;
