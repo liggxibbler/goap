@@ -13,7 +13,7 @@ namespace GOAP
 		ConcreteCondition(ConcreteCondition& other);
 		~ConcreteCondition();
 
-		ConcreteCondition(OperatorLayoutType layout);
+		ConcreteCondition(OperatorLayoutType layout, OperatorType oper);
 
 		void AddObjectParam(Object*);
 		bool Evaluate();

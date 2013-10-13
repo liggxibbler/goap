@@ -1,3 +1,7 @@
+Debug/
+goap/Debug/
+Release/
+goap/Release
 *.sdf
 ipch/
 *.opensdf

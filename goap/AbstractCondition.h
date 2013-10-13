@@ -12,7 +12,7 @@ namespace GOAP
 		AbstractCondition(const AbstractCondition& other);
 		~AbstractCondition();
 		
-		AbstractCondition(OperatorLayoutType layout);
+		AbstractCondition(OperatorLayoutType layout, OperatorType oper);
 
 		bool operator == (AbstractCondition& other);
 
@@ -24,6 +24,7 @@ namespace GOAP
 		OperatorType m_operatorType;
 		ObjectType* m_objectTypeParams;
 		AttributeType* m_attribParams;
+		int* m_values;
 		bool m_negate;
 	};
 }

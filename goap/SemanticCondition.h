@@ -12,7 +12,7 @@ namespace GOAP
 		SemanticCondition(SemanticCondition& other);
 		~SemanticCondition();
 
-		SemanticCondition(OperatorLayoutType layout);
+		SemanticCondition(OperatorLayoutType layout, OperatorType oper);
 		
 		void AddOperandSemanticTypeParams(OperandSemanticType ost);
 	private:
