@@ -83,6 +83,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="AbstractCondition.h" />
+    <ClInclude Include="SemanticCondition.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="StabTemplate.h" />
   </ItemGroup>
