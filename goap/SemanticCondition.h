@@ -7,9 +7,8 @@ namespace GOAP
 {
 	class SemanticCondition : public AbstractCondition
 	{
-		void AddOperandSemanticParam(OperandSemanticType ost);
 	private:
-		std::queue<OperandSemanticType> m_operandSemanticTypeParams;
+		std::list<OperandSemanticType> m_operandSemanticTypeParams;
 	};
 }
 
