@@ -9,9 +9,16 @@ namespace GOAP
 	class Agent : public Object
 	{
 	public:
-
+		Agent();
+		/*{
+			m_attribs[HEIGHT] = &m_height;
+			m_attribs[WEIGHT] = &m_weight;
+			m_attribs[ALIVE] = &m_isAlive;
+		}*/
 	private:
-		ActionTemplate* m_actionTemplates;
+		int m_height;
+		int m_weight;
+		int m_isAlive;
 	};
 }
 

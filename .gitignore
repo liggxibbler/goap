@@ -1,3 +1,4 @@
 *.sdf
 ipch/
 *.opensdf
+*.suo

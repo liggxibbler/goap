@@ -27,10 +27,12 @@ namespace GOAP
 		Operator(const Operator& other);
 		~Operator();
 
-		bool operator() (Object obj, Attribute attrib, int val, bool neg);
-		bool operator() (Object obj1, Object obj2, Attribute attrib, bool neg);
-		bool operator() (Object obj1, Attribute attrib1, Object obj2, Attribute attrib2, bool neg);
-		bool operator() (Object obj1, Object obj2, bool neg);
+		// might make non-pure virtual, for exception handling...
+
+		virtual bool operator() (Object obj, Attribute attrib, int val, bool neg) = 0;
+		virtual bool operator() (Object obj1, Object obj2, Attribute attrib, bool neg) = 0;
+		virtual bool operator() (Object obj1, Attribute attrib1, Object obj2, Attribute attrib2, bool neg) = 0;
+		virtual bool operator() (Object obj1, Object obj2, bool neg) = 0;
 
 	private:
 	};
