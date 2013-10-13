@@ -26,6 +26,7 @@ namespace GOAP
 		Operator* m_operator;
 		ObjectType* m_objectTypeParams;
 		AttributeType* m_attribParams;
+		bool m_negate;
 	};
 }
 
