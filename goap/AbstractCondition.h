@@ -18,7 +18,7 @@ namespace GOAP
 
 		bool operator == (AbstractCondition& other);
 
-		void AddObjectParam(ObjectType ot);
+		void AddObjectTypeParam(ObjectType ot);
 		void AddAttribParam(AttributeType at);
 
 	private:

@@ -7,8 +7,9 @@ namespace GOAP
 {
 	class ConcreteCondition : public AbstractCondition
 	{
+		void AddObjectParam(Object*);
 	private:
-		std::list<Object*> m_objectParams;
+		std::queue<Object*> m_objectParams;
 	};
 }
 
