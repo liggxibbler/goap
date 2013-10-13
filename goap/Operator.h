@@ -2,12 +2,11 @@
 #define _GOAP_OPERATOR_H_
 
 #include "Common.h"
+#include "Object.h"
+#include "ConcreteCondition.h"
 
 namespace GOAP
 {
-	class Object;
-	enum Attribute;
-
 	class Operator
 	{
 	public:
@@ -17,10 +16,12 @@ namespace GOAP
 
 		// might make non-pure virtual, for exception handling...
 
-		virtual bool operator() (Object obj, Attribute attrib, int val, bool neg) = 0;
-		virtual bool operator() (Object obj1, Object obj2, Attribute attrib, bool neg) = 0;
-		virtual bool operator() (Object obj1, Attribute attrib1, Object obj2, Attribute attrib2, bool neg) = 0;
-		virtual bool operator() (Object obj1, Object obj2, bool neg) = 0;
+		bool Evaluate(ConcreteCondition cc);
+
+		virtual bool operator() (Object* obj, AttributeType attrib, int val, bool neg) = 0;
+		virtual bool operator() (Object* obj1, Object* obj2, AttributeType attrib, bool neg) = 0;
+		virtual bool operator() (Object* obj1, AttributeType attrib1, Object* obj2, AttributeType attrib2, bool neg) = 0;
+		virtual bool operator() (Object* obj1, Object* obj2, bool neg) = 0;
 
 	private:
 	};

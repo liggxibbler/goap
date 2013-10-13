@@ -1,5 +1,5 @@
-#ifndef _GOAP_CONCRETECONDITION_H_
-#define _GOAP_CONCRETECONDITION_H_
+#ifndef _GOAP_CONCRETE_CONDITION_H_
+#define _GOAP_CONCRETE_CONDITION_H_
 
 #include "AbstractCondition.h"
 
@@ -7,9 +7,17 @@ namespace GOAP
 {
 	class ConcreteCondition : public AbstractCondition
 	{
+	public:
+		ConcreteCondition();
+		ConcreteCondition(ConcreteCondition& other);
+		~ConcreteCondition();
+
+		ConcreteCondition(OperatorLayoutType layout);
+
 		void AddObjectParam(Object*);
+		bool Evaluate();
 	private:
-		std::queue<Object*> m_objectParams;
+		Object* m_objectParams;
 	};
 }
 

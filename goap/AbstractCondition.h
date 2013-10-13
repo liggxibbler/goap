@@ -1,5 +1,5 @@
-#ifndef _GOAP_ABSTRACTCONDITION_H_
-#define _GOAP_ABSTRACTCONDITION_H_
+#ifndef _GOAP_ABSTRACT_CONDITION_H_
+#define _GOAP_ABSTRACT_CONDITION_H_
 
 #include "Common.h"
 #include "Operator.h"
@@ -24,8 +24,8 @@ namespace GOAP
 	private:
 		OperatorLayoutType m_layout;
 		Operator* m_operator;
-		std::queue<ObjectType> m_objectTypeParams;
-		std::queue<AttributeType> m_attribParams;
+		ObjectType* m_objectTypeParams;
+		AttributeType* m_attribParams;
 	};
 }
 

@@ -26,6 +26,7 @@ namespace GOAP
 		{
 			*m_attribs[at] = val;
 		}*/
+		virtual operator ObjectType () = 0;
 	protected:
 		std::map<AttributeType, int*> m_attribs;
 		Position m_position;

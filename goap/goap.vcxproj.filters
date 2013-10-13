@@ -15,41 +15,41 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="darham.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Action.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionTemplate.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="AbstractCondition.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StabTemplate.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Stab.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Action.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="ActionTemplate.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Agent.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Operator.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractCondition.h">
-      <Filter>Source Files</Filter>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ConcreteCondition.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="darham.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Operator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SemanticCondition.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

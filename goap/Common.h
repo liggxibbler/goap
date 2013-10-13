@@ -40,7 +40,8 @@ namespace GOAP
 		OP_LAYOUT_TYPE_OAVB,	// O has attrib A compared to V e.g. Dysh.height == 160
 		OP_LAYOUT_TYPE_OOAB,	// O1 and O2 have attribute A compared e.g. Al.weight > Dysh.weight
 		OP_LAYOUT_TYPE_OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
-		OP_LAYOUT_TYPE_OOB		// O1 and O2 have object level relationship e.g. Al owns Knife
+		OP_LAYOUT_TYPE_OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
+		OP_LAYOUT_TYPE_UNDEFINED
 	};
 
 	enum OperandSemanticType
