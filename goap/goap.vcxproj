@@ -80,6 +80,7 @@
     <ClInclude Include="Common.h" />
     <ClInclude Include="darham.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Operator.h" />
     <ClInclude Include="ParametricCondition.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="StabTemplate.h" />

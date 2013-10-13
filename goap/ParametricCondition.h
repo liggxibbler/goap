@@ -7,7 +7,15 @@ namespace GOAP
 {
 	class ParametricCondition
 	{
+	public:
+		static enum Semantic
+		{
+			INSTRUMENT,
+			OBJECT
+		};
+	public:
 
+	private:
 	};
 }
 
