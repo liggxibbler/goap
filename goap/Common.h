@@ -41,7 +41,7 @@ namespace GOAP
 		OP_LAYOUT_TYPE_OOAB,	// O1 and O2 have attribute A compared e.g. Al.weight > Dysh.weight
 		OP_LAYOUT_TYPE_OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
 		OP_LAYOUT_TYPE_OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
-		OP_LAYOUT_TYPE_UNDEFINED
+		OP_LAYOUT_TYPE_UNDEFINED = 0xffff
 	};
 
 	enum OperandSemanticType
@@ -52,12 +52,16 @@ namespace GOAP
 
 	enum OperatorType
 	{
-		OPER_TYPE_ATTIRB = 0x0000,
+		OPER_TYPE_HAS_ATTIRB = 0x0000,
 		
-		OPER_TYPE_GREATER,
+		OPER_TYPE_GREATER_THAN,
 		OPER_TYPE_EQUAL,
 
+		OPER_TYPE_PROXIMITY,
+
 		OPER_TYPE_OWNS,
+
+		OPER_TYPE_UNDEFINED = 0xffff
 	};
 }
 

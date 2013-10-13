@@ -28,6 +28,7 @@ namespace GOAP
 		}*/
 		virtual operator ObjectType () = 0;
 	protected:
+		char* m_id;
 		std::map<AttributeType, int*> m_attribs;
 		Position m_position;
 	};
