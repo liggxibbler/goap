@@ -12,25 +12,17 @@ namespace GOAP
 		Object();
 		Object(const Object& other);
 		~Object();
-	
-		/*Object()
-		{
-			m_attribs[POSX] = &m_posx;
-			m_attribs[POSY] = &m_posy;
-		}*/
-		int GetAttrib(AttributeType at);/*
-		{
-			return *m_attribs[at];
-		}*/
-		void SetAttrib(AttributeType at, int val);/*
-		{
-			*m_attribs[at] = val;
-		}*/
-		virtual operator ObjectType () = 0;
+		
+		int GetAttrib(AttributeType at);
+		void SetAttrib(AttributeType at, int val);
+		virtual operator ObjectType ();// = 0;
+		/*const*/ int& operator [] (AttributeType at); 
 	protected:
 		char* m_id;
 		std::map<AttributeType, int*> m_attribs;
-		Position m_position;
+		//Position m_position;
+		int m_posx;
+		int m_posy;
 	};
 }
 

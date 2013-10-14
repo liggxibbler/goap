@@ -3,6 +3,8 @@
 
 #include "Common.h"
 #include "Action.h"
+#include "SemanticCondition.h"
+#include "Object.h"
 
 namespace GOAP
 {
@@ -11,7 +13,9 @@ namespace GOAP
 	public:
 		virtual void Action* CreateNew() = 0;
 	protected:
-		static ObjectType* m_paramTypes;
+		OperandSemanticType* m_semantics;
+		SemanticCondition* m_preconds;
+		SemanticCondition* m_effects;
 	};
 }
 

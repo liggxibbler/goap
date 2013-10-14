@@ -16,8 +16,12 @@ namespace GOAP
 
 		bool operator == (AbstractCondition& other);
 
-		void AddObjectTypeParam(ObjectType ot);
-		void AddAttribParam(AttributeType at);
+		bool AddObjectTypeParam(ObjectType ot);
+		bool AddAttribParam(AttributeType at);
+		bool AddValue(int value);
+
+	private:
+		bool CreateArrays();
 
 	private:
 		OperatorLayoutType m_layout;
@@ -26,6 +30,14 @@ namespace GOAP
 		AttributeType* m_attribParams;
 		int* m_values;
 		bool m_negate;
+		
+		int m_topObjectParams;
+		int m_topAttribParams;
+		int m_topValues;
+
+		int m_numObjectParams;
+		int m_numAttribParams;
+		int m_numValues;
 	};
 }
 

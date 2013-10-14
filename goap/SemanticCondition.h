@@ -14,9 +14,10 @@ namespace GOAP
 
 		SemanticCondition(OperatorLayoutType layout, OperatorType oper);
 		
-		void AddOperandSemanticTypeParams(OperandSemanticType ost);
+		bool AddOperandSemanticTypeParams(OperandSemanticType ost);
 	private:
 		OperandSemanticType* m_operandSemanticTypeParams;
+		int m_topSemanticParam;
 	};
 }
 

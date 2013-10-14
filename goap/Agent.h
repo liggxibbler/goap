@@ -1,7 +1,7 @@
 #ifndef _GOAP_AGENT_H_
 #define _GOAP_AGENT_H_
 
-#include "ActionTemplate.h"
+//#include "ActionTemplate.h"
 #include "Object.h"
 
 namespace GOAP
@@ -10,11 +10,9 @@ namespace GOAP
 	{
 	public:
 		Agent();
-		/*{
-			m_attribs[HEIGHT] = &m_height;
-			m_attribs[WEIGHT] = &m_weight;
-			m_attribs[ALIVE] = &m_isAlive;
-		}*/
+		Agent(const Agent& other);
+		~Agent();
+
 	private:
 		int m_height;
 		int m_weight;
