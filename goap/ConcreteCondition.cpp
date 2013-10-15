@@ -46,6 +46,8 @@ bool ConcreteCondition::AddObjectParam(Object* objptr)
 	if(m_topObjectPtrParam < m_numObjectParams)
 	{
 		m_objectPtrParams[m_topObjectPtrParam++] = objptr;
+		m_objectTypeParams[m_topObjectParams++] = (*objptr);
+		DUMP("objptr" << m_objectPtrParams[m_topObjectPtrParam-1] << " added")
 		return true;
 	}
 	else

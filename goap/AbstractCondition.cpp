@@ -41,8 +41,8 @@ bool AbstractCondition::CreateArrays()
 	case OP_LAYOUT_TYPE_OAVB:
 		{
 			m_numObjectParams = 1;
-			m_numAttribParams = 2;
-			m_numValues = 0;
+			m_numAttribParams = 1;
+			m_numValues = 1;
 			break;
 		}
 	case OP_LAYOUT_TYPE_OOAB:
@@ -165,6 +165,7 @@ bool AbstractCondition::AddValue(int val)
 	if(m_topValues < m_numValues)
 	{
 		m_values[m_topValues++] = val;
+		std::cout << "\nvalue" << m_values[m_topValues-1] << " added\n";
 		return true;
 	}
 	else

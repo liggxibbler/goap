@@ -1,6 +1,13 @@
 #ifndef _GOAP_COMMONS_H_
 #define _GOAP_COMMONS_H_
 
+#include <iostream>
+#ifdef DEBUG
+#define DUMP(X) std::cout << std::endl << X << std::endl;
+#else
+#define DUMP(X)
+#endif
+
 namespace GOAP
 {
 	//template <class T>

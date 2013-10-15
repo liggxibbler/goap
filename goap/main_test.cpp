@@ -42,10 +42,10 @@ int main()
 	ConcreteCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	cc_eq.AddObjectParam(agent);
 	cc_eq.AddAttribParam(ATTRIB_TYPE_HEIGHT);
-	cc_eq.AddValue(20);
+	cc_eq.AddValue(10);
 	bool bResult = cc_eq.Evaluate(&om);
 
-	cout << "Agent.height == 20 is " << bResult << endl;
+	cout << "Agent.height == 10 is " << bResult << endl;
 
 	ConcreteCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
 	cc_gt.AddObjectParam(agent);

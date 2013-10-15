@@ -13,6 +13,8 @@ namespace GOAP
 		Agent(const Agent& other);
 		~Agent();
 
+		virtual operator ObjectType ();
+
 	private:
 		int m_height;
 		int m_weight;

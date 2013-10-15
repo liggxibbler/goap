@@ -16,3 +16,8 @@ Agent::Agent(const Agent& other)
 Agent::~Agent()
 {
 }
+
+Agent::operator GOAP::ObjectType()
+{
+	return OBJ_TYPE_AGENT;
+}
