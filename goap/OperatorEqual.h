@@ -1,15 +1,17 @@
+#ifndef _GOAP_OPEQUAL_H_
+#define _GOAP_OPEQUAL_H_
+
 #include "Operator.h"
 
 namespace GOAP
 {
-	namespace Op
+	class OpEqual : public Operator
 	{
-		class Equal : public Operator
-		{
-			virtual bool EvaluateOAVB ();
-			virtual bool EvaluateOOAB ();
-			virtual bool EvaluateOAOAB ();
-			virtual bool EvaluateOOB ();
-		};
-	}
+		virtual bool EvaluateOAVB ();
+		virtual bool EvaluateOOAB ();
+		virtual bool EvaluateOAOAB ();
+		virtual bool EvaluateOOB ();
+	};
 }
+
+#endif

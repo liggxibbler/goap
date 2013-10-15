@@ -1,9 +1,8 @@
 #include "OperatorEqual.h"
 
 using namespace GOAP;
-using namespace GOAP::Op;
 
-bool Equal::EvaluateOAVB ()
+bool OpEqual::EvaluateOAVB ()
 {
 	bool result;
 	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_values[0] )
@@ -17,7 +16,7 @@ bool Equal::EvaluateOAVB ()
 	
 	return m_negate == true ? result : !result;
 }
-bool Equal::EvaluateOOAB ()
+bool OpEqual::EvaluateOOAB ()
 {
 	bool result;
 	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_objectPtrs[1]->GetAttrib(m_attribs[0]) )
@@ -31,7 +30,7 @@ bool Equal::EvaluateOOAB ()
 	
 	return m_negate == true ? result : !result;
 }
-bool Equal::EvaluateOAOAB ()
+bool OpEqual::EvaluateOAOAB ()
 {
 	bool result;
 	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_objectPtrs[1]->GetAttrib(m_attribs[1]) )
@@ -45,7 +44,7 @@ bool Equal::EvaluateOAOAB ()
 	
 	return m_negate == true ? result : !result;
 }
-bool Equal::EvaluateOOB ()
+bool OpEqual::EvaluateOOB ()
 {
 	bool result;
 	if ( m_objectPtrs[0] == m_objectPtrs[1] )
