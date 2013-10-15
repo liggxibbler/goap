@@ -90,8 +90,13 @@
   <ItemGroup>
     <ClCompile Include="AbstractCondition.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="ConcreteCondition.cpp" />
     <ClCompile Include="main_test.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="OperatorEqual.cpp" />
+    <ClCompile Include="OperatorEqual.h" />
+    <ClCompile Include="SemanticCondition.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

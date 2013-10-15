@@ -3,6 +3,51 @@
 
 namespace GOAP
 {
+	//template <class T>
+	//class CappedStack
+	//{
+	//public:
+	//	CappedStack()
+	//	{
+	//		m_top = 0;
+	//		m_numItems = 0;
+	//		m_items = 0;
+	//	}
+
+	//	CappedStack(int numItems)
+	//	{
+	//		m_top = 0;
+	//		m_numItems = numItems;
+	//		m_items = new T[numItems];
+	//	}
+
+	//	~CappedStack()
+	//	{
+	//		delete[] m_items;
+	//		m_items = 0;
+	//	}
+
+	//	T Add(T item)
+	//	{
+	//		if (m_top < m_numItems)
+	//		{
+	//			m_items[m_top++] = item;
+	//		}
+	//		else
+	//		{
+	//			// throw an exception
+	//		}
+	//	}
+
+	//	int GetNumItems() {return m_numItems;}
+	//	T operator[](int index) {return m_items[int];}
+	//	
+	//private:
+	//	int m_numItems;
+	//	int m_top;
+	//	T* m_items;
+	//};
+
 	struct Position
 	{
 		int x;
@@ -47,7 +92,8 @@ namespace GOAP
 	enum OperandSemanticType
 	{
 		OP_SEMANTIC_TYPE_INSTRUMENT = 0x0000,
-		OP_SEMANTIC_TYPE_OBJECT
+		OP_SEMANTIC_TYPE_OBJECT,
+		OP_SEMANTIC_UNDEFINED = 0xffff
 	};
 
 	enum OperatorType

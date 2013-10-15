@@ -172,3 +172,29 @@ bool AbstractCondition::AddValue(int val)
 		return false;
 	}
 }
+
+
+OperatorLayoutType AbstractCondition::GetOperatorLayoutType()
+{
+	return m_layout;
+}
+
+OperatorType AbstractCondition::GetOperatorType()
+{
+	return m_operatorType;
+}
+
+AttributeType* AbstractCondition::GetAttributes()
+{
+	return m_attribParams;
+}
+
+int* AbstractCondition::GetValues()
+{
+	return m_values;
+}
+
+bool AbstractCondition::GetNegate()
+{
+	return m_negate;
+}

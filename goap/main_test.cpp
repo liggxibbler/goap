@@ -18,11 +18,9 @@ int main()
 	obj->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
 	obj->SetAttrib(ATTRIB_TYPE_ALIVE, true);*/
 
-	
 	cout << "obj has:" << endl;
 	cout << "X: " << obj->GetAttrib(ATTRIB_TYPE_POSX) << endl;
 	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;
-
 
 	GOAP::Agent* agent = new GOAP::Agent;
 	agent->SetAttrib(ATTRIB_TYPE_POSX, 3);
@@ -37,6 +35,8 @@ int main()
 	cout << "Height: " << (*agent)[ATTRIB_TYPE_HEIGHT] << endl;
 	cout << "Weight: " << (*agent)[ATTRIB_TYPE_WEIGHT] << endl;
 	cout << "Alive: " << (*agent)[ATTRIB_TYPE_ALIVE] << endl;
+
+	ConcreteCondition cc(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 
 	cin.get();
 	return 0;

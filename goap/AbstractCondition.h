@@ -20,10 +20,16 @@ namespace GOAP
 		bool AddAttribParam(AttributeType at);
 		bool AddValue(int value);
 
+		OperatorLayoutType GetOperatorLayoutType();
+		OperatorType GetOperatorType();
+		AttributeType* GetAttributes();
+		int* GetValues();
+		bool GetNegate();
+
 	private:
 		bool CreateArrays();
 
-	private:
+	protected:
 		OperatorLayoutType m_layout;
 		OperatorType m_operatorType;
 		ObjectType* m_objectTypeParams;
@@ -31,6 +37,10 @@ namespace GOAP
 		int* m_values;
 		bool m_negate;
 		
+		/*CappedStack<AttributeType>* m_objectTypeParams;
+		CappedStack<ObjectType>* m_objectTypeParams;
+		CappedStack<int>* m_objectTypeParams;*/
+
 		int m_topObjectParams;
 		int m_topAttribParams;
 		int m_topValues;

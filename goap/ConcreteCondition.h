@@ -15,10 +15,20 @@ namespace GOAP
 
 		ConcreteCondition(OperatorLayoutType layout, OperatorType oper);
 
-		void AddObjectParam(Object*);
+		Object* GetObjPtrByObjType(ObjectType ot);
+
+		bool AddObjectParam(Object* objptr);
 		bool Evaluate();
+
+		// ***
+		// BAD_DESIGN_ALERT
+		// **
+		// some of these need to be moved to AbstractAction for consistency
+		Object** GetObjects();
+
 	private:
-		Object* m_objectParams;
+		Object** m_objectPtrParams;
+		int m_topObjectPtrParam;
 	};
 }
 

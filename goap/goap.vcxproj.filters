@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Operators">
+      <UniqueIdentifier>{799a2df9-07a0-4bc0-8d9c-99f52f34a3f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractCondition.h">
@@ -64,6 +67,21 @@
     </ClCompile>
     <ClCompile Include="AbstractCondition.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SemanticCondition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConcreteCondition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Operator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorEqual.h">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="OperatorEqual.cpp">
+      <Filter>Source Files\Operators</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

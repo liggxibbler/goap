@@ -18,12 +18,16 @@ namespace GOAP
 
 		bool Evaluate(ConcreteCondition cc);
 
-		virtual bool operator() (Object* obj, AttributeType attrib, int val, bool neg) = 0;
-		virtual bool operator() (Object* obj1, Object* obj2, AttributeType attrib, bool neg) = 0;
-		virtual bool operator() (Object* obj1, AttributeType attrib1, Object* obj2, AttributeType attrib2, bool neg) = 0;
-		virtual bool operator() (Object* obj1, Object* obj2, bool neg) = 0;
+		virtual bool EvaluateOAVB () = 0;
+		virtual bool EvaluateOOAB () = 0;
+		virtual bool EvaluateOAOAB () = 0;
+		virtual bool EvaluateOOB () = 0;
 
-	private:
+	protected:
+		Object** m_objectPtrs;
+		AttributeType* m_attribs;
+		int* m_values;
+		bool m_negate;
 	};
 };
 
