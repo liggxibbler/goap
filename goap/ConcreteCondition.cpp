@@ -1,4 +1,5 @@
 #include "ConcreteCondition.h"
+#include "Operator.h"
 
 using namespace GOAP;
 
@@ -54,8 +55,10 @@ bool ConcreteCondition::AddObjectParam(Object* objptr)
 	}
 }
 
-bool ConcreteCondition::Evaluate()
+bool ConcreteCondition::Evaluate(Op::OperatorManger* om)
 {
+	Operator* oper = om->GetOperator(m_operatorType);
+	oper->Evaluate(this);
 	return false;
 }
 

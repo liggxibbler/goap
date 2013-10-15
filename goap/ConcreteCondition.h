@@ -3,6 +3,7 @@
 
 #include "AbstractCondition.h"
 #include "Object.h"
+#include "OperatorManager.h"
 
 namespace GOAP
 {
@@ -18,7 +19,7 @@ namespace GOAP
 		Object* GetObjPtrByObjType(ObjectType ot);
 
 		bool AddObjectParam(Object* objptr);
-		bool Evaluate();
+		bool Evaluate(Op::OperatorManger* om);
 
 		// ***
 		// BAD_DESIGN_ALERT

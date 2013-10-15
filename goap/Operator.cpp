@@ -13,15 +13,15 @@ Operator::~Operator()
 
 // might make non-pure virtual, for exception handling...
 
-bool Operator::Evaluate(ConcreteCondition cc)
+bool Operator::Evaluate(ConcreteCondition* cc)
 {
 	bool result;
-	m_attribs = cc.GetAttributes();
-	m_objectPtrs = cc.GetObjects();
-	m_values = cc.GetValues();
-	m_negate = cc.GetNegate();
+	m_attribs = cc->GetAttributes();
+	m_objectPtrs = cc->GetObjects();
+	m_values = cc->GetValues();
+	m_negate = cc->GetNegate();
 
-	switch(cc.GetOperatorLayoutType())
+	switch(cc->GetOperatorLayoutType())
 	{
 	case OP_LAYOUT_TYPE_OAOAB:
 		{

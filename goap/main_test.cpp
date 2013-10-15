@@ -5,6 +5,7 @@
 #include "Operator.h"
 #include "Object.h"
 #include "Agent.h"
+#include "OperatorManager.h"
 
 using namespace std;
 using namespace GOAP;
@@ -36,7 +37,20 @@ int main()
 	cout << "Weight: " << (*agent)[ATTRIB_TYPE_WEIGHT] << endl;
 	cout << "Alive: " << (*agent)[ATTRIB_TYPE_ALIVE] << endl;
 
-	ConcreteCondition cc(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	GOAP::Op::OperatorManger om;
+
+	ConcreteCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	cc_eq.AddObjectParam(agent);
+	cc_eq.AddAttribParam(ATTRIB_TYPE_HEIGHT);
+	cc_eq.AddValue(20);
+	bool bResult = cc_eq.Evaluate(&om);
+
+	cout << "Agent.height == 20 is " << bResult << endl;
+
+	ConcreteCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
+	cc_gt.AddObjectParam(agent);
+	cc_gt.AddAttribParam(ATTRIB_TYPE_HEIGHT);
+	cc_gt.AddValue(20);
 
 	cin.get();
 	return 0;
