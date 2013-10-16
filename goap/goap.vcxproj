@@ -78,6 +78,7 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="ConcreteCondition.cpp" />
     <ClCompile Include="Equal.cpp" />
+    <ClCompile Include="GreaterThan.cpp" />
     <ClCompile Include="main_test.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="ConcreteCondition.h" />
     <ClInclude Include="darham.h" />
     <ClInclude Include="Equal.h" />
+    <ClInclude Include="GreaterThan.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="OperatorManager.h" />

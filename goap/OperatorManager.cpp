@@ -1,12 +1,14 @@
 #include "OperatorManager.h"
 #include "Equal.h"
+#include "GreaterThan.h"
 
 using namespace GOAP;
 using namespace GOAP::Op;
 
 OperatorManger::OperatorManger()
 {
-	m_mapOperator[OPER_TYPE_EQUAL] = new Equal();
+	m_mapOperator[OPER_TYPE_EQUAL]			= new Equal();
+	m_mapOperator[OPER_TYPE_GREATER_THAN]	= new GreaterThan();
 }
 
 OperatorManger::OperatorManger(const OperatorManger& other)

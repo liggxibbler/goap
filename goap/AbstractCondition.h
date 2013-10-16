@@ -19,6 +19,7 @@ namespace GOAP
 		bool AddObjectTypeParam(ObjectType ot);
 		bool AddAttribParam(AttributeType at);
 		bool AddValue(int value);
+		void SetNegate(bool value);
 
 		OperatorLayoutType GetOperatorLayoutType();
 		OperatorType GetOperatorType();

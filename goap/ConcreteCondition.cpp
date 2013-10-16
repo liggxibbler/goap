@@ -60,8 +60,7 @@ bool ConcreteCondition::AddObjectParam(Object* objptr)
 bool ConcreteCondition::Evaluate(Op::OperatorManger* om)
 {
 	Operator* oper = om->GetOperator(m_operatorType);
-	oper->Evaluate(this);
-	return false;
+	return oper->Evaluate(this);
 }
 
 Object** ConcreteCondition::GetObjects()

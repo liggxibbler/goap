@@ -2,7 +2,7 @@
 #define _GOAP_COMMONS_H_
 
 #include <iostream>
-#ifdef DEBUG
+#ifdef _DEBUG
 #define DUMP(X) std::cout << std::endl << X << std::endl;
 #else
 #define DUMP(X)

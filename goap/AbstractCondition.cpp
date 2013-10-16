@@ -20,6 +20,7 @@ AbstractCondition::AbstractCondition(OperatorLayoutType layout, OperatorType ope
 {
 	m_layout = layout;
 	m_operatorType = oper;
+	m_negate = false;
 	CreateArrays();
 }
 
@@ -198,4 +199,9 @@ int* AbstractCondition::GetValues()
 bool AbstractCondition::GetNegate()
 {
 	return m_negate;
+}
+
+void AbstractCondition::SetNegate(bool value)
+{
+	m_negate = value;
 }

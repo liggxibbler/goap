@@ -26,7 +26,7 @@ int main()
 	GOAP::Agent* agent = new GOAP::Agent;
 	agent->SetAttrib(ATTRIB_TYPE_POSX, 3);
 	agent->SetAttrib(ATTRIB_TYPE_POSY, 1);
-	agent->SetAttrib(ATTRIB_TYPE_HEIGHT, 10);
+	agent->SetAttrib(ATTRIB_TYPE_HEIGHT, 9);
 	agent->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
 	agent->SetAttrib(ATTRIB_TYPE_ALIVE, true);
 
@@ -42,15 +42,20 @@ int main()
 	ConcreteCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	cc_eq.AddObjectParam(agent);
 	cc_eq.AddAttribParam(ATTRIB_TYPE_HEIGHT);
-	cc_eq.AddValue(10);
+	cc_eq.SetNegate(false);
+	cc_eq.AddValue(20);
 	bool bResult = cc_eq.Evaluate(&om);
 
-	cout << "Agent.height == 10 is " << bResult << endl;
+	cout << "Agent.height == 20 is " << bResult << endl;
 
 	ConcreteCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
 	cc_gt.AddObjectParam(agent);
 	cc_gt.AddAttribParam(ATTRIB_TYPE_HEIGHT);
-	cc_gt.AddValue(20);
+	cc_gt.SetNegate(false);
+	cc_gt.AddValue(10);
+	bResult = cc_gt.Evaluate(&om);
+
+	cout << "Agent.height > 10 is " << bResult << endl;
 
 	cin.get();
 	return 0;
