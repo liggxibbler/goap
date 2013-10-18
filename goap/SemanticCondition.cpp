@@ -14,7 +14,7 @@ SemanticCondition::~SemanticCondition()
 {
 }
 
-SemanticCondition::SemanticCondition(OperatorLayoutType layout, OperatorType oper) : AbstractCondition(layout, oper)
+SemanticCondition::SemanticCondition(OperatorLayoutType layout, OperatorType oper) : ConcreteCondition(layout, oper)
 {
 	m_topSemanticParam = 0;
 	m_operandSemanticTypeParams = new OperandSemanticType[m_numObjectParams];

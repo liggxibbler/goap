@@ -1,6 +1,7 @@
 #ifndef _GOAP_ACTION_H_
 #define _GOAP_ACTION_H_
 
+#include "Common.h"
 #include "Object.h"
 
 namespace GOAP
@@ -13,6 +14,7 @@ namespace GOAP
 		~Action();
 
 		virtual void Execute() = 0;
+		virtual operator ActionType();
 	protected:
 		Object* m_params;
 	};

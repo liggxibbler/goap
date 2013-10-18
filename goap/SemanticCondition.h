@@ -1,11 +1,11 @@
 #ifndef _GOAP_SEMANTIC_CONDITION_H_
 #define _GOAP_SEMANTIC_CONDITION_H_
 
-#include "AbstractCondition.h"
+#include "ConcreteCondition.h"
 
 namespace GOAP
 {
-	class SemanticCondition : public AbstractCondition
+	class SemanticCondition : public ConcreteCondition
 	{
 	public:
 		SemanticCondition();

@@ -10,6 +10,7 @@ namespace GOAP
 	{
 	public:
 		Object();
+		Object(char* name);
 		Object(const Object& other);
 		~Object();
 		
@@ -18,11 +19,14 @@ namespace GOAP
 		virtual operator ObjectType ();// = 0;
 		/*const*/ int& operator [] (AttributeType at); 
 	protected:
-		char* m_id;
+		static int s_numObjects;
+		int m_id;
+		char* m_name;
 		std::map<AttributeType, int*> m_attribs;
 		//Position m_position;
 		int m_posx;
 		int m_posy;
+		Object* m_owner;
 	};
 }
 

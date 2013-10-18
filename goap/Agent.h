@@ -10,6 +10,7 @@ namespace GOAP
 	{
 	public:
 		Agent();
+		Agent(char* name);
 		Agent(const Agent& other);
 		~Agent();
 

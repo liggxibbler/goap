@@ -116,6 +116,16 @@ namespace GOAP
 
 		OPER_TYPE_UNDEFINED = 0xffff
 	};
+
+	enum ActionType
+	{
+		ACTION_GOTO = 0x0000,
+		ACTION_TAKE,
+		ACTION_DROP,
+		
+		ACTION_CHOKE,
+		ACTION_STAB
+	};
 }
 
 #endif
