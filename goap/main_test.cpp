@@ -42,7 +42,7 @@ int main()
 	cc_eq[0].instance = agent;
 	cc_eq[0].attrib = ATTRIB_TYPE_HEIGHT;
 	cc_eq.SetNegate(false);
-	cc_eq[0].value = 30;
+	cc_eq[0].value = 0;
 	//DUMP( "post cc_eq >>> " << cc_eq[0].instance << ", " << cc_eq[0].attrib << ", " << cc_eq.GetNegate() << ", " << cc_eq[0].value)
 	bool bResult = cc_eq.Evaluate(&om);
 
@@ -53,7 +53,7 @@ int main()
 	cc_gt[0].attrib = ATTRIB_TYPE_HEIGHT;
 	cc_gt.SetNegate(false);
 	cc_gt[0].value = 31;
-	bResult = cc_eq.Evaluate(&om);
+	bResult = cc_gt.Evaluate(&om);
 
 	cout << "Agent.height > 10 is " << bResult << endl;
 
