@@ -48,9 +48,6 @@
     <ClCompile Include="GreaterThan.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractCondition.cpp">
-      <Filter>Source Files\Conditions</Filter>
-    </ClCompile>
     <ClCompile Include="Agent.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -63,12 +60,21 @@
     <ClCompile Include="OperatorManager.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="Action.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionManager.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Condition.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
+    <ClCompile Include="Stab.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="darham.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Equal.h">
@@ -76,9 +82,6 @@
     </ClInclude>
     <ClInclude Include="GreaterThan.h">
       <Filter>Header Files\Operators</Filter>
-    </ClInclude>
-    <ClInclude Include="AbstractCondition.h">
-      <Filter>Header Files\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="Agent.h">
       <Filter>Header Files\Objects</Filter>
@@ -95,14 +98,20 @@
     <ClInclude Include="Action.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="ActionTemplate.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="ActionManager.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
     <ClInclude Include="Planner.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stab.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Condition.h">
+      <Filter>Header Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionList.h">
+      <Filter>Header Files\Actions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

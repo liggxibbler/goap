@@ -3,7 +3,9 @@
 
 #include "Common.h"
 #include "Object.h"
+#include "Condition.h"
 #include <map>
+#include <list>
 
 namespace GOAP
 {
@@ -17,8 +19,14 @@ namespace GOAP
 		virtual Action* Clone() = 0;
 		virtual void Execute() = 0;
 		virtual operator ActionType();
+
+		std::list<Condition>::iterator GetFirstPrecondition();
+		std::list<Condition>::iterator GetFirstEffect();
+
 	protected:
-		std::map<OperandSemanticType, Object*> m_semParams;
+		std::map<OperandSemanticType, Object*> m_args;
+		std::list<Condition> m_preconds;
+		std::list<Condition> m_effects;
 	};
 }
 #endif

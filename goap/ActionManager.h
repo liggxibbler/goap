@@ -1,8 +1,8 @@
 #ifndef _GOAP_ACTIONMANGER_H_
 #define _GOAP_ACTIONMANGER_H_
 
-#include "ActionTemplate.h"
 #include "Action.h"
+#include "ActionList.h"
 #include "Common.h"
 #include <map>
 
@@ -15,11 +15,10 @@ namespace GOAP
 		ActionManager(const ActionManager& other);
 		~ActionManager();
 
-		Action* GetAction(ActionType);
-		ActionTemplate* GetActionTemplate(ActionType);
+		const Action* GetAction(ActionType at);
+		Action* GetNewAction(ActionType at);
 
 	private:
-		std::map<ActionType, ActionTemplate*> m_mapTemplate;
 		std::map<ActionType, Action*> m_mapAction;
 	};
 }

@@ -1,5 +1,5 @@
-#ifndef _GOAP_ABSTRACT_CONDITION_H_
-#define _GOAP_ABSTRACT_CONDITION_H_
+#ifndef _GOAP_CONDITION_H_
+#define _GOAP_CONDITION_H_
 
 #include "Common.h"
 #include "Object.h"
@@ -24,18 +24,18 @@ namespace GOAP
 		int					value;
 	};
 
-	class AbstractCondition
+	class Condition
 	{
 	public:
-		AbstractCondition();
-		AbstractCondition(const AbstractCondition& other);
-		~AbstractCondition();
+		Condition();
+		Condition(const Condition& other);
+		~Condition();
 		
-		AbstractCondition(OperatorLayoutType layout, OperatorType oper);
+		Condition(OperatorLayoutType layout, OperatorType oper);
 
 		// == evaluates operand and attrib type equivalence,
 		// does not take semantics or instances into account
-		virtual bool operator == (AbstractCondition& other);
+		virtual bool operator == (Condition& other);
 		
 
 		OperatorLayoutType GetOperatorLayoutType();

@@ -5,5 +5,4 @@ using namespace GOAP;
 
 StabTemplate::StabTemplate()
 {
-	m_prototype = new Stab(NULL, NULL, NULL);
 }

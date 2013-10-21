@@ -13,7 +13,7 @@ Operator::~Operator()
 
 // might make non-pure virtual, for exception handling...
 
-bool Operator::Evaluate(AbstractCondition* ac)
+bool Operator::Evaluate(Condition* ac)
 {
 	bool result;
 	

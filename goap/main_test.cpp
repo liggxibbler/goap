@@ -37,21 +37,21 @@ int main()
 
 	GOAP::Op::OperatorManger om;
 
-	AbstractCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	Condition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	//DUMP( "pre cc_eq >>> " << agent << ", " << ATTRIB_TYPE_HEIGHT << ", " << false << ", " << 9)
 	cc_eq[0].instance = agent;
 	cc_eq[0].attrib = ATTRIB_TYPE_HEIGHT;
 	cc_eq.SetNegate(false);
-	cc_eq[0].value = 0;
+	cc_eq[0].value = 30;
 	//DUMP( "post cc_eq >>> " << cc_eq[0].instance << ", " << cc_eq[0].attrib << ", " << cc_eq.GetNegate() << ", " << cc_eq[0].value)
 	bool bResult = cc_eq.Evaluate(&om);
 
 	cout << "Agent.height == 12 is " << bResult << endl;
 
-	AbstractCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
+	Condition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
 	cc_gt[0].instance = agent;
 	cc_gt[0].attrib = ATTRIB_TYPE_HEIGHT;
-	cc_gt.SetNegate(false);
+	cc_gt.SetNegate(true);
 	cc_gt[0].value = 31;
 	bResult = cc_gt.Evaluate(&om);
 

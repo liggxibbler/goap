@@ -1,24 +1,24 @@
-#include "AbstractCondition.h"
+#include "Condition.h"
 #include "OperatorManager.h"
 #include "Operator.h"
 
 using namespace GOAP;
 
-AbstractCondition::AbstractCondition()
+Condition::Condition()
 {
 	m_layout = OP_LAYOUT_TYPE_UNDEFINED;
 	m_operatorType = OPER_TYPE_UNDEFINED;
 	CreateArrays();
 }
 
-AbstractCondition::AbstractCondition(const AbstractCondition& other)
+Condition::Condition(const Condition& other)
 {
 }
-AbstractCondition::~AbstractCondition()
+Condition::~Condition()
 {
 }
 		
-AbstractCondition::AbstractCondition(OperatorLayoutType layout, OperatorType oper)
+Condition::Condition(OperatorLayoutType layout, OperatorType oper)
 {
 	m_layout = layout;
 	m_operatorType = oper;
@@ -26,7 +26,7 @@ AbstractCondition::AbstractCondition(OperatorLayoutType layout, OperatorType ope
 	CreateArrays();
 }
 
-bool AbstractCondition::CreateArrays()
+bool Condition::CreateArrays()
 {
 	m_topParam = 0;	
 
@@ -65,7 +65,7 @@ bool AbstractCondition::CreateArrays()
 	return true;
 }
 
-bool AbstractCondition::operator == (AbstractCondition& other)
+bool Condition::operator == (Condition& other)
 {
 	// this is logically correct and consistent,
 	// but maybe I should use a memory trick for quicker operation
@@ -96,38 +96,38 @@ bool AbstractCondition::operator == (AbstractCondition& other)
 	return true;
 }
 
-OperatorLayoutType AbstractCondition::GetOperatorLayoutType()
+OperatorLayoutType Condition::GetOperatorLayoutType()
 {
 	return m_layout;
 }
 
-OperatorType AbstractCondition::GetOperatorType()
+OperatorType Condition::GetOperatorType()
 {
 	return m_operatorType;
 }
 
-bool AbstractCondition::GetNegate()
+bool Condition::GetNegate()
 {
 	return m_negate;
 }
 
-void AbstractCondition::SetNegate(bool value)
+void Condition::SetNegate(bool value)
 {
 	m_negate = value;
 }
 
-bool AbstractCondition::Evaluate(Op::OperatorManger* om)
+bool Condition::Evaluate(Op::OperatorManger* om)
 {
 	Operator* oper = om->GetOperator(m_operatorType);
 	return oper->Evaluate(this);
 }
 
-const ConditionParameter* AbstractCondition::GetParams()
+const ConditionParameter* Condition::GetParams()
 {
 	return m_params;
 }
 
-ConditionParameter& AbstractCondition::operator[](int index)
+ConditionParameter& Condition::operator[](int index)
 {
 	return m_params[index];
 }

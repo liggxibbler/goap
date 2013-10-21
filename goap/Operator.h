@@ -3,7 +3,7 @@
 
 #include "Common.h"
 #include "Object.h"
-#include "AbstractCondition.h"
+#include "Condition.h"
 
 namespace GOAP
 {
@@ -16,7 +16,7 @@ namespace GOAP
 
 		// might make non-pure virtual, for exception handling...
 
-		bool Evaluate(AbstractCondition* cc);
+		bool Evaluate(Condition* cc);
 
 		virtual bool EvaluateOAVB () = 0;
 		virtual bool EvaluateOAOAB () = 0;

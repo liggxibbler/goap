@@ -126,7 +126,8 @@ namespace GOAP
 		ACTION_DROP,
 		
 		ACTION_CHOKE,
-		ACTION_STAB
+		ACTION_STAB,
+		ACTION_ACTION
 	};
 }
 
