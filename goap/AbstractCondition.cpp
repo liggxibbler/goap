@@ -1,4 +1,6 @@
 #include "AbstractCondition.h"
+#include "OperatorManager.h"
+#include "Operator.h"
 
 using namespace GOAP;
 
@@ -26,64 +28,40 @@ AbstractCondition::AbstractCondition(OperatorLayoutType layout, OperatorType ope
 
 bool AbstractCondition::CreateArrays()
 {
-	m_topAttribParams = 0;
-	m_topObjectParams = 0;
-	m_topValues = 0;
+	m_topParam = 0;	
 
 	switch(m_layout)
 	{
 	case OP_LAYOUT_TYPE_OAOAB:
 		{
-			m_numObjectParams = 2;
-			m_numAttribParams = 2;
-			m_numValues = 0;
+			m_numParams = 2;
 			break;
 		}
 	case OP_LAYOUT_TYPE_OAVB:
 		{
-			m_numObjectParams = 1;
-			m_numAttribParams = 1;
-			m_numValues = 1;
-			break;
-		}
-	case OP_LAYOUT_TYPE_OOAB:
-		{
-			m_numObjectParams = 2;
-			m_numAttribParams = 1;
-			m_numValues = 0;
+			m_numParams = 1;
 			break;
 		}
 	case OP_LAYOUT_TYPE_OOB:
 		{
-			m_numObjectParams = 2;
-			m_numAttribParams = 0;
-			m_numValues = 0;
+			m_numParams = 2;
 			break;
 		}
 	case OP_LAYOUT_TYPE_UNDEFINED:
 		{
-			m_numObjectParams = 0;
-			m_numAttribParams = 0;
-			m_numValues = 0;
+			m_numParams = 0;
 			break;
 			//throw an exception
 		}
 	default:
 		{
-			m_numObjectParams = 0;
-			m_numAttribParams = 0;
-			m_numValues = 0;
+			m_numParams = 0;
 			//throw an exception
 		}
 	};
 
-	m_objectTypeParams = new ObjectType[m_numObjectParams];
-	if(m_objectTypeParams == 0) /*throw exeption*/return false;
-	m_attribParams = new AttributeType[m_numAttribParams];
-	if(m_attribParams == 0) /*throw exeption*/return false;
-	m_values = new int[m_numValues];
-	if(m_values == 0) /*throw exeption*/return false;
-
+	m_params = new ConditionParameter[m_numParams];
+	
 	return true;
 }
 
@@ -97,9 +75,7 @@ bool AbstractCondition::operator == (AbstractCondition& other)
 	result = m_operatorType == other.m_operatorType &&
 		m_layout == other.m_layout &&
 		m_negate == other.m_negate &&
-		m_numObjectParams == other.m_numObjectParams &&						   
-		m_numAttribParams == other.m_numAttribParams &&
-		m_numValues == other.m_numValues;
+		m_numParams == other.m_numParams;
 	
 	if(!result)
 	{
@@ -107,74 +83,18 @@ bool AbstractCondition::operator == (AbstractCondition& other)
 	}
 	else
 	{
-		for(int i=0; i < m_numObjectParams; i++)
+		for(int i=0; i < m_numParams; i++)
 		{
-			if(m_objectTypeParams[i] != other.m_objectTypeParams[i])
+			if(m_params[i].type != other.m_params[i].type ||
+			m_params[i].attrib != other.m_params[i].attrib)
 			{
 				return false;
 			}
-		}
-		
-		for(int i=0; i < m_numAttribParams; i++)
-		{
-			if(m_attribParams[i] != other.m_attribParams[i])
-			{
-				return false;
-			}
-		}
-		
-		for(int i=0; i < m_numValues; i++)
-		{
-			if(m_values[i] != other.m_values[i])
-			{
-				return false;
-			}
-		}
+		}		
 	}
 
 	return true;
 }
-
-bool AbstractCondition::AddObjectTypeParam(ObjectType ot)
-{
-	if(m_topObjectParams < m_numObjectParams)
-	{
-		m_objectTypeParams[m_topObjectParams++] = ot;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool AbstractCondition::AddAttribParam(AttributeType at)
-{
-	if(m_topAttribParams < m_numAttribParams)
-	{
-		m_attribParams[m_topAttribParams++] = at;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
-bool AbstractCondition::AddValue(int val)
-{
-	if(m_topValues < m_numValues)
-	{
-		m_values[m_topValues++] = val;
-		std::cout << "\nvalue" << m_values[m_topValues-1] << " added\n";
-		return true;
-	}
-	else
-	{
-		return false;
-	}
-}
-
 
 OperatorLayoutType AbstractCondition::GetOperatorLayoutType()
 {
@@ -186,16 +106,6 @@ OperatorType AbstractCondition::GetOperatorType()
 	return m_operatorType;
 }
 
-AttributeType* AbstractCondition::GetAttributes()
-{
-	return m_attribParams;
-}
-
-int* AbstractCondition::GetValues()
-{
-	return m_values;
-}
-
 bool AbstractCondition::GetNegate()
 {
 	return m_negate;
@@ -204,4 +114,20 @@ bool AbstractCondition::GetNegate()
 void AbstractCondition::SetNegate(bool value)
 {
 	m_negate = value;
+}
+
+bool AbstractCondition::Evaluate(Op::OperatorManger* om)
+{
+	Operator* oper = om->GetOperator(m_operatorType);
+	return oper->Evaluate(this);
+}
+
+const ConditionParameter* AbstractCondition::GetParams()
+{
+	return m_params;
+}
+
+ConditionParameter& AbstractCondition::operator[](int index)
+{
+	return m_params[index];
 }

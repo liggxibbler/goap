@@ -76,31 +76,27 @@
   <ItemGroup>
     <ClCompile Include="AbstractCondition.cpp" />
     <ClCompile Include="Agent.cpp" />
-    <ClCompile Include="ConcreteCondition.cpp" />
     <ClCompile Include="Equal.cpp" />
     <ClCompile Include="GreaterThan.cpp" />
     <ClCompile Include="main_test.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
-    <ClCompile Include="SemanticCondition.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractCondition.h" />
     <ClInclude Include="Action.h" />
+    <ClInclude Include="ActionManager.h" />
     <ClInclude Include="ActionTemplate.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="ConcreteCondition.h" />
     <ClInclude Include="darham.h" />
     <ClInclude Include="Equal.h" />
     <ClInclude Include="GreaterThan.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="OperatorManager.h" />
-    <ClInclude Include="SemanticCondition.h" />
-    <ClInclude Include="Stab.h" />
-    <ClInclude Include="StabTemplate.h" />
+    <ClInclude Include="Planner.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

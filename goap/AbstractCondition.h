@@ -2,9 +2,28 @@
 #define _GOAP_ABSTRACT_CONDITION_H_
 
 #include "Common.h"
+#include "Object.h"
+#include "OperatorManager.h"
 
 namespace GOAP
 {
+	struct ConditionParameter
+	{
+		ConditionParameter() :
+		type(OBJ_TYPE_OBJECT),
+		semantic(OP_SEMANTIC_TYPE_NONE),
+		instance(NULL),
+		attrib(ATTRIB_TYPE_NONE),
+		value(0)
+		{}
+		
+		ObjectType			type;
+		OperandSemanticType	semantic;
+		Object*				instance;
+		AttributeType		attrib;
+		int					value;
+	};
+
 	class AbstractCondition
 	{
 	public:
@@ -14,18 +33,21 @@ namespace GOAP
 		
 		AbstractCondition(OperatorLayoutType layout, OperatorType oper);
 
-		bool operator == (AbstractCondition& other);
-
-		bool AddObjectTypeParam(ObjectType ot);
-		bool AddAttribParam(AttributeType at);
-		bool AddValue(int value);
-		void SetNegate(bool value);
+		// == evaluates operand and attrib type equivalence,
+		// does not take semantics or instances into account
+		virtual bool operator == (AbstractCondition& other);
+		
 
 		OperatorLayoutType GetOperatorLayoutType();
 		OperatorType GetOperatorType();
-		AttributeType* GetAttributes();
-		int* GetValues();
+		ConditionParameter& operator [] (int index);
+		
+		const ConditionParameter* GetParams();
+
+		void SetNegate(bool value);
 		bool GetNegate();
+
+		bool Evaluate(Op::OperatorManger* om);
 
 	private:
 		bool CreateArrays();
@@ -33,22 +55,16 @@ namespace GOAP
 	protected:
 		OperatorLayoutType m_layout;
 		OperatorType m_operatorType;
-		ObjectType* m_objectTypeParams;
-		AttributeType* m_attribParams;
-		int* m_values;
+		
+		ConditionParameter* m_params;
 		bool m_negate;
 		
 		/*CappedStack<AttributeType>* m_objectTypeParams;
 		CappedStack<ObjectType>* m_objectTypeParams;
 		CappedStack<int>* m_objectTypeParams;*/
 
-		int m_topObjectParams;
-		int m_topAttribParams;
-		int m_topValues;
-
-		int m_numObjectParams;
-		int m_numAttribParams;
-		int m_numValues;
+		int m_numParams;
+		int m_topParam;
 	};
 }
 

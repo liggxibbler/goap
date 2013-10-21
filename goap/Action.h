@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include "Object.h"
+#include <map>
 
 namespace GOAP
 {
@@ -13,10 +14,11 @@ namespace GOAP
 		Action(const Action& other);
 		~Action();
 
+		virtual Action* Clone() = 0;
 		virtual void Execute() = 0;
 		virtual operator ActionType();
 	protected:
-		Object* m_params;
+		std::map<OperandSemanticType, Object*> m_semParams;
 	};
 }
 #endif

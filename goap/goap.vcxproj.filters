@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Objects">
       <UniqueIdentifier>{245d3166-425b-4ae9-9459-c61ce228e26a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Actions">
+      <UniqueIdentifier>{776301d4-eed5-4b56-ada1-905389cfd491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actions">
+      <UniqueIdentifier>{30353867-2129-45f6-8008-a22c88f0d73f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_test.cpp">
@@ -43,12 +49,6 @@
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
     <ClCompile Include="AbstractCondition.cpp">
-      <Filter>Source Files\Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="ConcreteCondition.cpp">
-      <Filter>Source Files\Conditions</Filter>
-    </ClCompile>
-    <ClCompile Include="SemanticCondition.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
     <ClCompile Include="Agent.cpp">
@@ -65,22 +65,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Action.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionTemplate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="darham.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Stab.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StabTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Equal.h">
@@ -90,12 +78,6 @@
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
     <ClInclude Include="AbstractCondition.h">
-      <Filter>Header Files\Conditions</Filter>
-    </ClInclude>
-    <ClInclude Include="ConcreteCondition.h">
-      <Filter>Header Files\Conditions</Filter>
-    </ClInclude>
-    <ClInclude Include="SemanticCondition.h">
       <Filter>Header Files\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="Agent.h">
@@ -109,6 +91,18 @@
     </ClInclude>
     <ClInclude Include="OperatorManager.h">
       <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="Action.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionTemplate.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionManager.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Planner.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

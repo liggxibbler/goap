@@ -1,7 +1,5 @@
 #include <iostream>
 #include "Common.h"
-#include "ConcreteCondition.h"
-#include "SemanticCondition.h"
 #include "Operator.h"
 #include "Object.h"
 #include "Agent.h"
@@ -26,7 +24,7 @@ int main()
 	GOAP::Agent* agent = new GOAP::Agent;
 	agent->SetAttrib(ATTRIB_TYPE_POSX, 3);
 	agent->SetAttrib(ATTRIB_TYPE_POSY, 1);
-	agent->SetAttrib(ATTRIB_TYPE_HEIGHT, 9);
+	agent->SetAttrib(ATTRIB_TYPE_HEIGHT, 30);
 	agent->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
 	agent->SetAttrib(ATTRIB_TYPE_ALIVE, true);
 
@@ -39,21 +37,23 @@ int main()
 
 	GOAP::Op::OperatorManger om;
 
-	ConcreteCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	cc_eq.AddObjectParam(agent);
-	cc_eq.AddAttribParam(ATTRIB_TYPE_HEIGHT);
+	AbstractCondition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	//DUMP( "pre cc_eq >>> " << agent << ", " << ATTRIB_TYPE_HEIGHT << ", " << false << ", " << 9)
+	cc_eq[0].instance = agent;
+	cc_eq[0].attrib = ATTRIB_TYPE_HEIGHT;
 	cc_eq.SetNegate(false);
-	cc_eq.AddValue(20);
+	cc_eq[0].value = 30;
+	//DUMP( "post cc_eq >>> " << cc_eq[0].instance << ", " << cc_eq[0].attrib << ", " << cc_eq.GetNegate() << ", " << cc_eq[0].value)
 	bool bResult = cc_eq.Evaluate(&om);
 
-	cout << "Agent.height == 20 is " << bResult << endl;
+	cout << "Agent.height == 12 is " << bResult << endl;
 
-	ConcreteCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
-	cc_gt.AddObjectParam(agent);
-	cc_gt.AddAttribParam(ATTRIB_TYPE_HEIGHT);
+	AbstractCondition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
+	cc_gt[0].instance = agent;
+	cc_gt[0].attrib = ATTRIB_TYPE_HEIGHT;
 	cc_gt.SetNegate(false);
-	cc_gt.AddValue(10);
-	bResult = cc_gt.Evaluate(&om);
+	cc_gt[0].value = 31;
+	bResult = cc_eq.Evaluate(&om);
 
 	cout << "Agent.height > 10 is " << bResult << endl;
 

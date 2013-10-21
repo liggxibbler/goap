@@ -3,19 +3,20 @@
 
 #include "Common.h"
 #include "Action.h"
-#include "SemanticCondition.h"
 #include "Object.h"
+#include "AbstractCondition.h"
+#include <list>
 
 namespace GOAP
 {
 	class ActionTemplate
 	{
 	public:
-		virtual void Action* CreateNew() = 0;
+
 	protected:
 		OperandSemanticType* m_semantics;
-		SemanticCondition* m_preconds;
-		SemanticCondition* m_effects;
+		std::list<AbstractCondition> m_preconds;
+		std::list<AbstractCondition> m_effects;
 	};
 }
 

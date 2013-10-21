@@ -3,6 +3,7 @@
 
 //#include "ActionTemplate.h"
 #include "Object.h"
+#include <list>
 
 namespace GOAP
 {
@@ -16,7 +17,8 @@ namespace GOAP
 
 		virtual operator ObjectType ();
 
-	private:
+	protected:
+		std::list<ActionType> m_actions;
 		int m_height;
 		int m_weight;
 		int m_isAlive;

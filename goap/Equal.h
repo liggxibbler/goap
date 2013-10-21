@@ -10,7 +10,6 @@ namespace GOAP
 		class Equal : public Operator
 		{
 			virtual bool EvaluateOAVB ();
-			virtual bool EvaluateOOAB ();
 			virtual bool EvaluateOAOAB ();
 			virtual bool EvaluateOOB ();
 		};

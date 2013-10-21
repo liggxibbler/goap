@@ -13,15 +13,14 @@ Operator::~Operator()
 
 // might make non-pure virtual, for exception handling...
 
-bool Operator::Evaluate(ConcreteCondition* cc)
+bool Operator::Evaluate(AbstractCondition* ac)
 {
 	bool result;
-	m_attribs = cc->GetAttributes();
-	m_objectPtrs = cc->GetObjects();
-	m_values = cc->GetValues();
-	m_negate = cc->GetNegate();
+	
+	m_params = (ConditionParameter*) ac->GetParams();
+	m_negate = ac->GetNegate();
 
-	switch(cc->GetOperatorLayoutType())
+	switch(ac->GetOperatorLayoutType())
 	{
 	case OP_LAYOUT_TYPE_OAOAB:
 		{
@@ -31,11 +30,6 @@ bool Operator::Evaluate(ConcreteCondition* cc)
 	case OP_LAYOUT_TYPE_OAVB:
 		{
 			result = EvaluateOAVB();
-			break;
-		}
-	case OP_LAYOUT_TYPE_OOAB:
-		{
-			result = EvaluateOOAB();
 			break;
 		}
 	case OP_LAYOUT_TYPE_OOB:
@@ -56,5 +50,9 @@ bool Operator::Evaluate(ConcreteCondition* cc)
 			break;
 		}
 	};
+	
+	if(m_negate)
+		result = !result;
+
 	return result;
 }

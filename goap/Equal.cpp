@@ -6,49 +6,25 @@ using namespace GOAP::Op;
 bool Equal::EvaluateOAVB ()
 {
 	bool result;
-	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_values[0] )
+	if ( (*(m_params[0].instance))[m_params[0].attrib] == m_params[0].value )
 	{
-		DUMP("attrib is" << m_objectPtrs[0]->GetAttrib(m_attribs[0]))
-		DUMP("value is" << m_values[0])
+		DUMP("attrib is " << m_params[0].instance->GetAttrib(m_params[0].attrib))
+		DUMP("value is " << m_params[0].value)
 		result = true;
 	}
 	else
 	{
 		result = false;
 	}
-	
-	if(m_negate)
-	{
-		result = !result;
-	}
 
-	DUMP("result is" << result)
-
-	return result;
-}
-bool Equal::EvaluateOOAB ()
-{
-	bool result;
-	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_objectPtrs[1]->GetAttrib(m_attribs[0]) )
-	{
-		result = true;
-	}
-	else
-	{
-		result = false;
-	}
-	
-	if(m_negate)
-	{
-		result = !result;
-	}
+	DUMP("result is " << result)
 
 	return result;
 }
 bool Equal::EvaluateOAOAB ()
 {
 	bool result;
-	if ( m_objectPtrs[0]->GetAttrib(m_attribs[0]) == m_objectPtrs[1]->GetAttrib(m_attribs[1]) )
+	if ( (*(m_params[0].instance))[m_params[0].attrib] == (*(m_params[1].instance))[m_params[1].attrib] )
 	{
 		result = true;
 	}
@@ -56,29 +32,18 @@ bool Equal::EvaluateOAOAB ()
 	{
 		result = false;
 	}
-	
-	if(m_negate)
-	{
-		result = !result;
-	}
-
 	return result;
 }
 bool Equal::EvaluateOOB ()
 {
 	bool result;
-	if ( m_objectPtrs[0] == m_objectPtrs[1] )
+	if ( *(m_params[0].instance) == *(m_params[1].instance) )
 	{
 		result = true;
 	}
 	else
 	{
 		result = false;
-	}
-	
-	if(m_negate)
-	{
-		result = !result;
 	}
 
 	return result;
