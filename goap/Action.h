@@ -23,6 +23,9 @@ namespace GOAP
 		std::list<Condition>::iterator GetFirstPrecondition();
 		std::list<Condition>::iterator GetFirstEffect();
 
+		Condition* operator == (Condition& cond);
+		void CopySemanticsFromCondition(Condition& cond);
+
 	protected:
 		std::map<OperandSemanticType, Object*> m_args;
 		std::list<Condition> m_preconds;

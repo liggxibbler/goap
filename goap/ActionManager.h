@@ -11,6 +11,7 @@ namespace GOAP
 {
 	class ActionManager
 	{
+	public:
 		ActionManager();
 		ActionManager(const ActionManager& other);
 		~ActionManager();

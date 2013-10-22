@@ -3,15 +3,26 @@
 
 #include "Object.h"
 #include "Agent.h"
-#include "Action.h"
+#include "ActionManager.h"
+#include "Condition.h"
 #include <list>
+#include <stack>
+
 
 namespace GOAP
 {
 	class Planner
 	{
 	public:
-		Action** Plan();
+		Planner();
+		Planner(const Planner& other);
+		~Planner();
+		Action** Plan(Agent* agent, ActionManager* am);//, OperatorManager* om);
+	
+	private:
+		std::stack<Condition> m_goalStack;
+		std::list<Action*> m_actionQueue;
+		int m_depth;
 	};
 }
 

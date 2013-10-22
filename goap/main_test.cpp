@@ -22,11 +22,11 @@ int main()
 	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;
 
 	GOAP::Agent* agent = new GOAP::Agent;
-	agent->SetAttrib(ATTRIB_TYPE_POSX, 3);
-	agent->SetAttrib(ATTRIB_TYPE_POSY, 1);
-	agent->SetAttrib(ATTRIB_TYPE_HEIGHT, 30);
-	agent->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
-	agent->SetAttrib(ATTRIB_TYPE_ALIVE, true);
+	(*agent)[ATTRIB_TYPE_POSX] = 3;
+	(*agent)[ATTRIB_TYPE_POSY] = 1;
+	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;
+	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
+	(*agent)[ATTRIB_TYPE_ALIVE] = true;
 
 	cout << "agent has:" << endl;
 	cout << "X: " << (*agent)[ATTRIB_TYPE_POSX] << endl;

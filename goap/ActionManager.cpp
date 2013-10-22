@@ -4,7 +4,7 @@ using namespace GOAP;
 
 ActionManager::ActionManager()
 {
-	m_mapAction[ACTION_STAB] = new Stab(NULL, NULL, NULL);
+	m_mapAction[ACTION_STAB] = new Stab();
 }
 
 ActionManager::ActionManager(const ActionManager& other)

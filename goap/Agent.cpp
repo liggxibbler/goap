@@ -21,3 +21,18 @@ Agent::operator GOAP::ObjectType()
 {
 	return OBJ_TYPE_AGENT;
 }
+
+Condition& Agent::Goal()
+{
+	return m_goal;
+}
+
+std::list<ActionType>::iterator Agent::FirstAction()
+{
+	return m_actions.begin();
+}
+
+std::list<ActionType>::iterator Agent::LastAction()
+{
+	return m_actions.end();
+}
