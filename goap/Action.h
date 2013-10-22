@@ -33,6 +33,10 @@ namespace GOAP
 		std::list<ConditionParameter>::iterator GetArgByInstance(Object* obj);
 
 	protected:
+		virtual void InitArgs() = 0;
+		virtual void InitPreconditions() = 0;
+		virtual void InitEffects() = 0;
+
 		std::list<ConditionParameter> m_args;
 		std::list<Condition> m_preconds;
 		std::list<Condition> m_effects;

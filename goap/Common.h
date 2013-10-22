@@ -63,12 +63,13 @@ namespace GOAP
 
 	enum ObjectType
 	{
-		OBJ_TYPE_OBJECT = 0x0000, // either inanimate objects
-		OBJ_TYPE_BLADE,
-		OBJ_TYPE_CONTAINER,
-		OBJ_TYPE_AGENT = 0x8000, // or living things
-		OBJ_TYPE_PERSON,
-		OBJ_TYPE_LAST = 0xffff
+		OBJ_TYPE_OBJECT		= 0x0001, // either inanimate objects
+		OBJ_TYPE_BLADE		= 0x0002,
+		OBJ_TYPE_CONTAINER	= 0x0004,
+		
+		OBJ_TYPE_AGENT		= 0x0100, // or living things
+		OBJ_TYPE_PERSON		= 0x0200,
+		OBJ_TYPE_LAST		= 0xf000
 	};
 
 	enum AttributeType

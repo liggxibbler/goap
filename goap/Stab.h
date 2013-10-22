@@ -10,7 +10,6 @@ namespace GOAP
 	{
 	public:
 		Stab();
-		Stab(Agent* subject, Agent* victim, Object* blade);
 		Stab(const Stab& other);
 		~Stab();
 
@@ -18,7 +17,9 @@ namespace GOAP
 		virtual void Execute();
 		virtual Stab* Clone();
 	private:
-
+		virtual void InitArgs();
+		virtual void InitPreconditions();
+		virtual void InitEffects();
 	};
 }
 #endif
