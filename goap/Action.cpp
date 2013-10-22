@@ -28,16 +28,50 @@ Condition* Action::operator == (Condition& cond)
 	return NULL;
 }
 
-void Action::CopySemanticsFromCondition(Condition& cond)
+void Action::CopyArgsFromCondition(Condition& cond)
 {
-	std::map<OperandSemanticType, Object*>::iterator semanticIter;
-	for(semanticIter = m_args.begin(); semanticIter != m_args.end(); ++semanticIter)
+	std::list<ConditionParameter>::iterator paramIter;
+	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
-		//for param in cond
-		//	m_args.getParamByType(param.type).instance = param.instance
-		//
-		//
-		//
-		//
+		(*(GetArgByType(cond[i].type))).instance = cond[i].instance;
 	}
+}
+
+std::list<ConditionParameter>::iterator Action::GetArgBySemantic(OperandSemanticType st)
+{
+	std::list<ConditionParameter>::iterator paramIter;
+	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	{
+		if((*paramIter).semantic = st)
+		{
+			return paramIter;
+		}
+	}
+	return paramIter;
+}
+
+std::list<ConditionParameter>::iterator Action::GetArgByType(ObjectType ot)
+{
+	std::list<ConditionParameter>::iterator paramIter;
+	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	{
+		if((*paramIter).type = ot)
+		{
+			return paramIter;
+		}
+	}
+	return paramIter;
+}
+
+std::list<ConditionParameter>::iterator Action::GetArgByInstance(Object* obj)
+{
+	std::list<ConditionParameter>::iterator paramIter;
+	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	{
+		if((*paramIter).instance = obj)
+		{
+			return paramIter;
+		}
+	}
+	return paramIter;
 }

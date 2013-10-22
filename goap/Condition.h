@@ -43,11 +43,16 @@ namespace GOAP
 		ConditionParameter& operator [] (int index);
 		
 		const ConditionParameter* GetParams();
+		int GetNumParams();
 
 		void SetNegate(bool value);
 		bool GetNegate();
 
 		bool Evaluate(Op::OperatorManger* om);
+
+		ConditionParameter* GetParamBySemantic(OperandSemanticType st);
+		ConditionParameter* GetParamByType(ObjectType ot);
+		ConditionParameter* GetParamByInstance(Object* obj);
 
 	private:
 		bool CreateArrays();
@@ -58,10 +63,6 @@ namespace GOAP
 		
 		ConditionParameter* m_params;
 		bool m_negate;
-		
-		/*CappedStack<AttributeType>* m_objectTypeParams;
-		CappedStack<ObjectType>* m_objectTypeParams;
-		CappedStack<int>* m_objectTypeParams;*/
 
 		int m_numParams;
 		int m_topParam;

@@ -8,9 +8,6 @@ Stab::Stab(Agent* subject, Agent* victim, Object* blade)
 
 Stab::Stab()
 {
-	m_args[OP_SEMANTIC_TYPE_SUBJECT] = NULL;
-	m_args[OP_SEMANTIC_TYPE_OBJECT] = NULL;
-	m_args[OP_SEMANTIC_TYPE_INSTRUMENT] = NULL;
 }
 
 Stab::Stab(const Stab& other)

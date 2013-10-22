@@ -21,13 +21,19 @@ namespace GOAP
 		virtual operator ActionType();
 
 		std::list<Condition>::iterator GetFirstPrecondition();
+		std::list<Condition>::iterator GetLastPrecondition();
 		std::list<Condition>::iterator GetFirstEffect();
+		std::list<Condition>::iterator GetLastEffect();
 
 		Condition* operator == (Condition& cond);
-		void CopySemanticsFromCondition(Condition& cond);
+		void CopyArgsFromCondition(Condition& cond);
+
+		std::list<ConditionParameter>::iterator GetArgBySemantic(OperandSemanticType st);
+		std::list<ConditionParameter>::iterator GetArgByType(ObjectType ot);
+		std::list<ConditionParameter>::iterator GetArgByInstance(Object* obj);
 
 	protected:
-		std::map<OperandSemanticType, Object*> m_args;
+		std::list<ConditionParameter> m_args;
 		std::list<Condition> m_preconds;
 		std::list<Condition> m_effects;
 	};

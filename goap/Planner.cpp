@@ -21,5 +21,6 @@ Action** Planner::Plan(Agent* agent, ActionManager* am)
 		//			action[semantic] = unify(action.semantic.type)
 		//			if action[semantic] = null then break (i.e. try next actiontype)
 		//	
-	}	
+	}
+	return NULL;
 }

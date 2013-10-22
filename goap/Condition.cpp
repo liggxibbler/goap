@@ -131,3 +131,42 @@ ConditionParameter& Condition::operator[](int index)
 {
 	return m_params[index];
 }
+
+int Condition::GetNumParams()
+{
+	return m_numParams;
+}
+
+ConditionParameter* Condition::GetParamBySemantic(OperandSemanticType st)
+{
+	for(int i = 0; i < m_numParams; ++i)
+	{
+		if(m_params[i].semantic = st)
+		{
+			return &m_params[i];
+		}
+	}
+	return NULL;
+}
+ConditionParameter* Condition::GetParamByType(ObjectType ot)
+{
+	for(int i = 0; i < m_numParams; ++i)
+	{
+		if(m_params[i].type = ot)
+		{
+			return &m_params[i];
+		}
+	}
+	return NULL;
+}
+ConditionParameter* Condition::GetParamByInstance(Object* obj)
+{
+	for(int i = 0; i < m_numParams; ++i)
+	{
+		if(m_params[i].instance = obj)
+		{
+			return &m_params[i];
+		}
+	}
+	return NULL;
+}
