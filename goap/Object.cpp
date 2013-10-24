@@ -6,6 +6,16 @@ Object::Object()
 {
 	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
 	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
+	m_owner = NULL;
+}
+
+
+Object::Object(std::string name, Object* owner)
+{
+	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
+	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
+	m_owner = owner;
+	m_name = name;
 }
 
 Object::Object(const Object& other)

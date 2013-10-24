@@ -3,17 +3,20 @@
 #include "Operator.h"
 
 using namespace GOAP;
+using namespace Op;
 
 Condition::Condition()
 {
 	m_layout = OP_LAYOUT_TYPE_UNDEFINED;
 	m_operatorType = OPER_TYPE_UNDEFINED;
+	m_negate = false;
 	CreateArrays();
 }
 
 Condition::Condition(const Condition& other)
 {
 }
+
 Condition::~Condition()
 {
 }
@@ -116,7 +119,7 @@ void Condition::SetNegate(bool value)
 	m_negate = value;
 }
 
-bool Condition::Evaluate(Op::OperatorManger* om)
+bool Condition::Evaluate(Op::OperatorManager* om)
 {
 	Operator* oper = om->GetOperator(m_operatorType);
 	return oper->Evaluate(this);

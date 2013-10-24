@@ -24,8 +24,11 @@ namespace GOAP
 		std::list<Condition>::iterator GetLastPrecondition();
 		std::list<Condition>::iterator GetFirstEffect();
 		std::list<Condition>::iterator GetLastEffect();
+		std::list<ConditionParameter>::iterator GetFirstArg();
+		std::list<ConditionParameter>::iterator GetLastArg();
 
-		Condition* operator == (Condition& cond);
+
+		std::list<Condition>::iterator MightSatisfy(Condition& cond);
 		void CopyArgsFromCondition(Condition& cond);
 
 		std::list<ConditionParameter>::iterator GetArgBySemantic(OperandSemanticType st);

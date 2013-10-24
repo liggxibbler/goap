@@ -84,7 +84,6 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
-    <ClCompile Include="Planner.cpp" />
     <ClCompile Include="Stab.cpp" />
   </ItemGroup>
   <ItemGroup>

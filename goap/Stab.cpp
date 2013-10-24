@@ -74,6 +74,7 @@ void Stab::InitEffects()
 
 void Stab::InitPreconditions()
 {
+	// subject owns instrument
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	ConditionParameter sub, inst;
 	

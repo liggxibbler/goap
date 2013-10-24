@@ -1,6 +1,7 @@
 #include "Operator.h"
 
 using namespace GOAP;
+using namespace Op;
 
 Operator::Operator()
 {}

@@ -3,10 +3,13 @@
 
 #include "Common.h"
 #include "Object.h"
-#include "OperatorManager.h"
 
 namespace GOAP
 {
+	namespace Op
+	{
+		class OperatorManager;
+	}
 	struct ConditionParameter
 	{
 		ConditionParameter() :
@@ -49,7 +52,7 @@ namespace GOAP
 		void SetNegate(bool value);
 		bool GetNegate();
 
-		bool Evaluate(Op::OperatorManger* om);
+		bool Evaluate(Op::OperatorManager* om);
 
 		ConditionParameter* GetParamBySemantic(OperandSemanticType st);
 		ConditionParameter* GetParamByType(ObjectType ot);

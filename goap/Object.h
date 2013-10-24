@@ -1,8 +1,9 @@
 #ifndef _GOAP_OBJECT_H_
 #define _GOAP_OBJECT_H_
 
-#include <map>
 #include "Common.h"
+#include <map>
+#include <string>
 
 namespace GOAP
 {
@@ -10,7 +11,7 @@ namespace GOAP
 	{
 	public:
 		Object();
-		Object(char* name);
+		Object(std::string name, Object* owner = NULL);
 		Object(const Object& other);
 		~Object();
 		
@@ -21,7 +22,7 @@ namespace GOAP
 	protected:
 		static int s_numObjects;
 		int m_id;
-		char* m_name;
+		std::string m_name;
 		std::map<AttributeType, int*> m_attribs;
 		//Position m_position;
 		int m_posx;

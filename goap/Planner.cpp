@@ -2,7 +2,7 @@
 
 using namespace GOAP;
 
-Action** Planner::Plan(Agent* agent, ActionManager* am)
+PlanStatus Planner::Plan(Agent* agent, ActionManager* am, std::list<Action*>& plan)
 {
 	// Read agent's goal, push it on goal stack
 	m_goalStack.push(agent->Goal());
@@ -14,13 +14,31 @@ Action** Planner::Plan(Agent* agent, ActionManager* am)
 	{
 		Action* currentAction = (Action*)am->GetAction(*actionIter);
 		//if action == m_goalStack.top()
-		//	copy condition to action
-		//	i.e. act = am->getnew(*actioniter), act.copy(condition);
-		//  for semantic in action
-		//		if action[semantic] = null then
-		//			action[semantic] = unify(action.semantic.type)
-		//			if action[semantic] = null then break (i.e. try next actiontype)
-		//	
+		if( currentAction->MightSatisfy(m_goalStack.top()) != currentAction->GetLastEffect() )
+		{
+			//	copy condition to action
+			//	i.e. act = am->getnew(*actioniter), act.copy(condition);
+			currentAction->CopyArgsFromCondition(m_goalStack.top());
+			
+			//  for semantic in action
+			std::list<ConditionParameter>::iterator argIter;
+			for(argIter = currentAction->GetFirstArg(); argIter != currentAction->GetLastArg(); ++argIter)
+			{
+				//		if action[semantic] = null then
+				if ((*argIter).instance = NULL)
+				{
+					std::list<Object*>::iterator currentMatch = agent->FirstObject();
+					//	action[semantic] = unify(action.semantic.type)
+					std::list<Object*>::iterator objIter = agent->Unify((*argIter).type, currentMatch);
+					//currentAction->GetArgBySemantic(OP_SEMANTIC_TYPE_DESTINATION)->instance
+					//	if action[semantic] = null then break (i.e. try next actiontype)					
+				}
+				if(objIter == agent->LastObject())
+				{
+					break;
+				}
+			}
+		}
 	}
-	return NULL;
+	return PLAN_STAT_SUCCESS;
 }

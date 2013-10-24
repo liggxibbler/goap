@@ -5,17 +5,17 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-OperatorManger::OperatorManger()
+OperatorManager::OperatorManager()
 {
 	m_mapOperator[OPER_TYPE_EQUAL]			= new Equal();
 	m_mapOperator[OPER_TYPE_GREATER_THAN]	= new GreaterThan();
 }
 
-OperatorManger::OperatorManger(const OperatorManger& other)
+OperatorManager::OperatorManager(const OperatorManager& other)
 {
 }
 
-OperatorManger::~OperatorManger()
+OperatorManager::~OperatorManager()
 {
 	std::map<OperatorType, Operator*>::iterator iter;
 	for ( iter = m_mapOperator.begin(); iter != m_mapOperator.end(); iter++)
@@ -24,7 +24,7 @@ OperatorManger::~OperatorManger()
 	}
 }
 
-Operator* OperatorManger::GetOperator(OperatorType ot)
+Operator* OperatorManager::GetOperator(OperatorType ot)
 {
 	return m_mapOperator[ot];
 }

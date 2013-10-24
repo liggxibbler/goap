@@ -3,25 +3,25 @@
 
 #include <map>
 #include "Common.h"
+#include "Operator.h"
 
 namespace GOAP
 {
-	class Operator;
 	namespace Op
 	{
-		class OperatorManger
+		class OperatorManager
 		{
 		public:
-			OperatorManger();
-			OperatorManger(const OperatorManger& other);
-			~OperatorManger();
+			OperatorManager();
+			OperatorManager(const OperatorManager& other);
+			~OperatorManager();
 
 			Operator* GetOperator(OperatorType ot);
 
 		private:
 			std::map<OperatorType, Operator*> m_mapOperator;
 		};
-	};
+	}
 }
 
 #endif

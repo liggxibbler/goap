@@ -129,7 +129,14 @@ namespace GOAP
 		
 		ACTION_CHOKE,
 		ACTION_STAB,
+
 		ACTION_ACTION
+	};
+
+	enum PlanStatus
+	{
+		PLAN_STAT_FAIL,
+		PLAN_STAT_SUCCESS
 	};
 }
 

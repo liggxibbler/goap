@@ -7,25 +7,28 @@
 
 namespace GOAP
 {
-	class Operator
+	namespace Op
 	{
-	public:
-		Operator();
-		Operator(const Operator& other);
-		~Operator();
+		class Operator
+		{
+		public:
+			Operator();
+			Operator(const Operator& other);
+			~Operator();
 
-		// might make non-pure virtual, for exception handling...
+			// might make non-pure virtual, for exception handling...
 
-		bool Evaluate(Condition* cc);
+			bool Evaluate(Condition* cc);
 
-		virtual bool EvaluateOAVB () = 0;
-		virtual bool EvaluateOAOAB () = 0;
-		virtual bool EvaluateOOB () = 0;
+			virtual bool EvaluateOAVB () = 0;
+			virtual bool EvaluateOAOAB () = 0;
+			virtual bool EvaluateOOB () = 0;
 
-	protected:
-		ConditionParameter* m_params;
-		bool m_negate;
-	};
-};
+		protected:
+			ConditionParameter* m_params;
+			bool m_negate;
+		};
+	}
+}
 
 #endif

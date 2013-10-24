@@ -17,7 +17,7 @@ namespace GOAP
 		Planner();
 		Planner(const Planner& other);
 		~Planner();
-		Action** Plan(Agent* agent, ActionManager* am);//, OperatorManager* om);
+		PlanStatus Plan(Agent* agent, ActionManager* am, std::list<Action*>& plan);//, OperatorManager* om);
 	
 	private:
 		std::stack<Condition> m_goalStack;

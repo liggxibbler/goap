@@ -36,3 +36,10 @@ std::list<ActionType>::iterator Agent::LastAction()
 {
 	return m_actions.end();
 }
+
+//std::list<Object*>::iterator Agent::Unify(ObjectType ot, std::list<Object*>::iterator from)
+//{
+//	//iterate through list of objects
+//	//return if object.type = ot
+//	// BUT remember where you left so you can come back
+//}

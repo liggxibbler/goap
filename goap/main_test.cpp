@@ -35,7 +35,7 @@ int main()
 	cout << "Weight: " << (*agent)[ATTRIB_TYPE_WEIGHT] << endl;
 	cout << "Alive: " << (*agent)[ATTRIB_TYPE_ALIVE] << endl;
 
-	GOAP::Op::OperatorManger om;
+	GOAP::Op::OperatorManager om;
 
 	Condition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	//DUMP( "pre cc_eq >>> " << agent << ", " << ATTRIB_TYPE_HEIGHT << ", " << false << ", " << 9)
@@ -46,7 +46,7 @@ int main()
 	//DUMP( "post cc_eq >>> " << cc_eq[0].instance << ", " << cc_eq[0].attrib << ", " << cc_eq.GetNegate() << ", " << cc_eq[0].value)
 	bool bResult = cc_eq.Evaluate(&om);
 
-	cout << "Agent.height == 12 is " << bResult << endl;
+	cout << "Agent.height == 30 is " << bResult << endl;
 
 	Condition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
 	cc_gt[0].instance = agent;
@@ -58,5 +58,9 @@ int main()
 	cout << "Agent.height > 10 is " << bResult << endl;
 
 	cin.get();
+	
+	delete agent;
+	delete obj;
+
 	return 0;
 }

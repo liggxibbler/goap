@@ -15,17 +15,17 @@ Action::operator GOAP::ActionType()
 	return ACTION_ACTION;
 }
 
-Condition* Action::operator == (Condition& cond)
+std::list<Condition>::iterator Action::MightSatisfy(Condition& cond)
 {
 	std::list<Condition>::iterator effectIter;
 	for(effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
 	{
 		if(*effectIter == cond)
 		{
-			return &(*effectIter);
+			return effectIter;
 		}
 	}
-	return NULL;
+	return effectIter;
 }
 
 void Action::CopyArgsFromCondition(Condition& cond)
@@ -74,4 +74,14 @@ std::list<ConditionParameter>::iterator Action::GetArgByInstance(Object* obj)
 		}
 	}
 	return paramIter;
+}
+
+std::list<ConditionParameter>::iterator Action::GetFirstArg()
+{
+	return m_args.begin();
+}
+
+std::list<ConditionParameter>::iterator Action::GetLastArg()
+{
+	return m_args.end();
 }
