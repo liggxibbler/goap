@@ -9,6 +9,8 @@
 
 namespace GOAP
 {
+	class Agent;
+
 	class Action
 	{
 	public:
@@ -22,14 +24,17 @@ namespace GOAP
 
 		std::list<Condition>::iterator GetFirstPrecondition();
 		std::list<Condition>::iterator GetLastPrecondition();
+		
 		std::list<Condition>::iterator GetFirstEffect();
 		std::list<Condition>::iterator GetLastEffect();
+		
 		std::list<ConditionParameter>::iterator GetFirstArg();
 		std::list<ConditionParameter>::iterator GetLastArg();
 
-
 		std::list<Condition>::iterator MightSatisfy(Condition& cond);
 		void CopyArgsFromCondition(Condition& cond);
+
+		std::list<Action*> GetPossibleInstances(Agent* agent);
 
 		std::list<ConditionParameter>::iterator GetArgBySemantic(OperandSemanticType st);
 		std::list<ConditionParameter>::iterator GetArgByType(ObjectType ot);

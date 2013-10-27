@@ -4,10 +4,9 @@
 #include "Object.h"
 #include "Agent.h"
 #include "ActionManager.h"
-#include "Condition.h"
+#include "Goal.h"
 #include <list>
 #include <stack>
-
 
 namespace GOAP
 {
@@ -17,12 +16,15 @@ namespace GOAP
 		Planner();
 		Planner(const Planner& other);
 		~Planner();
+
+		Goal* PickNextGoal();
+
+
 		PlanStatus Plan(Agent* agent, ActionManager* am, std::list<Action*>& plan);//, OperatorManager* om);
 	
 	private:
-		std::stack<Condition> m_goalStack;
-		std::list<Action*> m_actionQueue;
-		int m_depth;
+		std::list<Goal*> m_frontier;			// The portion of the search space that is currently being analyzed
+		std::list<Action*> m_actionLongList;	// Initial candidates for previous action to have been taken
 	};
 }
 

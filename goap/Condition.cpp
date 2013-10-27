@@ -171,5 +171,6 @@ ConditionParameter* Condition::GetParamByInstance(Object* obj)
 			return &m_params[i];
 		}
 	}
+
 	return NULL;
 }

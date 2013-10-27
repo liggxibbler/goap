@@ -37,6 +37,9 @@
     <Filter Include="Source Files\Actions">
       <UniqueIdentifier>{30353867-2129-45f6-8008-a22c88f0d73f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Combination">
+      <UniqueIdentifier>{41a40966-bd87-4eb4-8a51-51a58be42c7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main_test.cpp">
@@ -74,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="Planner.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Goal.cpp">
+      <Filter>Source Files\Conditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +121,15 @@
     </ClInclude>
     <ClInclude Include="ActionList.h">
       <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Goal.h">
+      <Filter>Header Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="Digit.h">
+      <Filter>Header Files\Combination</Filter>
+    </ClInclude>
+    <ClInclude Include="Combination.h">
+      <Filter>Header Files\Combination</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

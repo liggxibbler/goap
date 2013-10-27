@@ -5,32 +5,38 @@ using namespace GOAP;
 PlanStatus Planner::Plan(Agent* agent, ActionManager* am, std::list<Action*>& plan)
 {
 	/*
-		Do this:
+	Do this:
 
-		pick least costly goal off short list
+	METHOD : PickNextGoal()
+	take least costly goal off short list
 
-		for that goal:
-		if goal is satisfied:
-			return path from current goal to root of goal tree (successive parent nodes)
-		
+	if goal is satisfied:
+		DON'T return path from current goal to root of goal tree (successive parent nodes)
+		(actually)
+		return just the goal node, it will contain a pointer to its parent node.
+		since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
+
+	METHOD : FillLongList(Agent, ActionManager)
+	for each condition in that goal:
 		for all actions in agent:
-			if action may satisfy goal:
-				copy goal to action
+			if action may satisfy condition: i.e. has effect that may satisfy condition
+				copy condition to action
 				add action to long list
 	
-		for all actions in long list:
-			if all null semantics can be instantiated:
-				add all possible instances of action to short list
-				add all preconditions of action to goal tree as child of current goal with action on the edge
+	METHOD : FindPreviousGoals(Agent)
+	for all actions in long list:
+		if all null semantics can be instantiated using Agent's list:
+			add all possible instances of action to short list
+			add all preconditions of action to a goal node as child of current goal with action on the edge
 	
-		clear the long list
+	clear the long list
 	
-		sort the short list by cost + heuristic
+	sort the short list by cost + heuristic
 	
-		for all actions in short list:
-			do the same thing, until:
-				either you reach maximum plan depth
-				or you reach a goal that is already satisfied in the current state
+	for all actions in short list:
+		do the same thing, until:
+			either you reach maximum plan depth
+			or you reach a goal that is already satisfied in the current state
 	*/
 
 
