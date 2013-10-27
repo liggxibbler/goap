@@ -31,7 +31,7 @@ namespace GOAP
 		std::list<ConditionParameter>::iterator GetFirstArg();
 		std::list<ConditionParameter>::iterator GetLastArg();
 
-		std::list<Condition>::iterator MightSatisfy(Condition& cond);
+		bool MightSatisfy(Condition& cond);
 		void CopyArgsFromCondition(Condition& cond);
 
 		std::list<Action*> GetPossibleInstances(Agent* agent);

@@ -16,7 +16,7 @@ namespace GOAP
 		ActionManager(const ActionManager& other);
 		~ActionManager();
 
-		const Action* GetAction(ActionType at);
+		Action* GetAction(ActionType at);
 		Action* GetNewAction(ActionType at);
 
 	private:

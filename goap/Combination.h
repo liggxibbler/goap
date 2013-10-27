@@ -63,6 +63,6 @@ namespace GOAP
 		Counter** m_Counters;
 		typename std::vector< std::vector<T> > m_lists;
 		typename std::vector<T> m_result;
-	}
+	};
 
 #endif

@@ -15,17 +15,17 @@ Action::operator GOAP::ActionType()
 	return ACTION_ACTION;
 }
 
-std::list<Condition>::iterator Action::MightSatisfy(Condition& cond)
+bool Action::MightSatisfy(Condition& cond)
 {
 	std::list<Condition>::iterator effectIter;
 	for(effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
 	{
 		if(*effectIter == cond)
 		{
-			return effectIter;
+			return true;
 		}
 	}
-	return effectIter;
+	return false;
 }
 
 void Action::CopyArgsFromCondition(Condition& cond)

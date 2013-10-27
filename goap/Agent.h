@@ -5,6 +5,7 @@
 #include "Common.h"
 #include "Object.h"
 #include "Condition.h"
+#include "Goal.h"
 #include <list>
 
 namespace GOAP
@@ -24,12 +25,12 @@ namespace GOAP
 		std::list<Object*>::iterator LastObject();
 
 		virtual operator ObjectType ();
-		Condition& Goal();
+		Goal* GetGoal();
 
 		//std::list<Object*>::iterator Unify(ObjectType ot, std::list<Object*>::iterator from);
 
 	protected:
-		Condition m_goal;
+		Goal* m_goal;
 		std::list<ActionType> m_actions;
 		std::list<Object*> m_objects;
 		int m_height;

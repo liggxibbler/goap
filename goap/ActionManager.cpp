@@ -15,7 +15,7 @@ ActionManager::~ActionManager()
 {
 }
 
-const Action* ActionManager::GetAction(ActionType at)
+Action* ActionManager::GetAction(ActionType at)
 {
 	return m_mapAction[at];
 }

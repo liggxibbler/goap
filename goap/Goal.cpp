@@ -66,3 +66,17 @@ void Goal::AddCondition(Condition& cond)
 {
 	m_conditions.push_back(cond);
 }
+
+std::list<Condition>::iterator Goal::GetFirstCondition()
+{
+	return m_conditions.begin();
+}
+std::list<Condition>::iterator Goal::GetLastCondition()
+{
+	return m_conditions.end();
+}
+
+int Goal::GetDepth()
+{
+	return m_depth;
+}
