@@ -25,6 +25,7 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 	{
 	// this means that the short list is empty
 	// which means either that the planner has failed to find a plan
+		plan = NULL;
 		return PLAN_STAT_FAIL;
 	}
 
@@ -64,15 +65,12 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 
 	ClearLongList(); // clear the long list
 
-	/*
-	for all actions in short list:
-		do the same thing, until:
-			either you reach maximum plan depth
-			or you reach a goal that is already satisfied in the current state
-			or the frontier is empty and no plan is found
-	*/
-	
-	return PlanWorkHorse(agent, am, om, plan);
+	return PlanWorkHorse(agent, am, om, plan); /* for all actions in short list:
+													do the same thing, until:
+														either you reach maximum plan depth
+														or you reach a goal that is already satisfied in the current state
+														or the frontier is empty and no plan is found
+												*/
 }
 
 void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
