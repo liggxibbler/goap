@@ -7,6 +7,7 @@
 #include "Combination.h"
 #include <map>
 #include <list>
+#include <vector>
 
 namespace GOAP
 {

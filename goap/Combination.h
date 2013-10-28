@@ -47,9 +47,11 @@ namespace GOAP
 			Counter* higher = NULL;
 			for(int i=0; i<numLists; i++)
 			{
-				m_Counters[i] = new Counter( m_lists[i].size(), higher);
+				m_Counters[i] = new Counter( m_lists[i].size(), higher); // XIBB test for failed new
 				higher = m_Counters[i];
 			}
+
+			return true;
 		}
 
 		bool Clear()
@@ -60,6 +62,8 @@ namespace GOAP
 				(*iter).clear();
 			}
 			m_lists.clear();
+			
+			return true;
 		}
 	
 	private:

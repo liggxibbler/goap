@@ -124,11 +124,33 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		tuples.push_back(m_orderedTuples.GetNextCombination(stat));
 	}
 
+	std::vector<std::vector<Object*> >::iterator finalObjIter;
 
-
+	for(finalObjIter = tuples.begin(); finalObjIter != tuples.end(); ++finalObjIter)
+	{
+		result.push_back(GetInstanceFromTuple(*finalObjIter));
+	}
 	//	put all vectors in a vector<vector>
 	//	pass that vector to a combination
 	//	append returned vector from combination to result (search frontier)
 	
 	return true;
+}
+
+Action* Action::GetInstanceFromTuple(std::vector<Object*> args)
+{
+	Action* act = Clone();
+	
+	std::vector<Object*>::iterator instanceIter;
+	std::list<ConditionParameter>::iterator cpIter;
+
+	cpIter = m_args.begin();
+	instanceIter = args.begin();
+
+	for(unsigned int i=0; i<m_args.size(); ++i)
+	{
+		(*cpIter++).instance = (*instanceIter++);
+	}
+
+	return act;
 }

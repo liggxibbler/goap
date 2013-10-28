@@ -78,6 +78,7 @@
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionManager.cpp" />
     <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Equal.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GreaterThan.cpp" />

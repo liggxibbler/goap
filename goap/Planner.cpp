@@ -97,8 +97,17 @@ void Planner::ExtendFrontier(Agent* agent)
 	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); ++iter)
 	{
 		act = *iter;
-		act->GetPossibleInstances(agent, instances);
+		if(!act->GetPossibleInstances(agent, instances))
+		{
+			return;
+		}
 	}
+
+	//	for each action instance:
+	//		conds = which conditions of the current goal it might satisfy
+	//		nextGoal = goal - conds + action.preconds
+	//		add nextGoal to GoalsMadeFromInstances
+	// m_frontier.splice(m_frontier.end(), GoalsMadeFromPreCondsOfInstances);
 }
 
 Goal* Planner::PickNextGoal()
