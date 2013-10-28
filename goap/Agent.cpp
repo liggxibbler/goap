@@ -22,7 +22,7 @@ Agent::operator GOAP::ObjectType()
 	return OBJ_TYPE_AGENT;
 }
 
-Condition& Agent::Goal()
+Goal* Agent::GetGoal()
 {
 	return m_goal;
 }

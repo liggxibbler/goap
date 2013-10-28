@@ -125,10 +125,10 @@
     <ClInclude Include="Goal.h">
       <Filter>Header Files\Conditions</Filter>
     </ClInclude>
-    <ClInclude Include="Digit.h">
+    <ClInclude Include="Combination.h">
       <Filter>Header Files\Combination</Filter>
     </ClInclude>
-    <ClInclude Include="Combination.h">
+    <ClInclude Include="Counter.h">
       <Filter>Header Files\Combination</Filter>
     </ClInclude>
   </ItemGroup>

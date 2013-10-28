@@ -85,3 +85,14 @@ std::list<ConditionParameter>::iterator Action::GetLastArg()
 {
 	return m_args.end();
 }
+
+bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
+{
+	//	for each semantic
+	//		put all mathing objects in a vector
+	//		if vector is empty : not possible -> set fail flag, return false
+	//	put all vectors in a vector<vector>
+	//	pass that vector to a combination
+	//	append returned vector from combination to result (search frontier)
+	return true;
+}

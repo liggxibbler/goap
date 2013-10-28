@@ -1,7 +1,7 @@
 #ifndef _GOAP_COMBINATION_H_
 #define _GOAP_COMBINATION_H_
 
-#include "Digit.h"
+#include "Counter.h"
 #include <vector>
 
 namespace GOAP
@@ -59,10 +59,10 @@ namespace GOAP
 		  bool Initialize();
 
 	private:
-		int m_numLists;
+		int numLists;
 		Counter** m_Counters;
 		typename std::vector< std::vector<T> > m_lists;
 		typename std::vector<T> m_result;
 	};
-
+}
 #endif

@@ -2,6 +2,8 @@
 
 using namespace GOAP;
 
+int Object::s_numObjects = 0;
+
 Object::Object()
 {
 	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;

@@ -45,6 +45,7 @@ bool Goal::Evaluate(Op::OperatorManager* om)
 
 bool Goal::IsConsistent(Op::OperatorManager* om)
 {
+	return false;
 }
 
 void Goal::AddChild(Goal* child)
@@ -79,4 +80,9 @@ std::list<Condition>::iterator Goal::GetLastCondition()
 int Goal::GetDepth()
 {
 	return m_depth;
+}
+
+Goal* Goal::Combine(Goal* other)
+{
+	return NULL;
 }

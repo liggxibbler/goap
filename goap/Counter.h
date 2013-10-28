@@ -1,13 +1,13 @@
-#ifndef _GOAP_DIGIT_H_
-#define _GOAP_DIGIT_H_
+#ifndef _GOAP_COUNTER_H_
+#define _GOAP_COUNTER_H_
 
 namespace GOAP
 {
-	class Digit
+	class Counter
 	{
 	public:
 
-		Digit(int size, Digit* higher) :
+		Counter(int size, Counter* higher) :
 		  m_size(size), m_higher(higher)
 		{
 			m_pointer = 0;
@@ -38,7 +38,7 @@ namespace GOAP
 	private:
 		int m_size;
 		int m_pointer;
-		Digit* m_higher;
+		Counter* m_higher;
 	};
 }
 
