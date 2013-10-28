@@ -29,7 +29,7 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 	}
 	
 	// this means that the short list is empty
-	// which means either that the planner has failed to find a plan
+	// which means that the planner has failed to find a plan
 	plan = NULL;
 	return PLAN_STAT_FAIL;
 }

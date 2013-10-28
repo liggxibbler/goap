@@ -7,6 +7,7 @@
 #include "Condition.h"
 #include "Goal.h"
 #include <list>
+#include <vector>
 
 namespace GOAP
 {
@@ -27,7 +28,7 @@ namespace GOAP
 		virtual operator ObjectType ();
 		Goal* GetGoal();
 
-		//std::list<Object*>::iterator Unify(ObjectType ot, std::list<Object*>::iterator from);
+		bool Unify(ObjectType ot, std::vector<Object*>& result);
 
 	protected:
 		Goal* m_goal;

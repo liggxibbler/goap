@@ -1,4 +1,5 @@
 #include "Action.h"
+#include "Agent.h"
 
 using namespace GOAP;
 
@@ -88,11 +89,46 @@ std::list<ConditionParameter>::iterator Action::GetLastArg()
 
 bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 {
-	//	for each semantic
-	//		put all mathing objects in a vector
-	//		if vector is empty : not possible -> set fail flag, return false
+	std::list<ConditionParameter>::iterator semanticIter;
+	ConditionParameter cp;
+	std::vector<Object*> unifyList;
+	std::vector<std::vector<Object*> > comboList;
+
+	for(semanticIter = m_args.begin(); semanticIter != m_args.end(); ++semanticIter)
+	{
+		cp = *semanticIter; 
+		if(cp.instance == NULL)
+		//	for each null semantic
+		{
+			//	put all mathing objects in a vector
+			if(!agent->Unify(cp.type, unifyList))
+			{
+				//	if vector is empty : unification not possible
+				return false;
+			}
+			comboList.push_back(unifyList);
+			unifyList.clear();
+		}
+		else
+		{
+			comboList.push_back(std::vector<Object*>(1, cp.instance));
+		}
+	}
+	
+	m_orderedTuples.Clear();
+	m_orderedTuples.Initialize(comboList, comboList.size());
+	std::vector<std::vector<Object*> > tuples;
+
+	for (bool stat = false; stat == false;)
+	{
+		tuples.push_back(m_orderedTuples.GetNextCombination(stat));
+	}
+
+
+
 	//	put all vectors in a vector<vector>
 	//	pass that vector to a combination
 	//	append returned vector from combination to result (search frontier)
+	
 	return true;
 }

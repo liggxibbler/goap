@@ -4,6 +4,7 @@
 #include "Common.h"
 #include "Object.h"
 #include "Condition.h"
+#include "Combination.h"
 #include <map>
 #include <list>
 
@@ -45,9 +46,13 @@ namespace GOAP
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
 
+		Action* GetInstanceFromTuple(std::vector<Object*>);
+
 		std::list<ConditionParameter> m_args;
 		std::list<Condition> m_preconds;
 		std::list<Condition> m_effects;
+
+		Combination<Object*> m_orderedTuples;
 	};
 }
 #endif

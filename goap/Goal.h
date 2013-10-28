@@ -30,6 +30,8 @@ namespace GOAP
 		std::list<Condition>::iterator GetFirstCondition();
 		std::list<Condition>::iterator GetLastCondition();
 
+		//bool operator < (Goal& other);
+
 		int GetDepth();
 
 		Goal* Combine(Goal* other);
