@@ -4,13 +4,20 @@
 #include "Object.h"
 #include "Agent.h"
 #include "OperatorManager.h"
+#include "ActionManager.h"
+#include "TestAction.h"
+#include "Goal.h"
 
 using namespace std;
 using namespace GOAP;
 
+void InitObjs(Object* o1, Agent* o2);
+void InitConds(Condition& cc_eq, Condition& cc_gt);
+
 int main()
 {
-	GOAP::Object* obj = new GOAP::Object;
+	Object* obj = new Object();
+	
 	obj->SetAttrib(ATTRIB_TYPE_POSX, 4);
 	obj->SetAttrib(ATTRIB_TYPE_POSY, 2);
 	/*obj->SetAttrib(ATTRIB_TYPE_HEIGHT, 10);
@@ -37,30 +44,29 @@ int main()
 
 	GOAP::Op::OperatorManager om;
 
-	Condition cc_eq(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	//DUMP( "pre cc_eq >>> " << agent << ", " << ATTRIB_TYPE_HEIGHT << ", " << false << ", " << 9)
-	cc_eq[0].instance = agent;
-	cc_eq[0].attrib = ATTRIB_TYPE_HEIGHT;
-	cc_eq.SetNegate(false);
-	cc_eq[0].value = 30;
-	//DUMP( "post cc_eq >>> " << cc_eq[0].instance << ", " << cc_eq[0].attrib << ", " << cc_eq.GetNegate() << ", " << cc_eq[0].value)
-	bool bResult = cc_eq.Evaluate(&om);
+	OperatorLayoutType a = OP_LAYOUT_TYPE_OAOAB;
+	OperatorType b = OPER_TYPE_EQUAL;
 
-	cout << "Agent.height == 30 is " << bResult << endl;
+	Condition testCond(a, b);
+	
+	testCond[0].instance = agent;
+	testCond[0].attrib = ATTRIB_TYPE_POSX;
+		
+	testCond[1].instance = obj;
+	testCond[1].attrib = ATTRIB_TYPE_POSX;
+	
+	Goal* goal = new Goal();
+	goal->AddCondition(testCond);
+	
+	ActionManager* am = new ActionManager();
 
-	Condition cc_gt(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_GREATER_THAN);
-	cc_gt[0].instance = agent;
-	cc_gt[0].attrib = ATTRIB_TYPE_HEIGHT;
-	cc_gt.SetNegate(true);
-	cc_gt[0].value = 31;
-	bResult = cc_gt.Evaluate(&om);
+	agent->AddAction(ACTION_TEST);
+	agent->SetGoal(goal);
 
-	cout << "Agent.height > 10 is " << bResult << endl;
+	agent->GetPlan(am, &om);
 
 	cin.get();
-	
 	delete agent;
 	delete obj;
-
 	return 0;
 }

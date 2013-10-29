@@ -2,6 +2,11 @@
 
 using namespace GOAP;
 
+Planner::Planner()
+{
+	m_currentGoal = NULL;
+}
+
 PlanStatus Planner::Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)
 {
 	m_frontier.push_back(agent->GetGoal());
@@ -112,5 +117,7 @@ void Planner::ExtendFrontier(Agent* agent)
 
 Goal* Planner::PickNextGoal()
 {
-	return NULL;
+	Goal* next = m_frontier.front();
+	m_frontier.remove(next);
+	return next;
 }

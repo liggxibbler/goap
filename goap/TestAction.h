@@ -1,22 +1,21 @@
-#ifndef _GOAP_STAB_H_
-#define _GOAP_STAB_H_
+#ifndef _GOAP_TESTACTION_H_
+#define _GOAP_TESTACTION_H_
 
 #include "Action.h"
 #include "Agent.h"
 
 namespace GOAP
 {
-	class Stab : public Action
+	class TestAction : public Action
 	{
 	public:
-		Stab();
-		Stab(const Stab& other);
-		~Stab();
+		TestAction();
+		TestAction(const TestAction& other);
+		~TestAction();
 
 		virtual operator ActionType();
 		virtual void Execute();
-		virtual Stab* Clone();		
-
+		virtual TestAction* Clone();
 	private:
 		virtual void InitArgs();
 		virtual void InitPreconditions();

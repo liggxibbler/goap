@@ -5,6 +5,7 @@ using namespace GOAP;
 ActionManager::ActionManager()
 {
 	m_mapAction[ACTION_STAB] = new Stab();
+	m_mapAction[ACTION_TEST] = new TestAction();
 }
 
 ActionManager::ActionManager(const ActionManager& other)

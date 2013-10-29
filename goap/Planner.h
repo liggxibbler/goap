@@ -5,7 +5,7 @@
 #include "Agent.h"
 #include "ActionManager.h"
 #include "OperatorManager.h"
-#include "Combination.h"
+#include "OrderedPair.h"
 #include "Goal.h"
 #include <list>
 

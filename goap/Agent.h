@@ -11,6 +11,13 @@
 
 namespace GOAP
 {
+	class Planner;
+	class ActionManager;
+	namespace Op
+	{
+		class OperatorManager;
+	}
+
 	class Agent : public Object
 	{
 	public:
@@ -27,8 +34,13 @@ namespace GOAP
 
 		virtual operator ObjectType ();
 		Goal* GetGoal();
+		void SetGoal(Goal* goal);
+
+		void AddAction(ActionType at);
 
 		bool Unify(ObjectType ot, std::vector<Object*>& result);
+
+		Goal* GetPlan(ActionManager* am, Op::OperatorManager* om);
 
 	protected:
 		Goal* m_goal;
@@ -37,6 +49,7 @@ namespace GOAP
 		int m_height;
 		int m_weight;
 		int m_isAlive;
+		Planner* m_planner;
 	};
 }
 

@@ -4,5 +4,6 @@
 // Contains all implemented actions
 
 #include "Stab.h"
+#include "TestAction.h"
 
 #endif

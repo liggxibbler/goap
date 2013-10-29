@@ -1,5 +1,5 @@
-#ifndef _GOAP_COMBINATION_H_
-#define _GOAP_COMBINATION_H_
+#ifndef _GOAP_ORDEREDPAIR_H_
+#define _GOAP_ORDEREDPAIR_H_
 
 #include "Counter.h"
 #include <vector>
@@ -7,20 +7,20 @@
 namespace GOAP
 {
 	template <class T>
-	class Combination
+	class OrderedPair
 	{
 	public:
-		Combination()
+		OrderedPair()
 		{
 			m_Counters = NULL;
 		}
 
-		~Combination()
+		~OrderedPair()
 		{
 			delete[] m_Counters;
 		}
 
-		typename std::vector<T> GetNextCombination(bool& status)
+		typename std::vector<T> GetNextOrderedPair(bool& status)
 		{
 			static std::vector<T> result;
 			result.clear();
@@ -31,7 +31,7 @@ namespace GOAP
 			}
 			else
 			{
-				result = GenerateCombination();
+				result = GenerateOrderedPair();
 				m_Counters[numLists - 1]->Increase();
 				status = false;
 			}
@@ -67,7 +67,7 @@ namespace GOAP
 		}
 	
 	private:
-		typename std::vector<T> GenerateCombination()
+		typename std::vector<T> GenerateOrderedPair()
 		{
 			m_result.clear();
 			for(unsigned int i=0; i < m_lists.size(); i++)

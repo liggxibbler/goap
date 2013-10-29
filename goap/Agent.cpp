@@ -1,4 +1,5 @@
 #include "Agent.h"
+#include "Planner.h"
 
 using namespace GOAP;
 
@@ -7,6 +8,7 @@ Agent::Agent()
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
+	m_planner = new Planner();
 }
 
 Agent::Agent(char* name)
@@ -15,6 +17,7 @@ Agent::Agent(char* name)
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
+	m_planner = new Planner();
 }
 
 Agent::Agent(const Agent& other)
@@ -74,4 +77,21 @@ bool Agent::Unify(ObjectType ot, std::vector<Object*>& result)
 	}
 
 	return true;
+}
+
+void Agent::AddAction(ActionType at)
+{
+	m_actions.push_back(at);
+}
+
+void Agent::SetGoal(Goal* goal)
+{
+	m_goal = goal;
+}
+
+Goal* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
+{
+	Goal* plan = NULL;
+	m_planner->Plan(this, am, om, plan);
+	return plan;
 }

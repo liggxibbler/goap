@@ -18,7 +18,7 @@ namespace GOAP
 
 			// might make non-pure virtual, for exception handling...
 
-			bool Evaluate(Condition* cc);
+			bool Evaluate(Condition& cc);
 
 			virtual bool EvaluateOAVB () = 0;
 			virtual bool EvaluateOAOAB () = 0;

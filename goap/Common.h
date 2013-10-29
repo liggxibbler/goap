@@ -94,15 +94,22 @@ namespace GOAP
 		OP_LAYOUT_TYPE_OAVB,	// O has attrib A compared to V e.g. Dysh.height == 160
 		OP_LAYOUT_TYPE_OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
 		OP_LAYOUT_TYPE_OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
+		OP_LAYOUT_TYPE_TRUE,	// for true preconditions
 		OP_LAYOUT_TYPE_UNDEFINED = 0xffff
 	};
 
 	enum OperandSemanticType
 	{
 		OP_SEMANTIC_TYPE_INSTRUMENT = 0x0000,
+		
 		OP_SEMANTIC_TYPE_OBJECT,
+		OP_SEMANTIC_TYPE_OBJECT0,
+		OP_SEMANTIC_TYPE_OBJECT1,
+		
 		OP_SEMANTIC_TYPE_DESTINATION,
+		
 		OP_SEMANTIC_TYPE_SUBJECT,
+		
 		OP_SEMANTIC_TYPE_NONE,
 		OP_SEMANTIC_TYPE_UNDEFINED = 0xffff
 	};
@@ -118,6 +125,8 @@ namespace GOAP
 
 		OPER_TYPE_OWNS,
 
+		OPER_TYPE_TRUE,
+
 		OPER_TYPE_UNDEFINED = 0xffff
 	};
 
@@ -130,6 +139,7 @@ namespace GOAP
 		ACTION_CHOKE,
 		ACTION_STAB,
 
+		ACTION_TEST,
 		ACTION_ACTION
 	};
 

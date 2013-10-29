@@ -21,11 +21,9 @@ Condition::~Condition()
 {
 }
 		
-Condition::Condition(OperatorLayoutType layout, OperatorType oper)
+Condition::Condition(OperatorLayoutType layout, OperatorType oper) :
+m_layout(layout), m_operatorType(oper), m_negate(false)
 {
-	m_layout = layout;
-	m_operatorType = oper;
-	m_negate = false;
 	CreateArrays();
 }
 
@@ -55,6 +53,11 @@ bool Condition::CreateArrays()
 			m_numParams = 0;
 			break;
 			//throw an exception
+		}
+	case OP_LAYOUT_TYPE_TRUE:
+		{
+			m_numParams = 0;
+			break;
 		}
 	default:
 		{
@@ -122,7 +125,7 @@ void Condition::SetNegate(bool value)
 bool Condition::Evaluate(Op::OperatorManager* om)
 {
 	Operator* oper = om->GetOperator(m_operatorType);
-	return oper->Evaluate(this);
+	return oper->Evaluate(*this);
 }
 
 const ConditionParameter* Condition::GetParams()

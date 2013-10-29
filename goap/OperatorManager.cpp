@@ -1,6 +1,5 @@
 #include "OperatorManager.h"
-#include "Equal.h"
-#include "GreaterThan.h"
+#include "OperatorList.h"
 
 using namespace GOAP;
 using namespace GOAP::Op;

@@ -28,7 +28,8 @@ bool Goal::Evaluate(Op::OperatorManager* om)
 
 	for(condIter = m_conditions.begin(); condIter != m_conditions.end(); ++condIter)
 	{
-		if ( (*condIter).Evaluate(om) )
+		Condition cond = *condIter;
+		if ( cond.Evaluate(om) )
 		{
 			result = false;
 			break;

@@ -4,7 +4,8 @@
 #include "Common.h"
 #include "Object.h"
 #include "Condition.h"
-#include "Combination.h"
+#include "Goal.h"
+#include "OrderedPair.h"
 #include <map>
 #include <list>
 #include <vector>
@@ -27,6 +28,8 @@ namespace GOAP
 		std::list<Condition>::iterator GetFirstPrecondition();
 		std::list<Condition>::iterator GetLastPrecondition();
 		
+		Goal* GetGoal();
+
 		std::list<Condition>::iterator GetFirstEffect();
 		std::list<Condition>::iterator GetLastEffect();
 		
@@ -42,7 +45,10 @@ namespace GOAP
 		std::list<ConditionParameter>::iterator GetArgByType(ObjectType ot);
 		std::list<ConditionParameter>::iterator GetArgByInstance(Object* obj);
 
+		void Initialize();
+		
 	protected:
+
 		virtual void InitArgs() = 0;
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
@@ -50,10 +56,13 @@ namespace GOAP
 		Action* GetInstanceFromTuple(std::vector<Object*>);
 
 		std::list<ConditionParameter> m_args;
-		std::list<Condition> m_preconds;
+		//std::list<Condition> m_preconds;
+		
+		Goal* m_preconds;
+
 		std::list<Condition> m_effects;
 
-		Combination<Object*> m_orderedTuples;
+		OrderedPair<Object*> m_orderedTuples;
 	};
 }
 #endif

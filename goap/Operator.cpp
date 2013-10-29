@@ -14,14 +14,14 @@ Operator::~Operator()
 
 // might make non-pure virtual, for exception handling...
 
-bool Operator::Evaluate(Condition* ac)
+bool Operator::Evaluate(Condition& ac)
 {
 	bool result;
 	
-	m_params = (ConditionParameter*) ac->GetParams();
-	m_negate = ac->GetNegate();
+	m_params = (ConditionParameter*) ac.GetParams();
+	m_negate = ac.GetNegate();
 
-	switch(ac->GetOperatorLayoutType())
+	switch(ac.GetOperatorLayoutType())
 	{
 	case OP_LAYOUT_TYPE_OAOAB:
 		{
@@ -36,6 +36,11 @@ bool Operator::Evaluate(Condition* ac)
 	case OP_LAYOUT_TYPE_OOB:
 		{
 			result = EvaluateOOB();
+			break;
+		}
+	case OP_LAYOUT_TYPE_TRUE:
+		{
+			result = true;
 			break;
 		}
 	case OP_LAYOUT_TYPE_UNDEFINED:

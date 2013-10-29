@@ -37,14 +37,14 @@
     <Filter Include="Source Files\Actions">
       <UniqueIdentifier>{30353867-2129-45f6-8008-a22c88f0d73f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Combination">
+    <Filter Include="Header Files\OrderedPairs">
       <UniqueIdentifier>{41a40966-bd87-4eb4-8a51-51a58be42c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application">
+      <UniqueIdentifier>{b82114a2-ff7d-465a-b1df-6969dfd96479}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main_test.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Equal.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
@@ -83,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="Counter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAction.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="True.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="main_test.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,11 +137,20 @@
     <ClInclude Include="Goal.h">
       <Filter>Header Files\Conditions</Filter>
     </ClInclude>
-    <ClInclude Include="Combination.h">
-      <Filter>Header Files\Combination</Filter>
-    </ClInclude>
     <ClInclude Include="Counter.h">
-      <Filter>Header Files\Combination</Filter>
+      <Filter>Header Files\OrderedPairs</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAction.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="OrderedPair.h">
+      <Filter>Header Files\OrderedPairs</Filter>
+    </ClInclude>
+    <ClInclude Include="OperatorList.h">
+      <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="True.h">
+      <Filter>Header Files\Operators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

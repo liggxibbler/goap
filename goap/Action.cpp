@@ -121,7 +121,7 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 
 	for (bool stat = false; stat == false;)
 	{
-		tuples.push_back(m_orderedTuples.GetNextCombination(stat));
+		tuples.push_back(m_orderedTuples.GetNextOrderedPair(stat));
 	}
 
 	std::vector<std::vector<Object*> >::iterator finalObjIter;
@@ -131,8 +131,8 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		result.push_back(GetInstanceFromTuple(*finalObjIter));
 	}
 	//	put all vectors in a vector<vector>
-	//	pass that vector to a combination
-	//	append returned vector from combination to result (search frontier)
+	//	pass that vector to a OrderedPair
+	//	append returned vector from OrderedPair to result (search frontier)
 	
 	return true;
 }
@@ -140,7 +140,8 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 Action* Action::GetInstanceFromTuple(std::vector<Object*> args)
 {
 	Action* act = Clone();
-	
+	act->Initialize(); // make sure arguments are initialized
+
 	std::vector<Object*>::iterator instanceIter;
 	std::list<ConditionParameter>::iterator cpIter;
 
@@ -153,4 +154,16 @@ Action* Action::GetInstanceFromTuple(std::vector<Object*> args)
 	}
 
 	return act;
+}
+
+Goal* Action::GetGoal()
+{
+	return m_preconds;
+}
+
+void Action::Initialize()
+{
+	InitArgs();
+	InitPreconditions();
+	InitEffects();
 }
