@@ -9,6 +9,7 @@ Planner::Planner()
 
 PlanStatus Planner::Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)
 {
+	m_frontier.push_back(NULL);
 	m_frontier.push_back(agent->GetGoal());
 	return PlanWorkHorse(agent, am, om, plan);
 }
@@ -117,7 +118,7 @@ void Planner::ExtendFrontier(Agent* agent)
 
 Goal* Planner::PickNextGoal()
 {
-	Goal* next = m_frontier.front();
+	Goal* next = m_frontier.back();
 	m_frontier.remove(next);
 	return next;
 }

@@ -15,6 +15,22 @@ Condition::Condition()
 
 Condition::Condition(const Condition& other)
 {
+	m_layout = other.m_layout;
+	m_negate = other.m_negate;
+	m_numParams = other.m_numParams;
+	m_operatorType = other.m_operatorType;
+	
+	m_params = NULL;
+	if(m_numParams != 0)
+	{
+		m_params = new ConditionParameter[m_numParams];
+		for(int i = 0; i < m_numParams; i++)
+		{
+			m_params[i] = other.m_params[i];
+		}
+	}
+
+	m_topParam = 0;
 }
 
 Condition::~Condition()
@@ -147,7 +163,7 @@ ConditionParameter* Condition::GetParamBySemantic(OperandSemanticType st)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
-		if(m_params[i].semantic = st)
+		if(m_params[i].semantic == st)
 		{
 			return &m_params[i];
 		}
@@ -158,7 +174,7 @@ ConditionParameter* Condition::GetParamByType(ObjectType ot)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
-		if(m_params[i].type = ot)
+		if(m_params[i].type == ot)
 		{
 			return &m_params[i];
 		}
@@ -169,7 +185,7 @@ ConditionParameter* Condition::GetParamByInstance(Object* obj)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
-		if(m_params[i].instance = obj)
+		if(m_params[i].instance == obj)
 		{
 			return &m_params[i];
 		}

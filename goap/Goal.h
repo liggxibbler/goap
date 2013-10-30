@@ -25,7 +25,7 @@ namespace GOAP
 		Goal* GetParent();
 		std::list<Goal*>::iterator GetFirstChild();
 
-		void AddCondition(Condition& cond);
+		void AddCondition(Condition cond);
 
 		std::list<Condition>::iterator GetFirstCondition();
 		std::list<Condition>::iterator GetLastCondition();

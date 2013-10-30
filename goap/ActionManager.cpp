@@ -6,6 +6,8 @@ ActionManager::ActionManager()
 {
 	m_mapAction[ACTION_STAB] = new Stab();
 	m_mapAction[ACTION_TEST] = new TestAction();
+
+	InitializePrototypes();
 }
 
 ActionManager::ActionManager(const ActionManager& other)
@@ -24,4 +26,15 @@ Action* ActionManager::GetAction(ActionType at)
 Action* ActionManager::GetNewAction(ActionType at)
 {
 	return m_mapAction[at]->Clone();
+}
+
+void ActionManager::InitializePrototypes()
+{
+	std::map<ActionType, Action*>::iterator prototypes;
+	Action* action;
+	for(prototypes = m_mapAction.begin(); prototypes != m_mapAction.end(); ++prototypes)
+	{
+		action = prototypes->second;
+		action->Initialize();
+	}
 }

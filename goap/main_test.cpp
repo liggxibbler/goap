@@ -63,7 +63,9 @@ int main()
 	agent->AddAction(ACTION_TEST);
 	agent->SetGoal(goal);
 
-	agent->GetPlan(am, &om);
+	Goal* plan = NULL;
+
+	plan = agent->GetPlan(am, &om);
 
 	cin.get();
 	delete agent;

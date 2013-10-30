@@ -57,9 +57,12 @@ void TestAction::InitEffects()
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
 	ConditionParameter obj0(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
 	
-	swapSubObj1[0] = obj0;
-	swapSubObj1[1] = sub;
-
+	swapSubObj1[0] = sub;
+	swapSubObj1[0].attrib = ATTRIB_TYPE_POSX;
+	
+	swapSubObj1[1] = obj0;
+	swapSubObj1[1].attrib = ATTRIB_TYPE_POSX;
+	
 	m_effects.push_back(swapSubObj1);	
 }
 

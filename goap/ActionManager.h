@@ -18,6 +18,7 @@ namespace GOAP
 
 		Action* GetAction(ActionType at);
 		Action* GetNewAction(ActionType at);
+		void InitializePrototypes();
 
 	private:
 		std::map<ActionType, Action*> m_mapAction;

@@ -73,8 +73,11 @@ void Stab::InitPreconditions()
 {
 	// subject owns instrument
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT)),
-		inst(*GetArgBySemantic(OP_SEMANTIC_TYPE_INSTRUMENT));
+	std::list<ConditionParameter>::iterator cpIter;
+	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT);
+	ConditionParameter sub(*cpIter);
+	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_INSTRUMENT);
+	ConditionParameter inst(*cpIter);
 	
 	subHasInst[0] = sub;
 	subHasInst[1] = inst;

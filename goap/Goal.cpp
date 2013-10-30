@@ -4,6 +4,10 @@ using namespace GOAP;
 
 Goal::Goal()
 {
+	m_action = NULL;
+	m_parent = NULL;
+	m_depth = 0;
+	m_cost = 0;
 	m_negate = false;
 }
 
@@ -29,7 +33,7 @@ bool Goal::Evaluate(Op::OperatorManager* om)
 	for(condIter = m_conditions.begin(); condIter != m_conditions.end(); ++condIter)
 	{
 		Condition cond = *condIter;
-		if ( cond.Evaluate(om) )
+		if ( !cond.Evaluate(om) )
 		{
 			result = false;
 			break;
@@ -64,7 +68,7 @@ std::list<Goal*>::iterator Goal::GetFirstChild()
 	return m_children.begin();
 }
 
-void Goal::AddCondition(Condition& cond)
+void Goal::AddCondition(Condition cond)
 {
 	m_conditions.push_back(cond);
 }

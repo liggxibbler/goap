@@ -43,7 +43,7 @@ std::list<ConditionParameter>::iterator Action::GetArgBySemantic(OperandSemantic
 	std::list<ConditionParameter>::iterator paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
-		if((*paramIter).semantic = st)
+		if((*paramIter).semantic == st)
 		{
 			return paramIter;
 		}
@@ -56,7 +56,7 @@ std::list<ConditionParameter>::iterator Action::GetArgByType(ObjectType ot)
 	std::list<ConditionParameter>::iterator paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
-		if((*paramIter).type = ot)
+		if((*paramIter).type == ot)
 		{
 			return paramIter;
 		}
@@ -69,7 +69,7 @@ std::list<ConditionParameter>::iterator Action::GetArgByInstance(Object* obj)
 	std::list<ConditionParameter>::iterator paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
-		if((*paramIter).instance = obj)
+		if((*paramIter).instance == obj)
 		{
 			return paramIter;
 		}
@@ -163,6 +163,7 @@ Goal* Action::GetGoal()
 
 void Action::Initialize()
 {
+	m_preconds = new Goal;
 	InitArgs();
 	InitPreconditions();
 	InitEffects();
