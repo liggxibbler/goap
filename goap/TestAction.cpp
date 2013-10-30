@@ -30,6 +30,7 @@ TestAction::operator ActionType()
 TestAction* TestAction::Clone()
 {
 	TestAction* newTestAction = new TestAction();
+	newTestAction->CloneData(this);
 	return newTestAction;
 }
 

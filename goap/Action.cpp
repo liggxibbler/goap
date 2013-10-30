@@ -168,3 +168,55 @@ void Action::Initialize()
 	InitPreconditions();
 	InitEffects();
 }
+
+void Action::CloneArgs(Action* prototype)
+{
+	std::list<ConditionParameter>::iterator argIter;
+	for(argIter = prototype->GetFirstArg(); argIter != prototype->GetLastArg(); ++argIter)
+	{
+		m_args.push_back(*argIter);
+	}
+}
+
+void Action::ClonePreconds(Action* prototype)
+{
+	std::list<Condition>::iterator condIter;
+	for(condIter = prototype->GetPreconds()->GetFirstCondition();
+		condIter != prototype->GetPreconds()->GetLastCondition();
+		++condIter)
+	{
+		m_preconds->AddCondition(*condIter);
+	}
+}
+
+void Action::CloneEffects(Action* prototype)
+{
+	std::list<Condition>::iterator condIter;
+	for(condIter = prototype->GetFirstEffect(); condIter != prototype->GetLastEffect(); ++condIter)
+	{
+		m_effects.push_back(*condIter);
+	}
+}
+
+Goal* Action::GetPreconds()
+{
+	return m_preconds;
+}
+
+void Action::CloneData(Action* prototype)
+{
+	m_preconds = new Goal();
+	CloneArgs(prototype);
+	CloneEffects(prototype);
+	ClonePreconds(prototype);
+}
+
+std::list<Condition>::iterator Action::GetFirstEffect()
+{
+	return m_effects.begin();
+}
+
+std::list<Condition>::iterator Action::GetLastEffect()
+{
+	return m_effects.end();
+}

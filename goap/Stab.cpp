@@ -26,6 +26,7 @@ Stab::operator ActionType()
 Stab* Stab::Clone()
 {
 	Stab* newStab = new Stab();
+	newStab->CloneData(this);
 	return newStab;
 }
 

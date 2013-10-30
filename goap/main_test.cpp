@@ -50,11 +50,12 @@ int main()
 	Condition testCond(a, b);
 	
 	testCond[0].instance = agent;
+	testCond[0].type = OBJ_TYPE_AGENT;
 	testCond[0].attrib = ATTRIB_TYPE_POSX;
-		
+
 	testCond[1].instance = obj;
 	testCond[1].attrib = ATTRIB_TYPE_POSX;
-	
+
 	Goal* goal = new Goal();
 	goal->AddCondition(testCond);
 	

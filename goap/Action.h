@@ -25,9 +25,7 @@ namespace GOAP
 		virtual void Execute() = 0;
 		virtual operator ActionType();
 
-		std::list<Condition>::iterator GetFirstPrecondition();
-		std::list<Condition>::iterator GetLastPrecondition();
-		
+		Goal* GetPreconds();		
 		Goal* GetGoal();
 
 		std::list<Condition>::iterator GetFirstEffect();
@@ -52,6 +50,13 @@ namespace GOAP
 		virtual void InitArgs() = 0;
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
+
+		// XIBB make sure these can't run unless their respective data
+		// has been initialized
+		void CloneData(Action* prototype);
+		void CloneArgs(Action* prototype);
+		void ClonePreconds(Action* prototype);
+		void CloneEffects(Action* prototype);
 
 		Action* GetInstanceFromTuple(std::vector<Object*>);
 
