@@ -28,7 +28,7 @@ bool Goal::Evaluate(Op::OperatorManager* om)
 {
 	bool result = true;
 
-	std::list<Condition>::iterator condIter;
+	CondIter condIter;
 
 	for(condIter = m_conditions.begin(); condIter != m_conditions.end(); ++condIter)
 	{
@@ -73,11 +73,11 @@ void Goal::AddCondition(Condition cond)
 	m_conditions.push_back(cond);
 }
 
-std::list<Condition>::iterator Goal::GetFirstCondition()
+CondIter Goal::GetFirstCondition()
 {
 	return m_conditions.begin();
 }
-std::list<Condition>::iterator Goal::GetLastCondition()
+CondIter Goal::GetLastCondition()
 {
 	return m_conditions.end();
 }

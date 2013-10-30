@@ -50,7 +50,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				add action to long list
 	*/
 
-	std::list<Condition>::iterator condsIter;
+	CondIter condsIter;
 	std::list<ActionType>::iterator actIter;
 
 	Action* action = NULL;

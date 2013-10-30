@@ -18,7 +18,7 @@ Action::operator GOAP::ActionType()
 
 bool Action::MightSatisfy(Condition& cond)
 {
-	std::list<Condition>::iterator effectIter;
+	CondIter effectIter;
 	for(effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
 	{
 		if(*effectIter == cond)
@@ -31,16 +31,16 @@ bool Action::MightSatisfy(Condition& cond)
 
 void Action::CopyArgsFromCondition(Condition& cond)
 {
-	std::list<ConditionParameter>::iterator paramIter;
+	CondParamIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		(*(GetArgByType(cond[i].type))).instance = cond[i].instance;
 	}
 }
 
-std::list<ConditionParameter>::iterator Action::GetArgBySemantic(OperandSemanticType st)
+CondParamIter Action::GetArgBySemantic(OperandSemanticType st)
 {
-	std::list<ConditionParameter>::iterator paramIter;
+	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).semantic == st)
@@ -51,9 +51,9 @@ std::list<ConditionParameter>::iterator Action::GetArgBySemantic(OperandSemantic
 	return paramIter;
 }
 
-std::list<ConditionParameter>::iterator Action::GetArgByType(ObjectType ot)
+CondParamIter Action::GetArgByType(ObjectType ot)
 {
-	std::list<ConditionParameter>::iterator paramIter;
+	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).type == ot)
@@ -64,9 +64,9 @@ std::list<ConditionParameter>::iterator Action::GetArgByType(ObjectType ot)
 	return paramIter;
 }
 
-std::list<ConditionParameter>::iterator Action::GetArgByInstance(Object* obj)
+CondParamIter Action::GetArgByInstance(Object* obj)
 {
-	std::list<ConditionParameter>::iterator paramIter;
+	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).instance == obj)
@@ -77,19 +77,19 @@ std::list<ConditionParameter>::iterator Action::GetArgByInstance(Object* obj)
 	return paramIter;
 }
 
-std::list<ConditionParameter>::iterator Action::GetFirstArg()
+CondParamIter Action::GetFirstArg()
 {
 	return m_args.begin();
 }
 
-std::list<ConditionParameter>::iterator Action::GetLastArg()
+CondParamIter Action::GetLastArg()
 {
 	return m_args.end();
 }
 
 bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 {
-	std::list<ConditionParameter>::iterator semanticIter;
+	CondParamIter semanticIter;
 	ConditionParameter cp;
 	std::vector<Object*> unifyList;
 	std::vector<std::vector<Object*> > comboList;
@@ -143,7 +143,7 @@ Action* Action::GetInstanceFromTuple(std::vector<Object*> args)
 	act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	std::list<ConditionParameter>::iterator cpIter;
+	CondParamIter cpIter;
 
 	cpIter = m_args.begin();
 	instanceIter = args.begin();
@@ -171,7 +171,7 @@ void Action::Initialize()
 
 void Action::CloneArgs(Action* prototype)
 {
-	std::list<ConditionParameter>::iterator argIter;
+	CondParamIter argIter;
 	for(argIter = prototype->GetFirstArg(); argIter != prototype->GetLastArg(); ++argIter)
 	{
 		m_args.push_back(*argIter);
@@ -180,7 +180,7 @@ void Action::CloneArgs(Action* prototype)
 
 void Action::ClonePreconds(Action* prototype)
 {
-	std::list<Condition>::iterator condIter;
+	CondIter condIter;
 	for(condIter = prototype->GetPreconds()->GetFirstCondition();
 		condIter != prototype->GetPreconds()->GetLastCondition();
 		++condIter)
@@ -191,7 +191,7 @@ void Action::ClonePreconds(Action* prototype)
 
 void Action::CloneEffects(Action* prototype)
 {
-	std::list<Condition>::iterator condIter;
+	CondIter condIter;
 	for(condIter = prototype->GetFirstEffect(); condIter != prototype->GetLastEffect(); ++condIter)
 	{
 		m_effects.push_back(*condIter);
@@ -211,12 +211,12 @@ void Action::CloneData(Action* prototype)
 	ClonePreconds(prototype);
 }
 
-std::list<Condition>::iterator Action::GetFirstEffect()
+CondIter Action::GetFirstEffect()
 {
 	return m_effects.begin();
 }
 
-std::list<Condition>::iterator Action::GetLastEffect()
+CondIter Action::GetLastEffect()
 {
 	return m_effects.end();
 }

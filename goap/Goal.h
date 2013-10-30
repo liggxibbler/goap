@@ -7,6 +7,9 @@
 
 namespace GOAP
 {
+	typedef std::list<Condition>::iterator CondIter;
+	typedef std::list<ConditionParameter>::iterator CondParamIter;
+
 	class Action;
 
 	class Goal
@@ -27,8 +30,8 @@ namespace GOAP
 
 		void AddCondition(Condition cond);
 
-		std::list<Condition>::iterator GetFirstCondition();
-		std::list<Condition>::iterator GetLastCondition();
+		CondIter GetFirstCondition();
+		CondIter GetLastCondition();
 
 		//bool operator < (Goal& other);
 
