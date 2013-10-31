@@ -114,7 +114,7 @@ bool Condition::operator == (Condition& other)
 			{
 				return false;
 			}
-		}		
+		}
 	}
 
 	return true;
@@ -194,4 +194,15 @@ ConditionParameter* Condition::GetParamByInstance(Object* obj)
 	}
 
 	return NULL;
+}
+
+void Condition::CopySemantics(Condition& other)
+{
+	// This method is only called by the MightSatisfy method of Action
+	// after it's verified that a Goal Condition and and effect are type
+	// compatible,
+	for(int i=0; i < m_numParams; i++)
+	{
+		other.m_params[i].semantic = m_params[i].semantic;
+	}
 }

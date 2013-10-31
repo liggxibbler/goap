@@ -104,8 +104,8 @@ void Planner::ExtendFrontier(Agent* agent)
 	{
 		act = *iter;
 		if(!act->GetPossibleInstances(agent, instances))
-		{
-			return;
+		{// this action cannot be used in the plan at this point
+			continue;
 		}
 	}
 

@@ -53,3 +53,8 @@ int& Object::operator[] (AttributeType at)
 {
 	return *m_attribs[at];
 }
+
+int Object::GetID()
+{
+	return m_id;
+}

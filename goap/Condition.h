@@ -77,6 +77,8 @@ namespace GOAP
 		ConditionParameter* GetParamByType(ObjectType ot);
 		ConditionParameter* GetParamByInstance(Object* obj);
 
+		void CopySemantics(Condition& other);
+
 	private:
 		bool CreateArrays();
 

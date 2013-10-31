@@ -23,6 +23,8 @@ bool Action::MightSatisfy(Condition& cond)
 	{
 		if(*effectIter == cond)
 		{
+			cond.CopySemantics(*effectIter);	// Tags the semantics of the Condition as the semantics of the Action
+												// This helps later for instantiating the Action clone
 			return true;
 		}
 	}
@@ -34,7 +36,12 @@ void Action::CopyArgsFromCondition(Condition& cond)
 	CondParamIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
-		(*(GetArgByType(cond[i].type))).instance = cond[i].instance;
+		OperandSemanticType st = cond[i].semantic;
+		if(st != OP_SEMANTIC_TYPE_NONE)
+		{
+			(*(	GetArgBySemantic(st))).instance = cond[i].instance;
+			cond[i].semantic = OP_SEMANTIC_TYPE_NONE; // reset for later checks
+		}
 	}
 }
 

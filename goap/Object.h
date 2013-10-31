@@ -18,7 +18,10 @@ namespace GOAP
 		int GetAttrib(AttributeType at);
 		void SetAttrib(AttributeType at, int val);
 		virtual operator ObjectType ();// = 0;
-		/*const*/ int& operator [] (AttributeType at); 
+		/*const*/ int& operator [] (AttributeType at);
+
+		int GetID();
+
 	protected:
 		static int s_numObjects;
 		int m_id;

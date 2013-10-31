@@ -16,6 +16,9 @@ void InitConds(Condition& cc_eq, Condition& cc_gt);
 
 int main()
 {
+	Agent a1, a2, a3;
+	Object o1, o2, o3;
+
 	Object* obj = new Object();
 	
 	obj->SetAttrib(ATTRIB_TYPE_POSX, 4);
@@ -41,6 +44,13 @@ int main()
 	cout << "Height: " << (*agent)[ATTRIB_TYPE_HEIGHT] << endl;
 	cout << "Weight: " << (*agent)[ATTRIB_TYPE_WEIGHT] << endl;
 	cout << "Alive: " << (*agent)[ATTRIB_TYPE_ALIVE] << endl;
+
+	cin.get();
+
+	cout << "Agent has ID " << agent->GetID() << endl;
+	cout << "Object has ID " << obj->GetID() << endl;
+
+	cin.get();
 
 	GOAP::Op::OperatorManager om;
 

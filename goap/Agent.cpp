@@ -48,26 +48,28 @@ std::list<ActionType>::iterator Agent::LastAction()
 	return m_actions.end();
 }
 
-std::list<Object*>::iterator Agent::FirstObject()
+std::map<int, Object*>::iterator Agent::FirstObject()
 {
 	return m_objects.begin();
 }
 
-std::list<Object*>::iterator Agent::LastObject()
+std::map<int, Object*>::iterator Agent::LastObject()
 {
 	return m_objects.end();
 }
 
 bool Agent::Unify(ObjectType ot, std::vector<Object*>& result)
 {
-	std::list<Object*>::iterator objIter;
+	std::map<int, Object*>::iterator objIter;
 	//iterate through list of objects
 	for(objIter = m_objects.begin(); objIter != m_objects.end(); ++objIter)
 	{
 		//return if object.type = ot
-		if(*(*objIter) == ot)
+		static Object* obj;
+		obj = (*objIter).second;
+		if(*obj == ot)
 		{
-			result.push_back(*objIter);
+			result.push_back(obj);
 		}
 	}
 	
@@ -94,4 +96,9 @@ Goal* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 	Goal* plan = NULL;
 	m_planner->Plan(this, am, om, plan);
 	return plan;
+}
+
+void Agent::See(Object* obj)
+{
+	m_objects[obj->GetID()] = obj;
 }

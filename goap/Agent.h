@@ -8,6 +8,7 @@
 #include "Goal.h"
 #include <list>
 #include <vector>
+#include <map>
 
 namespace GOAP
 {
@@ -29,8 +30,8 @@ namespace GOAP
 		std::list<ActionType>::iterator FirstAction();
 		std::list<ActionType>::iterator LastAction();
 
-		std::list<Object*>::iterator FirstObject();
-		std::list<Object*>::iterator LastObject();
+		std::map<int, Object*>::iterator FirstObject();
+		std::map<int, Object*>::iterator LastObject();
 
 		virtual operator ObjectType ();
 		Goal* GetGoal();
@@ -41,11 +42,12 @@ namespace GOAP
 		bool Unify(ObjectType ot, std::vector<Object*>& result);
 
 		Goal* GetPlan(ActionManager* am, Op::OperatorManager* om);
+		void See(Object* obj);
 
 	protected:
 		Goal* m_goal;
 		std::list<ActionType> m_actions;
-		std::list<Object*> m_objects;
+		std::map<int, Object*> m_objects;
 		int m_height;
 		int m_weight;
 		int m_isAlive;
