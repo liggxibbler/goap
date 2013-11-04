@@ -28,8 +28,8 @@ namespace GOAP
 		Goal* GetParent();
 		std::list<Goal*>::iterator GetFirstChild();
 
-		void AddCondition(Condition cond);
-		void RemoveCondition(int index);
+		void AddCondition(Condition& cond);
+		void RemoveCondition(Condition& cond);		
 
 		CondIter GetFirstCondition();
 		CondIter GetLastCondition();
@@ -40,7 +40,10 @@ namespace GOAP
 
 		Goal* Combine(Goal* other);
 
-		Goal* Clone();		
+		Goal* Clone();
+
+		void SetAction(Action* action);
+		void SetParent(Goal* parent);
 
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.

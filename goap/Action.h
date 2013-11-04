@@ -36,7 +36,7 @@ namespace GOAP
 		bool MightSatisfy(Condition& cond);
 		void CopyArgsFromCondition(Condition& cond);
 
-		bool GetPossibleInstances(Agent* agent, std::list<Action*>& result);
+		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
 		CondParamIter GetArgBySemantic(OperandSemanticType st);
 		CondParamIter GetArgByType(ObjectType ot);

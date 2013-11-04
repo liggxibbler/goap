@@ -18,6 +18,7 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 {
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; )
 	{
+		DUMP("Address of current goal is " << m_currentGoal )
 		if(m_currentGoal->Evaluate(om))
 		{
 			/*
@@ -54,35 +55,25 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 	std::list<ActionType>::iterator actIter;
 
 	Action* action = NULL;
-	int condIndex = 0; // index of 
-
+	
 	for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
-	// XIBB this is risky, if duplicates are possible, they will happen
-	// XIBB it would be better if the action long list is a set, and the condition long list is a list of lists
 	{
+		// XIBB this is risky, if duplicates are possible, they will happen
+		// XIBB it would be better if the action long list is a map.first,
+		// XIBB and the condition long list is a map.second list of conditions
+
 		for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
 		{
 			action = am->GetAction(*actIter);
 			if( action->MightSatisfy(*condsIter) )
 			{
+				DUMP("Found action candidate of type " << (ActionType)(*action))
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
 				action->CopyArgsFromCondition(*condsIter);
 				m_actionLongList.push_back(action);
-				m_condLongList.push_back(condIndex++);	// remember which condition the action might satisfy
+				m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
 			}
 		}
-	}
-}
-
-
-void Planner::ClearLongList()
-{
-	std::list<Action*>::iterator iter;
-	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); ++iter)
-	{
-		// Delete every action prototype on the long list
-		delete *iter;
-		m_actionLongList.remove(*iter);
 	}
 }
 
@@ -101,23 +92,61 @@ void Planner::ExtendFrontier(Agent* agent)
 	std::vector<Action*> vecAct;
 	
 	std::list<Action*> instances;
-	
-	std::list<Action*>::iterator instIter = instances.begin();
+	std::list<Condition>::iterator condIter = m_condLongList.begin();
+	Condition cond;
+
+	m_actInstPreconds.clear();	// clear list of goals from last iteration
+	m_condRemoveList.clear();
 
 	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); ++iter)
 	{
 		act = *iter;
-		if(!act->GetPossibleInstances(agent, instances))
-		{// this action cannot be used in the plan at this point
+		cond = *condIter;
+		int numInst = act->GetPossibleInstances(agent, instances); 
+		if(numInst == 0)
+		{
+			// this action cannot be used in the plan at this point
+			// and will not affect the frontier
+			DUMP("Action cannot be instantiated")
 			continue;
 		}
+		else
+		{
+			for(int i=0; i< numInst; i++)
+			{
+				m_condRemoveList.push_back(cond);
+			}
+		}
+		++condIter;
 	}
 
-	//	for each action instance:
-	//		conds = which conditions of the current goal it might satisfy
-	//		nextGoal = goal - conds + action.preconds
-	//		add nextGoal to GoalsMadeFromInstances
-	// m_frontier.splice(m_frontier.end(), GoalsMadeFromPreCondsOfInstances);
+	std::list<Action*>::iterator actInstIter;
+	condIter = m_condRemoveList.begin();
+	Action* action;
+
+	for(actInstIter = instances.begin(); actInstIter != instances.end(); ++actInstIter)
+	{
+		//		conds = which conditions of the current goal it might satisfy
+		action = *actInstIter;
+		cond = *condIter;
+		Goal* nextGoal = m_currentGoal->Clone();
+
+		nextGoal->RemoveCondition(cond);
+		std::list<Condition>::iterator effect;
+		
+		for(effect = action->GetFirstEffect(); effect != action->GetLastEffect(); ++effect)
+		{
+			nextGoal->AddCondition(*effect);
+		}
+		
+		nextGoal->SetAction(action);
+		nextGoal->SetParent(m_currentGoal);
+		m_currentGoal->AddChild(nextGoal);
+
+		m_frontier.push_back(nextGoal);
+		++condIter;
+	}
+	
 }
 
 Goal* Planner::PickNextGoal()
@@ -125,4 +154,18 @@ Goal* Planner::PickNextGoal()
 	Goal* next = m_frontier.back();
 	m_frontier.remove(next);
 	return next;
+}
+
+void Planner::ClearLongList()
+{
+	std::list<Action*>::iterator iter;
+//	Action* act;
+	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); iter = m_actionLongList.begin())
+	{
+		// Delete every action prototype on the long list
+		m_actionLongList.remove(*iter);
+	}
+	m_actionLongList.clear();
+	
+	//DUMP("CLEARING LONG LIST")
 }

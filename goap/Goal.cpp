@@ -77,7 +77,7 @@ std::list<Goal*>::iterator Goal::GetFirstChild()
 	return m_children.begin();
 }
 
-void Goal::AddCondition(Condition cond)
+void Goal::AddCondition(Condition& cond)
 {
 	m_conditions.push_back(cond);
 }
@@ -116,4 +116,30 @@ Goal* Goal::Clone()
 	clone->m_cost = m_cost;
 	
 	return clone;
+}
+
+void Goal::RemoveCondition(Condition& cond)
+{
+	CondIter rem;
+	Condition c;
+	for(rem = m_conditions.begin(); rem != m_conditions.end(); ++rem)
+	{
+		c = *rem;
+		if(c == cond)
+		{
+			CondIter iter2 = ++rem;
+			m_conditions.erase(--rem);
+			rem = --iter2;
+		}
+	}
+}
+
+void Goal::SetAction(Action* action)
+{
+	m_action = action;
+}
+
+void Goal::SetParent(Goal* parent)
+{
+	m_parent = parent;
 }

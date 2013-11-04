@@ -94,7 +94,7 @@ CondParamIter Action::GetLastArg()
 	return m_args.end();
 }
 
-bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
+int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 {
 	CondParamIter semanticIter;
 	ConditionParameter cp;
@@ -107,11 +107,11 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		if(cp.instance == NULL)
 		//	for each null semantic
 		{
-			//	put all mathing objects in a vector
+			//	put all mathcing objects in a vector
 			if(!agent->Unify(cp.type, unifyList))
 			{
 				//	if vector is empty : unification not possible
-				return false;
+				return 0;
 			}
 			comboList.push_back(unifyList);
 			unifyList.clear();
@@ -133,15 +133,17 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 
 	std::vector<std::vector<Object*> >::iterator finalObjIter;
 
+	Action* action = NULL;
 	for(finalObjIter = tuples.begin(); finalObjIter != tuples.end(); ++finalObjIter)
 	{
-		result.push_back(GetInstanceFromTuple(*finalObjIter));
+		action = GetInstanceFromTuple(*finalObjIter);
+		result.push_back(action);
 	}
 	//	put all vectors in a vector<vector>
 	//	pass that vector to an OrderedPair
 	//	append returned vector from OrderedPair to result (search frontier)
 	
-	return true;
+	return tuples.size();
 }
 
 Action* Action::GetInstanceFromTuple(std::vector<Object*> args)

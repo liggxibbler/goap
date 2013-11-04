@@ -73,6 +73,7 @@ int main()
 
 	agent->AddAction(ACTION_TEST);
 	agent->SetGoal(goal);
+	agent->See(obj);
 
 	Goal* plan = NULL;
 

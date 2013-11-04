@@ -58,7 +58,7 @@ namespace GOAP
 
 		// == evaluates operand and attrib type equivalence,
 		// does not take semantics or instances into account
-		virtual bool operator == (Condition& other);
+		bool operator == (Condition& other);
 		
 
 		OperatorLayoutType GetOperatorLayoutType();
