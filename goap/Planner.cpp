@@ -54,8 +54,11 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 	std::list<ActionType>::iterator actIter;
 
 	Action* action = NULL;
+	int condIndex = 0; // index of 
 
 	for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
+	// XIBB this is risky, if duplicates are possible, they will happen
+	// XIBB it would be better if the action long list is a set, and the condition long list is a list of lists
 	{
 		for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
 		{
@@ -65,6 +68,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
 				action->CopyArgsFromCondition(*condsIter);
 				m_actionLongList.push_back(action);
+				m_condLongList.push_back(condIndex++);	// remember which condition the action might satisfy
 			}
 		}
 	}

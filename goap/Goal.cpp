@@ -18,6 +18,15 @@ m_parent(parent), m_action(action), m_negate(negate)
 
 Goal::Goal(const Goal& other)
 {
+	/*std::list<Condition>::iterator condIter;
+	for(condIter = other.m_conditions.begin(); condIter != other.m_conditions.end(); ++condIter)
+	{
+		AddCondition(*condIter);
+	}
+	
+	m_negate = other.m_negate;
+	m_depth = other.m_depth;
+	m_cost = other.m_cost;*/
 }
 
 Goal::~Goal()
@@ -90,4 +99,21 @@ int Goal::GetDepth()
 Goal* Goal::Combine(Goal* other)
 {
 	return NULL;
+}
+
+Goal* Goal::Clone()
+{
+	Goal* clone = new Goal();
+	
+	std::list<Condition>::iterator condIter;
+	for(condIter = m_conditions.begin(); condIter != m_conditions.end(); ++condIter)
+	{
+		clone->AddCondition(*condIter);
+	}
+	
+	clone->m_negate = m_negate;
+	clone->m_depth = m_depth;
+	clone->m_cost = m_cost;
+	
+	return clone;
 }

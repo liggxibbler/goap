@@ -138,7 +138,7 @@ bool Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		result.push_back(GetInstanceFromTuple(*finalObjIter));
 	}
 	//	put all vectors in a vector<vector>
-	//	pass that vector to a OrderedPair
+	//	pass that vector to an OrderedPair
 	//	append returned vector from OrderedPair to result (search frontier)
 	
 	return true;

@@ -8,6 +8,7 @@
 #include "OrderedPair.h"
 #include "Goal.h"
 #include <list>
+#include <map>
 
 namespace GOAP
 {
@@ -33,6 +34,8 @@ namespace GOAP
 		Goal* m_currentGoal;
 		std::list<Goal*> m_frontier;			// The portion of the search space that is currently being analyzed
 		std::list<Action*> m_actionLongList;	// Initial candidates for previous action to have been taken
+		std::list< int > m_condLongList;	// The conditions that the action candidates might satisfy
+		//std::map< Action*, std::list<Condition> > m_longList;
 	};
 }
 

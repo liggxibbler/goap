@@ -29,6 +29,7 @@ namespace GOAP
 		std::list<Goal*>::iterator GetFirstChild();
 
 		void AddCondition(Condition cond);
+		void RemoveCondition(int index);
 
 		CondIter GetFirstCondition();
 		CondIter GetLastCondition();
@@ -38,6 +39,8 @@ namespace GOAP
 		int GetDepth();
 
 		Goal* Combine(Goal* other);
+
+		Goal* Clone();		
 
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.
