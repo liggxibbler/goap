@@ -108,7 +108,12 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
-			if(!agent->Unify(cp.type, unifyList))
+			if(cp.semantic == OP_SEMANTIC_TYPE_SUBJECT)
+			{
+				// The subject is always (for now) the agent itself
+				unifyList.push_back(agent);
+			}
+			else if(!agent->Unify(cp.type, unifyList))
 			{
 				//	if vector is empty : unification not possible
 				return 0;
@@ -128,7 +133,11 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 
 	for (bool stat = false; stat == false;)
 	{
-		tuples.push_back(m_orderedTuples.GetNextOrderedPair(stat));
+		std::vector<Object*> vecObj = m_orderedTuples.GetNextOrderedPair(stat);
+		if(!stat)
+		{
+			tuples.push_back(vecObj);
+		}
 	}
 
 	std::vector<std::vector<Object*> >::iterator finalObjIter;
@@ -146,10 +155,10 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	return tuples.size();
 }
 
-Action* Action::GetInstanceFromTuple(std::vector<Object*> args)
+Action* Action::GetInstanceFromTuple(std::vector<Object*>& args)
 {
 	Action* act = Clone();
-	act->Initialize(); // make sure arguments are initialized
+	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
 	CondParamIter cpIter;

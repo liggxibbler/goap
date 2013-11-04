@@ -120,16 +120,24 @@ Goal* Goal::Clone()
 
 void Goal::RemoveCondition(Condition& cond)
 {
-	CondIter rem;
+	// From stackoverflow.com
+	// http://stackoverflow.com/users/46821/michael-kristofik
+
+	CondIter rem = m_conditions.begin();
 	Condition c;
-	for(rem = m_conditions.begin(); rem != m_conditions.end(); ++rem)
+	
+
+
+	while(rem != m_conditions.end())
 	{
 		c = *rem;
 		if(c == cond)
 		{
-			CondIter iter2 = ++rem;
-			m_conditions.erase(--rem);
-			rem = --iter2;
+			m_conditions.erase(rem++);
+		}
+		else
+		{
+			++rem;
 		}
 	}
 }

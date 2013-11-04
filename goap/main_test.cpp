@@ -19,7 +19,7 @@ int main()
 	Agent a1, a2, a3;
 	Object o1, o2, o3;
 
-	Object* obj = new Object();
+	Object* obj = new Object("Kolang");
 	
 	obj->SetAttrib(ATTRIB_TYPE_POSX, 4);
 	obj->SetAttrib(ATTRIB_TYPE_POSY, 2);
@@ -31,7 +31,7 @@ int main()
 	cout << "X: " << obj->GetAttrib(ATTRIB_TYPE_POSX) << endl;
 	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;
 
-	GOAP::Agent* agent = new GOAP::Agent;
+	GOAP::Agent* agent = new GOAP::Agent("Alborz");
 	(*agent)[ATTRIB_TYPE_POSX] = 3;
 	(*agent)[ATTRIB_TYPE_POSY] = 1;
 	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;

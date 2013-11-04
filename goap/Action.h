@@ -57,7 +57,7 @@ namespace GOAP
 		void ClonePreconds(Action* prototype);
 		void CloneEffects(Action* prototype);
 
-		Action* GetInstanceFromTuple(std::vector<Object*>);
+		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
 		std::list<ConditionParameter> m_args;
 		//std::list<Condition> m_preconds;

@@ -9,6 +9,7 @@ Agent::Agent()
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
+	See(this); // Know thyself
 }
 
 Agent::Agent(char* name)
@@ -18,6 +19,7 @@ Agent::Agent(char* name)
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
+	See(this); // Know thyself
 }
 
 Agent::Agent(const Agent& other)
