@@ -3,6 +3,11 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
+bool True::Evaluate()
+{
+	return true;
+}
+
 bool True::EvaluateOAVB ()
 {
 	return true;

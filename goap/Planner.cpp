@@ -16,8 +16,13 @@ PlanStatus Planner::Plan(Agent* agent, ActionManager* am, Op::OperatorManager* o
 
 PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)
 {
-	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; )
+	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; m_currentGoal = PickNextGoal() )
 	{
+		if(m_currentGoal == NULL)
+		{
+			break;
+		}
+
 		DUMP("Address of current goal is " << m_currentGoal )
 		if(m_currentGoal->Evaluate(om))
 		{
@@ -132,11 +137,12 @@ void Planner::ExtendFrontier(Agent* agent)
 		Goal* nextGoal = m_currentGoal->Clone();
 
 		nextGoal->RemoveCondition(cond);
-		std::list<Condition>::iterator effect;
-		
-		for(effect = action->GetFirstEffect(); effect != action->GetLastEffect(); ++effect)
+		std::list<Condition>::iterator precond;
+		Goal* preconds = action->GetPreconds();
+
+		for(precond = preconds->GetFirstCondition(); precond != preconds->GetLastCondition(); ++precond)
 		{
-			nextGoal->AddCondition(*effect);
+			nextGoal->AddCondition(*precond);
 		}
 		
 		nextGoal->SetAction(action);

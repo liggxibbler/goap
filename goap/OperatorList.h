@@ -3,5 +3,6 @@
 
 #include "Equal.h"
 #include "GreaterThan.h"
+#include "True.h"
 
 #endif

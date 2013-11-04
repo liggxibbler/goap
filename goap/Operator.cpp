@@ -18,7 +18,11 @@ bool Operator::Evaluate(Condition& ac)
 {
 	bool result;
 	
-	m_params = (ConditionParameter*) ac.GetParams();
+	if( ac.GetNumParams() != 0)
+	{
+		m_params = (ConditionParameter*) ac.GetParams();
+	}
+	
 	m_negate = ac.GetNegate();
 
 	switch(ac.GetOperatorLayoutType())

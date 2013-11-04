@@ -9,6 +9,7 @@ namespace GOAP
 	{
 		class True : public Operator
 		{
+			virtual bool Evaluate();
 			virtual bool EvaluateOAVB ();
 			virtual bool EvaluateOAOAB ();
 			virtual bool EvaluateOOB ();

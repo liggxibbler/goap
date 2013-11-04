@@ -203,6 +203,6 @@ void Condition::CopySemantics(Condition& other)
 	// compatible,
 	for(int i=0; i < m_numParams; i++)
 	{
-		other.m_params[i].semantic = m_params[i].semantic;
+		m_params[i].semantic = other.m_params[i].semantic;
 	}
 }
