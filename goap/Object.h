@@ -21,6 +21,7 @@ namespace GOAP
 		/*const*/ int& operator [] (AttributeType at);
 
 		int GetID();
+		Object* GetOwner();
 
 	protected:
 		static int s_numObjects;

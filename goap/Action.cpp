@@ -39,7 +39,7 @@ void Action::CopyArgsFromCondition(Condition& cond)
 		OperandSemanticType st = cond[i].semantic;
 		if(st != OP_SEMANTIC_TYPE_NONE)
 		{
-			(*(	GetArgBySemantic(st))).instance = cond[i].instance;
+			GetArgBySemantic(st)->instance = cond[i].instance;
 			cond[i].semantic = OP_SEMANTIC_TYPE_NONE; // reset for later checks
 		}
 	}
@@ -237,4 +237,36 @@ CondIter Action::GetFirstEffect()
 CondIter Action::GetLastEffect()
 {
 	return m_effects.end();
+}
+
+void Action::UpdateConditionInstances()
+{
+	UpdateEffectInstances();
+	UpdatePrecondInstances();
+}
+
+void Action::UpdateEffectInstances()
+{
+	CondIter effect;
+	for (effect = m_effects.begin(); effect != m_effects.end(); ++effect)
+	{
+		for(int i = 0; i < effect->GetNumParams(); ++i)
+		{
+			OperandSemanticType st = effect->GetParamByIndex(i).semantic;
+			effect->GetParamByIndex(i).instance	= GetArgBySemantic(st)->instance;
+		}
+	}
+}
+
+void Action::UpdatePrecondInstances()
+{
+	CondIter precond;
+	for (precond = m_preconds->GetFirstCondition(); precond != m_preconds->GetLastCondition(); ++precond)
+	{
+		for(int i = 0; i < precond->GetNumParams(); ++i)
+		{
+			OperandSemanticType st = precond->GetParamByIndex(i).semantic;
+			precond->GetParamByIndex(i).instance = GetArgBySemantic(st)->instance;
+		}
+	}
 }

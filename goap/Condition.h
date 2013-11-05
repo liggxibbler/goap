@@ -63,8 +63,10 @@ namespace GOAP
 
 		OperatorLayoutType GetOperatorLayoutType();
 		OperatorType GetOperatorType();
-		ConditionParameter& operator [] (int index);
 		
+		ConditionParameter& operator [] (int index);
+		ConditionParameter& GetParamByIndex(int index);
+
 		const ConditionParameter* GetParams();
 		int GetNumParams();
 

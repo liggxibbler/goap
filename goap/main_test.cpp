@@ -54,17 +54,16 @@ int main()
 
 	GOAP::Op::OperatorManager om;
 
-	OperatorLayoutType a = OP_LAYOUT_TYPE_OAOAB;
-	OperatorType b = OPER_TYPE_EQUAL;
+	OperatorLayoutType a = OP_LAYOUT_TYPE_OOB;
+	OperatorType b = OPER_TYPE_OWNS;
 
 	Condition testCond(a, b);
 	
 	testCond[0].instance = agent;
 	testCond[0].type = OBJ_TYPE_AGENT;
-	testCond[0].attrib = ATTRIB_TYPE_POSX;
-
+	
 	testCond[1].instance = obj;
-	testCond[1].attrib = ATTRIB_TYPE_POSX;
+	testCond[1].type = OBJ_TYPE_OBJECT;
 
 	Goal* goal = new Goal();
 	goal->AddCondition(testCond);
@@ -72,6 +71,8 @@ int main()
 	ActionManager* am = new ActionManager();
 
 	agent->AddAction(ACTION_TEST);
+	agent->AddAction(ACTION_TAKE);
+
 	agent->SetGoal(goal);
 	agent->See(obj);
 

@@ -37,7 +37,7 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
 		ExtendFrontier(agent);					// finalize possible actions
-		ClearLongList();						// clear candidate list
+		ClearLongLists();						// clear candidate list
 	}
 	
 	// this means that the short list is empty
@@ -75,6 +75,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				DUMP("Found action candidate of type " << (ActionType)(*action))
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
 				action->CopyArgsFromCondition(*condsIter);
+				action->UpdateConditionInstances();
 				m_actionLongList.push_back(action);
 				m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
 			}
@@ -162,7 +163,7 @@ Goal* Planner::PickNextGoal()
 	return next;
 }
 
-void Planner::ClearLongList()
+void Planner::ClearLongLists()
 {
 	std::list<Action*>::iterator iter;
 //	Action* act;
@@ -173,5 +174,13 @@ void Planner::ClearLongList()
 	}
 	m_actionLongList.clear();
 	
+	CondIter condIter;
+	condIter = m_condLongList.begin();
+	while(condIter != m_condLongList.end())
+	{
+		// Delete every action prototype on the long list
+		m_condLongList.erase(condIter++);
+	}
+
 	//DUMP("CLEARING LONG LIST")
 }

@@ -4,5 +4,6 @@
 #include "Equal.h"
 #include "GreaterThan.h"
 #include "True.h"
+#include "Owns.h"
 
 #endif

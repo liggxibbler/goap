@@ -156,6 +156,11 @@ ConditionParameter& Condition::operator[](int index)
 	return m_params[index];
 }
 
+ConditionParameter& Condition::GetParamByIndex(int index)
+{
+	return m_params[index];
+}
+
 int Condition::GetNumParams()
 {
 	return m_numParams;

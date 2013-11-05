@@ -93,6 +93,12 @@
     <ClCompile Include="main_test.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="Take.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Owns.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -150,6 +156,12 @@
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
     <ClInclude Include="True.h">
+      <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="Take.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Owns.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
   </ItemGroup>

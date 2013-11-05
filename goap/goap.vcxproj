@@ -86,8 +86,10 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
+    <ClCompile Include="Owns.cpp" />
     <ClCompile Include="Planner.cpp" />
     <ClCompile Include="Stab.cpp" />
+    <ClCompile Include="Take.cpp" />
     <ClCompile Include="TestAction.cpp" />
     <ClCompile Include="True.cpp" />
   </ItemGroup>
@@ -107,8 +109,10 @@
     <ClInclude Include="OperatorList.h" />
     <ClInclude Include="OperatorManager.h" />
     <ClInclude Include="OrderedPair.h" />
+    <ClInclude Include="Owns.h" />
     <ClInclude Include="Planner.h" />
     <ClInclude Include="Stab.h" />
+    <ClInclude Include="Take.h" />
     <ClInclude Include="TestAction.h" />
     <ClInclude Include="True.h" />
   </ItemGroup>

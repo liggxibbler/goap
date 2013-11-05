@@ -24,7 +24,7 @@ namespace GOAP
 	private:
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, ActionManager* am);
-		void ClearLongList();
+		void ClearLongLists();
 		void ExtendFrontier(Agent* agent);
 
 	private:

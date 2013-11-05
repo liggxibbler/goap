@@ -16,6 +16,7 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual void Execute();
 		virtual TestAction* Clone();
+
 	private:
 		virtual void InitArgs();
 		virtual void InitPreconditions();

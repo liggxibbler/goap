@@ -58,3 +58,8 @@ int Object::GetID()
 {
 	return m_id;
 }
+
+Object* Object::GetOwner()
+{
+	return m_owner;
+}

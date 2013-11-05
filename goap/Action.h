@@ -43,7 +43,8 @@ namespace GOAP
 		CondParamIter GetArgByInstance(Object* obj);
 
 		void Initialize();
-		
+		void UpdateConditionInstances();
+
 	protected:
 
 		virtual void InitArgs() = 0;
@@ -57,6 +58,9 @@ namespace GOAP
 		void ClonePreconds(Action* prototype);
 		void CloneEffects(Action* prototype);
 
+		void UpdateEffectInstances();
+		void UpdatePrecondInstances();
+		
 		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
 		std::list<ConditionParameter> m_args;
