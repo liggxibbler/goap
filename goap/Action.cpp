@@ -113,7 +113,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
 			}
-			else if(!agent->Unify(cp.type, unifyList))
+			else if(!agent->Unify(cp.type, unifyList, cp.strict))
 			{
 				//	if vector is empty : unification not possible
 				return 0;

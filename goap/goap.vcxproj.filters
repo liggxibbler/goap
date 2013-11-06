@@ -102,11 +102,14 @@
     <ClCompile Include="GoTo.cpp">
       <Filter>Source Files\Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Plan.cpp">
-      <Filter>Header Files\Planning</Filter>
-    </ClCompile>
     <ClCompile Include="Planner.cpp">
       <Filter>Source Files\Planning</Filter>
+    </ClCompile>
+    <ClCompile Include="Plan.cpp">
+      <Filter>Source Files\Planning</Filter>
+    </ClCompile>
+    <ClCompile Include="ConditionParameter.cpp">
+      <Filter>Source Files\Conditions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +176,14 @@
     <ClInclude Include="Plan.h">
       <Filter>Header Files\Planning</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="Planner.h">
-      <Filter>Source Files\Planning</Filter>
+      <Filter>Header Files\Planning</Filter>
+    </ClInclude>
+    <ClInclude Include="ConditionParameter.h">
+      <Filter>Header Files\Conditions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

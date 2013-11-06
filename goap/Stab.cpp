@@ -55,7 +55,7 @@ void Stab::InitArgs()
 	//INSTRUMENT
 	inst.semantic = OP_SEMANTIC_TYPE_INSTRUMENT;
 	inst.instance = NULL;
-	inst.type = OBJ_TYPE_BLADE;
+	inst.type = OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
 	m_args.push_back(inst);
 }
 

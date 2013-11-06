@@ -1,5 +1,5 @@
-#ifndef _GOAP_OBJECT_H_
-#define _GOAP_OBJECT_H_
+#ifndef _GOAP_ENTITY_H_
+#define _GOAP_ENTITY_H_
 
 #include "Common.h"
 #include <map>
@@ -7,35 +7,33 @@
 
 namespace GOAP
 {
-	class Object
+	class Entity
 	{
 	public:
-		Object();
-		Object(std::string name, Object* owner = NULL);
-		Object(const Object& other);
-		~Object();
+		Entity();
+		Entity(std::string name, Entity* owner = NULL);
+		Entity(const Entity& other);
+		~Entity();
 		
 		int GetAttrib(AttributeType at);
 		void SetAttrib(AttributeType at, int val);
-		virtual operator ObjectType ();// = 0;
+		virtual operator EntityType ();// = 0;
 		/*const*/ int& operator [] (AttributeType at);
 
 		int GetID();
-		Object* GetOwner();
-
-		virtual int GetCompoundType();
+		Entity* GetOwner();
 
 		std::string GetName();
 
 	protected:
-		static int s_numObjects;
+		static int s_numEntities;
 		int m_id;
 		std::string m_name;
 		std::map<AttributeType, int*> m_attribs;
 		//Position m_position;
 		int m_posx;
 		int m_posy;
-		Object* m_owner;
+		Entity* m_owner;
 	};
 }
 

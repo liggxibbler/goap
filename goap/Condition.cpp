@@ -109,8 +109,17 @@ bool Condition::operator == (Condition& other)
 	{
 		for(int i=0; i < m_numParams; i++)
 		{
-			if(m_params[i].type != other.m_params[i].type ||
-			m_params[i].attrib != other.m_params[i].attrib)
+			static bool differentTypes;
+			if(m_params[i].strict || other.m_params[i].strict)
+			{
+				differentTypes = m_params[i].type =! other.m_params[i].type;
+			}
+			else
+			{
+				differentTypes = m_params[i].type & other.m_params[i].type == 0;
+			}
+
+			if(differentTypes || (m_params[i].attrib != other.m_params[i].attrib))
 			{
 				return false;
 			}

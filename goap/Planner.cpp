@@ -32,6 +32,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
 			plan->SetPlan(m_currentGoal);
+			plan->SetStatus(PLAN_STAT_SUCCESS);
 			return PLAN_STAT_SUCCESS;
 		}
 
@@ -42,7 +43,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 	
 	// this means that the short list is empty
 	// which means that the planner has failed to find a plan
-	plan = NULL;
+	plan->SetStatus(PLAN_STAT_FAIL);
 	return PLAN_STAT_FAIL;
 }
 

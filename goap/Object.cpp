@@ -68,3 +68,8 @@ std::string Object::GetName()
 {
 	return m_name;
 }
+
+int Object::GetCompoundType()
+{
+	return OBJ_TYPE_OBJECT;
+}

@@ -60,7 +60,7 @@ std::map<int, Object*>::iterator Agent::LastObject()
 	return m_objects.end();
 }
 
-bool Agent::Unify(ObjectType ot, std::vector<Object*>& result)
+bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
 {
 	std::map<int, Object*>::iterator objIter;
 	//iterate through list of objects
@@ -69,9 +69,19 @@ bool Agent::Unify(ObjectType ot, std::vector<Object*>& result)
 		//return if object.type = ot
 		static Object* obj;
 		obj = (*objIter).second;
-		if(*obj == ot)
+		if(strict)
 		{
-			result.push_back(obj);
+			if(*obj == ot)
+			{
+				result.push_back(obj);
+			}
+		}
+		else
+		{
+			if(obj->GetCompoundType() & ot != 0)
+			{
+				result.push_back(obj);
+			}
 		}
 	}
 	
@@ -106,4 +116,9 @@ Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 void Agent::See(Object* obj)
 {
 	m_objects[obj->GetID()] = obj;
+}
+
+int Agent::GetCompoundType()
+{
+	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
 }

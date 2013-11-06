@@ -16,9 +16,14 @@ namespace GOAP
 		ActionStatus Execute();
 		void SetPlan(Goal* goal);
 
+		Goal* GetPlan();
+		PlanStatus GetStatus();
+		void SetStatus(PlanStatus status);
+
 	private:
 		Goal* m_plan;
+		PlanStatus m_status;
 	};
-};
+}
 
 #endif

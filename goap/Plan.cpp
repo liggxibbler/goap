@@ -62,3 +62,18 @@ void Plan::SetPlan(Goal* goal)
 {
 	m_plan = goal;
 }
+
+Goal* Plan::GetPlan()
+{
+	return m_plan;
+}
+
+PlanStatus Plan::GetStatus()
+{
+	return m_status;
+}
+
+void Plan::SetStatus(PlanStatus status)
+{
+	m_status = status;
+}

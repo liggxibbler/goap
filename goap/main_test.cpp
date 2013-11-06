@@ -28,9 +28,9 @@ int main()
 	obj->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
 	obj->SetAttrib(ATTRIB_TYPE_ALIVE, true);*/
 
-	cout << "obj has:" << endl;
+	/*cout << "obj has:" << endl;
 	cout << "X: " << obj->GetAttrib(ATTRIB_TYPE_POSX) << endl;
-	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;
+	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;*/
 
 	GOAP::Agent* agent = new GOAP::Agent("Alborz");
 	(*agent)[ATTRIB_TYPE_POSX] = 3;
@@ -39,7 +39,14 @@ int main()
 	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*agent)[ATTRIB_TYPE_ALIVE] = true;
 
-	cout << "agent has:" << endl;
+	GOAP::Agent* dysh = new GOAP::Agent("Dysh");
+	(*agent)[ATTRIB_TYPE_POSX] = 5;
+	(*agent)[ATTRIB_TYPE_POSY] = 1;
+	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;
+	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
+	(*agent)[ATTRIB_TYPE_ALIVE] = true;
+
+	/*cout << "agent has:" << endl;
 	cout << "X: " << (*agent)[ATTRIB_TYPE_POSX] << endl;
 	cout << "Y: " << (*agent)[ATTRIB_TYPE_POSY] << endl;
 	cout << "Height: " << (*agent)[ATTRIB_TYPE_HEIGHT] << endl;
@@ -51,20 +58,25 @@ int main()
 	cout << "Agent has ID " << agent->GetID() << endl;
 	cout << "Object has ID " << obj->GetID() << endl;
 
-	cin.get();
+	cin.get();*/
 
 	GOAP::Op::OperatorManager om;
 
-	OperatorLayoutType a = OP_LAYOUT_TYPE_OOB;
-	OperatorType b = OPER_TYPE_OWNS;
-
-	Condition testCond(a, b);
+	Condition testCond(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	
+	/*testCond[0].instance = agent;
+	testCond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	testCond[0].attrib = ATTRIB_TYPE_ALIVE;
+	testCond[0].value = false;*/
+
 	testCond[0].instance = agent;
 	testCond[0].type = OBJ_TYPE_AGENT;
-	
+	testCond[0].value = false;
+	testCond[0].strict = true;
+
 	testCond[1].instance = obj;
 	testCond[1].type = OBJ_TYPE_OBJECT;
+	testCond[1].value = false;
 
 	Goal* goal = new Goal();
 	goal->AddCondition(testCond);
@@ -73,19 +85,29 @@ int main()
 
 	agent->AddAction(ACTION_GOTO);
 	agent->AddAction(ACTION_TAKE);
+	agent->AddAction(ACTION_STAB);
 
 	agent->SetGoal(goal);
+	
 	agent->See(obj);
+	agent->See(dysh);
+	agent->See(agent);
+
 
 	Plan* plan = NULL;
 	plan = agent->GetPlan(am, &om);
 
-	ActionStatus stat = ACT_STAT_UNKNOWN;
-
-	while(plan->Execute() != ACT_STAT_DONE)
+	if(plan->GetStatus() == PLAN_STAT_SUCCESS)
 	{
+		ActionStatus stat = ACT_STAT_UNKNOWN;
+		while(plan->Execute() != ACT_STAT_DONE)
+		{
+		}
 	}
-
+	else
+	{
+		DUMP("Planning failed")
+	}
 	cin.get();
 	delete agent;
 	delete obj;

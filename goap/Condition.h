@@ -2,6 +2,7 @@
 #define _GOAP_CONDITION_H_
 
 #include "Common.h"
+#include "ConditionParameter.h"
 #include "Object.h"
 
 namespace GOAP
@@ -10,43 +11,7 @@ namespace GOAP
 	{
 		class OperatorManager;
 	}
-	struct ConditionParameter
-	{
-		ConditionParameter() :
-		type(OBJ_TYPE_OBJECT),
-		semantic(OP_SEMANTIC_TYPE_NONE),
-		instance(NULL),
-		attrib(ATTRIB_TYPE_NONE),
-		value(0)
-		{}
-		
-		ConditionParameter(const ConditionParameter& other)
-		{
-			attrib = other.attrib;
-			instance = other.instance;
-			semantic = other.semantic;
-			type = other.type;
-			value = other.value;
-		}
-
-		ConditionParameter& operator = (ConditionParameter& other)
-		{
-			attrib = other.attrib;
-			instance = other.instance;
-			semantic = other.semantic;
-			type = other.type;
-			value = other.value;
-			return *this;
-		}
-		
-		ObjectType			type;	// XIBB this should be an int, in order to allow multiple type flags
-									// e.g. an object can be a blade >>> type = OBJECT | BLADE i.e. both
-		OperandSemanticType	semantic;
-		Object*				instance;
-		AttributeType		attrib;
-		int					value;
-	};
-
+	
 	class Condition
 	{
 	public:

@@ -40,10 +40,12 @@ namespace GOAP
 
 		void AddAction(ActionType at);
 
-		bool Unify(ObjectType ot, std::vector<Object*>& result);
+		bool Unify(int ot, std::vector<Object*>& result, bool strict);
 
 		Plan* GetPlan(ActionManager* am, Op::OperatorManager* om);
 		void See(Object* obj);
+
+		virtual int GetCompoundType();
 
 	protected:
 		Goal* m_goal;

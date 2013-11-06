@@ -27,6 +27,17 @@ namespace GOAP
 		OBJ_TYPE_LAST		= 0xf000
 	};
 
+	enum EntityType
+	{
+		ENT_TYPE_OBJECT		= 0x0001, // either inanimate objects
+		ENT_TYPE_BLADE		= 0x0002,
+		ENT_TYPE_CONTAINER	= 0x0004,
+		
+		ENT_TYPE_AGENT		= 0x0100, // or living things
+		ENT_TYPE_PERSON		= 0x0200,
+		ENT_TYPE_LAST		= 0xf000
+	};
+
 	enum AttributeType
 	{
 		ATTRIB_TYPE_HEIGHT = 0x0000,
