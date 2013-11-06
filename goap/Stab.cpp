@@ -89,4 +89,18 @@ void Stab::InitPreconditions()
 	subHasInst[1] = inst;
 	
 	m_preconds->AddCondition(subHasInst);
+
+	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	
+	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0);
+	ConditionParameter obj(*cpIter);
+	
+	subNearObj[0] = sub;
+	subNearObj[0].attrib = ATTRIB_TYPE_POSX;
+	
+	subNearObj[1] = obj;
+	subNearObj[1].attrib = ATTRIB_TYPE_POSX;
+	
+	m_preconds->AddCondition(subNearObj);
+
 }
