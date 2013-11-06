@@ -6,6 +6,7 @@
 #include "Object.h"
 #include "Condition.h"
 #include "Goal.h"
+#include "Plan.h"
 #include <list>
 #include <vector>
 #include <map>
@@ -41,7 +42,7 @@ namespace GOAP
 
 		bool Unify(ObjectType ot, std::vector<Object*>& result);
 
-		Goal* GetPlan(ActionManager* am, Op::OperatorManager* om);
+		Plan* GetPlan(ActionManager* am, Op::OperatorManager* om);
 		void See(Object* obj);
 
 	protected:

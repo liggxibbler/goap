@@ -7,6 +7,8 @@
 #include "OperatorManager.h"
 #include "OrderedPair.h"
 #include "Goal.h"
+#include "Plan.h"
+
 #include <list>
 #include <map>
 
@@ -19,7 +21,7 @@ namespace GOAP
 		Planner(const Planner& other);
 		~Planner();
 
-		PlanStatus Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan);
+		PlanStatus Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan);
 
 	private:
 		Goal* PickNextGoal();
@@ -29,7 +31,7 @@ namespace GOAP
 
 	private:
 
-		PlanStatus PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* goal); // planner workhorse
+		PlanStatus DeviseWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* goal); // planner workhorse
 
 		Goal* m_currentGoal;
 		std::list<Goal*> m_frontier;				// The portion of the search space that is currently being analyzed
@@ -38,8 +40,6 @@ namespace GOAP
 		std::list< Condition > m_condRemoveList;	// The conditions that the action candidates might satisfy
 		//std::map< Action*, std::list<Condition> > m_longList;
 		std::list<Goal*> m_actInstPreconds;
-
-		Goal* m_plan;
 	};
 }
 

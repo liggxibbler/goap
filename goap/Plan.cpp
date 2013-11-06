@@ -24,6 +24,7 @@ Plan::~Plan()
 ActionStatus Plan::Execute()
 {
 	Action* action = m_plan->GetAction();
+	
 	if(action != NULL)
 	{
 		switch(action->Execute())
@@ -35,7 +36,7 @@ ActionStatus Plan::Execute()
 			return ACT_STAT_SUCCESS;
 		case ACT_STAT_RUNNING:
 			//
-			m_plan = m_plan;
+			//m_plan = m_plan;
 			// and no replanning is needed
 			return ACT_STAT_RUNNING;
 		case ACT_STAT_FAIL:
@@ -55,4 +56,9 @@ ActionStatus Plan::Execute()
 		// 
 		return ACT_STAT_DONE;
 	}
+}
+
+void Plan::SetPlan(Goal* goal)
+{
+	m_plan = goal;
 }

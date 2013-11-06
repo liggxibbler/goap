@@ -7,6 +7,7 @@
 #include "ActionManager.h"
 #include "GoTo.h"
 #include "Goal.h"
+#include "Plan.h"
 
 using namespace std;
 using namespace GOAP;
@@ -76,9 +77,14 @@ int main()
 	agent->SetGoal(goal);
 	agent->See(obj);
 
-	Goal* plan = NULL;
-
+	Plan* plan = NULL;
 	plan = agent->GetPlan(am, &om);
+
+	ActionStatus stat = ACT_STAT_UNKNOWN;
+
+	while(plan->Execute() != ACT_STAT_DONE)
+	{
+	}
 
 	cin.get();
 	delete agent;

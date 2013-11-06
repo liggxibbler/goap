@@ -110,7 +110,8 @@ namespace GOAP
 	enum PlanStatus
 	{
 		PLAN_STAT_FAIL,
-		PLAN_STAT_SUCCESS
+		PLAN_STAT_SUCCESS,
+		PLAN_STAT_UNKNOWN
 	};
 }
 

@@ -93,10 +93,10 @@ void Agent::SetGoal(Goal* goal)
 	m_goal = goal;
 }
 
-Goal* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
+Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
-	Goal* plan = NULL;
-	if( m_planner->Plan(this, am, om, plan) == PLAN_STAT_SUCCESS)
+	Plan* plan = new Plan();
+	if( m_planner->Devise(this, am, om, plan) == PLAN_STAT_SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}

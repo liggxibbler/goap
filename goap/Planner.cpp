@@ -5,17 +5,16 @@ using namespace GOAP;
 Planner::Planner()
 {
 	m_currentGoal = NULL;
-	m_plan = NULL;
 }
 
-PlanStatus Planner::Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)
+PlanStatus Planner::Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
 {
 	m_frontier.push_back(NULL);
 	m_frontier.push_back(agent->GetGoal());
-	return PlanWorkHorse(agent, am, om, plan);
+	return DeviseWorkHorse(agent, am, om, plan);
 }
 
-PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)
+PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
 {
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; m_currentGoal = PickNextGoal() )
 	{
@@ -32,7 +31,7 @@ PlanStatus Planner::PlanWorkHorse(Agent* agent, ActionManager* am, Op::OperatorM
 			return just the goal node, it will contain a pointer to its parent node.
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
-			plan = m_currentGoal;
+			plan->SetPlan(m_currentGoal);
 			return PLAN_STAT_SUCCESS;
 		}
 

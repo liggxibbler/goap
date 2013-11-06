@@ -14,6 +14,7 @@ namespace GOAP
 		~Plan();
 
 		ActionStatus Execute();
+		void SetPlan(Goal* goal);
 
 	private:
 		Goal* m_plan;
