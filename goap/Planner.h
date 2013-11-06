@@ -20,7 +20,7 @@ namespace GOAP
 		~Planner();
 
 		PlanStatus Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan);
-	
+
 	private:
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, ActionManager* am);
@@ -38,6 +38,8 @@ namespace GOAP
 		std::list< Condition > m_condRemoveList;	// The conditions that the action candidates might satisfy
 		//std::map< Action*, std::list<Condition> > m_longList;
 		std::list<Goal*> m_actInstPreconds;
+
+		Goal* m_plan;
 	};
 }
 

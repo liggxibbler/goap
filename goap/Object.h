@@ -23,6 +23,8 @@ namespace GOAP
 		int GetID();
 		Object* GetOwner();
 
+		std::string GetName();
+
 	protected:
 		static int s_numObjects;
 		int m_id;

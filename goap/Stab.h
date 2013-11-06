@@ -14,7 +14,7 @@ namespace GOAP
 		~Stab();
 
 		virtual operator ActionType();
-		virtual void Execute();
+		virtual ActionStatus Execute();
 		virtual Stab* Clone();		
 
 	private:

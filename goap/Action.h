@@ -21,7 +21,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual void Execute() = 0;
+		virtual ActionStatus Execute() = 0;
 		virtual operator ActionType();
 
 		Goal* GetPreconds();		

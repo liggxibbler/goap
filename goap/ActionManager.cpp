@@ -5,7 +5,7 @@ using namespace GOAP;
 ActionManager::ActionManager()
 {
 	m_mapAction[ACTION_STAB] = new Stab();
-	m_mapAction[ACTION_TEST] = new TestAction();
+	m_mapAction[ACTION_GOTO] = new GoTo();
 	m_mapAction[ACTION_TAKE] = new Take();
 
 	InitializePrototypes();

@@ -45,6 +45,8 @@ namespace GOAP
 		void SetAction(Action* action);
 		void SetParent(Goal* parent);
 
+		Action* GetAction();
+
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.
 											// i.e. individual goal nodes can be reached from more than on higher goal

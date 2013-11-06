@@ -96,7 +96,10 @@ void Agent::SetGoal(Goal* goal)
 Goal* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
 	Goal* plan = NULL;
-	m_planner->Plan(this, am, om, plan);
+	if( m_planner->Plan(this, am, om, plan) == PLAN_STAT_SUCCESS)
+	{
+		DUMP("FOUND PLAN")
+	}
 	return plan;
 }
 

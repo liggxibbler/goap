@@ -14,8 +14,14 @@ Stab::~Stab()
 {
 }
 
-void Stab::Execute()
+ActionStatus Stab::Execute()
 {
+	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
+	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
+	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_TYPE_INSTRUMENT));
+
+	DUMP(sub.instance->GetName() << " Stab " << obj.instance->GetName() << " with " << ins.instance->GetName())
+	return ACT_STAT_SUCCESS;
 }
 
 Stab::operator ActionType()
@@ -41,7 +47,7 @@ void Stab::InitArgs()
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj.semantic = OP_SEMANTIC_TYPE_OBJECT;
+	obj.semantic = OP_SEMANTIC_TYPE_OBJECT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_AGENT;
 	m_args.push_back(obj);
@@ -58,7 +64,7 @@ void Stab::InitEffects()
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_HAS_ATTIRB);
 	ConditionParameter obj;
 	// OBJECT
-	obj.semantic	= OP_SEMANTIC_TYPE_OBJECT;
+	obj.semantic	= OP_SEMANTIC_TYPE_OBJECT0;
 	obj.instance	= NULL;
 	obj.type		= OBJ_TYPE_AGENT;
 	obj.attrib		= ATTRIB_TYPE_ALIVE;

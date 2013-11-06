@@ -19,8 +19,13 @@ Take::operator ActionType()
 	return ACTION_TAKE;
 }
 
-void Take::Execute()
+ActionStatus Take::Execute()
 {
+	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
+	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
+	
+	DUMP(sub.instance->GetName() << " Take " << obj.instance->GetName() )
+	return ACT_STAT_SUCCESS;
 }
 
 Take* Take::Clone()

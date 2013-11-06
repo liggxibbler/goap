@@ -1,20 +1,21 @@
-#ifndef _GOAP_OP_TAKE_
-#define _GOAP_OP_TAKE_
+#ifndef _GOAP_GOTO_H_
+#define _GOAP_GOTO_H_
 
 #include "Action.h"
+#include "Agent.h"
 
 namespace GOAP
 {
-	class Take : public Action
+	class GoTo : public Action
 	{
 	public:
-		Take();
-		Take(const Take& other);
-		~Take();
+		GoTo();
+		GoTo(const GoTo& other);
+		~GoTo();
 
 		virtual operator ActionType();
 		virtual ActionStatus Execute();
-		virtual Take* Clone();		
+		virtual GoTo* Clone();
 
 	private:
 		virtual void InitArgs();
@@ -22,5 +23,4 @@ namespace GOAP
 		virtual void InitEffects();
 	};
 }
-
 #endif

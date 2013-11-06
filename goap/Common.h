@@ -57,7 +57,6 @@ namespace GOAP
 	{
 		OP_SEMANTIC_TYPE_INSTRUMENT = 0x0000,
 		
-		OP_SEMANTIC_TYPE_OBJECT,
 		OP_SEMANTIC_TYPE_OBJECT0,
 		OP_SEMANTIC_TYPE_OBJECT1,
 		
@@ -96,6 +95,16 @@ namespace GOAP
 
 		ACTION_TEST,
 		ACTION_ACTION
+	};
+
+	enum ActionStatus
+	{
+		ACT_STAT_RUNNING,
+		ACT_STAT_FAIL,
+		ACT_STAT_SUCCESS,
+		ACT_STAT_UNKNOWN,
+
+		ACT_STAT_DONE		// mark the successful execution of a plan?
 	};
 
 	enum PlanStatus

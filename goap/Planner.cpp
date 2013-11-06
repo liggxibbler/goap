@@ -5,6 +5,7 @@ using namespace GOAP;
 Planner::Planner()
 {
 	m_currentGoal = NULL;
+	m_plan = NULL;
 }
 
 PlanStatus Planner::Plan(Agent* agent, ActionManager* am, Op::OperatorManager* om, Goal* plan)

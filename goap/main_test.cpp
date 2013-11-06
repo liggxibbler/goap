@@ -5,7 +5,7 @@
 #include "Agent.h"
 #include "OperatorManager.h"
 #include "ActionManager.h"
-#include "TestAction.h"
+#include "GoTo.h"
 #include "Goal.h"
 
 using namespace std;
@@ -70,7 +70,7 @@ int main()
 	
 	ActionManager* am = new ActionManager();
 
-	agent->AddAction(ACTION_TEST);
+	agent->AddAction(ACTION_GOTO);
 	agent->AddAction(ACTION_TAKE);
 
 	agent->SetGoal(goal);

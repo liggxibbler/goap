@@ -63,3 +63,8 @@ Object* Object::GetOwner()
 {
 	return m_owner;
 }
+
+std::string Object::GetName()
+{
+	return m_name;
+}

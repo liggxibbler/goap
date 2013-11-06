@@ -1,4 +1,5 @@
 #include "Goal.h"
+#include "Action.h"
 
 using namespace GOAP;
 
@@ -150,4 +151,9 @@ void Goal::SetAction(Action* action)
 void Goal::SetParent(Goal* parent)
 {
 	m_parent = parent;
+}
+
+Action* Goal::GetAction()
+{
+	return m_action;
 }
