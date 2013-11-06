@@ -71,7 +71,7 @@ bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
 		obj = (*objIter).second;
 		if(strict)
 		{
-			if(*obj == ot)
+			if(obj->GetCompoundType() == ot)
 			{
 				result.push_back(obj);
 			}

@@ -23,7 +23,7 @@ Blade::operator GOAP::ObjectType()
 	return OBJ_TYPE_BLADE;
 }
 
-//Blade::operator CompoundType ()
-//{
-//	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
-//}
+int Blade::GetCompoundType()
+{
+	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
+}

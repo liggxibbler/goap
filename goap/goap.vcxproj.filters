@@ -111,6 +111,9 @@
     <ClCompile Include="ConditionParameter.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
+    <ClCompile Include="Blade.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="ConditionParameter.h">
       <Filter>Header Files\Conditions</Filter>
+    </ClInclude>
+    <ClInclude Include="Blade.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

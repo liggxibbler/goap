@@ -14,7 +14,7 @@ namespace GOAP
 		~Blade();
 
 		virtual operator ObjectType();
-		//virtual operator CompoundType ();
+		virtual int GetCompoundType ();
 	};
 }
 

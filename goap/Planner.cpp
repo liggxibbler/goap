@@ -37,7 +37,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 		}
 
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
-		ExtendFrontier(agent);					// finalize possible actions
+		ExpandFrontier(agent);					// finalize possible actions
 		ClearLongLists();						// clear candidate list
 	}
 	
@@ -84,9 +84,9 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 	}
 }
 
-void Planner::ExtendFrontier(Agent* agent)
+void Planner::ExpandFrontier(Agent* agent)
 {
-	/* METHOD : ExtendFrontier(Agent)
+	/* METHOD : ExpandFrontier(Agent)
 	for all actions in long list:
 		if all null semantics can be instantiated using Agent's list:
 			in such a way that the list remains sorted by cost + heuristic:

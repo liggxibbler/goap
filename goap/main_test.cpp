@@ -8,6 +8,7 @@
 #include "GoTo.h"
 #include "Goal.h"
 #include "Plan.h"
+#include "Blade.h"
 
 using namespace std;
 using namespace GOAP;
@@ -20,8 +21,9 @@ int main()
 	Agent a1, a2, a3;
 	Object o1, o2, o3;
 
-	Object* obj = new Object("Kolang");
-	
+	//Object* obj = new Object("Kolang");
+	Blade* obj = new Blade("Knife");
+
 	obj->SetAttrib(ATTRIB_TYPE_POSX, 4);
 	obj->SetAttrib(ATTRIB_TYPE_POSY, 2);
 	/*obj->SetAttrib(ATTRIB_TYPE_HEIGHT, 10);
@@ -62,21 +64,21 @@ int main()
 
 	GOAP::Op::OperatorManager om;
 
-	Condition testCond(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
+	Condition testCond(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	
-	/*testCond[0].instance = agent;
+	testCond[0].instance = dysh;
 	testCond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	testCond[0].attrib = ATTRIB_TYPE_ALIVE;
-	testCond[0].value = false;*/
+	testCond[0].value = false;
 
-	testCond[0].instance = agent;
+	/*testCond[0].instance = agent;
 	testCond[0].type = OBJ_TYPE_AGENT;
 	testCond[0].value = false;
 	testCond[0].strict = true;
 
 	testCond[1].instance = obj;
 	testCond[1].type = OBJ_TYPE_OBJECT;
-	testCond[1].value = false;
+	testCond[1].value = false;*/
 
 	Goal* goal = new Goal();
 	goal->AddCondition(testCond);

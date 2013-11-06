@@ -163,12 +163,13 @@ Action* Action::GetInstanceFromTuple(std::vector<Object*>& args)
 	std::vector<Object*>::iterator instanceIter;
 	CondParamIter cpIter;
 
-	cpIter = m_args.begin();
+	cpIter = act->m_args.begin();
 	instanceIter = args.begin();
 
 	for(unsigned int i=0; i<m_args.size(); ++i)
 	{
-		(*cpIter++).instance = (*instanceIter++);
+		cpIter->instance = *(instanceIter++);
+		++cpIter;
 	}
 
 	return act;

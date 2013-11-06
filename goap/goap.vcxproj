@@ -74,6 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Blade.cpp" />
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionManager.cpp" />
@@ -97,6 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionList.h" />
+    <ClInclude Include="Blade.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionManager.h" />

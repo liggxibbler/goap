@@ -56,21 +56,19 @@ void Stab::InitArgs()
 	inst.semantic = OP_SEMANTIC_TYPE_INSTRUMENT;
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
+	inst.strict = true;
+
 	m_args.push_back(inst);
 }
 
 void Stab::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	ConditionParameter obj;
-	// OBJECT
-	obj.semantic	= OP_SEMANTIC_TYPE_OBJECT0;
-	obj.instance	= NULL;
-	obj.type		= OBJ_TYPE_AGENT;
-	obj.attrib		= ATTRIB_TYPE_ALIVE;
-	obj.value		= false;
+	ConditionParameter obj = *GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0);
 	
 	objIsDead[0] = obj;
+	objIsDead[0].attrib	= ATTRIB_TYPE_ALIVE;
+	objIsDead[0].value	= false;
 	objIsDead.SetNegate(false);
 
 	m_effects.push_back(objIsDead);
@@ -80,6 +78,7 @@ void Stab::InitPreconditions()
 {
 	// subject owns instrument
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
+	
 	CondParamIter cpIter;
 	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT);
 	ConditionParameter sub(*cpIter);
