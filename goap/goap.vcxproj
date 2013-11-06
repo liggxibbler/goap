@@ -81,16 +81,17 @@
     <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Equal.cpp" />
     <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="GoTo.cpp" />
     <ClCompile Include="GreaterThan.cpp" />
     <ClCompile Include="main_test.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
     <ClCompile Include="Owns.cpp" />
+    <ClCompile Include="Plan.cpp" />
     <ClCompile Include="Planner.cpp" />
     <ClCompile Include="Stab.cpp" />
     <ClCompile Include="Take.cpp" />
-    <ClCompile Include="TestAction.cpp" />
     <ClCompile Include="True.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +104,7 @@
     <ClInclude Include="Counter.h" />
     <ClInclude Include="Equal.h" />
     <ClInclude Include="Goal.h" />
+    <ClInclude Include="GoTo.h" />
     <ClInclude Include="GreaterThan.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Operator.h" />
@@ -110,10 +112,10 @@
     <ClInclude Include="OperatorManager.h" />
     <ClInclude Include="OrderedPair.h" />
     <ClInclude Include="Owns.h" />
+    <ClInclude Include="Plan.h" />
     <ClInclude Include="Planner.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="Take.h" />
-    <ClInclude Include="TestAction.h" />
     <ClInclude Include="True.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -43,6 +43,12 @@
     <Filter Include="Application">
       <UniqueIdentifier>{b82114a2-ff7d-465a-b1df-6969dfd96479}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Planning">
+      <UniqueIdentifier>{bfbb9710-e812-449e-9199-c63450018b66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Planning">
+      <UniqueIdentifier>{78fe973f-bc78-432d-ba32-f9b26d3ab1cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -75,17 +81,11 @@
     <ClCompile Include="Stab.cpp">
       <Filter>Source Files\Actions</Filter>
     </ClCompile>
-    <ClCompile Include="Planner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Goal.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
     <ClCompile Include="Counter.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestAction.cpp">
-      <Filter>Source Files\Actions</Filter>
     </ClCompile>
     <ClCompile Include="True.cpp">
       <Filter>Source Files\Operators</Filter>
@@ -98,6 +98,15 @@
     </ClCompile>
     <ClCompile Include="Owns.cpp">
       <Filter>Source Files\Operators</Filter>
+    </ClCompile>
+    <ClCompile Include="GoTo.cpp">
+      <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Plan.cpp">
+      <Filter>Header Files\Planning</Filter>
+    </ClCompile>
+    <ClCompile Include="Planner.cpp">
+      <Filter>Source Files\Planning</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -128,9 +137,6 @@
     <ClInclude Include="ActionManager.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Planner.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Stab.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
@@ -146,9 +152,6 @@
     <ClInclude Include="Counter.h">
       <Filter>Header Files\OrderedPairs</Filter>
     </ClInclude>
-    <ClInclude Include="TestAction.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="OrderedPair.h">
       <Filter>Header Files\OrderedPairs</Filter>
     </ClInclude>
@@ -163,6 +166,15 @@
     </ClInclude>
     <ClInclude Include="Owns.h">
       <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="GoTo.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Plan.h">
+      <Filter>Header Files\Planning</Filter>
+    </ClInclude>
+    <ClInclude Include="Planner.h">
+      <Filter>Source Files\Planning</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
