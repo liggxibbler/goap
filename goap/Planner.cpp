@@ -134,6 +134,7 @@ void Planner::ExtendFrontier(Agent* agent)
 	{
 		//		conds = which conditions of the current goal it might satisfy
 		action = *actInstIter;
+		action->UpdateConditionInstances();		
 		cond = *condIter;
 		Goal* nextGoal = m_currentGoal->Clone();
 

@@ -61,7 +61,7 @@ void Stab::InitArgs()
 
 void Stab::InitEffects()
 {
-	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_HAS_ATTIRB);
+	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	ConditionParameter obj;
 	// OBJECT
 	obj.semantic	= OP_SEMANTIC_TYPE_OBJECT0;
