@@ -119,9 +119,11 @@
     <ClInclude Include="Owns.h" />
     <ClInclude Include="Plan.h" />
     <ClInclude Include="Planner.h" />
+    <ClInclude Include="Room.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="Take.h" />
     <ClInclude Include="True.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

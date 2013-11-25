@@ -27,11 +27,13 @@ BEGIN_EVENT_TABLE(testDlg,wxDialog)
 	
 	EVT_CLOSE(testDlg::OnClose)
 	EVT_ACTIVATE(testDlg::testDlgActivate)
+	EVT_BUTTON(ID_WXBUTTONRIGHT,testDlg::WxButtonRightClick)
+	EVT_BUTTON(ID_WXBUTTONLEFT,testDlg::WxButtonLeftClick)
 END_EVENT_TABLE()
 ////Event Table End
 
-testDlg::testDlg(wxWindow *parent, wxWindowID id, const wxString &title, const wxPoint &position, const wxSize& size, long style)
-: wxDialog(parent, id, title, position, size, style)
+testDlg::testDlg(wxWindow *parent, testDlgApp* app, wxWindowID id, const wxString &title, const wxPoint &position, const wxSize& size, long style)
+: wxDialog(parent, id, title, position, size, style), myApp(app)
 {
 	CreateGUIControls();
 }
@@ -60,9 +62,35 @@ void testDlg::CreateGUIControls()
 	WxStaticText2 = new wxStaticText(this, ID_WXSTATICTEXT2, _("Agents"), wxPoint(16, 152), wxDefaultSize, 0, _("WxStaticText2"));
 
 	WxStaticText1 = new wxStaticText(this, ID_WXSTATICTEXT1, _("Objects"), wxPoint(16, 120), wxDefaultSize, 0, _("WxStaticText1"));
-
-	wxArrayString arrayStringFor_WxComboBox2;
-	WxComboBox2 = new wxComboBox(this, ID_WXCOMBOBOX2, _("WxComboBox1"), wxPoint(152, 152), wxSize(137, 23), arrayStringFor_WxComboBox2, 0, wxDefaultValidator, _("WxComboBox2"));
+    
+    
+    wxString* stuff;
+    int size;
+    if(myApp != 0)
+    {
+        if(myApp->m_room != 0)
+        {
+            size = myApp->m_room->m_objects.size();
+        }
+        else
+        {
+            MessageBox(NULL, L"room", L" ", MB_OK);
+        }
+    }
+    else
+    {
+        MessageBox(NULL, L"myApp", L" ", MB_OK);
+    }
+    stuff = new wxString[size];
+    std::list<Object*>::iterator iter = myApp->m_room->m_objects.begin();
+    for(int i=0; i<size; ++i)
+    {
+        stuff[i] = (*iter)->m_name;
+        ++iter;
+    }
+    
+	wxArrayString arrayStringFor_ComboAgents(size, stuff);
+	ComboAgents = new wxComboBox(this, ID_COMBOAGENTS, _("WxComboBox1"), wxPoint(152, 152), wxSize(137, 23), arrayStringFor_ComboAgents, 0, wxDefaultValidator, _("ComboAgents"));
 
 	wxArrayString arrayStringFor_WxComboBox1;
 	WxComboBox1 = new wxComboBox(this, ID_WXCOMBOBOX1, _("WxComboBox1"), wxPoint(152, 120), wxSize(137, 23), arrayStringFor_WxComboBox1, 0, wxDefaultValidator, _("WxComboBox1"));
@@ -79,7 +107,7 @@ void testDlg::CreateGUIControls()
 	////GUI Items Creation End
 }
 
-void testDlg::OnClose(wxCloseEvent& /*event*/)
+void testDlg::OnClose(wxCloseEvent& e)
 {
 	Destroy();
 }
@@ -90,4 +118,44 @@ void testDlg::OnClose(wxCloseEvent& /*event*/)
 void testDlg::testDlgActivate(wxActivateEvent& event)
 {
 	// insert your code here
+}
+
+/*
+ * WxButtonLeftClick
+ */
+void testDlg::WxButtonLeftClick(wxCommandEvent& event)
+{
+	// insert your code here
+	myApp->m_room = myApp->m_room->m_left;
+	UpdateCombos();
+}
+
+/*
+ * WxButtonRightClick
+ */
+void testDlg::WxButtonRightClick(wxCommandEvent& event)
+{
+	// insert your code here
+	myApp->m_room = myApp->m_room->m_right;
+	UpdateCombos();
+}
+
+void testDlg::UpdateCombos()
+{
+    wxString* stuff;
+    int size = myApp->m_room->m_objects.size();
+    stuff = new wxString[size];
+    std::list<Object*>::iterator iter = myApp->m_room->m_objects.begin();
+    for(int i=0; i<size; ++i)
+    {
+        stuff[i] = (*iter)->m_name;
+        ++iter;
+    }
+    
+	delete ComboAgents;
+    wxArrayString arrayStringFor_ComboAgents(size, stuff);
+	ComboAgents = new wxComboBox(this, ID_COMBOAGENTS, _("WxComboBox1"), wxPoint(152, 152), wxSize(137, 23), arrayStringFor_ComboAgents, 0, wxDefaultValidator, _("ComboAgents"));
+
+//	wxArrayString arrayStringFor_WxComboBox1;
+//	WxComboBox1 = new wxComboBox(this, ID_WXCOMBOBOX1, _("WxComboBox1"), wxPoint(152, 120), wxSize(137, 23), arrayStringFor_WxComboBox1, 0, wxDefaultValidator, _("WxComboBox1"));
 }

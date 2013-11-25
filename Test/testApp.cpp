@@ -15,14 +15,6 @@ IMPLEMENT_APP(testDlgApp)
 
 bool testDlgApp::OnInit()
 {
-	testDlg* dialog = new testDlg(NULL);
-	SetTopWindow(dialog);
-	dialog->Show(true);	
-    
-   	InterviewDlg* iDialog = new InterviewDlg(NULL);
-//	SetTopWindow(dialog);
-	iDialog->Show(false);	
-    
     Object *knife, *rope, *table, *statue, *lamp;
     Room *kitchen, *living, *dining;
     
@@ -31,6 +23,15 @@ bool testDlgApp::OnInit()
     living = m_world->AddRoom("Living Room");
     dining = m_world->AddRoom("Dining Room");
     
+    kitchen->m_left = living;
+    living->m_right = kitchen;
+    
+    living->m_left = dining;
+    dining->m_right = living;
+    
+    dining->m_left = kitchen;
+    kitchen->m_right = dining;
+    
     knife = kitchen->AddObject("Knife");
     rope = kitchen->AddObject("Rope");
     table = dining->AddObject("Table");
@@ -38,6 +39,15 @@ bool testDlgApp::OnInit()
     lamp = living->AddObject("Lamp");
     
     m_room = living;
+
+	testDlg* dialog = new testDlg(NULL, this);
+	SetTopWindow(dialog);
+    //dialog->SetApp(this);
+    dialog->Show(true);
+    
+   	InterviewDlg* iDialog = new InterviewDlg(NULL);
+//	SetTopWindow(dialog);
+	iDialog->Show(false);	
     
 	return true;
 }

@@ -1,7 +1,7 @@
 # Project: Project1
 # Compiler: Default GCC compiler
 # Compiler Type: MingW 3
-# Makefile created by wxDev-C++ IDE 7.4.2.569 on 25/11/13 15:23
+# Makefile created by wxDev-C++ IDE 7.4.2.569 on 25/11/13 19:31
 
 WXLIBNAME = wxmsw29u
 CPP       = g++.exe
@@ -36,10 +36,10 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(LINK) $(LINKOBJ) -o "$(BIN)" $(LIBS) 
 
-Objects/MingW/testApp.o: $(GLOBALDEPS) testApp.cpp testApp.h testDlg.h InterviewDlg.h
+Objects/MingW/testApp.o: $(GLOBALDEPS) testApp.cpp testApp.h testDlg.h testApp.h InterviewDlg.h
 	$(CPP) -c testApp.cpp -o Objects/MingW/testApp.o $(CXXFLAGS)
 
-Objects/MingW/testDlg.o: $(GLOBALDEPS) testDlg.cpp testDlg.h
+Objects/MingW/testDlg.o: $(GLOBALDEPS) testDlg.cpp testDlg.h testApp.h
 	$(CPP) -c testDlg.cpp -o Objects/MingW/testDlg.o $(CXXFLAGS)
 
 Objects/MingW/InterviewDlg.o: $(GLOBALDEPS) InterviewDlg.cpp InterviewDlg.h

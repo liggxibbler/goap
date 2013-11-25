@@ -49,6 +49,9 @@
     <Filter Include="Source Files\Planning">
       <UniqueIdentifier>{78fe973f-bc78-432d-ba32-f9b26d3ab1cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\World">
+      <UniqueIdentifier>{1a4feec5-9f55-4bc1-8100-e17b8e8fc33b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -190,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="Blade.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files\World</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

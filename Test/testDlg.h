@@ -37,16 +37,20 @@
 #define testDlg_STYLE wxCAPTION | wxDIALOG_NO_PARENT | wxCLOSE_BOX
 ////Dialog Style End
 
+#include "testApp.h"
+
 class testDlg : public wxDialog
 {
 	private:
 		DECLARE_EVENT_TABLE();
 		
 	public:
-		testDlg(wxWindow *parent, wxWindowID id = 1, const wxString &title = wxT("test"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = testDlg_STYLE);
+		testDlg(wxWindow *parent, testDlgApp* app, wxWindowID id = 1, const wxString &title = wxT("test"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = testDlg_STYLE);
 		virtual ~testDlg();
 		void testDlgActivate(wxActivateEvent& event);
-	
+		void WxButtonLeftClick(wxCommandEvent& event);
+		void SetApp(testDlgApp* app) {myApp = app;}
+		void WxButtonRightClick(wxCommandEvent& event);
 	private:
 		//Do not add custom control declarations between 
 		//GUI Control Declaration Start and GUI Control Declaration End.
@@ -56,11 +60,15 @@ class testDlg : public wxDialog
 		wxTextCtrl *WxMemo1;
 		wxStaticText *WxStaticText2;
 		wxStaticText *WxStaticText1;
-		wxComboBox *WxComboBox2;
+		wxComboBox *ComboAgents;
 		wxComboBox *WxComboBox1;
 		wxButton *WxButtonRight;
 		wxButton *WxButtonLeft;
 		////GUI Control Declaration End
+		
+		testDlgApp *myApp;
+		
+		void UpdateCombos();
 		
 	private:
 		//Note: if you receive any error with these enum IDs, then you need to
@@ -74,7 +82,7 @@ class testDlg : public wxDialog
 			ID_WXMEMO1 = 1007,
 			ID_WXSTATICTEXT2 = 1006,
 			ID_WXSTATICTEXT1 = 1005,
-			ID_WXCOMBOBOX2 = 1004,
+			ID_COMBOAGENTS = 1004,
 			ID_WXCOMBOBOX1 = 1003,
 			ID_WXBUTTONRIGHT = 1002,
 			ID_WXBUTTONLEFT = 1001,

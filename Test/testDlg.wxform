@@ -38,6 +38,7 @@ object frmNewForm: TfrmNewForm
     Height = 62
     Caption = '&Left'
     TabOrder = 0
+    EVT_BUTTON = 'WxButtonLeftClick'
     Wx_BKColor = clBlack
     Wx_ButtonStyle = []
     Wx_Class = 'wxButton'
@@ -75,6 +76,7 @@ object frmNewForm: TfrmNewForm
     Height = 62
     Caption = '&Right'
     TabOrder = 1
+    EVT_BUTTON = 'WxButtonRightClick'
     Wx_BKColor = clBlack
     Wx_ButtonStyle = []
     Wx_Class = 'wxButton'
@@ -140,7 +142,7 @@ object frmNewForm: TfrmNewForm
     Wx_Floating_X_Pos = 0
     Wx_Floating_Y_Pos = 0
   end
-  object WxComboBox2: TWxComboBox
+  object ComboAgents: TWxComboBox
     Left = 152
     Top = 152
     Width = 137
@@ -156,7 +158,7 @@ object frmNewForm: TfrmNewForm
     Wx_FGColor = clBlack
     Wx_GeneralStyle = []
     Wx_Hidden = False
-    Wx_IDName = 'ID_WXCOMBOBOX2'
+    Wx_IDName = 'ID_COMBOAGENTS'
     Wx_IDValue = 1004
     Wx_PaneCaption = 'WxComboBox1'
     Wx_PaneName = 'WxComboBox1_Pane'
@@ -281,8 +283,8 @@ object frmNewForm: TfrmNewForm
   object WxStaticText3: TWxStaticText
     Left = 8
     Top = 8
-    Width = 292
-    Height = 27
+    Width = 44
+    Height = 19
     Caption = 'Objects'
     TabOrder = 7
     Wx_BGColor = clBlack

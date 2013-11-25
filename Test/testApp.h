@@ -45,6 +45,10 @@ public:
         m_objects.push_back(obj);
         return obj;
     }
+    
+    Room* m_left;
+    Room* m_right;
+    
 };
 
 class World
