@@ -12,7 +12,7 @@ Agent::Agent()
 	See(this); // Know thyself
 }
 
-Agent::Agent(char* name)
+Agent::Agent(std::string name)
 {
 	m_name = name;
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;

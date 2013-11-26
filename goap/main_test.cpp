@@ -46,11 +46,11 @@ int main()
 	(*agent)[ATTRIB_TYPE_ALIVE] = true;
 
 	GOAP::Agent* dysh = new GOAP::Agent("Dysh");
-	(*agent)[ATTRIB_TYPE_POSX] = 5;
-	(*agent)[ATTRIB_TYPE_POSY] = 1;
-	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;
-	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
-	(*agent)[ATTRIB_TYPE_ALIVE] = true;
+	(*dysh)[ATTRIB_TYPE_POSX] = 5;
+	(*dysh)[ATTRIB_TYPE_POSY] = 1;
+	(*dysh)[ATTRIB_TYPE_HEIGHT] = 30;
+	(*dysh)[ATTRIB_TYPE_WEIGHT] = 20;
+	(*dysh)[ATTRIB_TYPE_ALIVE] = true;
 
 	/*cout << "agent has:" << endl;
 	cout << "X: " << (*agent)[ATTRIB_TYPE_POSX] << endl;
@@ -118,7 +118,6 @@ int main()
 	delete obj;
 	
 	Game* game = new Game();
-
 	game->Initialize();
 	game->Run();
 	

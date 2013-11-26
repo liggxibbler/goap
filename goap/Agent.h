@@ -24,7 +24,7 @@ namespace GOAP
 	{
 	public:
 		Agent();
-		Agent(char* name);
+		Agent(std::string name);
 		Agent(const Agent& other);
 		~Agent();
 

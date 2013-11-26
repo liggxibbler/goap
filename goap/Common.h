@@ -123,6 +123,13 @@ namespace GOAP
 		PLAN_STAT_SUCCESS,
 		PLAN_STAT_UNKNOWN
 	};
+
+	enum QuestionType
+	{
+		Q_POSITION,
+		Q_POSSESSION,
+		Q_ACTION
+	};
 }
 
 #endif

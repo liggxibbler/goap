@@ -25,6 +25,10 @@ namespace GOAP
 		Object* AddObject(std::string name);
 		void AddObject(Object* obj);
 
+		Agent* AddAgent(std::string name);
+		void AddAgent(Agent* agent);
+
+
 		std::string GetName();
 
 		Room* Clone();

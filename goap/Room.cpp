@@ -87,3 +87,15 @@ std::list<Agent*>::iterator Room::GetLastAgent()
 {
 	return m_agents.end();
 }
+
+Agent* Room::AddAgent(std::string name)
+{
+	Agent* agent = new Agent(name);
+	m_agents.push_back(agent);
+	return agent;
+}
+
+void Room::AddAgent(Agent* agent)
+{
+	m_agents.push_back(agent);
+}

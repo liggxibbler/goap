@@ -1,7 +1,7 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
-#include <map>
+#include <vector>
 
 namespace GOAP
 {
@@ -27,9 +27,9 @@ public:
 	bool Run(/*database class thing*/);
 
 private:
-	std::map<char, GOAP::Object*> m_objectMap;
-	std::map<char, GOAP::Agent*> m_agentMap;
-	std::map<char, GOAP::Room*> m_roomMap;
+	std::vector<GOAP::Object*> m_vecObject;
+	std::vector<GOAP::Agent*> m_vecAgent;
+	std::vector<GOAP::Room*> m_vecRoom;
 
 	/*databaseClassThing* m_database;*/
 
