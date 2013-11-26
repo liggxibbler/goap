@@ -22,6 +22,7 @@ public:
 
 	void Roam();
 	void Interview();
+	void Accuse();
 
 	bool Run(/*database class thing*/);
 

@@ -34,7 +34,7 @@ void Game::Initialize()
 
 	kitchen = m_world->AddRoom("Kitchen");
 	living = m_world->AddRoom("Living Room");
-	dining = m_world->AddRoom("Dining");
+	dining = m_world->AddRoom("Dining Room");
 
 	knife = new Blade("Knife");
 	kitchen->AddObject(knife);
@@ -58,11 +58,15 @@ void Game::Roam()
 	{
 		cout << item++ << ") " << (*iter)->GetName() << endl;
 	}
+	
+	int interview = item;
 	cout << "\nYou can interview:\n";
 	for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
 	{
 		cout << item++ << ") " << (*iter)->GetName() << endl;
 	}
+
+	int room = item;
 	cout << "\nYou can go to:\n";
 	for(auto iter(m_world->GetFirstRoom()); iter != m_world->GetLastRoom(); ++iter)
 	{
@@ -88,6 +92,23 @@ void Game::Roam()
 
 void Game::Interview()
 {
+	cout << "You are interviewing " << m_currentAgent->GetName() << ":\n";
+	cout << "Would you like to ask about :\n";
+	/*list of objects*/
+	/*list of agents*/
+	/*go back (m_currentAgent = 0)*/
+	/*accuse*/
+
+	/*if choice is agent:
+		position
+		action
+		
+	  if choice is object:
+		position
+		possession
+	*/
+
+	/*what time (military)?*/
 }
 
 bool Game::Run(/*database class thing*/)

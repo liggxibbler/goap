@@ -89,16 +89,15 @@ int main()
 	
 	ActionManager* am = new ActionManager();
 
-	agent->AddAction(ACTION_GOTO);
-	agent->AddAction(ACTION_TAKE);
 	agent->AddAction(ACTION_STAB);
+	agent->AddAction(ACTION_TAKE);
+	agent->AddAction(ACTION_GOTO);	
 
 	agent->SetGoal(goal);
 	
-	agent->See(obj);
 	agent->See(dysh);
 	agent->See(agent);
-
+	agent->See(obj);
 
 	Plan* plan = NULL;
 	plan = agent->GetPlan(am, &om);
