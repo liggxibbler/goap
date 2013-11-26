@@ -1,7 +1,7 @@
 #ifndef _GOAP_WORLD_H_
 #define _GOAP_WORLD_H_
 
-#include <map>
+#include <list>
 #include <string>
 
 namespace GOAP
@@ -24,9 +24,12 @@ namespace GOAP
 
 		std::string GetName();
 		
+		std::list<Room*>::iterator GetFirstRoom();
+		std::list<Room*>::iterator GetLastRoom();
+
 	private:
-		std::map<std::string, Room*> m_rooms;
-		std::string name;
+		std::list<Room*> m_rooms;
+		std::string m_name;
 	};
 }
 

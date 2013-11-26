@@ -52,6 +52,9 @@
     <Filter Include="Header Files\World">
       <UniqueIdentifier>{1a4feec5-9f55-4bc1-8100-e17b8e8fc33b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\World">
+      <UniqueIdentifier>{ba2856fa-81bd-4630-818e-8ee0eee0d564}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -116,6 +119,15 @@
     </ClCompile>
     <ClCompile Include="Blade.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>Header Files\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

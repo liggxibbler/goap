@@ -10,6 +10,10 @@
 #include "Plan.h"
 #include "Blade.h"
 
+#include "World.h"
+#include "Room.h"
+#include "Game.h"
+
 using namespace std;
 using namespace GOAP;
 
@@ -113,5 +117,11 @@ int main()
 	cin.get();
 	delete agent;
 	delete obj;
+	
+	Game* game = new Game();
+
+	game->Initialize();
+	game->Run();
+	
 	return 0;
 }
