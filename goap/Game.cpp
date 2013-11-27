@@ -85,7 +85,7 @@ void Game::Roam()
 	m_vecRoom.clear();
 
 	cout << "========================\n\n";
-	cout << "You are in the " << m_currentRoom->GetName() << "!\n";
+	cout << "You are in the " << m_currentRoom->GetName() << "\n\n";
 	cout << "You can see(examine):\n";
 	int item = 1;
 	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
@@ -112,7 +112,7 @@ void Game::Roam()
 	
 	cout << "\n Or enter 0 to quit.\n";
 
-	cout << "\nWhat would you like to do? ";
+	cout << "\nWhat would you like to do?\n>>>";
 	int answer;
 	cin >> answer;
 
@@ -123,7 +123,7 @@ void Game::Roam()
 
 	if(answer < witness)// examine
 	{
-		//examine(answer);
+		//examine(answer-1);
 	}
 	else if(answer>=witness && answer <iRoom)//agent
 	{
@@ -143,9 +143,13 @@ void Game::Roam()
 
 void Game::Interview()
 {
+	m_vecObject.clear();
+	m_vecAgent.clear();
+
 	cout << "========================\n\n";
 	cout << "You are interviewing " << m_currentAgent->GetName() << ":\n";
 	cout << "What/who would you like to ask about :\n";
+	
 	int item = 1;
 	for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
 	{
@@ -153,6 +157,7 @@ void Game::Interview()
 		for(auto object((*room)->GetFirstObject());object != (*room)->GetLastObject(); ++object)
 		{
 			cout << item++ << ") " << (*object)->GetName() << endl;
+			m_vecObject.push_back(*object);
 		}
 	}
 
@@ -163,13 +168,15 @@ void Game::Interview()
 		for(auto agent((*room)->GetFirstAgent());agent != (*room)->GetLastAgent(); ++agent)
 		{
 			cout << item++ << ") " << (*agent)->GetName() << endl;
+			m_vecAgent.push_back(*agent);
 		}
 	}
 
+	int accuse = item;
 	/*accuse if available*/
 
 	/*go back (m_currentAgent = 0)*/
-	cout << "\nEnter 0 to go back to roam" << endl;
+	cout << "\nEnter 0 to go back to roam\n>>>";;
 	
 	int answer;
 	cin >> answer;
@@ -181,20 +188,50 @@ void Game::Interview()
 		return;
 	}	
 
-	cout << "You can ask about\n";
-	cout << "1) Position\n";
-	cout << "2) \n";
+	std::string wasChar, choiceTwo;
+	QuestionType qt2;
+	Object* qObject = 0;
+
+	if(answer < iAgent)
+		// object
+	{
+		wasChar = "it was";
+		choiceTwo = "Who had it";
+		qt2 = Q_POSSESSION;
+		qObject = m_vecAgent[answer - 1];
+	}
+	else
+		// agent
+	{
+		wasChar = "they were";
+		choiceTwo = "What they were doing";
+		qt2 = Q_ACTION;
+		qObject = m_vecAgent[answer - iAgent];
+	}
+
+	cout << "\nYou can ask about\n";
+	cout << "1) Where " <<  wasChar << "\n";
+	cout << "2) " << choiceTwo << "\n";
 	
+	cout << ">>>";
+	cin >> answer;
 
-	/*	
-		position
-	if choice is agent:
-		action
-	else choice is object:
-		possession
-	*/
+	QuestionType question;
 
-	/*what time (military)?*/
+	if(answer == 1)
+	{
+		question = Q_POSITION;
+	}
+	else
+	{
+		question = qt2;
+	}
+
+	cout << "\nWhat time?\n>>> ";
+	cin >> answer;
+
+	// time = military2time(answer)
+	// Ask(m_currentAgent, qObject, question, time);
 }
 
 bool Game::Run(/*database class thing*/)

@@ -102,5 +102,4 @@ void Stab::InitPreconditions()
 	subNearObj[1].attrib = ATTRIB_TYPE_POSX;
 	
 	m_preconds->AddCondition(subNearObj);
-
 }
