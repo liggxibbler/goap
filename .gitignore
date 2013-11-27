@@ -6,3 +6,6 @@ goap/Release
 ipch/
 *.opensdf
 *.suo
+goap.zip
+Test/
+Frame/
