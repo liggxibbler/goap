@@ -25,6 +25,11 @@ public:
 	void Accuse();
 
 	bool Run(/*database class thing*/);
+	
+	void AssignRoles();
+	void PopulateRooms();
+	void GeneratePlot();
+	void MainLoop();
 
 private:
 	std::vector<GOAP::Object*> m_vecObject;
@@ -38,6 +43,7 @@ private:
 	GOAP::Room* m_currentRoom;
 	GOAP::Agent* m_currentAgent;
 	bool m_running;
+	bool m_murder;
 };
 
 #endif

@@ -236,6 +236,35 @@ void Game::Interview()
 
 bool Game::Run(/*database class thing*/)
 {
+	AssignRoles();
+	PopulateRooms();
+	GeneratePlot();
+	
+	MainLoop();
+	
+	return true;
+}
+
+void Game::GeneratePlot()
+{
+	while(!m_murder)
+	{
+		for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+		{
+			for(auto object((*room)->GetFirstObject()); object != (*room)->GetLastObject(); ++object)
+			{
+				(*object)->Update();
+			}
+			for(auto agent((*room)->GetFirstAgent()); agent != (*room)->GetLastAgent(); ++agent)
+			{
+				(*agent)->Update();
+			}
+		}
+	}
+}
+
+void Game::MainLoop()
+{
 	while(m_running)
 	{
 		if(m_roam)
@@ -247,5 +276,12 @@ bool Game::Run(/*database class thing*/)
 			Interview();
 		}
 	}
-	return true;
+}
+
+void Game::AssignRoles()
+{
+}
+
+void Game::PopulateRooms()
+{
 }

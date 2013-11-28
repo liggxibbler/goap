@@ -8,6 +8,8 @@ Object::Object()
 {
 	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
 	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
+	m_attribs[ATTRIB_TYPE_ROOM] = (int*)(&m_room);
+	
 	m_owner = NULL;
 	m_name = "ANONYMOUS";
 	m_id = s_numObjects++;

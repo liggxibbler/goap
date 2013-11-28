@@ -21,7 +21,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ActionStatus Execute() = 0;
+		ActionStatus Execute();
 		virtual operator ActionType();
 
 		Goal* GetPreconds();		
@@ -50,6 +50,8 @@ namespace GOAP
 		virtual void InitArgs() = 0;
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
+
+		virtual ActionStatus ExecuteWorkhorse() = 0;
 
 		// XIBB make sure these can't run unless their respective data
 		// has been initialized

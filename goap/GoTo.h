@@ -14,10 +14,10 @@ namespace GOAP
 		~GoTo();
 
 		virtual operator ActionType();
-		virtual ActionStatus Execute();
 		virtual GoTo* Clone();
 
 	private:
+		virtual ActionStatus ExecuteWorkhorse();
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

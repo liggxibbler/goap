@@ -13,10 +13,10 @@ namespace GOAP
 		~Take();
 
 		virtual operator ActionType();
-		virtual ActionStatus Execute();
 		virtual Take* Clone();		
 
 	private:
+		virtual ActionStatus ExecuteWorkhorse();
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

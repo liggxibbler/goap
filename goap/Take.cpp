@@ -19,7 +19,7 @@ Take::operator ActionType()
 	return ACTION_TAKE;
 }
 
-ActionStatus Take::Execute()
+ActionStatus Take::ExecuteWorkhorse()
 {
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));

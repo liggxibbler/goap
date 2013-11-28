@@ -39,6 +39,7 @@ namespace GOAP
 		//Position m_position;
 		int m_posx;
 		int m_posy;
+		RoomName m_room;
 		Object* m_owner;
 	};
 }

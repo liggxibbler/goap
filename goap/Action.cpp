@@ -271,3 +271,10 @@ void Action::UpdatePrecondInstances()
 		}
 	}
 }
+
+ActionStatus Action::Execute()
+{
+	// log action to local database
+	// send message to all agents in room
+	return ExecuteWorkhorse();
+}

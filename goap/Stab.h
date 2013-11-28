@@ -14,10 +14,10 @@ namespace GOAP
 		~Stab();
 
 		virtual operator ActionType();
-		virtual ActionStatus Execute();
 		virtual Stab* Clone();		
 
 	private:
+		virtual ActionStatus ExecuteWorkhorse();
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

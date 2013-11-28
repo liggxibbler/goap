@@ -41,16 +41,22 @@ int main()
 	GOAP::Agent* agent = new GOAP::Agent("Alborz");
 	(*agent)[ATTRIB_TYPE_POSX] = 3;
 	(*agent)[ATTRIB_TYPE_POSY] = 1;
+	(*agent)[ATTRIB_TYPE_ROOM] = ROOM_KITCHEN;
 	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;
 	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*agent)[ATTRIB_TYPE_ALIVE] = true;
 
+	DUMP("Al is in " << (*agent)[ATTRIB_TYPE_ROOM] << ".")
+
 	GOAP::Agent* dysh = new GOAP::Agent("Dysh");
 	(*dysh)[ATTRIB_TYPE_POSX] = 5;
 	(*dysh)[ATTRIB_TYPE_POSY] = 1;
+	(*dysh)[ATTRIB_TYPE_ROOM] = ROOM_DINING;
 	(*dysh)[ATTRIB_TYPE_HEIGHT] = 30;
 	(*dysh)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*dysh)[ATTRIB_TYPE_ALIVE] = true;
+
+	DUMP("Dysh is in " << (*dysh)[ATTRIB_TYPE_ROOM] << ".")
 
 	/*cout << "agent has:" << endl;
 	cout << "X: " << (*agent)[ATTRIB_TYPE_POSX] << endl;
