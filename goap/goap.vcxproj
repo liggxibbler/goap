@@ -115,7 +115,9 @@
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoTo.h" />
     <ClInclude Include="GreaterThan.h" />
+    <ClInclude Include="MessageDispatcher.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Operator.h" />
     <ClInclude Include="OperatorList.h" />
     <ClInclude Include="OperatorManager.h" />

@@ -39,3 +39,9 @@ void ActionManager::InitializePrototypes()
 		action->Initialize();
 	}
 }
+
+ActionManager* ActionManager::Instance()
+{
+	static ActionManager am;
+	return &am;
+}

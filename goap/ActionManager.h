@@ -11,10 +11,14 @@ namespace GOAP
 {
 	class ActionManager
 	{
-	public:
+	private:
 		ActionManager();
 		ActionManager(const ActionManager& other);
 		~ActionManager();
+	
+	public:
+		
+		static ActionManager* Instance();
 
 		Action* GetAction(ActionType at);
 		Action* GetNewAction(ActionType at);

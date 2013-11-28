@@ -66,7 +66,7 @@ int main()
 
 	cin.get();*/
 
-	GOAP::Op::OperatorManager om;
+	GOAP::Op::OperatorManager* om = GOAP::Op::OperatorManager::Instance();
 
 	Condition testCond(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	
@@ -87,7 +87,7 @@ int main()
 	Goal* goal = new Goal();
 	goal->AddCondition(testCond);
 	
-	ActionManager* am = new ActionManager();
+	ActionManager* am = ActionManager::Instance();
 
 	agent->AddAction(ACTION_STAB);
 	agent->AddAction(ACTION_TAKE);
@@ -100,7 +100,7 @@ int main()
 	agent->See(obj);
 
 	Plan* plan = NULL;
-	plan = agent->GetPlan(am, &om);
+	plan = agent->GetPlan(am, om);
 
 	if(plan->GetStatus() == PLAN_STAT_SUCCESS)
 	{

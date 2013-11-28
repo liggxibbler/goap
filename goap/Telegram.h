@@ -1,5 +1,5 @@
-#ifndef _GOAP_TELEGRAM_H_
-#define _GOAP_TELEGRAM_H_
+#ifndef _TELEGRAM_H_
+#define _TELEGRAM_H_
 
 namespace GOAP
 {

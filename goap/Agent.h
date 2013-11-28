@@ -46,6 +46,7 @@ namespace GOAP
 		void See(Object* obj);
 
 		virtual int GetCompoundType();
+		virtual void Update();
 
 	protected:
 		Goal* m_goal;
@@ -55,6 +56,7 @@ namespace GOAP
 		int m_weight;
 		int m_isAlive;
 		Planner* m_planner;
+		Plan* m_plan;
 	};
 }
 

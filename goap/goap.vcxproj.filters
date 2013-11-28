@@ -221,5 +221,11 @@
     <ClInclude Include="Telegram.h">
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
+    <ClInclude Include="MessageDispatcher.h">
+      <Filter>Header Files\Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

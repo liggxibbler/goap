@@ -9,6 +9,8 @@ Agent::Agent()
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
+	m_plan = new Plan();
+	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -19,6 +21,8 @@ Agent::Agent(std::string name)
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
+	m_plan = new Plan();
+	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -105,12 +109,12 @@ void Agent::SetGoal(Goal* goal)
 
 Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
-	Plan* plan = new Plan();
-	if( m_planner->Devise(this, am, om, plan) == PLAN_STAT_SUCCESS)
+	//Plan* plan = new Plan();
+	if( m_planner->Devise(this, am, om, m_plan) == PLAN_STAT_SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}
-	return plan;
+	return m_plan;
 }
 
 void Agent::See(Object* obj)
@@ -121,4 +125,16 @@ void Agent::See(Object* obj)
 int Agent::GetCompoundType()
 {
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
+}
+
+void Agent::Update()
+{
+	if(m_plan->GetStatus() == PLAN_STAT_SUCCESS)
+	{
+		m_plan->Execute();
+	}
+	else
+	{
+		GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+	}
 }

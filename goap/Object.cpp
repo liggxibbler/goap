@@ -73,3 +73,11 @@ int Object::GetCompoundType()
 {
 	return OBJ_TYPE_OBJECT;
 }
+
+void Object::Update()
+{
+	if(m_owner != NULL)
+	{
+		// set my position to my parent's position
+	}
+}

@@ -29,3 +29,9 @@ Operator* OperatorManager::GetOperator(OperatorType ot)
 {
 	return m_mapOperator[ot];
 }
+
+OperatorManager* OperatorManager::Instance()
+{
+	static OperatorManager om;
+	return &om;
+}

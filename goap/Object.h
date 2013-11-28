@@ -23,6 +23,8 @@ namespace GOAP
 		int GetID();
 		Object* GetOwner();
 
+		virtual void Update();
+
 		virtual int GetCompoundType();
 
 		std::string GetName();
