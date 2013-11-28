@@ -29,12 +29,15 @@ namespace GOAP
 
 	enum EntityType
 	{
-		ENT_TYPE_OBJECT		= 0x0001, // either inanimate objects
-		ENT_TYPE_BLADE		= 0x0002,
-		ENT_TYPE_CONTAINER	= 0x0004,
+		ENT_TYPE_ENTITY		= 0x0001, // always an entity
+
+		ENT_TYPE_OBJECT		= 0x0002, // either inanimate object
+		ENT_TYPE_BLADE		= 0x0004,
+		ENT_TYPE_CONTAINER	= 0x0008,
 		
-		ENT_TYPE_AGENT		= 0x0100, // or living things
+		ENT_TYPE_AGENT		= 0x0100, // or living thing
 		ENT_TYPE_PERSON		= 0x0200,
+		
 		ENT_TYPE_LAST		= 0xf000
 	};
 
@@ -60,7 +63,7 @@ namespace GOAP
 		OP_LAYOUT_TYPE_OAVB,	// O has attrib A compared to V e.g. Dysh.height == 160
 		OP_LAYOUT_TYPE_OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
 		OP_LAYOUT_TYPE_OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
-		OP_LAYOUT_TYPE_TRUE,	// for true preconditions
+		OP_LAYOUT_TYPE_TRUE,	// for actions with no preconditions
 		OP_LAYOUT_TYPE_UNDEFINED = 0xffff
 	};
 

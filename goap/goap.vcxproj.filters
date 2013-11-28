@@ -55,6 +55,9 @@
     <Filter Include="Source Files\World">
       <UniqueIdentifier>{ba2856fa-81bd-4630-818e-8ee0eee0d564}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Messages">
+      <UniqueIdentifier>{a8eb70f3-793b-4b7d-8f1d-a58a2b4fa6ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Telegram.h">
+      <Filter>Header Files\Messages</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

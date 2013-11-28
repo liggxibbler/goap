@@ -126,6 +126,7 @@
     <ClInclude Include="Room.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="Take.h" />
+    <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
