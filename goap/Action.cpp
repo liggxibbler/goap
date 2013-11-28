@@ -36,16 +36,16 @@ void Action::CopyArgsFromCondition(Condition& cond)
 	CondParamIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
-		OperandSemanticType st = cond[i].semantic;
-		if(st != OP_SEMANTIC_TYPE_NONE)
+		OperandSemanticRole st = cond[i].semantic;
+		if(st != OP_SEMANTIC_ROLE_NONE)
 		{
 			GetArgBySemantic(st)->instance = cond[i].instance;
-			cond[i].semantic = OP_SEMANTIC_TYPE_NONE; // reset for later checks
+			cond[i].semantic = OP_SEMANTIC_ROLE_NONE; // reset for later checks
 		}
 	}
 }
 
-CondParamIter Action::GetArgBySemantic(OperandSemanticType st)
+CondParamIter Action::GetArgBySemantic(OperandSemanticRole st)
 {
 	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
@@ -108,7 +108,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
-			if(cp.semantic == OP_SEMANTIC_TYPE_SUBJECT)
+			if(cp.semantic == OP_SEMANTIC_ROLE_AGENT)
 			{
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
@@ -253,7 +253,7 @@ void Action::UpdateEffectInstances()
 	{
 		for(int i = 0; i < effect->GetNumParams(); ++i)
 		{
-			OperandSemanticType st = effect->GetParamByIndex(i).semantic;
+			OperandSemanticRole st = effect->GetParamByIndex(i).semantic;
 			effect->GetParamByIndex(i).instance	= GetArgBySemantic(st)->instance;
 		}
 	}
@@ -266,7 +266,7 @@ void Action::UpdatePrecondInstances()
 	{
 		for(int i = 0; i < precond->GetNumParams(); ++i)
 		{
-			OperandSemanticType st = precond->GetParamByIndex(i).semantic;
+			OperandSemanticRole st = precond->GetParamByIndex(i).semantic;
 			precond->GetParamByIndex(i).instance = GetArgBySemantic(st)->instance;
 		}
 	}

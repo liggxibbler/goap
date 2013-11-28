@@ -1,6 +1,8 @@
 #ifndef _TELEGRAM_H_
 #define _TELEGRAM_H_
 
+// based on buckland's book
+
 namespace GOAP
 {
 	class Object;
@@ -13,7 +15,6 @@ struct Telegram
 	ObjectID Receiver;
 	MessageType Msg;
 	void*	ExtraInfo;
-
 };
 
 #endif

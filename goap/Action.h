@@ -38,7 +38,7 @@ namespace GOAP
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
-		CondParamIter GetArgBySemantic(OperandSemanticType st);
+		CondParamIter GetArgBySemantic(OperandSemanticRole st);
 		CondParamIter GetArgByType(ObjectType ot);
 		CondParamIter GetArgByInstance(Object* obj);
 

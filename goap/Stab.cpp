@@ -16,9 +16,9 @@ Stab::~Stab()
 
 ActionStatus Stab::Execute()
 {
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
-	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
-	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_TYPE_INSTRUMENT));
+	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT));
 
 	DUMP(sub.instance->GetName() << " Stab " << obj.instance->GetName() << " with " << ins.instance->GetName())
 	return ACT_STAT_SUCCESS;
@@ -41,19 +41,19 @@ void Stab::InitArgs()
 	ConditionParameter sub, obj, inst;
 	
 	// SUBJECT
-	sub.semantic = OP_SEMANTIC_TYPE_SUBJECT;
+	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj.semantic = OP_SEMANTIC_TYPE_OBJECT0;
+	obj.semantic = OP_SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_AGENT;
 	m_args.push_back(obj);
 
 	//INSTRUMENT
-	inst.semantic = OP_SEMANTIC_TYPE_INSTRUMENT;
+	inst.semantic = OP_SEMANTIC_ROLE_INSTRUMENT;
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
 	inst.strict = true;
@@ -64,7 +64,7 @@ void Stab::InitArgs()
 void Stab::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	ConditionParameter obj = *GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0);
+	ConditionParameter obj = *GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	objIsDead[0] = obj;
 	objIsDead[0].attrib	= ATTRIB_TYPE_ALIVE;
@@ -80,9 +80,9 @@ void Stab::InitPreconditions()
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	
 	CondParamIter cpIter;
-	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT);
+	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
 	ConditionParameter sub(*cpIter);
-	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_INSTRUMENT);
+	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT);
 	ConditionParameter inst(*cpIter);
 	
 	subHasInst[0] = sub;
@@ -92,7 +92,7 @@ void Stab::InitPreconditions()
 
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	cpIter = GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0);
+	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
 	ConditionParameter obj(*cpIter);
 	
 	subNearObj[0] = sub;

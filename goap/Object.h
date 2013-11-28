@@ -29,6 +29,8 @@ namespace GOAP
 
 		std::string GetName();
 
+		//void OnMessage(Telegram& msg);
+
 	protected:
 		static int s_numObjects;
 		int m_id;

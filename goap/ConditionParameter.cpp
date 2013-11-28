@@ -4,7 +4,7 @@ using namespace GOAP;
 
 ConditionParameter::ConditionParameter() :
 type(OBJ_TYPE_OBJECT),
-	semantic(OP_SEMANTIC_TYPE_NONE),
+	semantic(OP_SEMANTIC_ROLE_NONE),
 	instance(NULL),
 	attrib(ATTRIB_TYPE_NONE),
 	value(0),

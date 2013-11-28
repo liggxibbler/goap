@@ -16,8 +16,8 @@ GoTo::~GoTo()
 
 ActionStatus GoTo::Execute()
 {
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
-	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
+	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 
 	sub.instance->SetAttrib(ATTRIB_TYPE_POSX, (*(obj.instance))[ATTRIB_TYPE_POSX]);
 	DUMP(sub.instance->GetName() << " GoTo " << obj.instance->GetName())
@@ -42,13 +42,13 @@ void GoTo::InitArgs()
 	ConditionParameter sub, obj1;
 	
 	// SUBJECT
-	sub.semantic = OP_SEMANTIC_TYPE_SUBJECT;
+	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj1.semantic = OP_SEMANTIC_TYPE_OBJECT0;
+	obj1.semantic = OP_SEMANTIC_ROLE_PATIENT0;
 	obj1.instance = NULL;
 	obj1.type = OBJ_TYPE_OBJECT;
 	m_args.push_back(obj1);
@@ -58,8 +58,8 @@ void GoTo::InitEffects()
 {
 	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_TYPE_SUBJECT));
-	ConditionParameter obj0(*GetArgBySemantic(OP_SEMANTIC_TYPE_OBJECT0));
+	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj0(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 	
 	swapSubObj1[0] = sub;
 	swapSubObj1[0].attrib = ATTRIB_TYPE_POSX;

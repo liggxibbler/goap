@@ -175,7 +175,7 @@ int Condition::GetNumParams()
 	return m_numParams;
 }
 
-ConditionParameter* Condition::GetParamBySemantic(OperandSemanticType st)
+ConditionParameter* Condition::GetParamBySemantic(OperandSemanticRole st)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
