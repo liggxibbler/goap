@@ -3,6 +3,7 @@
 
 #include <list>
 #include <string>
+#include "Common.h"
 
 namespace GOAP
 {
@@ -15,7 +16,7 @@ namespace GOAP
 		World(const World& other);
 		~World();
 
-		Room* AddRoom(std::string name);
+		Room* AddRoom(std::string name, RoomName rn);
 		void AddRoom(Room* room);
 
 		Room* GetRoom(std::string name);

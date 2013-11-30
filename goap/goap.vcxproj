@@ -130,6 +130,7 @@
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
+    <ClInclude Include="Wander.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

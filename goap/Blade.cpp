@@ -27,3 +27,8 @@ int Blade::GetCompoundType()
 {
 	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
 }
+
+bool Blade::CanBeMurderWeapon()
+{
+	return true;
+}

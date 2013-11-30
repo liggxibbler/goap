@@ -17,9 +17,9 @@ World::~World()
 }
 
 
-Room* World::AddRoom(std::string name)
+Room* World::AddRoom(std::string name, RoomName rn)
 {
-	Room* room = new Room(name);
+	Room* room = new Room(name, rn);
 	m_rooms.push_back(room);
 	return room;
 }

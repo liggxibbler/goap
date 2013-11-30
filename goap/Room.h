@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include "Common.h"
 
 namespace GOAP
 {
@@ -14,7 +15,7 @@ namespace GOAP
 	public:
 		Room();
 		Room(const Room& other);
-		Room(std::string name);
+		Room(std::string name, RoomName rn);
 		~Room();
 
 		void SetLeft(Room* left);
@@ -28,7 +29,6 @@ namespace GOAP
 		Agent* AddAgent(std::string name);
 		void AddAgent(Agent* agent);
 
-
 		std::string GetName();
 
 		Room* Clone();
@@ -39,11 +39,19 @@ namespace GOAP
 		std::list<Agent*>::iterator GetFirstAgent();
 		std::list<Agent*>::iterator GetLastAgent();
 
+		RoomName GetType();
+
+		int GetID();
+
 	private:
+		static int s_nextID;
+
+		RoomName m_type;
 		std::string m_name;
 		std::list<Object*> m_objects;
 		std::list<Agent*> m_agents;
-		
+		int m_ID;
+
 		Room* m_left;
 		Room* m_right;
 	};

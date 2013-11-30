@@ -7,6 +7,8 @@
 
 namespace GOAP
 {
+	class Room;
+
 	class Object
 	{
 	public:
@@ -31,6 +33,15 @@ namespace GOAP
 
 		//void OnMessage(Telegram& msg);
 
+		virtual void Examine();
+
+		void MayBeFoundIn(int);
+
+		virtual bool CanBeMurderWeapon();
+
+		Room* GetRoom();
+		void SetRoom(Room* room);
+
 	protected:
 		static int s_numObjects;
 		int m_id;
@@ -39,8 +50,10 @@ namespace GOAP
 		//Position m_position;
 		int m_posx;
 		int m_posy;
-		RoomName m_room;
+		int m_room;
 		Object* m_owner;
+		int m_canBeFoundIn;
+		Room* m_roomInstance;
 	};
 }
 

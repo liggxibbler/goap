@@ -15,6 +15,8 @@ namespace GOAP
 {
 	class Planner;
 	class ActionManager;
+	class Action;
+
 	namespace Op
 	{
 		class OperatorManager;
@@ -47,8 +49,15 @@ namespace GOAP
 
 		virtual int GetCompoundType();
 		virtual void Update();
+		virtual void Examine();
+
+		virtual bool CanBeMurderWeapon();
+
+		void Log(Action* action);
 
 	protected:
+		void Interview();
+
 		Goal* m_goal;
 		std::list<ActionType> m_actions;
 		std::map<int, Object*> m_objects;
@@ -57,6 +66,8 @@ namespace GOAP
 		int m_isAlive;
 		Planner* m_planner;
 		Plan* m_plan;
+
+		std::vector<Action*> m_actionLog;
 	};
 }
 

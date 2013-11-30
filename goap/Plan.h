@@ -18,6 +18,7 @@ namespace GOAP
 
 		Goal* GetPlan();
 		PlanStatus GetStatus();
+		ActionStatus GetActionStatus();
 		void SetStatus(PlanStatus status);
 
 	private:

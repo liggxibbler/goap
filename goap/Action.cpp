@@ -1,9 +1,10 @@
 #include "Action.h"
 #include "Agent.h"
+#include "Room.h"
 
 using namespace GOAP;
 
-Action::Action()
+Action::Action() : m_status(ACT_STAT_INIT)
 {
 }
 
@@ -277,4 +278,20 @@ ActionStatus Action::Execute()
 	// log action to local database
 	// send message to all agents in room
 	return ExecuteWorkhorse();
+}
+
+ActionStatus Action::GetStatus()
+{
+	return m_status;
+}
+
+void Action::Dispatch()
+{
+	auto cp = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Room* room = agent->GetRoom();
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();)
+	{
+		(*agent)->Log(this);
+	}
 }

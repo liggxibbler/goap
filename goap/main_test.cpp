@@ -51,7 +51,7 @@ int main()
 	GOAP::Agent* dysh = new GOAP::Agent("Dysh");
 	(*dysh)[ATTRIB_TYPE_POSX] = 5;
 	(*dysh)[ATTRIB_TYPE_POSY] = 1;
-	(*dysh)[ATTRIB_TYPE_ROOM] = ROOM_DINING;
+	(*dysh)[ATTRIB_TYPE_ROOM] = ROOM_DINING_ROOM;
 	(*dysh)[ATTRIB_TYPE_HEIGHT] = 30;
 	(*dysh)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*dysh)[ATTRIB_TYPE_ALIVE] = true;

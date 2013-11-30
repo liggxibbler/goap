@@ -4,15 +4,17 @@
 
 using namespace GOAP;
 
-Room::Room()
+int Room::s_nextID = 0;
+
+Room::Room() : m_ID(s_nextID++)
 {
 }
 
-Room::Room(const Room& other)
+Room::Room(const Room& other) : m_ID(s_nextID++)
 {
 }
 
-Room::Room(std::string name) : m_name(name)
+Room::Room(std::string name , RoomName rn) : m_name(name), m_type(rn), m_ID(s_nextID++)
 {
 }
 
@@ -41,17 +43,23 @@ Room* Room::GetRight()
 	return m_right;
 }
 
+int Room::GetID()
+{
+	return m_ID;
+}
 
 Object* Room::AddObject(std::string name)
 {
 	Object* obj = new Object(name);
 	m_objects.push_back(obj);
+	obj->SetRoom(this);
 	return obj;
 }
 
 void Room::AddObject(Object* obj)
 {
 	m_objects.push_back(obj);
+	obj->SetRoom(this);
 }
 
 
@@ -92,10 +100,17 @@ Agent* Room::AddAgent(std::string name)
 {
 	Agent* agent = new Agent(name);
 	m_agents.push_back(agent);
+	agent->SetRoom(this);
 	return agent;
 }
 
 void Room::AddAgent(Agent* agent)
 {
 	m_agents.push_back(agent);
+	agent->SetRoom(this);
+}
+
+RoomName Room::GetType()
+{
+	return m_type;
 }

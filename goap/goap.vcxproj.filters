@@ -227,5 +227,8 @@
     <ClInclude Include="ObjectManager.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Wander.h">
+      <Filter>Header Files\Actions</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

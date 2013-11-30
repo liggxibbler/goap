@@ -27,28 +27,30 @@ ActionStatus Plan::Execute()
 	
 	if(action != NULL)
 	{
-		switch(action->Execute())
+		ActionStatus stat = action->Execute();
+		switch(stat)
 		{
 		case ACT_STAT_SUCCESS:
 			// delete this one
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
-			return ACT_STAT_SUCCESS;
+			break;
 		case ACT_STAT_RUNNING:
 			//
 			//m_plan = m_plan;
 			// and no replanning is needed
-			return ACT_STAT_RUNNING;
+			break;
 		case ACT_STAT_FAIL:
 			// delete this one
 			m_plan = m_plan->GetParent();
 			// but replanning is needed
-			return ACT_STAT_FAIL;
+			break;
 		default:
 			// throw exception
 			return ACT_STAT_UNKNOWN;
 			break;
 		};
+		return stat;
 	}
 	else
 	{
@@ -76,4 +78,9 @@ PlanStatus Plan::GetStatus()
 void Plan::SetStatus(PlanStatus status)
 {
 	m_status = status;
+}
+
+ActionStatus Plan::GetActionStatus()
+{
+	return m_plan->GetAction()->GetStatus();
 }

@@ -29,51 +29,12 @@ void Game::Initialize()
 
 	Room *kitchen, *living, *dining;
 	
-	Blade *knife;
-	Object *rope, *table, *statue, *lamp;
+	kitchen = m_world->AddRoom("Kitchen", ROOM_KITCHEN);
+	living = m_world->AddRoom("Living Room", ROOM_LIVING_ROOM);
+	dining = m_world->AddRoom("Dining Room", ROOM_DINING_ROOM);
 
-	kitchen = m_world->AddRoom("Kitchen");
-	living = m_world->AddRoom("Living Room");
-	dining = m_world->AddRoom("Dining Room");
-
-	knife = new Blade("Knife");
-	kitchen->AddObject(knife);
-
-	rope = kitchen->AddObject("Rope");
-
-	statue = living->AddObject("Statue");
-	lamp = living->AddObject("Lamp");
-
-	table = dining->AddObject("Table");
-
-	//Blade* obj = new Blade("Knife");
-
-	knife->SetAttrib(ATTRIB_TYPE_POSX, 4);
-	knife->SetAttrib(ATTRIB_TYPE_POSY, 2);
-	/*obj->SetAttrib(ATTRIB_TYPE_HEIGHT, 10);
-	obj->SetAttrib(ATTRIB_TYPE_WEIGHT, 20);
-	obj->SetAttrib(ATTRIB_TYPE_ALIVE, true);*/
-
-	/*cout << "obj has:" << endl;
-	cout << "X: " << obj->GetAttrib(ATTRIB_TYPE_POSX) << endl;
-	cout << "Y: " << obj->GetAttrib(ATTRIB_TYPE_POSY) << endl;*/
-
-	GOAP::Agent* al = new GOAP::Agent("Alborz");
-	(*al)[ATTRIB_TYPE_POSX] = 3;
-	(*al)[ATTRIB_TYPE_POSY] = 1;
-	(*al)[ATTRIB_TYPE_HEIGHT] = 30;
-	(*al)[ATTRIB_TYPE_WEIGHT] = 20;
-	(*al)[ATTRIB_TYPE_ALIVE] = true;
-
-	GOAP::Agent* dysh = new GOAP::Agent("Dysh");
-	(*dysh)[ATTRIB_TYPE_POSX] = 5;
-	(*dysh)[ATTRIB_TYPE_POSY] = 1;
-	(*dysh)[ATTRIB_TYPE_HEIGHT] = 30;
-	(*dysh)[ATTRIB_TYPE_WEIGHT] = 20;
-	(*dysh)[ATTRIB_TYPE_ALIVE] = true;
-
-	kitchen->AddAgent(al);
-	living->AddAgent(dysh);
+	InitializeAgents();
+	InitializeObjects();
 
 	m_currentRoom = kitchen;
 }
@@ -278,10 +239,151 @@ void Game::MainLoop()
 	}
 }
 
-void Game::AssignRoles()
+void Game::AssignRoles(/*int numWitness*/)
 {
+	// from agent bank
+	// pick a random agent
+	// mark as murderer
+	// pick a random agent that's not the murderer
+	// mark as victim
+	// set 'murderer.goal' to be 'victim.isAlive == false'
+	// pick (numWitness + 1) agents
+	// set as witness(es)
+	
+	Agent* murderer = m_agents[0];
+	Agent* victim = m_agents[1];
+	
+	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	cond[0].attrib = ATTRIB_TYPE_ALIVE;
+	cond[0].instance = victim;
+	cond[0].type = OBJ_TYPE_AGENT;
+	cond[0].value = false;
+
+	Goal* goal = new Goal;
+	goal->AddCondition(cond);
+	murderer->SetGoal(goal);
+
+	murderer->See(victim);
+	
+	m_actors.push_back(murderer);
+	m_actors.push_back(victim);
+	m_actors.push_back(m_agents[2]);
+
+	auto room(m_world->GetFirstRoom());
+	++room;
+	(*room)->AddAgent(murderer);
+	(*room)->AddAgent(victim);
+	(*room)->AddAgent(m_agents[2]);
 }
 
 void Game::PopulateRooms()
 {
+	/* for each room in world
+		from object bank[room]
+			pick an object that can be used as a murder weapon
+			i.e. that is the instrument in an action with an effect OAV[O.isAlive == false]
+			pick 2-4 other objects from that room
+	*/
+	// kitchen, living, dining
+
+	auto room = m_world->GetFirstRoom(); //kitchen
+	(*room)->AddObject(m_objects[1]);
+	(*room)->AddObject(m_objects[2]);
+	(*room)->AddObject(m_objects[3]);
+	++room;
+
+	(*room)->AddObject(m_objects[0]);//living
+	(*room)->AddObject(m_objects[4]);
+	++room;
+
+	(*room)->AddObject(m_objects[5]);//dining
+	(*room)->AddObject(m_objects[6]);	
+}
+
+void Game::InitializeAgents()
+{
+	m_agents.clear();
+
+	m_agents.push_back(new GOAP::Agent("Alborz"));
+	(*m_agents[0])[ATTRIB_TYPE_POSX] = 3;
+	(*m_agents[0])[ATTRIB_TYPE_POSY] = 1;
+	(*m_agents[0])[ATTRIB_TYPE_HEIGHT] = 30;
+	(*m_agents[0])[ATTRIB_TYPE_WEIGHT] = 20;
+	(*m_agents[0])[ATTRIB_TYPE_ALIVE] = true;
+
+	m_agents.push_back(new GOAP::Agent("Dysh"));
+	(*m_agents[1])[ATTRIB_TYPE_POSX] = 5;
+	(*m_agents[1])[ATTRIB_TYPE_POSY] = 1;
+	(*m_agents[1])[ATTRIB_TYPE_HEIGHT] = 30;
+	(*m_agents[1])[ATTRIB_TYPE_WEIGHT] = 20;
+	(*m_agents[1])[ATTRIB_TYPE_ALIVE] = true;
+
+	m_agents.push_back(new GOAP::Agent("Jim"));
+	(*m_agents[2])[ATTRIB_TYPE_POSX] = 5;
+	(*m_agents[2])[ATTRIB_TYPE_POSY] = 1;
+	(*m_agents[2])[ATTRIB_TYPE_HEIGHT] = 30;
+	(*m_agents[2])[ATTRIB_TYPE_WEIGHT] = 20;
+	(*m_agents[2])[ATTRIB_TYPE_ALIVE] = true;
+
+	m_agents.push_back(new GOAP::Agent("Joe"));
+	(*m_agents[3])[ATTRIB_TYPE_POSX] = 5;
+	(*m_agents[3])[ATTRIB_TYPE_POSY] = 1;
+	(*m_agents[3])[ATTRIB_TYPE_HEIGHT] = 30;
+	(*m_agents[3])[ATTRIB_TYPE_WEIGHT] = 20;
+	(*m_agents[3])[ATTRIB_TYPE_ALIVE] = true;
+
+	m_agents.push_back(new GOAP::Agent("Bob"));
+	(*m_agents[4])[ATTRIB_TYPE_POSX] = 5;
+	(*m_agents[4])[ATTRIB_TYPE_POSY] = 1;
+	(*m_agents[4])[ATTRIB_TYPE_HEIGHT] = 30;
+	(*m_agents[4])[ATTRIB_TYPE_WEIGHT] = 20;
+	(*m_agents[4])[ATTRIB_TYPE_ALIVE] = true;
+}
+
+void Game::InitializeObjects()
+{
+	/*
+	clock
+	scissors
+	mirror
+	bottle
+	kettle
+	toaster
+	fork
+	chemicals
+	cups
+	drinks
+	foods
+	*/
+
+	m_objects.clear();
+	Object* obj = 0;
+
+	obj = new Object("Clock");
+	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
+	m_objects.push_back(obj);
+
+	obj = new Object("Cup");
+	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
+	m_objects.push_back(obj);
+
+	obj = new Blade("Knife");
+	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
+	m_objects.push_back(obj);
+	
+	obj = new Object("Rope");
+	obj->MayBeFoundIn(ROOM_KITCHEN);
+	m_objects.push_back(obj);
+	
+	obj = new Object("Statue");
+	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
+	m_objects.push_back(obj);
+
+	obj = new Object("Lamp");
+	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
+	m_objects.push_back(obj);
+
+	obj = new Object("Table");
+	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM | ROOM_LIVING_ROOM);
+	m_objects.push_back(obj);
 }

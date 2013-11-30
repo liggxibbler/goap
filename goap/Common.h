@@ -113,10 +113,12 @@ namespace GOAP
 
 	enum ActionStatus
 	{
+		ACT_STAT_INIT,
 		ACT_STAT_RUNNING,
 		ACT_STAT_FAIL,
 		ACT_STAT_SUCCESS,
-		ACT_STAT_UNKNOWN,
+		//ACT_STAT_IDLE,
+		ACT_STAT_UNKNOWN,		
 
 		ACT_STAT_DONE		// mark the successful execution of a plan?
 	};
@@ -137,9 +139,11 @@ namespace GOAP
 
 	enum RoomName
 	{
-		ROOM_KITCHEN,
-		ROOM_LIVING,
-		ROOM_DINING
+		ROOM_KITCHEN		= 0x01,
+		ROOM_LIVING_ROOM	= 0x02,
+		ROOM_DINING_ROOM	= 0x04,
+		ROOM_BATHROOM		= 0x08,
+		ROOM_BEDROOM		= 0x10
 	};
 }
 

@@ -15,6 +15,7 @@ namespace GOAP
 
 		virtual operator ObjectType();
 		virtual int GetCompoundType ();
+		virtual bool CanBeMurderWeapon();
 	};
 }
 

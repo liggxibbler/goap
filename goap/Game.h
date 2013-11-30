@@ -19,7 +19,7 @@ public:
 	~Game();
 
 	void Initialize();
-
+	
 	void Roam();
 	void Interview();
 	void Accuse();
@@ -38,12 +38,19 @@ private:
 
 	/*databaseClassThing* m_database;*/
 
+	void InitializeAgents();
+	void InitializeObjects();
+
 	GOAP::World* m_world;
 	bool m_roam;
 	GOAP::Room* m_currentRoom;
 	GOAP::Agent* m_currentAgent;
 	bool m_running;
 	bool m_murder;
+
+	std::vector<GOAP::Agent*>	m_agents;
+	std::vector<GOAP::Agent*>	m_actors;
+	std::vector<GOAP::Object*>	m_objects;
 };
 
 #endif

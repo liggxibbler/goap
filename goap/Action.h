@@ -22,6 +22,7 @@ namespace GOAP
 
 		virtual Action* Clone() = 0;
 		ActionStatus Execute();
+		ActionStatus GetStatus();
 		virtual operator ActionType();
 
 		Goal* GetPreconds();		
@@ -63,6 +64,8 @@ namespace GOAP
 		void UpdateEffectInstances();
 		void UpdatePrecondInstances();
 		
+		void Dispatch();
+
 		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
 		std::list<ConditionParameter> m_args;
@@ -73,6 +76,10 @@ namespace GOAP
 		std::list<Condition> m_effects;
 
 		OrderedPair<Object*> m_orderedTuples;
+		ActionStatus m_status;
+
+		int m_time;
+
 	};
 }
 #endif

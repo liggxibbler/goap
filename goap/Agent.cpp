@@ -1,5 +1,6 @@
 #include "Agent.h"
 #include "Planner.h"
+#include "Action.h"
 
 using namespace GOAP;
 
@@ -137,4 +138,24 @@ void Agent::Update()
 	{
 		GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
 	}
+}
+
+void Agent::Examine()
+{
+	Object::Examine();
+	Interview();
+}
+
+bool Agent::CanBeMurderWeapon()
+{
+	return false;
+}
+
+void Agent::Interview()
+{
+}
+
+void Agent::Log(Action* action)
+{
+	m_actionLog.push_back(action);
 }

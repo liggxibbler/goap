@@ -1,14 +1,15 @@
 #include "Object.h"
+#include "Room.h"
 
 using namespace GOAP;
 
 int Object::s_numObjects = 0;
 
-Object::Object()
+Object::Object() : m_canBeFoundIn(0)
 {
 	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
 	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
-	m_attribs[ATTRIB_TYPE_ROOM] = (int*)(&m_room);
+	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
 	
 	m_owner = NULL;
 	m_name = "ANONYMOUS";
@@ -16,16 +17,17 @@ Object::Object()
 }
 
 
-Object::Object(std::string name, Object* owner)
+Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0)
 {
 	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
 	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
+	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
 	m_owner = owner;
 	m_name = name;
 	m_id = s_numObjects++;
 }
 
-Object::Object(const Object& other)
+Object::Object(const Object& other) : m_canBeFoundIn(0)
 {
 	// TBI
 }
@@ -82,4 +84,29 @@ void Object::Update()
 	{
 		// set my position to my parent's position
 	}
+}
+
+void Object::Examine()
+{
+}
+
+void Object::MayBeFoundIn(int rooms)
+{
+	m_canBeFoundIn |= rooms;
+}
+
+bool Object::CanBeMurderWeapon()
+{
+	return false;
+}
+
+void Object::SetRoom(Room* room)
+{
+	m_roomInstance = room;
+	m_room = room->GetID();
+}
+
+Room* Object::GetRoom()
+{
+	return m_roomInstance;
 }
