@@ -208,6 +208,8 @@ bool Game::Run(/*database class thing*/)
 
 void Game::GeneratePlot()
 {
+	m_murder = false;
+
 	while(!m_murder)
 	{
 		for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
@@ -310,6 +312,10 @@ void Game::InitializeAgents()
 	(*m_agents[0])[ATTRIB_TYPE_HEIGHT] = 30;
 	(*m_agents[0])[ATTRIB_TYPE_WEIGHT] = 20;
 	(*m_agents[0])[ATTRIB_TYPE_ALIVE] = true;
+	m_agents[0]->AddAction(ACTION_GOTO);
+	m_agents[0]->AddAction(ACTION_TAKE);
+	m_agents[0]->AddAction(ACTION_STAB);
+
 
 	m_agents.push_back(new GOAP::Agent("Dysh"));
 	(*m_agents[1])[ATTRIB_TYPE_POSX] = 5;

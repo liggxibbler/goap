@@ -5,7 +5,7 @@
 
 using namespace GOAP;
 
-Agent::Agent()
+Agent::Agent() : m_goal(0)
 {
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
@@ -16,7 +16,7 @@ Agent::Agent()
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name)
+Agent::Agent(std::string name) : m_goal(0)
 {
 	m_name = name;
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
@@ -137,7 +137,10 @@ void Agent::Update()
 	}
 	else
 	{
-		GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+		if(m_goal != 0)
+		{
+			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+		}
 	}
 }
 
