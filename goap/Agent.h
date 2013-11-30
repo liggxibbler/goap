@@ -16,6 +16,7 @@ namespace GOAP
 	class Planner;
 	class ActionManager;
 	class Action;
+	class Room;
 
 	namespace Op
 	{
@@ -46,6 +47,7 @@ namespace GOAP
 
 		Plan* GetPlan(ActionManager* am, Op::OperatorManager* om);
 		void See(Object* obj);
+		void See(Room* room);
 
 		virtual int GetCompoundType();
 		virtual void Update();

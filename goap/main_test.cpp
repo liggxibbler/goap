@@ -25,8 +25,12 @@ int main()
 	Agent a1, a2, a3;
 	Object o1, o2, o3;
 
+	Room* r1 = new Room("room1",ROOM_BATHROOM), *r2 = new Room("room2",ROOM_BATHROOM);
+
 	//Object* obj = new Object("Kolang");
 	Blade* obj = new Blade("Knife");
+
+	r2->AddObject(obj);
 
 	obj->SetAttrib(ATTRIB_TYPE_POSX, 4);
 	obj->SetAttrib(ATTRIB_TYPE_POSY, 2);
@@ -45,6 +49,7 @@ int main()
 	(*agent)[ATTRIB_TYPE_HEIGHT] = 30;
 	(*agent)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*agent)[ATTRIB_TYPE_ALIVE] = true;
+	r2->AddAgent(agent);
 
 	DUMP("Al is in " << (*agent)[ATTRIB_TYPE_ROOM] << ".")
 
@@ -55,6 +60,7 @@ int main()
 	(*dysh)[ATTRIB_TYPE_HEIGHT] = 30;
 	(*dysh)[ATTRIB_TYPE_WEIGHT] = 20;
 	(*dysh)[ATTRIB_TYPE_ALIVE] = true;
+	r2->AddAgent(dysh);
 
 	DUMP("Dysh is in " << (*dysh)[ATTRIB_TYPE_ROOM] << ".")
 

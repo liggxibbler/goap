@@ -1,6 +1,7 @@
 #include "Agent.h"
 #include "Planner.h"
 #include "Action.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -158,4 +159,17 @@ void Agent::Interview()
 void Agent::Log(Action* action)
 {
 	m_actionLog.push_back(action);
+}
+
+void Agent::See(Room* room)
+{
+	for(auto object(room->GetFirstObject());object != room->GetLastObject();++object)
+	{
+		See(*object);
+	}
+	
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	{
+		See(*agent);
+	}
 }

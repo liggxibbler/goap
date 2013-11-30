@@ -277,7 +277,9 @@ ActionStatus Action::Execute()
 {
 	// log action to local database
 	// send message to all agents in room
-	return ExecuteWorkhorse();
+	ActionStatus stat = ExecuteWorkhorse();
+	Dispatch();
+	return stat;
 }
 
 ActionStatus Action::GetStatus()
@@ -290,7 +292,7 @@ void Action::Dispatch()
 	auto cp = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
-	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();)
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 	{
 		(*agent)->Log(this);
 	}

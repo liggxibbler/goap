@@ -19,7 +19,7 @@ ActionStatus GoTo::ExecuteWorkhorse()
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 
-	sub.instance->SetAttrib(ATTRIB_TYPE_POSX, (*(obj.instance))[ATTRIB_TYPE_POSX]);
+	sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
 	DUMP(sub.instance->GetName() << " GoTo " << obj.instance->GetName())
 
 	return ACT_STAT_SUCCESS;
@@ -62,10 +62,10 @@ void GoTo::InitEffects()
 	ConditionParameter obj0(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 	
 	swapSubObj1[0] = sub;
-	swapSubObj1[0].attrib = ATTRIB_TYPE_POSX;
+	swapSubObj1[0].attrib = ATTRIB_TYPE_ROOM;
 	
 	swapSubObj1[1] = obj0;
-	swapSubObj1[1].attrib = ATTRIB_TYPE_POSX;
+	swapSubObj1[1].attrib = ATTRIB_TYPE_ROOM;
 	
 	m_effects.push_back(swapSubObj1);	
 }

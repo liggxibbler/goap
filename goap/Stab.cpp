@@ -96,10 +96,10 @@ void Stab::InitPreconditions()
 	ConditionParameter obj(*cpIter);
 	
 	subNearObj[0] = sub;
-	subNearObj[0].attrib = ATTRIB_TYPE_POSX;
+	subNearObj[0].attrib = ATTRIB_TYPE_ROOM;
 	
 	subNearObj[1] = obj;
-	subNearObj[1].attrib = ATTRIB_TYPE_POSX;
+	subNearObj[1].attrib = ATTRIB_TYPE_ROOM;
 	
 	m_preconds->AddCondition(subNearObj);
 }

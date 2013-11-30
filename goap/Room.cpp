@@ -101,6 +101,7 @@ Agent* Room::AddAgent(std::string name)
 	Agent* agent = new Agent(name);
 	m_agents.push_back(agent);
 	agent->SetRoom(this);
+	agent->See(this);
 	return agent;
 }
 
