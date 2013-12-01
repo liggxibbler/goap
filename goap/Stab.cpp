@@ -21,6 +21,9 @@ ActionStatus Stab::ExecuteWorkhorse()
 	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT));
 
 	DUMP(sub.instance->GetName() << " Stab " << obj.instance->GetName() << " with " << ins.instance->GetName())
+	
+	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
+
 	return ACT_STAT_SUCCESS;
 }
 

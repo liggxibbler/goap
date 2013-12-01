@@ -223,6 +223,7 @@ void Game::GeneratePlot()
 				(*agent)->Update(m_world, 0);
 			}
 		}
+		cin.get();
 	}
 }
 
