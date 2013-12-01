@@ -2,6 +2,7 @@
 #define _GOAP_PLAN_H_
 
 #include "Goal.h"
+#include "IExecutable.h"
 
 namespace GOAP
 {
@@ -13,7 +14,7 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		ActionStatus Execute();
+		virtual ActionStatus Execute();
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();

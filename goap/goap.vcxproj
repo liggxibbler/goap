@@ -97,6 +97,7 @@
     <ClCompile Include="Stab.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
+    <ClCompile Include="Wander.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -115,6 +116,7 @@
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoTo.h" />
     <ClInclude Include="GreaterThan.h" />
+    <ClInclude Include="IExecutable.h" />
     <ClInclude Include="MessageDispatcher.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />

@@ -6,6 +6,7 @@
 #include "Condition.h"
 #include "Goal.h"
 #include "OrderedPair.h"
+#include "IExecutable.h"
 #include <map>
 #include <list>
 #include <vector>
@@ -13,7 +14,7 @@
 namespace GOAP
 {
 	class Agent;
-	class Action
+	class Action : public IExecutable
 	{
 	public:
 		Action();
@@ -21,7 +22,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		ActionStatus Execute();
+		virtual ActionStatus Execute() override;
 		ActionStatus GetStatus();
 		virtual operator ActionType();
 

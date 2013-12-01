@@ -4,13 +4,13 @@
 #include <string>
 #include <list>
 #include "Common.h"
+#include "Object.h"
 
 namespace GOAP
 {
-	class Object;
 	class Agent;
 
-	class Room
+	class Room : public Object
 	{
 	public:
 		Room();

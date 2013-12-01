@@ -100,7 +100,8 @@ namespace GOAP
 
 	enum ActionType
 	{
-		ACTION_GOTO = 0x0000,
+		ACTION_GOTO,
+		ACTION_WANDER,
 		ACTION_TAKE,
 		ACTION_DROP,
 		

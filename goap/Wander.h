@@ -6,11 +6,14 @@
 
 namespace GOAP
 {
+	class World;
+
 	class Wander : public Action
 	{
 	public:
 		Wander();
-		Wander(const GoTo& other);
+		Wander(World* world, Agent* agent, int turns);
+		Wander(const Wander& other);
 		~Wander();
 
 		virtual operator ActionType();
@@ -23,8 +26,8 @@ namespace GOAP
 		virtual void InitEffects();
 
 		int m_numTurns;
-		int m_currentTurn;
-
+		World* m_world;
+		Agent* m_agent;
 	};
 }
 #endif
