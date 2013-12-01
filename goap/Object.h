@@ -8,6 +8,7 @@
 namespace GOAP
 {
 	class Room;
+	class World;
 
 	class Object
 	{
@@ -25,7 +26,7 @@ namespace GOAP
 		int GetID();
 		Object* GetOwner();
 
-		virtual void Update();
+		virtual void Update(World* world, int turn);
 
 		virtual int GetCompoundType();
 

@@ -6,11 +6,14 @@
 
 namespace GOAP
 {
+	class Room;
+
 	class GoTo : public Action
 	{
 	public:
 		GoTo();
 		GoTo(const GoTo& other);
+		GoTo(Room* room, Agent* agent);
 		~GoTo();
 
 		virtual operator ActionType();
@@ -21,6 +24,9 @@ namespace GOAP
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();
+
+		Agent* m_agent;
+		Object* m_dest;
 	};
 }
 #endif

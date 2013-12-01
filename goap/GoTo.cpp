@@ -1,12 +1,17 @@
 #include "GoTo.h"
+#include "Room.h"
 
 using namespace GOAP;
 
-GoTo::GoTo()
+GoTo::GoTo() : m_agent(0), m_dest(0)
 {
 }
 
 GoTo::GoTo(const GoTo& other)
+{
+}
+
+GoTo::GoTo(Room* room, Agent* agent) : m_agent(agent), m_dest(room)
 {
 }
 
@@ -19,7 +24,12 @@ ActionStatus GoTo::ExecuteWorkhorse()
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 
-	sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
+	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
+	Room* room = obj.instance->GetRoom();
+	sub.instance->SetRoom(room);
+	Agent* agent = dynamic_cast<Agent*>(sub.instance);
+	agent->See(room);
+
 	DUMP(sub.instance->GetName() << " GoTo " << obj.instance->GetName())
 
 	return ACT_STAT_SUCCESS;
@@ -43,15 +53,16 @@ void GoTo::InitArgs()
 	
 	// SUBJECT
 	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
-	sub.instance = NULL;
+	sub.instance = m_agent;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
 	// OBJECT
 	obj1.semantic = OP_SEMANTIC_ROLE_PATIENT0;
-	obj1.instance = NULL;
+	obj1.instance = m_dest;
 	obj1.type = OBJ_TYPE_OBJECT;
 	m_args.push_back(obj1);
+
 }
 
 void GoTo::InitEffects()

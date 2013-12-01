@@ -117,7 +117,7 @@ int main()
 	if(plan->GetStatus() == PLAN_STAT_SUCCESS)
 	{
 		ActionStatus stat = ACT_STAT_UNKNOWN;
-		while(plan->Execute() != ACT_STAT_DONE)
+		while(plan->Execute() != ACT_STAT_SUCCESS)
 		{
 		}
 	}

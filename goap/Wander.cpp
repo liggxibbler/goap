@@ -1,5 +1,6 @@
 #include "Wander.h"
 #include "World.h"
+#include "GoTo.h"
 
 using namespace GOAP;
 

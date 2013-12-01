@@ -20,6 +20,7 @@ namespace GOAP
 		void AddRoom(Room* room);
 
 		Room* GetRoom(std::string name);
+		Room* GetRandomRoom();
 
 		World* Clone();
 

@@ -57,3 +57,14 @@ std::list<Room*>::iterator World::GetLastRoom()
 {
 	return m_rooms.end();
 }
+
+Room* World::GetRandomRoom()
+{
+	int i = rand() % m_rooms.size();
+	auto room = m_rooms.begin();
+	for(int j = 0; j < i; j++)
+	{
+		room++;
+	}
+	return *room;
+}

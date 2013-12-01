@@ -16,7 +16,7 @@ Room::Room(const Room& other) : m_ID(s_nextID++)
 	SetRoom(this);
 }
 
-Room::Room(std::string name , RoomName rn) : m_name(name), m_type(rn), m_ID(s_nextID++)
+Room::Room(std::string name , RoomName rn) : Object(name), m_type(rn), m_ID(s_nextID++)
 {
 	SetRoom(this);
 }

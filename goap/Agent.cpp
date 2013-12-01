@@ -2,10 +2,12 @@
 #include "Planner.h"
 #include "Action.h"
 #include "Room.h"
+#include "World.h"
+#include "Wander.h"
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0)
+Agent::Agent() : m_goal(0), m_nextExecution(0)
 {
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
@@ -16,7 +18,7 @@ Agent::Agent() : m_goal(0)
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0)
+Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0)
 {
 	m_name = name;
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
@@ -129,17 +131,34 @@ int Agent::GetCompoundType()
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
 }
 
-void Agent::Update()
+void Agent::Update(World* world, int turn)
 {
-	if(m_plan->GetStatus() == PLAN_STAT_SUCCESS)
+	if(m_nextExecution != 0)
 	{
-		m_plan->Execute();
-	}
-	else
-	{
-		if(m_goal != 0)
+		ActionStatus as = m_nextExecution->Execute();
+		if (as == ACT_STAT_SUCCESS)
 		{
-			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+			m_nextExecution = 0;
+		}
+	}
+	else if(m_goal != 0)
+	{
+		GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+		PlanStatus ps = m_plan->GetStatus();
+		if(ps == PLAN_STAT_FAIL)
+		{
+			Room* room = world->GetRandomRoom();
+			GoTo* gt = new GoTo(room, this);
+			gt->Initialize();
+			m_nextExecution = gt;
+		}
+		else if (ps == PLAN_STAT_SUCCESS)
+		{
+			m_nextExecution = m_plan;
+		}
+		else
+		{
+			m_nextExecution = 0;
 		}
 	}
 }

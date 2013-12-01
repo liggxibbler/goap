@@ -47,7 +47,7 @@ namespace GOAP
 		static int s_nextID;
 
 		RoomName m_type;
-		std::string m_name;
+		//std::string m_name;
 		std::list<Object*> m_objects;
 		std::list<Agent*> m_agents;
 		int m_ID;

@@ -34,7 +34,7 @@ ActionStatus Plan::Execute()
 			// delete this one
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
-			break;
+			return ACT_STAT_RUNNING;
 		case ACT_STAT_RUNNING:
 			//
 			//m_plan = m_plan;
@@ -56,7 +56,7 @@ ActionStatus Plan::Execute()
 	{
 		// this is the ultimate goal
 		// 
-		return ACT_STAT_DONE;
+		return ACT_STAT_SUCCESS;
 	}
 }
 

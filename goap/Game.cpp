@@ -216,11 +216,11 @@ void Game::GeneratePlot()
 		{
 			for(auto object((*room)->GetFirstObject()); object != (*room)->GetLastObject(); ++object)
 			{
-				(*object)->Update();
+				(*object)->Update(m_world, 0);
 			}
 			for(auto agent((*room)->GetFirstAgent()); agent != (*room)->GetLastAgent(); ++agent)
 			{
-				(*agent)->Update();
+				(*agent)->Update(m_world, 0);
 			}
 		}
 	}

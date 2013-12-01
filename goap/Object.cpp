@@ -1,5 +1,6 @@
 #include "Object.h"
 #include "Room.h"
+#include "World.h"
 
 using namespace GOAP;
 
@@ -78,11 +79,12 @@ int Object::GetCompoundType()
 	return OBJ_TYPE_OBJECT;
 }
 
-void Object::Update()
+void Object::Update(World* world, int turn)
 {
 	if(m_owner != NULL)
 	{
 		// set my position to my parent's position
+		SetRoom(m_owner->GetRoom());
 	}
 }
 

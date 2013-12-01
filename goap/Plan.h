@@ -6,7 +6,7 @@
 
 namespace GOAP
 {
-	class Plan
+	class Plan : public IExecutable
 	{
 	public:
 		Plan();
@@ -14,7 +14,7 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		virtual ActionStatus Execute();
+		virtual ActionStatus Execute() override;
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();

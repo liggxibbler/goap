@@ -50,7 +50,7 @@ namespace GOAP
 		void See(Room* room);
 
 		virtual int GetCompoundType();
-		virtual void Update();
+		virtual void Update(World* world, int turn) override;
 		virtual void Examine();
 
 		virtual bool CanBeMurderWeapon();
@@ -68,6 +68,8 @@ namespace GOAP
 		int m_isAlive;
 		Planner* m_planner;
 		Plan* m_plan;
+
+		IExecutable* m_nextExecution;
 
 		std::vector<Action*> m_actionLog;
 	};
