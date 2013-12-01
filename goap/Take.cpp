@@ -19,12 +19,12 @@ Take::operator ActionType()
 	return ACTION_TAKE;
 }
 
-ActionStatus Take::ExecuteWorkhorse()
+ActionStatus Take::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 	
-	DUMP(sub.instance->GetName() << " Take " << obj.instance->GetName() )
+	DUMP(Express(0))
 	return ACT_STAT_SUCCESS;
 }
 
@@ -76,4 +76,38 @@ void Take::InitEffects()
 	subHasObj[1] = obj;
 
 	m_effects.push_back(subHasObj);
+}
+
+std::string Take::Express(Agent* agent)
+{
+	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	
+	std::string _agent;
+	std::string _patient;
+	
+	/// XIBB /// weirdest error. agent cannot be cast down to Object*. Why?
+
+	if(sub->instance == (Object*)agent)
+	{
+		_agent = "I";
+	}
+	else
+	{
+		_agent = sub->instance->GetName();
+	}
+
+	if(obj->instance == (Object*)agent)
+	{
+		_patient = "me";
+	}
+	else
+	{
+		_patient = obj->instance->GetName();
+	}
+
+	std::stringstream str;
+	str << _agent << " took " << _patient;
+
+	return str.str();
 }

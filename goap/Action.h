@@ -10,6 +10,8 @@
 #include <map>
 #include <list>
 #include <vector>
+#include <string>
+#include <sstream>
 
 namespace GOAP
 {
@@ -22,7 +24,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ActionStatus Execute() override;
+		virtual ActionStatus Execute(int turn) override;
 		ActionStatus GetStatus();
 		virtual operator ActionType();
 
@@ -47,13 +49,15 @@ namespace GOAP
 		void Initialize();
 		void UpdateConditionInstances();
 
+		virtual std::string Express(Agent* agent) = 0;
+
 	protected:
 
 		virtual void InitArgs() = 0;
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
 
-		virtual ActionStatus ExecuteWorkhorse() = 0;
+		virtual ActionStatus ExecuteWorkhorse(int turn) = 0;
 
 		// XIBB make sure these can't run unless their respective data
 		// has been initialized
@@ -65,7 +69,7 @@ namespace GOAP
 		void UpdateEffectInstances();
 		void UpdatePrecondInstances();
 		
-		void Dispatch();
+		void Dispatch(int turn);
 
 		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
@@ -80,7 +84,6 @@ namespace GOAP
 		ActionStatus m_status;
 
 		int m_time;
-
 	};
 }
 #endif

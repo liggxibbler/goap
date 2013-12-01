@@ -19,8 +19,10 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual GoTo* Clone();
 
+		virtual std::string Express(Agent* agent) override;
+
 	private:
-		virtual ActionStatus ExecuteWorkhorse();
+		virtual ActionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

@@ -97,11 +97,11 @@
     <ClCompile Include="Stab.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
-    <ClCompile Include="Wander.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionList.h" />
+    <ClInclude Include="ActionRecord.h" />
     <ClInclude Include="Blade.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Action.h" />
@@ -132,7 +132,6 @@
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
-    <ClInclude Include="Wander.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>

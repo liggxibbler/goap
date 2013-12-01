@@ -20,7 +20,7 @@ namespace GOAP
 		virtual Wander* Clone();
 
 	private:
-		virtual ActionStatus ExecuteWorkhorse();
+		virtual ActionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

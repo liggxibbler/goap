@@ -33,7 +33,7 @@ Wander* Wander::Clone()
 	return newWander;
 }
 
-ActionStatus Wander::ExecuteWorkhorse()
+ActionStatus Wander::ExecuteWorkhorse(int turn)
 {
 	return ACT_STAT_DONE;
 }

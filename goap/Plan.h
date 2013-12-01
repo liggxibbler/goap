@@ -14,7 +14,7 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		virtual ActionStatus Execute() override;
+		virtual ActionStatus Execute(int turn) override;
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();

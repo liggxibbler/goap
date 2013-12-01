@@ -48,6 +48,8 @@ private:
 	bool m_running;
 	bool m_murder;
 
+	int m_turn;
+
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
 	std::vector<GOAP::Object*>	m_objects;

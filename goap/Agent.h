@@ -7,6 +7,7 @@
 #include "Condition.h"
 #include "Goal.h"
 #include "Plan.h"
+#include "ActionRecord.h"
 #include <list>
 #include <vector>
 #include <map>
@@ -55,10 +56,12 @@ namespace GOAP
 
 		virtual bool CanBeMurderWeapon();
 
-		void Log(Action* action);
+		void Log(int turn, Action* action);
 
 		bool GetMurder();
 		void DoneMurder(bool flag);
+
+		void Answer(Object* obj, QuestionType qt, int turn);
 
 	protected:
 		void Interview();
@@ -76,7 +79,7 @@ namespace GOAP
 
 		IExecutable* m_nextExecution;
 
-		std::vector<Action*> m_actionLog;
+		std::vector<ActionRecord> m_actionLog;
 	};
 }
 

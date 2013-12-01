@@ -11,7 +11,7 @@ using namespace std;
 
 using namespace GOAP;
 
-Game::Game() : m_roam(true), m_running(true)
+Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 }
 
@@ -59,7 +59,12 @@ void Game::Roam()
 	cout << "\nYou can interview:\n";
 	for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
 	{
-		cout << item++ << ") " << (*iter)->GetName() << endl;
+		cout << item++ << ") " << (*iter)->GetName();
+		if((*iter)->GetAttrib(ATTRIB_TYPE_ALIVE) == false)
+		{
+			cout << " [DEAD]";
+		}
+		cout << endl;
 		m_vecAgent.push_back(*iter);
 	}
 
@@ -104,95 +109,103 @@ void Game::Roam()
 
 void Game::Interview()
 {
-	m_vecObject.clear();
-	m_vecAgent.clear();
+	//m_vecObject.clear();
+	//m_vecAgent.clear();
 
-	cout << "========================\n\n";
-	cout << "You are interviewing " << m_currentAgent->GetName() << ":\n";
-	cout << "What/who would you like to ask about :\n";
-	
-	int item = 1;
-	for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
-	{
-		/*list objects*/
-		for(auto object((*room)->GetFirstObject());object != (*room)->GetLastObject(); ++object)
-		{
-			cout << item++ << ") " << (*object)->GetName() << endl;
-			m_vecObject.push_back(*object);
-		}
-	}
+	//cout << "========================\n\n";
+	//cout << "You are interviewing " << m_currentAgent->GetName() << ":\n";
+	//cout << "What/who would you like to ask about :\n";
+	//
+	//int item = 1;
+	//for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+	//{
+	//	/*list objects*/
+	//	for(auto object((*room)->GetFirstObject());object != (*room)->GetLastObject(); ++object)
+	//	{
+	//		cout << item++ << ") " << (*object)->GetName() << endl;
+	//		m_vecObject.push_back(*object);
+	//	}
+	//}
 
-	int iAgent = item;
-	for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
-	{
-		/*list agents*/
-		for(auto agent((*room)->GetFirstAgent());agent != (*room)->GetLastAgent(); ++agent)
-		{
-			cout << item++ << ") " << (*agent)->GetName() << endl;
-			m_vecAgent.push_back(*agent);
-		}
-	}
+	//int iAgent = item;
+	//for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+	//{
+	//	/*list agents*/
+	//	for(auto agent((*room)->GetFirstAgent());agent != (*room)->GetLastAgent(); ++agent)
+	//	{
+	//		cout << item++ << ") " << (*agent)->GetName() << endl;
+	//		m_vecAgent.push_back(*agent);
+	//	}
+	//}
 
-	int accuse = item;
-	/*accuse if available*/
+	//int accuse = item;
+	///*accuse if available*/
 
-	/*go back (m_currentAgent = 0)*/
-	cout << "\nEnter 0 to go back to roam\n>>>";;
-	
-	int answer;
-	cin >> answer;
+	///*go back (m_currentAgent = 0)*/
+	//cout << "\nEnter 0 to go back to roam\n>>>";;
+	//
+	//int answer;
+	//cin >> answer;
 
-	if(answer == 0)
+	//if(answer == 0)
+	//{
+	//	m_roam = true;
+	//	m_currentAgent = 0;
+	//	return;
+	//}	
+
+	//std::string wasChar, choiceTwo;
+	//QuestionType qt2;
+	//Object* qObject = 0;
+
+	//if(answer < iAgent)
+	//	// object
+	//{
+	//	wasChar = "it was";
+	//	choiceTwo = "Who had it";
+	//	qt2 = Q_POSSESSION;
+	//	qObject = m_vecAgent[answer - 1];
+	//}
+	//else
+	//	// agent
+	//{
+	//	wasChar = "they were";
+	//	choiceTwo = "What they were doing";
+	//	qt2 = Q_ACTION;
+	//	qObject = m_vecAgent[answer - iAgent];
+	//}
+
+	//cout << "\nYou can ask about\n";
+	//cout << "1) Where " <<  wasChar << "\n";
+	//cout << "2) " << choiceTwo << "\n";
+	//
+	//cout << ">>>";
+	//cin >> answer;
+
+	//QuestionType question;
+
+	//if(answer == 1)
+	//{
+	//	question = Q_POSITION;
+	//}
+	//else
+	//{
+	//	question = qt2;
+	//}
+
+	int time;
+	cout << "\nWhat time?\n>>> ";
+	cin >> time;
+
+	if( time == 0 )
 	{
 		m_roam = true;
 		m_currentAgent = 0;
 		return;
-	}	
-
-	std::string wasChar, choiceTwo;
-	QuestionType qt2;
-	Object* qObject = 0;
-
-	if(answer < iAgent)
-		// object
-	{
-		wasChar = "it was";
-		choiceTwo = "Who had it";
-		qt2 = Q_POSSESSION;
-		qObject = m_vecAgent[answer - 1];
-	}
-	else
-		// agent
-	{
-		wasChar = "they were";
-		choiceTwo = "What they were doing";
-		qt2 = Q_ACTION;
-		qObject = m_vecAgent[answer - iAgent];
 	}
 
-	cout << "\nYou can ask about\n";
-	cout << "1) Where " <<  wasChar << "\n";
-	cout << "2) " << choiceTwo << "\n";
-	
-	cout << ">>>";
-	cin >> answer;
-
-	QuestionType question;
-
-	if(answer == 1)
-	{
-		question = Q_POSITION;
-	}
-	else
-	{
-		question = qt2;
-	}
-
-	cout << "\nWhat time?\n>>> ";
-	cin >> answer;
-
-	// time = military2time(answer)
-	// Ask(m_currentAgent, qObject, question, time);
+	//m_currentAgent->Answer(qObject, question, answer);
+	m_currentAgent->Answer(0, Q_ACTION, time);
 }
 
 bool Game::Run(/*database class thing*/)
@@ -216,11 +229,11 @@ void Game::GeneratePlot()
 		{
 			for(auto object((*room)->GetFirstObject()); object != (*room)->GetLastObject(); ++object)
 			{
-				(*object)->Update(m_world, 0);
+				(*object)->Update(m_world, m_turn);
 			}
 			for(auto agent((*room)->GetFirstAgent()); agent != (*room)->GetLastAgent(); ++agent)
 			{
-				(*agent)->Update(m_world, 0);
+				(*agent)->Update(m_world, m_turn);
 				if( (*agent)->GetMurder())
 				{
 					m_murder = true;
@@ -228,7 +241,10 @@ void Game::GeneratePlot()
 				}
 			}
 		}
+#ifdef _DEBUG
 		cin.get();
+#endif
+		++m_turn;
 	}
 }
 

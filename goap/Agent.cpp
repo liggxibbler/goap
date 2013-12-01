@@ -3,7 +3,8 @@
 #include "Action.h"
 #include "Room.h"
 #include "World.h"
-#include "Wander.h"
+//#include "Wander.h"
+#include "ActionRecord.h"
 
 using namespace GOAP;
 
@@ -136,7 +137,7 @@ void Agent::Update(World* world, int turn)
 	m_bDoneMurder = false;
 	if(m_nextExecution != 0)
 	{
-		ActionStatus as = m_nextExecution->Execute();
+		ActionStatus as = m_nextExecution->Execute(turn);
 		if (as == ACT_STAT_SUCCESS)
 		{
 			m_nextExecution = 0;
@@ -179,9 +180,12 @@ void Agent::Interview()
 {
 }
 
-void Agent::Log(Action* action)
+void Agent::Log(int turn, Action* action)
 {
-	m_actionLog.push_back(action);
+	ActionRecord ar;
+	ar.action = action;
+	ar.turn = turn;
+	m_actionLog.push_back(ar);
 }
 
 void Agent::See(Room* room)
@@ -205,4 +209,15 @@ bool Agent::GetMurder()
 void Agent::DoneMurder(bool flag)
 {
 	m_bDoneMurder = flag;
+}
+
+void Agent::Answer(Object* obj, QuestionType qt, int turn)
+{
+	for(unsigned int i=0; i<m_actionLog.size();++i)
+	{
+		if(m_actionLog[i].turn == turn)
+		{
+			std::cout << m_actionLog[i].action->Express(this);
+		}
+	}
 }

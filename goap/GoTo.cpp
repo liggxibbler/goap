@@ -19,7 +19,7 @@ GoTo::~GoTo()
 {
 }
 
-ActionStatus GoTo::ExecuteWorkhorse()
+ActionStatus GoTo::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
@@ -30,7 +30,7 @@ ActionStatus GoTo::ExecuteWorkhorse()
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->See(room);
 
-	DUMP(sub.instance->GetName() << " GoTo " << obj.instance->GetName())
+	DUMP(Express(0))
 
 	return ACT_STAT_SUCCESS;
 }
@@ -86,4 +86,35 @@ void GoTo::InitPreconditions()
 	// subject owns instrument
 	Condition condTrue(OP_LAYOUT_TYPE_TRUE, OPER_TYPE_TRUE);
 	m_preconds->AddCondition(condTrue);
+}
+
+std::string GoTo::Express(Agent* agent)
+{
+	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	
+	std::string _agent;
+	std::string _patient;
+
+	if(sub->instance == agent)
+	{
+		_agent = "I";
+	}
+	else
+	{
+		_agent = sub->instance->GetName();
+	}
+
+	if(obj->instance == agent)
+	{
+		_patient = "me";
+	}
+	else
+	{
+		_patient = obj->instance->GetName();
+	}
+	
+	std::stringstream str;
+	str << _agent << " went to " << _patient;
+	return str.str();
 }

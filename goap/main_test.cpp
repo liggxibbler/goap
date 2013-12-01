@@ -21,8 +21,16 @@ void InitObjs(Object* o1, Agent* o2);
 void InitConds(Condition& cc_eq, Condition& cc_gt);
 
 int main()
-{
-	Agent a1, a2, a3;
+{	
+	Game* game = new Game();
+	game->Initialize();
+	game->Run();
+	
+	return 0;
+}
+
+void other()
+{Agent a1, a2, a3;
 	Object o1, o2, o3;
 
 	Room* r1 = new Room("room1",ROOM_BATHROOM), *r2 = new Room("room2",ROOM_BATHROOM);
@@ -117,7 +125,7 @@ int main()
 	if(plan->GetStatus() == PLAN_STAT_SUCCESS)
 	{
 		ActionStatus stat = ACT_STAT_UNKNOWN;
-		while(plan->Execute() != ACT_STAT_SUCCESS)
+		while(plan->Execute(0) != ACT_STAT_SUCCESS)
 		{
 		}
 	}
@@ -125,13 +133,10 @@ int main()
 	{
 		DUMP("Planning failed")
 	}
+#ifdef _DEBUG
 	cin.get();
+#endif
 	delete agent;
 	delete obj;
-	
-	Game* game = new Game();
-	game->Initialize();
-	game->Run();
-	
-	return 0;
+
 }

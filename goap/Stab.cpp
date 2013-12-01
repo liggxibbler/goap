@@ -14,14 +14,15 @@ Stab::~Stab()
 {
 }
 
-ActionStatus Stab::ExecuteWorkhorse()
+ActionStatus Stab::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT));
 
-	DUMP(sub.instance->GetName() << " Stab " << obj.instance->GetName() << " with " << ins.instance->GetName())
+	DUMP(Express(0))
 	
+
 	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
@@ -106,4 +107,37 @@ void Stab::InitPreconditions()
 	subNearObj[1].attrib = ATTRIB_TYPE_ROOM;
 	
 	m_preconds->AddCondition(subNearObj);
+}
+
+std::string Stab::Express(Agent* agent)
+{
+	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	auto ins = GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT);
+
+	std::string _agent;
+	std::string _patient;
+	std::string _instrument(ins->instance->GetName());
+
+	if(sub->instance == agent)
+	{
+		_agent = "I";
+	}
+	else
+	{
+		_agent = sub->instance->GetName();
+	}
+
+	if(obj->instance == agent)
+	{
+		_patient = "me";
+	}
+	else
+	{
+		_patient = obj->instance->GetName();
+	}
+
+	std::stringstream str;
+	str << _agent << " stabbed " << _patient << " with " << _instrument;
+	return str.str();
 }

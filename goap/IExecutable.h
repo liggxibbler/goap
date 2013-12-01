@@ -8,7 +8,7 @@ namespace GOAP
 	class IExecutable
 	{
 	public:
-		virtual ActionStatus Execute() = 0;
+		virtual ActionStatus Execute(int turn) = 0;
 	};
 }
 #endif
