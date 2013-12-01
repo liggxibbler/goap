@@ -221,6 +221,11 @@ void Game::GeneratePlot()
 			for(auto agent((*room)->GetFirstAgent()); agent != (*room)->GetLastAgent(); ++agent)
 			{
 				(*agent)->Update(m_world, 0);
+				if( (*agent)->GetMurder())
+				{
+					m_murder = true;
+					(*agent)->DoneMurder(false);
+				}
 			}
 		}
 		cin.get();

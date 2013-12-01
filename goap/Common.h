@@ -108,6 +108,8 @@ namespace GOAP
 		ACTION_CHOKE,
 		ACTION_STAB,
 
+		ACTION_MURDER,
+
 		ACTION_TEST,
 		ACTION_ACTION
 	};
@@ -120,6 +122,9 @@ namespace GOAP
 		ACT_STAT_SUCCESS,
 		//ACT_STAT_IDLE,
 		ACT_STAT_UNKNOWN,		
+
+		ACT_STAT_MURDER,
+		ACT_STAT_NONE,
 
 		ACT_STAT_DONE		// mark the successful execution of a plan?
 	};

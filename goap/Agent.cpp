@@ -7,7 +7,7 @@
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0), m_nextExecution(0)
+Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false)
 {
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
@@ -18,7 +18,7 @@ Agent::Agent() : m_goal(0), m_nextExecution(0)
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0)
+Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false)
 {
 	m_name = name;
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
@@ -133,6 +133,7 @@ int Agent::GetCompoundType()
 
 void Agent::Update(World* world, int turn)
 {
+	m_bDoneMurder = false;
 	if(m_nextExecution != 0)
 	{
 		ActionStatus as = m_nextExecution->Execute();
@@ -194,4 +195,14 @@ void Agent::See(Room* room)
 	{
 		See(*agent);
 	}
+}
+
+bool Agent::GetMurder()
+{
+	return m_bDoneMurder;
+}
+
+void Agent::DoneMurder(bool flag)
+{
+	m_bDoneMurder = flag;
 }

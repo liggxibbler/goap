@@ -31,6 +31,7 @@ ActionStatus Plan::Execute()
 		switch(stat)
 		{
 		case ACT_STAT_SUCCESS:
+		case ACT_STAT_MURDER:
 			// delete this one
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed

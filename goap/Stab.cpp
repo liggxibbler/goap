@@ -23,8 +23,9 @@ ActionStatus Stab::ExecuteWorkhorse()
 	DUMP(sub.instance->GetName() << " Stab " << obj.instance->GetName() << " with " << ins.instance->GetName())
 	
 	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
-
-	return ACT_STAT_SUCCESS;
+	Agent* agent = dynamic_cast<Agent*>(sub.instance);
+	agent->DoneMurder(true);
+	return ACT_STAT_MURDER;
 }
 
 Stab::operator ActionType()

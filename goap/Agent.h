@@ -57,6 +57,9 @@ namespace GOAP
 
 		void Log(Action* action);
 
+		bool GetMurder();
+		void DoneMurder(bool flag);
+
 	protected:
 		void Interview();
 
@@ -68,6 +71,8 @@ namespace GOAP
 		int m_isAlive;
 		Planner* m_planner;
 		Plan* m_plan;
+
+		bool m_bDoneMurder;
 
 		IExecutable* m_nextExecution;
 
