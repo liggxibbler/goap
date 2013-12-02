@@ -62,6 +62,7 @@ namespace GOAP
 		void DoneMurder(bool flag);
 
 		void Answer(Object* obj, QuestionType qt, int turn);
+		void GiveStatement();
 
 	protected:
 		void Interview();

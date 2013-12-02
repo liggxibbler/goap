@@ -220,4 +220,13 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 			std::cout << m_actionLog[i].action->Express(this);
 		}
 	}
+	//GiveStatement();
+}
+
+void Agent::GiveStatement()
+{
+	for(unsigned int i=0; i<m_actionLog.size(); ++i)
+	{
+		std::cout << "At " << m_actionLog[i].turn << " " << m_actionLog[i].action->Express(this) << std::endl;
+	}
 }
