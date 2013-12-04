@@ -260,14 +260,14 @@ void Agent::DoneMurder(bool flag)
 
 void Agent::Answer(Object* obj, QuestionType qt, int turn)
 {
-	for(unsigned int i=0; i<m_actionLog.size();++i)
+	/*for(unsigned int i=0; i<m_actionLog.size();++i)
 	{
 		if(m_actionLog[i].turn == turn)
 		{
 			std::cout << m_actionLog[i].action->Express(this);
 		}
-	}
-	//GiveStatement();
+	}*/
+	GiveStatement();
 }
 
 void Agent::GiveStatement()
