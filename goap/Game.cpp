@@ -336,51 +336,6 @@ void Game::InitializeAgents()
 
 	m_agents.clear();
 
-<<<<<<< HEAD
-	m_agents.push_back(new GOAP::Agent("Alborz"));
-	(*m_agents[0])[ATTRIB_TYPE_POSX] = 3;
-	(*m_agents[0])[ATTRIB_TYPE_POSY] = 1;
-	(*m_agents[0])[ATTRIB_TYPE_HEIGHT] = 30;
-	(*m_agents[0])[ATTRIB_TYPE_WEIGHT] = 20;
-	(*m_agents[0])[ATTRIB_TYPE_ALIVE] = true;
-	
-	m_agents[0]->AddAction(ACTION_SHOOT);
-	//m_agents[0]->AddAction(ACTION_STRANGLE);
-	//m_agents[0]->AddAction(ACTION_BLUGEON);
-	m_agents[0]->AddAction(ACTION_GOTO);
-	m_agents[0]->AddAction(ACTION_TAKE);
-	//m_agents[0]->AddAction(ACTION_STAB);
-
-
-
-	m_agents.push_back(new GOAP::Agent("Dysh"));
-	(*m_agents[1])[ATTRIB_TYPE_POSX] = 5;
-	(*m_agents[1])[ATTRIB_TYPE_POSY] = 1;
-	(*m_agents[1])[ATTRIB_TYPE_HEIGHT] = 30;
-	(*m_agents[1])[ATTRIB_TYPE_WEIGHT] = 20;
-	(*m_agents[1])[ATTRIB_TYPE_ALIVE] = true;
-
-	m_agents.push_back(new GOAP::Agent("Jim"));
-	(*m_agents[2])[ATTRIB_TYPE_POSX] = 5;
-	(*m_agents[2])[ATTRIB_TYPE_POSY] = 1;
-	(*m_agents[2])[ATTRIB_TYPE_HEIGHT] = 30;
-	(*m_agents[2])[ATTRIB_TYPE_WEIGHT] = 20;
-	(*m_agents[2])[ATTRIB_TYPE_ALIVE] = true;
-
-	m_agents.push_back(new GOAP::Agent("Joe"));
-	(*m_agents[3])[ATTRIB_TYPE_POSX] = 5;
-	(*m_agents[3])[ATTRIB_TYPE_POSY] = 1;
-	(*m_agents[3])[ATTRIB_TYPE_HEIGHT] = 30;
-	(*m_agents[3])[ATTRIB_TYPE_WEIGHT] = 20;
-	(*m_agents[3])[ATTRIB_TYPE_ALIVE] = true;
-
-	m_agents.push_back(new GOAP::Agent("Bob"));
-	(*m_agents[4])[ATTRIB_TYPE_POSX] = 5;
-	(*m_agents[4])[ATTRIB_TYPE_POSY] = 1;
-	(*m_agents[4])[ATTRIB_TYPE_HEIGHT] = 30;
-	(*m_agents[4])[ATTRIB_TYPE_WEIGHT] = 20;
-	(*m_agents[4])[ATTRIB_TYPE_ALIVE] = true;
-=======
 	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS ; ++i)
 		m_agents.push_back(new GOAP::Agent());
 	
@@ -449,8 +404,6 @@ void Game::InitializeAgents()
 	//probably just tag murderer here and move these to the agents class:
 	m_agents[MURDERER_ID]->AddAction(ACTION_GOTO);
 	m_agents[MURDERER_ID]->AddAction(ACTION_TAKE);
-	
->>>>>>> 4570f873de3c44f92b354ef1b8be57317a15af89
 }
 
 void Game::InitializeObjects()
