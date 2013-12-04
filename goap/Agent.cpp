@@ -8,7 +8,8 @@
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false)
+Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), 
+				 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
 	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
@@ -19,7 +20,8 @@ Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false)
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false)
+Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), 
+								 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_name = name;
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
@@ -33,6 +35,24 @@ Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(fa
 
 Agent::Agent(const Agent& other)
 {
+}
+
+void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory, 
+								int locationProbability[], bool canStab, bool canStrangle, 
+								bool canShoot, bool canBludgeon, int height, int weight)
+{
+	m_name = name;
+	m_height = height;
+	m_weight = weight; 
+	m_backStory = backStory;
+	m_gender = gender;
+
+	//m_locationProbability[ROOM_KITCHEN] = locationProbability[0] ;//TO_DO: the roulette thingie and for all of the 5 rooms
+
+	//give actions based on the "can" booleans:
+	if (canStab)
+		this->AddAction(ACTION_STAB);
+	//TO_DO: the rest of em
 }
 
 Agent::~Agent()
