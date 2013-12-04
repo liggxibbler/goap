@@ -5,6 +5,9 @@
 #include "Room.h"
 #include "World.h"
 #include "Blade.h"
+#include "Blunt.h"
+#include "Squeezer.h"
+#include "Projectile.h"
 
 #include <iostream>
 using namespace std;
@@ -318,6 +321,7 @@ void Game::PopulateRooms()
 
 	(*room)->AddObject(m_objects[0]);//living
 	(*room)->AddObject(m_objects[4]);
+	(*room)->AddObject(m_objects[7]);
 	++room;
 
 	(*room)->AddObject(m_objects[5]);//dining
@@ -334,9 +338,14 @@ void Game::InitializeAgents()
 	(*m_agents[0])[ATTRIB_TYPE_HEIGHT] = 30;
 	(*m_agents[0])[ATTRIB_TYPE_WEIGHT] = 20;
 	(*m_agents[0])[ATTRIB_TYPE_ALIVE] = true;
+	
+	m_agents[0]->AddAction(ACTION_SHOOT);
+	//m_agents[0]->AddAction(ACTION_STRANGLE);
+	//m_agents[0]->AddAction(ACTION_BLUGEON);
 	m_agents[0]->AddAction(ACTION_GOTO);
 	m_agents[0]->AddAction(ACTION_TAKE);
-	m_agents[0]->AddAction(ACTION_STAB);
+	//m_agents[0]->AddAction(ACTION_STAB);
+
 
 
 	m_agents.push_back(new GOAP::Agent("Dysh"));
@@ -399,11 +408,11 @@ void Game::InitializeObjects()
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 	
-	obj = new Object("Rope");
+	obj = new Squeezer("Rope");
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
 	
-	obj = new Object("Statue");
+	obj = new Blunt("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);
 
@@ -413,5 +422,9 @@ void Game::InitializeObjects()
 
 	obj = new Object("Table");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM | ROOM_LIVING_ROOM);
+	m_objects.push_back(obj);
+
+	obj = new Projectile("Gun");
+	obj->MayBeFoundIn(ROOM_BEDROOM);
 	m_objects.push_back(obj);
 }

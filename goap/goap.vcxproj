@@ -75,6 +75,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Blade.cpp" />
+    <ClCompile Include="Blugeon.cpp" />
+    <ClCompile Include="Blunt.cpp" />
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionManager.cpp" />
@@ -93,8 +95,12 @@
     <ClCompile Include="Owns.cpp" />
     <ClCompile Include="Plan.cpp" />
     <ClCompile Include="Planner.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Shoot.cpp" />
+    <ClCompile Include="Squeezer.cpp" />
     <ClCompile Include="Stab.cpp" />
+    <ClCompile Include="Strangle.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
     <ClCompile Include="World.cpp" />
@@ -103,6 +109,8 @@
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="ActionRecord.h" />
     <ClInclude Include="Blade.h" />
+    <ClInclude Include="Blugeon.h" />
+    <ClInclude Include="Blunt.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Action.h" />
     <ClInclude Include="ActionManager.h" />
@@ -127,8 +135,12 @@
     <ClInclude Include="Owns.h" />
     <ClInclude Include="Plan.h" />
     <ClInclude Include="Planner.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Shoot.h" />
+    <ClInclude Include="Squeezer.h" />
     <ClInclude Include="Stab.h" />
+    <ClInclude Include="Strangle.h" />
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />

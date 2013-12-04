@@ -4,9 +4,12 @@ using namespace GOAP;
 
 ActionManager::ActionManager()
 {
-	m_mapAction[ACTION_STAB] = new Stab();
-	m_mapAction[ACTION_GOTO] = new GoTo();
-	m_mapAction[ACTION_TAKE] = new Take();
+	m_mapAction[ACTION_STAB]		= new Stab();
+	m_mapAction[ACTION_GOTO]		= new GoTo();
+	m_mapAction[ACTION_TAKE]		= new Take();
+	m_mapAction[ACTION_BLUGEON]		= new Blugeon();
+	m_mapAction[ACTION_STRANGLE]	= new Strangle();
+	m_mapAction[ACTION_SHOOT]		= new Shoot();
 
 	InitializePrototypes();
 }
