@@ -24,13 +24,21 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
 
+	Room* oldRoom = sub.instance->GetRoom();
 	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
-	Room* room = obj.instance->GetRoom();
-	sub.instance->SetRoom(room);
-	Agent* agent = dynamic_cast<Agent*>(sub.instance);
-	agent->See(room);
+	Room* nextRoom = obj.instance->GetRoom();
+	//sub.instance->SetRoom(room);
+	
+	if(oldRoom != nextRoom)
+	{
+		oldRoom->MarkForDeletion((Agent*)sub.instance);
+		
+		nextRoom->AddAgent((Agent*)(sub.instance));
+		Agent* agent = dynamic_cast<Agent*>(sub.instance);
+		agent->See(nextRoom);
 
-	DUMP(Express(0))
+		DUMP(Express(0))
+	}
 
 	return ACT_STAT_SUCCESS;
 }
@@ -117,4 +125,9 @@ std::string GoTo::Express(Agent* agent)
 	std::stringstream str;
 	str << _agent << " went to " << _patient;
 	return str.str();
+}
+
+GoTo::operator std::string()
+{
+	return "GoTo";
 }

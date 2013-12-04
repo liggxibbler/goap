@@ -3,6 +3,7 @@
 
 #include <string>
 #include <list>
+#include <set>
 #include "Common.h"
 #include "Object.h"
 
@@ -36,12 +37,16 @@ namespace GOAP
 		std::list<Object*>::iterator GetFirstObject();
 		std::list<Object*>::iterator GetLastObject();
 
-		std::list<Agent*>::iterator GetFirstAgent();
-		std::list<Agent*>::iterator GetLastAgent();
+		std::set<Agent*>::iterator GetFirstAgent();
+		std::set<Agent*>::iterator GetLastAgent();
 
 		RoomName GetType();
 
 		int GetID();
+
+		virtual bool Update(World* world, int turn);
+
+		void MarkForDeletion(Agent* agent);
 
 	private:
 		static int s_nextID;
@@ -49,7 +54,8 @@ namespace GOAP
 		RoomName m_type;
 		//std::string m_name;
 		std::list<Object*> m_objects;
-		std::list<Agent*> m_agents;
+		std::set<Agent*> m_agents;
+		std::set<Agent*> m_markedForDeletion;
 		int m_ID;
 
 		Room* m_left;

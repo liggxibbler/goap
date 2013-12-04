@@ -32,6 +32,25 @@ void World::AddRoom(Room* room)
 
 Room* World::GetRoom(std::string name)
 {
+	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	{
+		if ((*room)->GetName() == name)
+		{
+			return *room;
+		}
+	}
+	return 0;
+}
+
+Room* World::GetRoom(int id)
+{
+	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	{
+		if ((*room)->GetID() == id)
+		{
+			return *room;
+		}
+	}
 	return 0;
 }
 

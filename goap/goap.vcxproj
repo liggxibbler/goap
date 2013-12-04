@@ -75,7 +75,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Blade.cpp" />
-    <ClCompile Include="Blugeon.cpp" />
+    <ClCompile Include="Bludgeon.cpp" />
     <ClCompile Include="Blunt.cpp" />
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Action.cpp" />
@@ -109,7 +109,7 @@
     <ClInclude Include="ActionList.h" />
     <ClInclude Include="ActionRecord.h" />
     <ClInclude Include="Blade.h" />
-    <ClInclude Include="Blugeon.h" />
+    <ClInclude Include="Bludgeon.h" />
     <ClInclude Include="Blunt.h" />
     <ClInclude Include="Condition.h" />
     <ClInclude Include="Action.h" />

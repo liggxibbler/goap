@@ -8,6 +8,8 @@
 #define DUMP(X)
 #endif
 
+#define NUMBER_OF_ROOMS 5
+
 namespace GOAP
 {
 	struct Position
@@ -109,7 +111,7 @@ namespace GOAP
 		ACTION_DROP,
 		
 		ACTION_STAB,
-		ACTION_BLUGEON,
+		ACTION_BLUDGEON,
 		ACTION_STRANGLE,
 		ACTION_SHOOT,
 

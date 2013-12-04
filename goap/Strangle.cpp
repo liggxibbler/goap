@@ -141,3 +141,8 @@ std::string Strangle::Express(Agent* agent)
 	str << _agent << " strangled " << _patient << " with " << _instrument;
 	return str.str();
 }
+
+Strangle::operator std::string()
+{
+	return "Strangle";
+}

@@ -20,6 +20,7 @@ namespace GOAP
 		virtual GoTo* Clone();
 
 		virtual std::string Express(Agent* agent) override;
+		virtual operator std::string() override;
 
 	private:
 		virtual ActionStatus ExecuteWorkhorse(int turn);

@@ -89,12 +89,12 @@ std::list<Object*>::iterator Room::GetLastObject()
 }
 
 
-std::list<Agent*>::iterator Room::GetFirstAgent()
+std::set<Agent*>::iterator Room::GetFirstAgent()
 {
 	return m_agents.begin();
 }
 
-std::list<Agent*>::iterator Room::GetLastAgent()
+std::set<Agent*>::iterator Room::GetLastAgent()
 {
 	return m_agents.end();
 }
@@ -102,7 +102,7 @@ std::list<Agent*>::iterator Room::GetLastAgent()
 Agent* Room::AddAgent(std::string name)
 {
 	Agent* agent = new Agent(name);
-	m_agents.push_back(agent);
+	m_agents.insert(agent);
 	agent->SetRoom(this);
 	agent->See(this);
 	return agent;
@@ -110,11 +110,54 @@ Agent* Room::AddAgent(std::string name)
 
 void Room::AddAgent(Agent* agent)
 {
-	m_agents.push_back(agent);
+	m_agents.insert(agent);
 	agent->SetRoom(this);
 }
 
 RoomName Room::GetType()
 {
 	return m_type;
+}
+
+bool Room::Update(World* world, int turn)
+{
+	bool result = false;
+	bool murder = false;
+
+	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
+	{
+		(*object)->Update(world, turn);
+	}
+	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+	{
+		murder = (*agent)->Update(world, turn);
+		if( murder )
+		{
+			result = true;
+			(*agent)->DoneMurder(false);
+		}
+	}
+	
+	// this deletion block copied from stackoverflow.com
+	auto it = m_agents.begin();
+	while(it != m_agents.end())
+	{
+		if (m_markedForDeletion.find(*it) != m_markedForDeletion.end())
+		{
+			// post-increment operator returns a copy, then increment
+			m_agents.erase(it++);
+		}
+		else
+		{
+			// pre-increment operator increments, then return
+			++it;
+		}
+	}
+
+	return result;
+}
+
+void Room::MarkForDeletion(Agent* agent)
+{
+	m_markedForDeletion.insert(agent);
 }

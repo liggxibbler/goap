@@ -47,12 +47,37 @@ void Agent::InitializeCharacter(std::string name, Gender gender, std::string bac
 	m_backStory = backStory;
 	m_gender = gender;
 
-	//m_locationProbability[ROOM_KITCHEN] = locationProbability[0] ;//TO_DO: the roulette thingie and for all of the 5 rooms
+	this->AddAction(ACTION_GOTO);
+
+	for(int i = 0; i<NUMBER_OF_ROOMS; ++i)
+	{
+		if(i==0)
+		{
+			m_locationProbability[i] = locationProbability[i];
+		}
+		else
+		{
+			m_locationProbability[i] = locationProbability[i] + locationProbability[i-1];
+		}
+	}
 
 	//give actions based on the "can" booleans:
 	if (canStab)
+	{
 		this->AddAction(ACTION_STAB);
-	//TO_DO: the rest of em
+	}
+	if (canBludgeon)
+	{
+		this->AddAction(ACTION_BLUDGEON);
+	}
+	if (canShoot)
+	{
+		this->AddAction(ACTION_SHOOT);
+	}
+	if (canStrangle)
+	{
+		this->AddAction(ACTION_STRANGLE);
+	}
 }
 
 Agent::~Agent()
@@ -152,7 +177,7 @@ int Agent::GetCompoundType()
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
 }
 
-void Agent::Update(World* world, int turn)
+bool Agent::Update(World* world, int turn)
 {
 	m_bDoneMurder = false;
 	if(m_nextExecution != 0)
@@ -183,6 +208,8 @@ void Agent::Update(World* world, int turn)
 			m_nextExecution = 0;
 		}
 	}
+
+	return m_bDoneMurder;
 }
 
 void Agent::Examine()
@@ -248,5 +275,20 @@ void Agent::GiveStatement()
 	for(unsigned int i=0; i<m_actionLog.size(); ++i)
 	{
 		std::cout << "At " << m_actionLog[i].turn << " " << m_actionLog[i].action->Express(this) << std::endl;
+	}
+}
+
+RoomName Agent::GetNextRoom()
+{
+	static RoomName rooms[] = {ROOM_KITCHEN, ROOM_LIVING_ROOM, ROOM_DINING_ROOM, ROOM_BATHROOM, ROOM_BEDROOM};
+	
+	int random = rand() % 100;
+	
+	for (int i=0; i<NUMBER_OF_ROOMS;++i)
+	{
+		if (random < m_locationProbability[i])
+		{
+			return rooms[i];
+		}
 	}
 }

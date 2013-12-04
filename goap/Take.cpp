@@ -111,3 +111,8 @@ std::string Take::Express(Agent* agent)
 
 	return str.str();
 }
+
+Take::operator std::string()
+{
+	return "Take";
+}

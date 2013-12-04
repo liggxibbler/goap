@@ -26,7 +26,7 @@ namespace GOAP
 		int GetID();
 		Object* GetOwner();
 
-		virtual void Update(World* world, int turn);
+		virtual bool Update(World* world, int turn);
 
 		virtual int GetCompoundType();
 

@@ -132,9 +132,6 @@
     <ClCompile Include="World.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
-    <ClCompile Include="Blugeon.cpp">
-      <Filter>Source Files\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Blunt.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -149,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bludgeon.cpp">
+      <Filter>Source Files\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +251,6 @@
     <ClInclude Include="ActionRecord.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Blugeon.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Blunt.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
@@ -268,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Bludgeon.h">
+      <Filter>Header Files\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

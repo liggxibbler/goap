@@ -1,22 +1,23 @@
-#ifndef _GOAP_BLUGEON_H_
-#define _GOAP_BLUGEON_H_
+#ifndef _GOAP_BLUDGEON_H_
+#define _GOAP_BLUDGEON_H_
 
 #include "Action.h"
 #include "Agent.h"
 
 namespace GOAP
 {
-	class Blugeon : public Action
+	class Bludgeon : public Action
 	{
 	public:
-		Blugeon();
-		Blugeon(const Blugeon& other);
-		~Blugeon();
+		Bludgeon();
+		Bludgeon(const Bludgeon& other);
+		~Bludgeon();
 
 		virtual operator ActionType();
-		virtual Blugeon* Clone();		
+		virtual Bludgeon* Clone();		
 
 		virtual std::string Express(Agent* agent) override;
+		virtual operator std::string() override;
 
 	private:
 		virtual ActionStatus ExecuteWorkhorse(int turn);

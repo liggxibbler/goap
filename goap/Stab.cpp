@@ -141,3 +141,8 @@ std::string Stab::Express(Agent* agent)
 	str << _agent << " stabbed " << _patient << " with " << _instrument;
 	return str.str();
 }
+
+Stab::operator std::string()
+{
+	return "Stab";
+}

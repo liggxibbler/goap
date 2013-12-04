@@ -6,7 +6,7 @@
 #include "Stab.h"
 #include "GoTo.h"
 #include "Take.h"
-#include "Blugeon.h"
+#include "Bludgeon.h"
 #include "Strangle.h"
 #include "Shoot.h"
 

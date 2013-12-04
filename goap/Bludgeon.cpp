@@ -1,20 +1,20 @@
-#include "Blugeon.h"
+#include "Bludgeon.h"
 
 using namespace GOAP;
 
-Blugeon::Blugeon()
+Bludgeon::Bludgeon()
 {
 }
 
-Blugeon::Blugeon(const Blugeon& other)
+Bludgeon::Bludgeon(const Bludgeon& other)
 {
 }
 
-Blugeon::~Blugeon()
+Bludgeon::~Bludgeon()
 {
 }
 
-ActionStatus Blugeon::ExecuteWorkhorse(int turn)
+ActionStatus Bludgeon::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
@@ -28,19 +28,19 @@ ActionStatus Blugeon::ExecuteWorkhorse(int turn)
 	return ACT_STAT_MURDER;
 }
 
-Blugeon::operator ActionType()
+Bludgeon::operator ActionType()
 {
-	return ACTION_BLUGEON;
+	return ACTION_BLUDGEON;
 }
 
-Blugeon* Blugeon::Clone()
+Bludgeon* Bludgeon::Clone()
 {
-	Blugeon* newBlugeon = new Blugeon();
-	newBlugeon->CloneData(this);
-	return newBlugeon;
+	Bludgeon* newBludgeon = new Bludgeon();
+	newBludgeon->CloneData(this);
+	return newBludgeon;
 }
 
-void Blugeon::InitArgs()
+void Bludgeon::InitArgs()
 {
 	ConditionParameter sub, obj, inst;
 	
@@ -65,7 +65,7 @@ void Blugeon::InitArgs()
 	m_args.push_back(inst);
 }
 
-void Blugeon::InitEffects()
+void Bludgeon::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	ConditionParameter obj = *GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
@@ -78,7 +78,7 @@ void Blugeon::InitEffects()
 	m_effects.push_back(objIsDead);
 }
 
-void Blugeon::InitPreconditions()
+void Bludgeon::InitPreconditions()
 {
 	// subject owns instrument
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
@@ -108,7 +108,7 @@ void Blugeon::InitPreconditions()
 	m_preconds->AddCondition(subNearObj);
 }
 
-std::string Blugeon::Express(Agent* agent)
+std::string Bludgeon::Express(Agent* agent)
 {
 	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
 	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
@@ -139,4 +139,9 @@ std::string Blugeon::Express(Agent* agent)
 	std::stringstream str;
 	str << _agent << " hit " << _patient << " in the head with " << _instrument;
 	return str.str();
+}
+
+Bludgeon::operator std::string()
+{
+	return "Bludgeon";
 }

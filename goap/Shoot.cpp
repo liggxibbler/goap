@@ -141,3 +141,8 @@ std::string Shoot::Express(Agent* agent)
 	str << _agent << " shot " << _patient << " with " << _instrument;
 	return str.str();
 }
+
+Shoot::operator std::string()
+{
+	return "Shoot";
+}

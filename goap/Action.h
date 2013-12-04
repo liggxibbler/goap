@@ -51,6 +51,8 @@ namespace GOAP
 
 		virtual std::string Express(Agent* agent) = 0;
 
+		virtual operator std::string() = 0;
+
 	protected:
 
 		virtual void InitArgs() = 0;

@@ -56,7 +56,7 @@ namespace GOAP
 		void See(Room* room);
 
 		virtual int GetCompoundType();
-		virtual void Update(World* world, int turn) override;
+		virtual bool Update(World* world, int turn) override;
 		virtual void Examine();
 
 		virtual bool CanBeMurderWeapon();
@@ -68,6 +68,8 @@ namespace GOAP
 
 		void Answer(Object* obj, QuestionType qt, int turn);
 		void GiveStatement();
+
+		RoomName GetNextRoom();
 
 	protected:
 		void Interview();
@@ -82,7 +84,7 @@ namespace GOAP
 		int m_weight;
 		Gender m_gender;
 		std::string m_backStory;
-		std::map <RoomName, int> m_locationProbability;
+		int m_locationProbability[NUMBER_OF_ROOMS];
 
 		int m_isAlive;
 		bool m_bDoneMurder;
