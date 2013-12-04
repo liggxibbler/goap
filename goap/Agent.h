@@ -32,6 +32,11 @@ namespace GOAP
 		Agent(const Agent& other);
 		~Agent();
 
+		void InitializeCharacter(std::string name, Gender gender, 
+								 std::string backStory, int locationProbability[], 
+								 bool canStab, bool canStrangle, bool canShoot, 
+								 bool canBludgeon, int height, int weight);
+
 		std::list<ActionType>::iterator FirstAction();
 		std::list<ActionType>::iterator LastAction();
 
@@ -69,14 +74,20 @@ namespace GOAP
 
 		Goal* m_goal;
 		std::list<ActionType> m_actions;
-		std::map<int, Object*> m_objects;
-		int m_height;
-		int m_weight;
-		int m_isAlive;
+		std::map<int, Object*> m_objects;	
 		Planner* m_planner;
 		Plan* m_plan;
 
+		int m_height;
+		int m_weight;
+		Gender m_gender;
+		std::string m_backStory;
+		std::map <RoomName, int> m_locationProbability;
+
+		int m_isAlive;
 		bool m_bDoneMurder;
+		bool m_isVictim;
+		bool m_isMurderer;
 
 		IExecutable* m_nextExecution;
 

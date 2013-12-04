@@ -328,10 +328,15 @@ void Game::PopulateRooms()
 	(*room)->AddObject(m_objects[6]);	
 }
 
+//hard-coding the characters by passing the variables to agent's initializer method
 void Game::InitializeAgents()
 {
+	int NUMBER_OF_CHARACTERS = 10;
+	int MURDERER_ID = 3;
+
 	m_agents.clear();
 
+<<<<<<< HEAD
 	m_agents.push_back(new GOAP::Agent("Alborz"));
 	(*m_agents[0])[ATTRIB_TYPE_POSX] = 3;
 	(*m_agents[0])[ATTRIB_TYPE_POSY] = 1;
@@ -375,6 +380,77 @@ void Game::InitializeAgents()
 	(*m_agents[4])[ATTRIB_TYPE_HEIGHT] = 30;
 	(*m_agents[4])[ATTRIB_TYPE_WEIGHT] = 20;
 	(*m_agents[4])[ATTRIB_TYPE_ALIVE] = true;
+=======
+	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS ; ++i)
+		m_agents.push_back(new GOAP::Agent());
+	
+
+	//0. Comrade Tartar
+	int locationProbability1[] = {0, 5, 50, 5, 40};
+	m_agents[0]->InitializeCharacter("Comrade Tartar", Gender::MALE
+	, "A Russia circus acrobat defected to England. A muscled and strong man that claims he has captured all the circus's bears barehanded"
+	, locationProbability1, true, true, false, true, 9, 10);
+
+	//1. Colonel Worcestershire
+	int locationProbability2[] = {0, 60, 5, 5, 30};
+	m_agents[1]->InitializeCharacter("Colonel Worcestershire", Gender::MALE
+	, "An old British military man. Though respected and feared by his men, old age has left visible marks on his body."
+	, locationProbability2, true, false, true, false, 8, 8);
+
+	//2. Don Gravy
+	int locationProbability3[] = {0, 30, 30, 5, 35};
+	m_agents[2]->InitializeCharacter("Don Gravy", Gender::MALE
+	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
+	, locationProbability3, true, true, true, true, 6, 9);
+
+	//3. Mademoiselle Velouté
+	int locationProbability4[] = {0, 30, 30, 10, 30};
+	m_agents[3]->InitializeCharacter("Mademoiselle Velouté", Gender::FEMALE
+	, "A French super model on holidays."
+	, locationProbability4, true, true, true, false, 6, 4);
+
+	//4. Madame Béchamel
+	int locationProbability5[] = {0, 15, 20, 5, 60};
+	m_agents[4]->InitializeCharacter("Madame Béchamel", Gender::FEMALE
+	, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
+	, locationProbability5, true, true, false, false, 5, 6);
+
+	//5. Mrs.Hollandaise
+	int locationProbability6[] = {30, 5, 30, 5, 30};
+	m_agents[5]->InitializeCharacter("Mrs. Hollandaise", Gender::FEMALE
+	, "The maid."
+	, locationProbability6, true, true, false, true, 5, 5);
+
+	//6. Mr.Hollandaise
+	int locationProbability7[] = {30, 5, 50, 5, 10};
+	m_agents[6]->InitializeCharacter("Mr.Hollandaise", Gender::MALE
+	, "The butler. A Dutch and French descendant butler and maid husband and wife"
+	, locationProbability7, true, true, false, true, 7, 6);
+
+	//7. Herr Duckefett
+	int locationProbability8[] = {0, 5, 50, 5, 40};
+	m_agents[7]->InitializeCharacter("Herr Duckefett", Gender::MALE
+	, "A German explorer. HAs a strange taste when it comes to women"
+	, locationProbability8, true, true, true, true, 8, 7);
+
+	//8. prof.Custard
+	int locationProbability9[] = {0, 35, 50, 5, 10};
+	m_agents[8]->InitializeCharacter("prof.Custard", Gender::MALE
+	, "British renowned "
+	, locationProbability9, true, true, true, true, 8, 7);
+
+	//9. Signor Bolognese
+	int locationProbability10[] = {0, 50, 5, 5, 40};
+	m_agents[9]->InitializeCharacter("Signor Bolognese", Gender::MALE
+	, "Italian, sleezy, barber, slim, fast, cheap"
+	, locationProbability10, true, true, true, true, 8, 7);
+
+
+	//probably just tag murderer here and move these to the agents class:
+	m_agents[MURDERER_ID]->AddAction(ACTION_GOTO);
+	m_agents[MURDERER_ID]->AddAction(ACTION_TAKE);
+	
+>>>>>>> 4570f873de3c44f92b354ef1b8be57317a15af89
 }
 
 void Game::InitializeObjects()

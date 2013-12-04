@@ -156,6 +156,12 @@ namespace GOAP
 		ROOM_BATHROOM		= 0x08,
 		ROOM_BEDROOM		= 0x10
 	};
+
+	enum Gender
+	{
+		MALE,
+		FEMALE
+	};
 }
 
 #endif
