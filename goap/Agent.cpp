@@ -208,6 +208,10 @@ bool Agent::Update(World* world, int turn)
 			m_nextExecution = 0;
 		}
 	}
+	else
+	{
+		DUMP(m_name << " has no goal to plan for at turn " << turn)
+	}
 
 	return m_bDoneMurder;
 }

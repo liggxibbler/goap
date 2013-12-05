@@ -236,6 +236,19 @@ void Game::GeneratePlot()
 				break;
 			}
 		}
+
+		for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+		{
+			(*room)->UpdateAgentPositions();
+		}
+
+
+		// this deletion block copied from stackoverflow.com
+	
+		DUMP("******************************")
+		DUMP("Turn " << m_turn << " is over.")
+		DUMP("******************************")
+		std::cin.get();
 		++m_turn;
 	}
 }

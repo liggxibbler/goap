@@ -31,14 +31,13 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 	
 	if(oldRoom != nextRoom)
 	{
-		oldRoom->MarkForDeletion((Agent*)sub.instance);
-		
-		nextRoom->AddAgent((Agent*)(sub.instance));
+		oldRoom->MarkForDeletion((Agent*)sub.instance);		
+		nextRoom->MarkForAddition((Agent*)(sub.instance));
 		Agent* agent = dynamic_cast<Agent*>(sub.instance);
 		agent->See(nextRoom);
-
-		DUMP(Express(0))
 	}
+
+	DUMP(Express(0))
 
 	return ACT_STAT_SUCCESS;
 }

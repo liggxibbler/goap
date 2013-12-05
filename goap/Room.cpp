@@ -124,12 +124,15 @@ bool Room::Update(World* world, int turn)
 	bool result = false;
 	bool murder = false;
 
+	DUMP("*** Updating room " << m_name << " at turn " << turn << " ***")
+
 	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
 	{
 		(*object)->Update(world, turn);
 	}
 	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
 	{
+		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
 		murder = (*agent)->Update(world, turn);
 		if( murder )
 		{
@@ -137,9 +140,38 @@ bool Room::Update(World* world, int turn)
 			(*agent)->DoneMurder(false);
 		}
 	}
-	
-	// this deletion block copied from stackoverflow.com
+
+	return result;
+}
+
+void Room::MarkForDeletion(Agent* agent)
+{
+	m_markedForDeletion.insert(agent);
+}
+
+void Room::MarkForAddition(Agent* agent)
+{
+	m_markedForAddition.insert(agent);
+}
+
+void Room::UpdateAgentPositions()
+{
 	auto it = m_agents.begin();
+	
+	while(it != m_agents.end())
+	{
+		if (m_markedForAddition.find(*it) != m_markedForAddition.end())
+		{
+			// post-increment operator returns a copy, then increment
+			m_agents.insert(*(it++));
+		}
+		else
+		{
+			// pre-increment operator increments, then return
+			++it;
+		}
+	}
+
 	while(it != m_agents.end())
 	{
 		if (m_markedForDeletion.find(*it) != m_markedForDeletion.end())
@@ -154,10 +186,5 @@ bool Room::Update(World* world, int turn)
 		}
 	}
 
-	return result;
-}
-
-void Room::MarkForDeletion(Agent* agent)
-{
-	m_markedForDeletion.insert(agent);
+	it = m_agents.begin();
 }

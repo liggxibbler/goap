@@ -47,8 +47,13 @@ namespace GOAP
 		virtual bool Update(World* world, int turn);
 
 		void MarkForDeletion(Agent* agent);
+		void MarkForAddition(Agent* agent);
+		void UpdateAgentPositions();
 
 	private:
+		void ClearMarkedAgents();
+		void AddMarkedAgents();
+		
 		static int s_nextID;
 
 		RoomName m_type;
@@ -56,6 +61,7 @@ namespace GOAP
 		std::list<Object*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
+		std::set<Object*> m_markedForAddition;
 		int m_ID;
 
 		Room* m_left;
