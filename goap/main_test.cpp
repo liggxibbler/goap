@@ -27,7 +27,7 @@ unsigned int seed;
 int main()
 {	
 	//seed = (unsigned int)time(NULL);
-	srand(1386261647);
+	//srand(1386261647);
 	
 	Game* game = new Game();
 	game->Initialize();

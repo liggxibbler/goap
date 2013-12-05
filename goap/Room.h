@@ -61,7 +61,7 @@ namespace GOAP
 		std::list<Object*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
-		std::set<Object*> m_markedForAddition;
+		std::set<Agent*> m_markedForAddition;
 		int m_ID;
 
 		Room* m_left;

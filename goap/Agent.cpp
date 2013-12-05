@@ -210,7 +210,7 @@ bool Agent::Update(World* world, int turn)
 	}
 	else
 	{
-		DUMP(m_name << " has no goal to plan for at turn " << turn)
+		DUMP("       **" << m_name << " has no goal to plan for at turn " << turn)
 	}
 
 	return m_bDoneMurder;
