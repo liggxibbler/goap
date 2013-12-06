@@ -313,18 +313,19 @@ void Game::PopulateRooms()
 	(*room)->AddObject(m_objects[1]);
 	(*room)->AddObject(m_objects[2]);
 	(*room)->AddObject(m_objects[3]);
-	(*room)->AddAgent(m_agents[0]);
 	++room;
 
 	(*room)->AddObject(m_objects[0]);//living
 	(*room)->AddObject(m_objects[4]);
 	(*room)->AddObject(m_objects[7]);
-	(*room)->AddAgent(m_agents[1]);
 	++room;
 
 	(*room)->AddObject(m_objects[5]);//dining
 	(*room)->AddObject(m_objects[6]);	
-	(*room)->AddAgent(m_agents[2]);
+
+	m_world->GetRandomRoom()->AddAgent(m_agents[0]);
+	m_world->GetRandomRoom()->AddAgent(m_agents[1]);
+	m_world->GetRandomRoom()->AddAgent(m_agents[2]);
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
