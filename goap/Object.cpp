@@ -28,9 +28,16 @@ Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0)
 	m_id = s_numObjects++;
 }
 
-Object::Object(const Object& other) : m_canBeFoundIn(0)
+Object::Object(const Object& other)
 {
-	// TBI
+	m_owner = other.m_owner;
+	m_name = other.m_name;
+	m_id = other.m_id;
+	m_canBeFoundIn = other.m_canBeFoundIn;
+
+	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
+	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
+	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
 }
 
 Object::~Object()
@@ -112,4 +119,9 @@ void Object::SetRoom(Room* room)
 Room* Object::GetRoom()
 {
 	return m_roomInstance;
+}
+
+Object* Object::Clone()
+{
+	return new Object(*this);
 }

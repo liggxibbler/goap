@@ -71,6 +71,8 @@ namespace GOAP
 
 		RoomName GetNextRoom();
 
+		virtual Object* Clone();
+
 	protected:
 		void Interview();
 

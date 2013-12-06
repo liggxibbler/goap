@@ -43,6 +43,8 @@ namespace GOAP
 		Room* GetRoom();
 		void SetRoom(Room* room);
 
+		virtual Object* Clone();
+
 	protected:
 		static int s_numObjects;
 		int m_id;

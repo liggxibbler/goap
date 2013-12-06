@@ -71,13 +71,6 @@ std::string Room::GetName()
 	return m_name;
 }
 
-
-Room* Room::Clone()
-{
-	return 0;
-}
-
-
 std::list<Object*>::iterator Room::GetFirstObject()
 {
 	return m_objects.begin();
@@ -180,4 +173,9 @@ void Room::UpdateAgentPositions()
 
 	m_markedForAddition.clear();
 	m_markedForDeletion.clear();
+}
+
+Object* Room::Clone()
+{
+	return new Room(*this);
 }

@@ -33,8 +33,16 @@ Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(fa
 	See(this); // Know thyself
 }
 
-Agent::Agent(const Agent& other)
+Agent::Agent(const Agent& other) : Object(other)
 {
+	
+	m_height = other.m_height;
+	m_weight = other.m_weight;
+	m_isAlive = other.m_isAlive;
+
+	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
+	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
+	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 }
 
 void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory, 
@@ -236,6 +244,7 @@ void Agent::Log(int turn, Action* action)
 	ActionRecord ar;
 	ar.action = action;
 	ar.turn = turn;
+	ar.room = (Room*)m_roomInstance->Clone();
 	m_actionLog.push_back(ar);
 }
 
@@ -264,14 +273,14 @@ void Agent::DoneMurder(bool flag)
 
 void Agent::Answer(Object* obj, QuestionType qt, int turn)
 {
-	/*for(unsigned int i=0; i<m_actionLog.size();++i)
+	for(unsigned int i=0; i<m_actionLog.size();++i)
 	{
 		if(m_actionLog[i].turn == turn)
 		{
 			std::cout << m_actionLog[i].action->Express(this);
 		}
-	}*/
-	GiveStatement();
+	}
+	//GiveStatement();
 }
 
 void Agent::GiveStatement()
@@ -295,4 +304,9 @@ RoomName Agent::GetNextRoom()
 			return rooms[i];
 		}
 	}
+}
+
+Object* Agent::Clone()
+{
+	return new Agent(*this);
 }
