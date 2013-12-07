@@ -43,27 +43,33 @@ Stab* Stab::Clone()
 
 void Stab::InitArgs()
 {
-	ConditionParameter sub, obj, inst;
+	ConditionParameter sub, obj, inst, room;
 	
-	// SUBJECT
+	// AGENT
 	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
-	// OBJECT
+	// PATIENT
 	obj.semantic = OP_SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_AGENT;
 	m_args.push_back(obj);
 
-	//INSTRUMENT
+	// INSTRUMENT
 	inst.semantic = OP_SEMANTIC_ROLE_INSTRUMENT;
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
 	inst.strict = true;
-
 	m_args.push_back(inst);
+
+	// LOCATIVE
+	room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
+	room.instance = NULL;
+	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	inst.strict = true;
+	m_args.push_back(room);
 }
 
 void Stab::InitEffects()
