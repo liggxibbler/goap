@@ -31,9 +31,9 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 	
 	if(oldRoom != nextRoom)
 	{
-		oldRoom->MarkForDeletion((Agent*)sub.instance);		
-		nextRoom->MarkForAddition((Agent*)(sub.instance));
 		Agent* agent = dynamic_cast<Agent*>(sub.instance);
+		oldRoom->MarkForDeletion(agent);		
+		nextRoom->MarkForAddition(agent);
 		agent->See(nextRoom);
 	}
 
@@ -102,6 +102,7 @@ std::string GoTo::Express(Agent* agent)
 	
 	std::string _agent;
 	std::string _patient;
+	std::string _verb;
 
 	if(sub->instance == agent)
 	{
@@ -115,18 +116,28 @@ std::string GoTo::Express(Agent* agent)
 	if(obj->instance == agent)
 	{
 		_patient = "me";
+		_verb = "came";
 	}
 	else
 	{
 		_patient = obj->instance->GetName();
+		_verb = "went";
 	}
 	
 	std::stringstream str;
-	str << _agent << " went to " << _patient;
+	str << _agent << " " << _verb << " to " << _patient;
 	return str.str();
 }
 
 GoTo::operator std::string()
 {
 	return "GoTo";
+}
+
+int GoTo::Cost()
+{
+	// return a measure of
+	// 1 - how UNLIKELY it is for you to be here
+	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
+	return 0;
 }

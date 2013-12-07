@@ -53,6 +53,13 @@ namespace GOAP
 
 		virtual operator std::string() = 0;
 
+		/*virtual int GetCost() = 0;
+		virtual int GetRisk() = 0;*/
+
+		static bool CompareCost(Action* a1, Action* a2);
+
+		virtual int Cost() = 0;
+
 	protected:
 
 		virtual void InitArgs() = 0;

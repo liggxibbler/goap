@@ -32,8 +32,6 @@ namespace GOAP
 
 		std::string GetName();
 
-		Room* Clone();
-
 		std::list<Object*>::iterator GetFirstObject();
 		std::list<Object*>::iterator GetLastObject();
 
@@ -50,6 +48,8 @@ namespace GOAP
 		void MarkForAddition(Agent* agent);
 		void UpdateAgentPositions();
 
+		virtual Object* Clone();
+
 	private:
 		void ClearMarkedAgents();
 		void AddMarkedAgents();
@@ -61,7 +61,7 @@ namespace GOAP
 		std::list<Object*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
-		std::set<Object*> m_markedForAddition;
+		std::set<Agent*> m_markedForAddition;
 		int m_ID;
 
 		Room* m_left;

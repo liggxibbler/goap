@@ -71,13 +71,6 @@ std::string Room::GetName()
 	return m_name;
 }
 
-
-Room* Room::Clone()
-{
-	return 0;
-}
-
-
 std::list<Object*>::iterator Room::GetFirstObject()
 {
 	return m_objects.begin();
@@ -112,6 +105,7 @@ void Room::AddAgent(Agent* agent)
 {
 	m_agents.insert(agent);
 	agent->SetRoom(this);
+	agent->See(this);
 }
 
 RoomName Room::GetType()
@@ -156,35 +150,32 @@ void Room::MarkForAddition(Agent* agent)
 
 void Room::UpdateAgentPositions()
 {
-	auto it = m_agents.begin();
-	
-	while(it != m_agents.end())
+	auto addIter = m_markedForAddition.begin();
+	while(addIter != m_markedForAddition.end())
 	{
-		if (m_markedForAddition.find(*it) != m_markedForAddition.end())
+		AddAgent(*(addIter++));
+	}
+
+	auto delIter = m_agents.begin();
+	while(delIter != m_agents.end())
+	{
+		if (m_markedForDeletion.find(*delIter) != m_markedForDeletion.end())
 		{
 			// post-increment operator returns a copy, then increment
-			m_agents.insert(*(it++));
+			m_agents.erase(delIter++);
 		}
 		else
 		{
 			// pre-increment operator increments, then return
-			++it;
+			++delIter;
 		}
 	}
 
-	while(it != m_agents.end())
-	{
-		if (m_markedForDeletion.find(*it) != m_markedForDeletion.end())
-		{
-			// post-increment operator returns a copy, then increment
-			m_agents.erase(it++);
-		}
-		else
-		{
-			// pre-increment operator increments, then return
-			++it;
-		}
-	}
+	m_markedForAddition.clear();
+	m_markedForDeletion.clear();
+}
 
-	it = m_agents.begin();
+Object* Room::Clone()
+{
+	return new Room(*this);
 }

@@ -116,3 +116,11 @@ Take::operator std::string()
 {
 	return "Take";
 }
+
+int Take::Cost()
+{
+	// return a measure of
+	// 1 - if that thing doesn't BELONG to you
+	// 2 - bonus points if it BELONGS to someone else, and not a room
+	return 0;
+}

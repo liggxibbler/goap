@@ -297,11 +297,6 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_actors.push_back(murderer);
 	m_actors.push_back(victim);
 	m_actors.push_back(m_agents[2]);
-
-	auto room(m_world->GetFirstRoom());
-	(*room)->AddAgent(murderer);
-	(*(++room))->AddAgent(victim);
-	(*(++room))->AddAgent(m_agents[2]);
 }
 
 void Game::PopulateRooms()
@@ -327,6 +322,10 @@ void Game::PopulateRooms()
 
 	(*room)->AddObject(m_objects[5]);//dining
 	(*room)->AddObject(m_objects[6]);	
+
+	m_world->GetRandomRoom()->AddAgent(m_agents[0]);
+	m_world->GetRandomRoom()->AddAgent(m_agents[1]);
+	m_world->GetRandomRoom()->AddAgent(m_agents[2]);
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
