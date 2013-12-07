@@ -22,7 +22,6 @@ ActionStatus Strangle::ExecuteWorkhorse(int turn)
 
 	DUMP(Express(0))
 	
-
 	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
@@ -145,4 +144,12 @@ std::string Strangle::Express(Agent* agent)
 Strangle::operator std::string()
 {
 	return "Strangle";
+}
+
+int Strangle::Cost()
+{
+	// return a measure of
+	// 1 - how UNLIKELY it is to find the victim alone in the room
+	// 2 - how UNLIKELY it is for the victim to be found after being killed
+	return 0;
 }

@@ -133,3 +133,11 @@ GoTo::operator std::string()
 {
 	return "GoTo";
 }
+
+int GoTo::Cost()
+{
+	// return a measure of
+	// 1 - how UNLIKELY it is for you to be here
+	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
+	return 0;
+}

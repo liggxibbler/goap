@@ -152,3 +152,11 @@ Stab::operator std::string()
 {
 	return "Stab";
 }
+
+int Stab::Cost()
+{
+	// return a measure of
+	// 1 - how UNLIKELY it is to find the victim alone in the room
+	// 2 - how UNLIKELY it is for the victim to be found after being killed
+	return 0;
+}
