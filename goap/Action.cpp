@@ -114,10 +114,10 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
 			}
-			else if(cp.semantic == OP_SEMANTIC_ROLE_LOCATIVE)
-			{
-				// push all rooms on unifyList
-			}
+			//else if(cp.semantic == OP_SEMANTIC_ROLE_LOCATIVE)
+			//{
+			//	// push all rooms on unifyList
+			//}
 			else if(!agent->Unify(cp.type, unifyList, cp.strict))
 			{
 				//	if vector is empty : unification not possible
