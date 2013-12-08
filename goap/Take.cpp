@@ -21,8 +21,8 @@ Take::operator ActionType()
 
 ActionStatus Take::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
 	
 	DUMP(Express(0))
 	return ACT_STAT_SUCCESS;
@@ -54,8 +54,8 @@ void Take::InitArgs()
 void Take::InitPreconditions()
 {
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
-	ConditionParameter sub = *GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT),
-		obj = *GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter sub = *GetArg(OP_SEMANTIC_ROLE_AGENT),
+		obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	subNearObj[0] = sub;
 	subNearObj[0].attrib = ATTRIB_TYPE_ROOM;
@@ -69,8 +69,8 @@ void Take::InitPreconditions()
 void Take::InitEffects()
 {
 	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
-	ConditionParameter sub = *GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT),
-		obj = *GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter sub = *GetArg(OP_SEMANTIC_ROLE_AGENT),
+		obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	subHasObj[0] = sub;
 	subHasObj[1] = obj;
@@ -80,8 +80,8 @@ void Take::InitEffects()
 
 std::string Take::Express(Agent* agent)
 {
-	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	std::string _agent;
 	std::string _patient;

@@ -21,8 +21,8 @@ GoTo::~GoTo()
 
 ActionStatus GoTo::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
 
 	Room* oldRoom = sub.instance->GetRoom();
 	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
@@ -76,8 +76,8 @@ void GoTo::InitEffects()
 {
 	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj0(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj0(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
 	
 	swapSubObj1[0] = sub;
 	swapSubObj1[0].attrib = ATTRIB_TYPE_ROOM;
@@ -97,8 +97,8 @@ void GoTo::InitPreconditions()
 
 std::string GoTo::Express(Agent* agent)
 {
-	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	std::string _agent;
 	std::string _patient;

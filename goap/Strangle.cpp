@@ -16,9 +16,9 @@ Strangle::~Strangle()
 
 ActionStatus Strangle::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0));
-	ConditionParameter ins(*GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT));
+	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter ins(*GetArg(OP_SEMANTIC_ROLE_INSTRUMENT));
 
 	DUMP(Express(0))
 	
@@ -74,7 +74,7 @@ void Strangle::InitArgs()
 void Strangle::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	ConditionParameter obj = *GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	
 	objIsDead[0] = obj;
 	objIsDead[0].attrib	= ATTRIB_TYPE_ALIVE;
@@ -90,9 +90,9 @@ void Strangle::InitPreconditions()
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	
 	CondParamIter cpIter;
-	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	cpIter = GetArg(OP_SEMANTIC_ROLE_AGENT);
 	ConditionParameter sub(*cpIter);
-	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT);
+	cpIter = GetArg(OP_SEMANTIC_ROLE_INSTRUMENT);
 	ConditionParameter inst(*cpIter);
 	
 	subHasInst[0] = sub;
@@ -102,7 +102,7 @@ void Strangle::InitPreconditions()
 
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	cpIter = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
+	cpIter = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
 	ConditionParameter obj(*cpIter);
 	
 	subNearObj[0] = sub;
@@ -116,9 +116,9 @@ void Strangle::InitPreconditions()
 
 std::string Strangle::Express(Agent* agent)
 {
-	auto sub = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArgBySemantic(OP_SEMANTIC_ROLE_PATIENT0);
-	auto ins = GetArgBySemantic(OP_SEMANTIC_ROLE_INSTRUMENT);
+	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	auto ins = GetArg(OP_SEMANTIC_ROLE_INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;

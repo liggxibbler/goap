@@ -40,13 +40,13 @@ void Action::CopyArgsFromCondition(Condition& cond)
 		SemanticRole st = cond[i].semantic;
 		if(st != OP_SEMANTIC_ROLE_NONE)
 		{
-			GetArgBySemantic(st)->instance = cond[i].instance;
+			GetArg(st)->instance = cond[i].instance;
 			cond[i].semantic = OP_SEMANTIC_ROLE_NONE; // reset for later checks
 		}
 	}
 }
 
-CondParamIter Action::GetArgBySemantic(SemanticRole st)
+CondParamIter Action::GetArg(SemanticRole st)
 {
 	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
@@ -59,7 +59,7 @@ CondParamIter Action::GetArgBySemantic(SemanticRole st)
 	return paramIter;
 }
 
-CondParamIter Action::GetArgByType(ObjectType ot)
+CondParamIter Action::GetArg(ObjectType ot)
 {
 	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
@@ -72,7 +72,7 @@ CondParamIter Action::GetArgByType(ObjectType ot)
 	return paramIter;
 }
 
-CondParamIter Action::GetArgByInstance(Object* obj)
+CondParamIter Action::GetArg(Object* obj)
 {
 	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
@@ -259,7 +259,7 @@ void Action::UpdateEffectInstances()
 		for(int i = 0; i < effect->GetNumParams(); ++i)
 		{
 			SemanticRole st = effect->GetParamByIndex(i).semantic;
-			effect->GetParamByIndex(i).instance	= GetArgBySemantic(st)->instance;
+			effect->GetParamByIndex(i).instance	= GetArg(st)->instance;
 		}
 	}
 }
@@ -272,7 +272,7 @@ void Action::UpdatePrecondInstances()
 		for(int i = 0; i < precond->GetNumParams(); ++i)
 		{
 			SemanticRole st = precond->GetParamByIndex(i).semantic;
-			precond->GetParamByIndex(i).instance = GetArgBySemantic(st)->instance;
+			precond->GetParamByIndex(i).instance = GetArg(st)->instance;
 		}
 	}
 }
@@ -293,7 +293,7 @@ ActionStatus Action::GetStatus()
 
 void Action::Dispatch(int turn)
 {
-	auto cp = GetArgBySemantic(OP_SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(OP_SEMANTIC_ROLE_AGENT);
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)

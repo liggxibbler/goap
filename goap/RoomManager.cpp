@@ -49,7 +49,7 @@ void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Ag
 	{
 		agent = *iter;
 		std::string roomName(agent->GetName() + std::string("'s bedroom"));
-		room = new Room(roomName, ROOM_BEDROOM, *iter);
+		room = new Room(roomName, ROOM_BEDROOM, agent);
 		m_mapBedroom[agent] = room;
 		m_rooms.push_back(room);
 	}

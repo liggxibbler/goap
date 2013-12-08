@@ -10,7 +10,7 @@
 #include "Plan.h"
 #include "Blade.h"
 
-#include "World.h"
+//#include "World.h"
 #include "Room.h"
 #include "Game.h"
 

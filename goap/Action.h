@@ -42,9 +42,9 @@ namespace GOAP
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
-		CondParamIter GetArgBySemantic(SemanticRole st);
-		CondParamIter GetArgByType(ObjectType ot);
-		CondParamIter GetArgByInstance(Object* obj);
+		CondParamIter GetArg(SemanticRole st);
+		CondParamIter GetArg(ObjectType ot);
+		CondParamIter GetArg(Object* obj);
 
 		void Initialize();
 		void UpdateConditionInstances();
