@@ -40,7 +40,7 @@ namespace GOAP
 
 		bool Evaluate(Op::OperatorManager* om);
 
-		ConditionParameter* GetParamBySemantic(OperandSemanticRole st);
+		ConditionParameter* GetParamBySemantic(SemanticRole st);
 		ConditionParameter* GetParamByType(ObjectType ot);
 		ConditionParameter* GetParamByInstance(Object* obj);
 

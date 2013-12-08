@@ -15,7 +15,7 @@ namespace GOAP
 		//ObjectType			type;	// XIBB this should be an int, in order to allow multiple type flags
 									// e.g. an object can be a blade >>> type = OBJECT | BLADE i.e. both
 		int					type;
-		OperandSemanticRole	semantic;
+		SemanticRole	semantic;
 		Object*				instance;
 		AttributeType		attrib;
 		int					value;

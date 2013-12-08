@@ -42,7 +42,7 @@ Strangle* Strangle::Clone()
 
 void Strangle::InitArgs()
 {
-	ConditionParameter sub, obj, inst;
+	ConditionParameter sub, obj, inst, room;
 	
 	// SUBJECT
 	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
@@ -61,8 +61,14 @@ void Strangle::InitArgs()
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT;
 	inst.strict = true;
-
 	m_args.push_back(inst);
+
+	// LOCATIVE
+	room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
+	room.instance = NULL;
+	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	inst.strict = true;
+	//m_args.push_back(room);
 }
 
 void Strangle::InitEffects()

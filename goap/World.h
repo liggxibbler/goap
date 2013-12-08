@@ -4,11 +4,10 @@
 #include <list>
 #include <string>
 #include "Common.h"
+#include "RoomManager.h"
 
 namespace GOAP
 {
-	class Room;
-
 	class World
 	{
 	public:
@@ -16,12 +15,13 @@ namespace GOAP
 		World(const World& other);
 		~World();
 
-		Room* AddRoom(std::string name, RoomName rn);
-		void AddRoom(Room* room);
+		/*Room* AddRoom(std::string name, RoomName rn);
+		void AddRoom(Room* room);*/
 
 		Room* GetRoom(std::string name);
 		Room* GetRoom(int id);
-		Room* GetRandomRoom();
+		Room* GetRoom(RoomName rn);
+		Room* GetRandomRoom(Agent* agent);
 
 		World* Clone();
 
@@ -31,7 +31,8 @@ namespace GOAP
 		std::list<Room*>::iterator GetLastRoom();
 
 	private:
-		std::list<Room*> m_rooms;
+		//std::list<Room*> m_rooms;
+		RoomManager* m_roomManager;
 		std::string m_name;
 	};
 }

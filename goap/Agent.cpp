@@ -2,7 +2,7 @@
 #include "Planner.h"
 #include "Action.h"
 #include "Room.h"
-#include "World.h"
+#include "RoomManager.h"
 //#include "Wander.h"
 #include "ActionRecord.h"
 
@@ -185,7 +185,7 @@ int Agent::GetCompoundType()
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
 }
 
-bool Agent::Update(World* world, int turn)
+bool Agent::Update(RoomManager* rm, int turn)
 {
 	m_bDoneMurder = false;
 	if(m_nextExecution != 0)
@@ -202,7 +202,7 @@ bool Agent::Update(World* world, int turn)
 		PlanStatus ps = m_plan->GetStatus();
 		if(ps == PLAN_STAT_FAIL)
 		{
-			Room* room = world->GetRandomRoom();
+			Room* room = rm->GetRandomRoom(this);
 			GoTo* gt = new GoTo(room, this);
 			gt->Initialize();
 			m_nextExecution = gt;
@@ -250,6 +250,8 @@ void Agent::Log(int turn, Action* action)
 
 void Agent::See(Room* room)
 {
+	See((Object*)room);
+
 	for(auto object(room->GetFirstObject());object != room->GetLastObject();++object)
 	{
 		See(*object);
@@ -297,13 +299,15 @@ RoomName Agent::GetNextRoom()
 	
 	int random = rand() % 100;
 	
-	for (int i=0; i<NUMBER_OF_ROOMS;++i)
+	int i;
+	for (i=0; i<NUMBER_OF_ROOMS;++i)
 	{
 		if (random < m_locationProbability[i])
 		{
 			return rooms[i];
 		}
 	}
+	return rooms[i-1];
 }
 
 Object* Agent::Clone()

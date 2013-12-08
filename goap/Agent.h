@@ -56,7 +56,7 @@ namespace GOAP
 		void See(Room* room);
 
 		virtual int GetCompoundType();
-		virtual bool Update(World* world, int turn) override;
+		virtual bool Update(RoomManager* room, int turn) override;
 		virtual void Examine();
 
 		virtual bool CanBeMurderWeapon();

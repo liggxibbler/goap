@@ -4,7 +4,7 @@
 using namespace GOAP;
 
 
-World::World()
+World::World() : m_roomManager(0)
 {
 }
 

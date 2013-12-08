@@ -97,13 +97,13 @@
     <ClCompile Include="Planner.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="Shoot.cpp" />
     <ClCompile Include="Squeezer.cpp" />
     <ClCompile Include="Stab.cpp" />
     <ClCompile Include="Strangle.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionList.h" />
@@ -137,6 +137,7 @@
     <ClInclude Include="Planner.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="RoomManager.h" />
     <ClInclude Include="Shoot.h" />
     <ClInclude Include="Squeezer.h" />
     <ClInclude Include="Stab.h" />
@@ -144,7 +145,6 @@
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
-    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

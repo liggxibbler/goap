@@ -1,6 +1,6 @@
 #include "Object.h"
 #include "Room.h"
-#include "World.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -86,7 +86,7 @@ int Object::GetCompoundType()
 	return OBJ_TYPE_OBJECT;
 }
 
-bool Object::Update(World* world, int turn)
+bool Object::Update(RoomManager* rm, int turn)
 {
 	if(m_owner != NULL)
 	{

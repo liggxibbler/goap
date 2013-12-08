@@ -16,7 +16,7 @@ Room::Room(const Room& other) : m_ID(s_nextID++)
 	SetRoom(this);
 }
 
-Room::Room(std::string name , RoomName rn) : Object(name), m_type(rn), m_ID(s_nextID++)
+Room::Room(std::string name , RoomName rn, Object* owner) : Object(name, owner), m_type(rn), m_ID(s_nextID++)
 {
 	SetRoom(this);
 }
@@ -66,10 +66,10 @@ void Room::AddObject(Object* obj)
 }
 
 
-std::string Room::GetName()
-{
-	return m_name;
-}
+//std::string Room::GetName()
+//{
+//	return m_name;
+//}
 
 std::list<Object*>::iterator Room::GetFirstObject()
 {
@@ -113,7 +113,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(World* world, int turn)
+bool Room::Update(RoomManager* rm, int turn)
 {
 	bool result = false;
 	bool murder = false;
@@ -122,12 +122,12 @@ bool Room::Update(World* world, int turn)
 
 	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
 	{
-		(*object)->Update(world, turn);
+		(*object)->Update(rm, turn);
 	}
 	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		murder = (*agent)->Update(world, turn);
+		murder = (*agent)->Update(rm, turn);
 		if( murder )
 		{
 			result = true;

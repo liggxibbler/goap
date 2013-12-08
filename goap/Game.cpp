@@ -3,7 +3,6 @@
 #include "Object.h"
 #include "Agent.h"
 #include "Room.h"
-#include "World.h"
 #include "Blade.h"
 #include "Blunt.h"
 #include "Squeezer.h"
@@ -16,6 +15,7 @@ using namespace GOAP;
 
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
+	m_roomManager = 0;
 }
 
 Game::Game(const Game& other)
@@ -28,18 +28,13 @@ Game::~Game()
 
 void Game::Initialize()
 {
-	m_world = new World();
-
-	Room *kitchen, *living, *dining;
-	
-	kitchen = m_world->AddRoom("Kitchen", ROOM_KITCHEN);
-	living = m_world->AddRoom("Living Room", ROOM_LIVING_ROOM);
-	dining = m_world->AddRoom("Dining Room", ROOM_DINING_ROOM);
+	m_roomManager = RoomManager::Instance();
 
 	InitializeAgents();
 	InitializeObjects();
+	m_roomManager->Initialize(m_agents.begin(), m_agents.end());
 
-	m_currentRoom = kitchen;
+	m_currentRoom = m_roomManager->GetRoom(ROOM_KITCHEN);
 }
 
 void Game::Roam()
@@ -60,20 +55,27 @@ void Game::Roam()
 	
 	int witness = item;
 	cout << "\nYou can interview:\n";
-	for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
+	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
 	{
-		cout << item++ << ") " << (*iter)->GetName();
-		if((*iter)->GetAttrib(ATTRIB_TYPE_ALIVE) == false)
+		cout << "\n[NOBODY]\n";
+	}
+	else
+	{
+		for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
 		{
-			cout << " [DEAD]";
+			cout << item++ << ") " << (*iter)->GetName();
+			if((*iter)->GetAttrib(ATTRIB_TYPE_ALIVE) == false)
+			{
+				cout << " [DEAD]";
+			}
+			cout << endl;
+			m_vecAgent.push_back(*iter);
 		}
-		cout << endl;
-		m_vecAgent.push_back(*iter);
 	}
 
 	int iRoom = item;
 	cout << "\nYou can go to:\n";
-	for(auto iter(m_world->GetFirstRoom()); iter != m_world->GetLastRoom(); ++iter)
+	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
 	{
 		cout << item++ << ") " << (*iter)->GetName() << endl;
 		m_vecRoom.push_back(*iter);
@@ -228,16 +230,16 @@ void Game::GeneratePlot()
 
 	while(!m_murder)
 	{
-		for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
-			m_murder = (*room)->Update(m_world, m_turn);
+			m_murder = (*room)->Update(m_roomManager, m_turn);
 			if(m_murder)
 			{
 				break;
 			}
 		}
 
-		for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
+		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
 			(*room)->UpdateAgentPositions();
 		}
@@ -309,23 +311,23 @@ void Game::PopulateRooms()
 	*/
 	// kitchen, living, dining
 
-	auto room = m_world->GetFirstRoom(); //kitchen
-	(*room)->AddObject(m_objects[1]);
-	(*room)->AddObject(m_objects[2]);
-	(*room)->AddObject(m_objects[3]);
-	++room;
+	Room* room = m_roomManager->GetRoom(ROOM_KITCHEN); //kitchen
+	room->AddObject(m_objects[1]);
+	room->AddObject(m_objects[2]);
+	room->AddObject(m_objects[3]);
+	
+	room = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
+	room->AddObject(m_objects[0]);//living
+	room->AddObject(m_objects[4]);
+	room->AddObject(m_objects[7]);
 
-	(*room)->AddObject(m_objects[0]);//living
-	(*room)->AddObject(m_objects[4]);
-	(*room)->AddObject(m_objects[7]);
-	++room;
+	room = m_roomManager->GetRoom(ROOM_DINING_ROOM);
+	room->AddObject(m_objects[5]);//dining
+	room->AddObject(m_objects[6]);	
 
-	(*room)->AddObject(m_objects[5]);//dining
-	(*room)->AddObject(m_objects[6]);	
-
-	m_world->GetRandomRoom()->AddAgent(m_agents[0]);
-	m_world->GetRandomRoom()->AddAgent(m_agents[1]);
-	m_world->GetRandomRoom()->AddAgent(m_agents[2]);
+	m_roomManager->GetRandomRoom(m_agents[0])->AddAgent(m_agents[0]);
+	m_roomManager->GetRandomRoom(m_agents[1])->AddAgent(m_agents[1]);
+	m_roomManager->GetRandomRoom(m_agents[2])->AddAgent(m_agents[2]);
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method

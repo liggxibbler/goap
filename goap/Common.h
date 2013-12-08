@@ -74,7 +74,7 @@ namespace GOAP
 		OP_LAYOUT_TYPE_UNDEFINED = 0xffff
 	};
 
-	enum OperandSemanticRole
+	enum SemanticRole
 	{
 		OP_SEMANTIC_ROLE_INSTRUMENT = 0x0000,
 		

@@ -1,14 +1,13 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include "RoomManager.h"
 #include <vector>
 
 namespace GOAP
 {
-	class Room;
 	class Agent;
 	class Object;
-	class World;
 }
 
 class Game
@@ -41,10 +40,12 @@ private:
 	void InitializeAgents();
 	void InitializeObjects();
 
-	GOAP::World* m_world;
+	//GOAP::World* m_world;
 	bool m_roam;
 	GOAP::Room* m_currentRoom;
 	GOAP::Agent* m_currentAgent;
+	GOAP::RoomManager* m_roomManager;	
+	
 	bool m_running;
 	bool m_murder;
 

@@ -16,7 +16,7 @@ namespace GOAP
 	public:
 		Room();
 		Room(const Room& other);
-		Room(std::string name, RoomName rn);
+		Room(std::string name, RoomName rn, Object* owner = NULL);
 		~Room();
 
 		void SetLeft(Room* left);
@@ -30,7 +30,7 @@ namespace GOAP
 		Agent* AddAgent(std::string name);
 		void AddAgent(Agent* agent);
 
-		std::string GetName();
+		//std::string GetName();
 
 		std::list<Object*>::iterator GetFirstObject();
 		std::list<Object*>::iterator GetLastObject();
@@ -42,7 +42,7 @@ namespace GOAP
 
 		int GetID();
 
-		virtual bool Update(World* world, int turn);
+		virtual bool Update(RoomManager* rm, int turn);
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);

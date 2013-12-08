@@ -37,7 +37,7 @@ void Action::CopyArgsFromCondition(Condition& cond)
 	CondParamIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
-		OperandSemanticRole st = cond[i].semantic;
+		SemanticRole st = cond[i].semantic;
 		if(st != OP_SEMANTIC_ROLE_NONE)
 		{
 			GetArgBySemantic(st)->instance = cond[i].instance;
@@ -46,7 +46,7 @@ void Action::CopyArgsFromCondition(Condition& cond)
 	}
 }
 
-CondParamIter Action::GetArgBySemantic(OperandSemanticRole st)
+CondParamIter Action::GetArgBySemantic(SemanticRole st)
 {
 	CondParamIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
@@ -258,7 +258,7 @@ void Action::UpdateEffectInstances()
 	{
 		for(int i = 0; i < effect->GetNumParams(); ++i)
 		{
-			OperandSemanticRole st = effect->GetParamByIndex(i).semantic;
+			SemanticRole st = effect->GetParamByIndex(i).semantic;
 			effect->GetParamByIndex(i).instance	= GetArgBySemantic(st)->instance;
 		}
 	}
@@ -271,7 +271,7 @@ void Action::UpdatePrecondInstances()
 	{
 		for(int i = 0; i < precond->GetNumParams(); ++i)
 		{
-			OperandSemanticRole st = precond->GetParamByIndex(i).semantic;
+			SemanticRole st = precond->GetParamByIndex(i).semantic;
 			precond->GetParamByIndex(i).instance = GetArgBySemantic(st)->instance;
 		}
 	}

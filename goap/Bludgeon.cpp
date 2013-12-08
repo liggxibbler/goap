@@ -42,7 +42,7 @@ Bludgeon* Bludgeon::Clone()
 
 void Bludgeon::InitArgs()
 {
-	ConditionParameter sub, obj, inst;
+	ConditionParameter sub, obj, inst, room;
 	
 	// SUBJECT
 	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
@@ -61,8 +61,15 @@ void Bludgeon::InitArgs()
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_BLUNT | OBJ_TYPE_OBJECT;
 	inst.strict = true;
-
 	m_args.push_back(inst);
+
+	// LOCATIVE
+	room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
+	room.instance = NULL;
+	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	inst.strict = true;
+	//m_args.push_back(room);
+
 }
 
 void Bludgeon::InitEffects()

@@ -64,11 +64,11 @@ void Stab::InitArgs()
 	inst.strict = true;
 	m_args.push_back(inst);
 
-	//// LOCATIVE
-	//room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
-	//room.instance = NULL;
-	//inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-	//inst.strict = true;
+	// LOCATIVE
+	room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
+	room.instance = NULL;
+	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	inst.strict = true;
 	//m_args.push_back(room);
 }
 
