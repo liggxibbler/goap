@@ -153,3 +153,33 @@ int GoTo::Cost(RoomManager* rm)
 
 	return cost;
 }
+
+Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
+{
+	GoTo* act = Clone();
+	//act->Initialize(); // make sure arguments are initialized
+
+	std::vector<Object*>::iterator instanceIter;
+	CondParamIter cpIter;
+
+	cpIter = act->m_args.begin();
+	instanceIter = args.begin();
+
+	for(unsigned int i=0; i<m_args.size(); ++i)
+	{
+		cpIter->instance = *(instanceIter++);
+		++cpIter;
+	}
+
+	auto _agent = act->GetArg(SEMANTIC_ROLE_AGENT);
+	auto _goal = act->GetArg(SEMANTIC_ROLE_GOAL);
+
+	if(_agent->instance == _goal->instance)
+	{
+		return 0;
+	}
+	else
+	{
+		return act;
+	}
+}

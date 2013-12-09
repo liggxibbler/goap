@@ -38,8 +38,7 @@ ActionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 			return ACT_STAT_RUNNING;
 		case ACT_STAT_SKIP:
 			m_plan = m_plan->GetParent();
-			this->Execute(om, turn);
-			break;
+			return this->Execute(om, turn);
 		case ACT_STAT_RUNNING:
 			//
 			//m_plan = m_plan;

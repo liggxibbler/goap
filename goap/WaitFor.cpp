@@ -22,25 +22,28 @@ WaitFor::~WaitFor()
 
 ActionStatus WaitFor::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
+	//if(m_turns == 0)
+	//{
+	//	/*append this to plan:
+	//	goTo random room;
+	//	goTo back here;
+	//	wait for victim;*/
+	//	(Agent*)(*GetArg(SEMANTIC_ROLE_AGENT));
+	//}
 
-	Room* oldRoom = sub.instance->GetRoom();
-	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
-	Room* nextRoom = obj.instance->GetRoom();
-	//sub.instance->SetRoom(room);
-	
-	if(oldRoom != nextRoom)
+	auto _goal = GetArg(SEMANTIC_ROLE_GOAL);
+	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+
+	if(_goal->instance->GetRoom() == _locative->instance->GetRoom())
 	{
-		Agent* agent = dynamic_cast<Agent*>(sub.instance);
-		oldRoom->MarkForDeletion(agent);		
-		nextRoom->MarkForAddition(agent);
-		agent->See(nextRoom);
+		return ACT_STAT_SUCCESS;
 	}
-
-	DUMP(Express(0))
-
-	return ACT_STAT_SUCCESS;
+	else
+	{
+		DUMP(Express(0))
+		/*m_turns--;*/
+		return ACT_STAT_RUNNING;
+	}
 }
 
 WaitFor::operator ActionType()
@@ -74,9 +77,11 @@ void WaitFor::InitArgs()
 	// LOCATIVE
 	loc.semantic = SEMANTIC_ROLE_LOCATIVE;
 	loc.instance = NULL;
-	loc.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	loc.type = OBJ_TYPE_ROOM;
 	loc.strict = true;
 	m_args.push_back(loc);
+
+	m_turns = WAIT_TURNS;
 }
 
 void WaitFor::InitEffects()
@@ -132,7 +137,7 @@ std::string WaitFor::Express(Agent* agent)
 	}
 	else
 	{
-		_goal = obj->instance->GetRoom()->GetName();
+		_goal = obj->instance->GetName();
 	}
 	
 	std::stringstream str;
@@ -167,4 +172,34 @@ int WaitFor::Cost(RoomManager* rm)
 void WaitFor::Dispatch(int turn)
 {
 	return;
+}
+
+Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
+{
+	WaitFor* act = Clone();
+	//act->Initialize(); // make sure arguments are initialized
+
+	std::vector<Object*>::iterator instanceIter;
+	CondParamIter cpIter;
+
+	cpIter = act->m_args.begin();
+	instanceIter = args.begin();
+
+	for(unsigned int i=0; i<m_args.size(); ++i)
+	{
+		cpIter->instance = *(instanceIter++);
+		++cpIter;
+	}
+
+	auto _agent = act->GetArg(SEMANTIC_ROLE_AGENT);
+	auto _goal = act->GetArg(SEMANTIC_ROLE_GOAL);
+
+	if(_agent->instance == _goal->instance)
+	{
+		return 0;
+	}
+	else
+	{
+		return act;
+	}
 }

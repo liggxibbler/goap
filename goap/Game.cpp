@@ -260,7 +260,7 @@ bool Game::GeneratePlot()
 		DUMP("******************************")
 
 #ifdef _DEBUG
-		//std::cin.get();
+		std::cin.get();
 #endif
 		++m_turn;
 		if(m_turn >= 50)
@@ -319,7 +319,8 @@ void Game::AssignRoles(/*int numWitness*/)
 	murderer->SetGoal(goal);
 
 	murderer->See(victim);
-	
+	murderer->AddAction(ACTION_WAITFOR);
+
 	m_roomManager->ShowBedrooms(murderer);
 
 	m_actors.push_back(murderer);

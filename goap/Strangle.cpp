@@ -87,32 +87,43 @@ void Strangle::InitEffects()
 
 void Strangle::InitPreconditions()
 {
-	// subject owns instrument
-	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
-	
-	CondParamIter cpIter;
-	cpIter = GetArg(SEMANTIC_ROLE_AGENT);
-	ConditionParameter sub(*cpIter);
-	cpIter = GetArg(SEMANTIC_ROLE_INSTRUMENT);
-	ConditionParameter inst(*cpIter);
-	
-	subHasInst[0] = sub;
-	subHasInst[1] = inst;
-	
-	m_preconds->AddCondition(subHasInst);
+	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
+	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
+	auto _instrument(GetArg(SEMANTIC_ROLE_INSTRUMENT));
+	auto _locative(GetArg(SEMANTIC_ROLE_LOCATIVE));
 
-	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	// AGENT owns INSTRUMENT
+	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	
-	cpIter = GetArg(SEMANTIC_ROLE_PATIENT0);
-	ConditionParameter obj(*cpIter);
+	agentHasInst[0] = *_agent;
+	agentHasInst[1] = *_instrument;
 	
-	subNearObj[0] = sub;
-	subNearObj[0].attrib = ATTRIB_TYPE_ROOM;
+	m_preconds->AddCondition(agentHasInst);
+
+	// AGENT AT LOCATIVE
+
+	Condition agentAtLoc(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	subNearObj[1] = obj;
-	subNearObj[1].attrib = ATTRIB_TYPE_ROOM;
+	agentAtLoc[0] = *_agent;
+	agentAtLoc[0].attrib = ATTRIB_TYPE_ROOM;
 	
-	m_preconds->AddCondition(subNearObj);
+	agentAtLoc[1] = *_locative;
+	agentAtLoc[1].attrib = ATTRIB_TYPE_ROOM;
+	
+	m_preconds->AddCondition(agentAtLoc);
+
+	// PATIENT AT LOCATIVE
+
+	Condition patientAtLoc(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	
+	patientAtLoc[0] = *_patient;
+	patientAtLoc[0].attrib = ATTRIB_TYPE_ROOM;
+	
+	patientAtLoc[1] = *_locative;
+	patientAtLoc[1].attrib = ATTRIB_TYPE_ROOM;
+	
+	m_preconds->AddCondition(patientAtLoc);
+
 }
 
 std::string Strangle::Express(Agent* agent)

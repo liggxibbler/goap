@@ -10,6 +10,7 @@ ActionManager::ActionManager()
 	m_mapAction[ACTION_BLUDGEON]	= new Bludgeon();
 	m_mapAction[ACTION_STRANGLE]	= new Strangle();
 	m_mapAction[ACTION_SHOOT]		= new Shoot();
+	m_mapAction[ACTION_WAITFOR]		= new WaitFor();
 
 	InitializePrototypes();
 }

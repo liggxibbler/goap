@@ -90,7 +90,7 @@ namespace GOAP
 		
 		virtual void Dispatch(int turn);
 
-		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
+		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
 		std::list<ConditionParameter> m_args;
 		//std::list<Condition> m_preconds;

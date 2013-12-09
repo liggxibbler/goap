@@ -154,7 +154,10 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	for(finalObjIter = tuples.begin(); finalObjIter != tuples.end(); ++finalObjIter)
 	{
 		action = GetInstanceFromTuple(*finalObjIter);
-		result.push_back(action);
+		if(action != 0)
+		{
+			result.push_back(action);
+		}
 	}
 	//	put all vectors in a vector<vector>
 	//	pass that vector to an OrderedPair

@@ -9,5 +9,6 @@
 #include "Bludgeon.h"
 #include "Strangle.h"
 #include "Shoot.h"
+#include "WaitFor.h"
 
 #endif

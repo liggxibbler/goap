@@ -1,6 +1,8 @@
 #ifndef _GOAP_WAITFOR_H_
 #define _GOAP_WAITFOR_H_
 
+#define WAIT_TURNS 3
+
 #include "Action.h"
 #include "Agent.h"
 
@@ -24,14 +26,19 @@ namespace GOAP
 
 		virtual int Cost(RoomManager* rm) override;
 		virtual void Dispatch(int turn) override;
+	
 	private:
+		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple) override;
+
 		virtual ActionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();
 
+		int m_turns;
 		Agent* m_agent;
 		Object* m_dest;
+		bool m_switch; // true for wait, false for do over
 	};
 }
 #endif

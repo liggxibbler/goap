@@ -200,7 +200,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		else if (as == ACT_STAT_SKIP)
 		{
 			m_nextExecution = 0;
-			Update(om, rm, turn);
+			/*Update(om, rm, turn);*/
 		}
 	}
 	else if(m_goal != 0)

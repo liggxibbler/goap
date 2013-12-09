@@ -25,6 +25,8 @@ namespace GOAP
 		virtual int Cost(RoomManager* rm) override;
 
 	private:
+		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple) override;
+
 		virtual ActionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
 		virtual void InitPreconditions();
