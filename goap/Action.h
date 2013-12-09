@@ -88,7 +88,7 @@ namespace GOAP
 		void UpdateEffectInstances();
 		void UpdatePrecondInstances();
 		
-		void Dispatch(int turn);
+		virtual void Dispatch(int turn);
 
 		Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 

@@ -40,6 +40,8 @@ namespace GOAP
 			float GetProbAlone(Agent* agent, Room* room);
 			float GetProbWillBeFound(Agent* agent, Room* room);
 
+			void ClearRooms();
+
 		private:
 			std::map<RoomName, Room*> m_mapRoom;
 			std::map<Agent*, Room*> m_mapBedroom;

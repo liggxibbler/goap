@@ -8,6 +8,7 @@
 #include "Squeezer.h"
 #include "Projectile.h"
 #include "OperatorManager.h"
+#include <time.h>
 
 #include <iostream>
 using namespace std;
@@ -17,6 +18,8 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
+	m_seed = (unsigned int)time(NULL);
+	srand(m_seed);
 }
 
 Game::Game(const Game& other)
@@ -217,18 +220,22 @@ void Game::Interview()
 bool Game::Run(/*database class thing*/)
 {
 	AssignRoles();
+	bool result = false;
 	PopulateRooms();
-	GeneratePlot();
+	if (!GeneratePlot())
+	{
+		return false;
+	}
 	
 	MainLoop();
 	
 	return true;
 }
 
-void Game::GeneratePlot()
+bool Game::GeneratePlot()
 {
 	m_murder = false;
-
+	
 	while(!m_murder)
 	{
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
@@ -253,10 +260,23 @@ void Game::GeneratePlot()
 		DUMP("******************************")
 
 #ifdef _DEBUG
-		std::cin.get();
+		//std::cin.get();
 #endif
 		++m_turn;
+		if(m_turn >= 50)
+		{
+			std::cout << "	******************************\n";
+			std::cout << "	Hi! Don't worry! You did nothing wrong!\n";
+			std::cout << "	The program has failed.\n";
+			std::cout << "	******************************\n";
+			std::cout << "	Please tell Alborz that seed " << m_seed << " doesn't work," <<endl;
+			std::cout << "	then restart the program.\n\n	It's not you, it's me\n";
+			std::cout << "	******************************\n";
+			std::cin.get();
+			return false;
+		}
 	}
+	return true;
 }
 
 void Game::MainLoop()

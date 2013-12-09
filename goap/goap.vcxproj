@@ -104,6 +104,7 @@
     <ClCompile Include="Strangle.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
+    <ClCompile Include="WaitFor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionList.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
+    <ClInclude Include="WaitFor.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

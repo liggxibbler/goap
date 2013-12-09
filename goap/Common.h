@@ -108,6 +108,7 @@ namespace GOAP
 	enum ActionType
 	{
 		ACTION_GOTO,
+		ACTION_WAITFOR,
 		ACTION_WANDER,
 		ACTION_TAKE,
 		ACTION_DROP,

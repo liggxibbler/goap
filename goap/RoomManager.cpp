@@ -196,3 +196,23 @@ float RoomManager::GetProbWillBeFound(Agent* agent, Room* room)
 	}
 	return 1.0f - prob;
 }
+
+void RoomManager::ClearRooms()
+{
+	/*for(bedroom)
+	{
+		for(agent)
+		{
+			wipe agent's room';
+			remove agent from list;
+		}
+	}
+	for(otherrooms)
+	{
+		for(agent)
+		{
+			wipe agent's room';
+			remove agent from list;
+		}
+	}*/
+}

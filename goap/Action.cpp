@@ -292,8 +292,8 @@ ActionStatus Action::Execute(Op::OperatorManager* om, int turn)
 	{
 		if( EvaluatePreconditions(om) )
 		{
-			Dispatch(turn);
 			ActionStatus stat = ExecuteWorkhorse(turn);
+			Dispatch(turn);
 			return stat;
 		}
 		else

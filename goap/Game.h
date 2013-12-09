@@ -27,7 +27,7 @@ public:
 	
 	void AssignRoles();
 	void PopulateRooms();
-	void GeneratePlot();
+	bool GeneratePlot();
 	void MainLoop();
 
 private:
@@ -50,7 +50,7 @@ private:
 	bool m_murder;
 
 	int m_turn;
-
+	unsigned int m_seed;
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
 	std::vector<GOAP::Object*>	m_objects;

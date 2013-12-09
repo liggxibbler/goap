@@ -28,8 +28,6 @@ int main()
 {	
 	//seed = (unsigned int)time(NULL);
 	//srand(1386261647);
-	
-	srand(time(NULL));
 
 	Game* game = new Game();
 	game->Initialize();

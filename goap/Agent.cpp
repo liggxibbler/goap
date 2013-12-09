@@ -197,6 +197,11 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		{
 			m_nextExecution = 0;
 		}
+		else if (as == ACT_STAT_SKIP)
+		{
+			m_nextExecution = 0;
+			Update(om, rm, turn);
+		}
 	}
 	else if(m_goal != 0)
 	{
@@ -220,7 +225,15 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	}
 	else
 	{
-		DUMP("       **" << m_name << " has no goal to plan for at turn " << turn)
+		int wander = rand() % 100;
+		if(wander < 50)
+		{
+			DUMP("       **" << m_name << " be wanderin' " << turn)
+			Room* room = rm->GetRandomRoom(this);
+			GoTo* gt = new GoTo(room, this);
+			gt->Initialize();
+			m_nextExecution = gt;
+		}
 	}
 
 	return m_bDoneMurder;
