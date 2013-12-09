@@ -45,7 +45,7 @@ Agent::Agent(const Agent& other) : Object(other)
 	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
 }
 
-void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory, 
+void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory, 
 								int locationProbability[], bool canStab, bool canStrangle, 
 								bool canShoot, bool canBludgeon, int height, int weight)
 {

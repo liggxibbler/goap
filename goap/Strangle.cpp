@@ -16,9 +16,9 @@ Strangle::~Strangle()
 
 ActionStatus Strangle::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
-	ConditionParameter ins(*GetArg(OP_SEMANTIC_ROLE_INSTRUMENT));
+	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
 
 	DUMP(Express(0))
 	
@@ -45,26 +45,26 @@ void Strangle::InitArgs()
 	ConditionParameter sub, obj, inst, room;
 	
 	// SUBJECT
-	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
+	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj.semantic = OP_SEMANTIC_ROLE_PATIENT0;
+	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_AGENT;
 	m_args.push_back(obj);
 
 	//INSTRUMENT
-	inst.semantic = OP_SEMANTIC_ROLE_INSTRUMENT;
+	inst.semantic = SEMANTIC_ROLE_INSTRUMENT;
 	inst.instance = NULL;
 	inst.type = OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT;
 	inst.strict = true;
 	m_args.push_back(inst);
 
 	// LOCATIVE
-	room.semantic = OP_SEMANTIC_ROLE_LOCATIVE;
+	room.semantic = SEMANTIC_ROLE_LOCATIVE;
 	room.instance = NULL;
 	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	inst.strict = true;
@@ -74,7 +74,7 @@ void Strangle::InitArgs()
 void Strangle::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	ConditionParameter obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 	
 	objIsDead[0] = obj;
 	objIsDead[0].attrib	= ATTRIB_TYPE_ALIVE;
@@ -90,9 +90,9 @@ void Strangle::InitPreconditions()
 	Condition subHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
 	
 	CondParamIter cpIter;
-	cpIter = GetArg(OP_SEMANTIC_ROLE_AGENT);
+	cpIter = GetArg(SEMANTIC_ROLE_AGENT);
 	ConditionParameter sub(*cpIter);
-	cpIter = GetArg(OP_SEMANTIC_ROLE_INSTRUMENT);
+	cpIter = GetArg(SEMANTIC_ROLE_INSTRUMENT);
 	ConditionParameter inst(*cpIter);
 	
 	subHasInst[0] = sub;
@@ -102,7 +102,7 @@ void Strangle::InitPreconditions()
 
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	cpIter = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	cpIter = GetArg(SEMANTIC_ROLE_PATIENT0);
 	ConditionParameter obj(*cpIter);
 	
 	subNearObj[0] = sub;
@@ -116,9 +116,9 @@ void Strangle::InitPreconditions()
 
 std::string Strangle::Express(Agent* agent)
 {
-	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
-	auto ins = GetArg(OP_SEMANTIC_ROLE_INSTRUMENT);
+	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto ins = GetArg(SEMANTIC_ROLE_INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;
@@ -157,5 +157,21 @@ int Strangle::Cost()
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
 	// 2 - how UNLIKELY it is for the victim to be found after being killed
-	return 0;
+
+	int cost = 0;
+
+	//auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	//auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	//
+	//if (_locative->instance->GetOwner() != 0)
+	//{
+	//	cost += 1000;
+	//}
+	//if (_locative->instance->GetOwner() == _patient->instance)
+	//{
+	//	cost += 500;
+	//}
+	//return cost;
+
+	return rand() % 1000;
 }

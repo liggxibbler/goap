@@ -23,6 +23,29 @@ namespace GOAP
 
 		PlanStatus Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan);
 
+		class CompareGoals
+		{
+		public:
+			bool operator ()(Goal* g1, Goal* g2)
+			{
+				// keep the NULL pointer at the beginning
+				if(g1 == 0)
+				{
+					return true;
+				}
+				else if (g2 == 0)
+				{
+					return false;
+				}
+				// and sort the rest in descending order,
+				// so the least costly action is always at the end
+				else
+				{
+					return (g1->GetAction()->Cost()) > (g1->GetAction()->Cost());
+				}
+			}
+		} myCompare;
+
 	private:
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, ActionManager* am);
@@ -30,7 +53,6 @@ namespace GOAP
 		void ExpandFrontier(Agent* agent);
 
 	private:
-
 		PlanStatus DeviseWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* goal); // planner workhorse
 
 		Goal* m_currentGoal;

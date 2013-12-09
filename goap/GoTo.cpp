@@ -21,8 +21,8 @@ GoTo::~GoTo()
 
 ActionStatus GoTo::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
 	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
@@ -59,13 +59,13 @@ void GoTo::InitArgs()
 	ConditionParameter sub, obj1;
 	
 	// SUBJECT
-	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
+	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = m_agent;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj1.semantic = OP_SEMANTIC_ROLE_PATIENT0;
+	obj1.semantic = SEMANTIC_ROLE_GOAL;
 	obj1.instance = m_dest;
 	obj1.type = OBJ_TYPE_OBJECT;
 	m_args.push_back(obj1);
@@ -76,8 +76,8 @@ void GoTo::InitEffects()
 {
 	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
 	
-	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj0(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj0(*GetArg(SEMANTIC_ROLE_GOAL));
 	
 	swapSubObj1[0] = sub;
 	swapSubObj1[0].attrib = ATTRIB_TYPE_ROOM;
@@ -97,11 +97,11 @@ void GoTo::InitPreconditions()
 
 std::string GoTo::Express(Agent* agent)
 {
-	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(SEMANTIC_ROLE_GOAL);
 	
 	std::string _agent;
-	std::string _patient;
+	std::string _goal;
 	std::string _verb;
 
 	if(sub->instance == agent)
@@ -115,17 +115,17 @@ std::string GoTo::Express(Agent* agent)
 
 	if(obj->instance == agent)
 	{
-		_patient = "me";
+		_goal = "me";
 		_verb = "came";
 	}
 	else
 	{
-		_patient = obj->instance->GetName();
+		_goal = obj->instance->GetRoom()->GetName();
 		_verb = "went";
 	}
 	
 	std::stringstream str;
-	str << _agent << " " << _verb << " to " << _patient;
+	str << _agent << " " << _verb << " to " << _goal;
 	return str.str();
 }
 
@@ -139,5 +139,16 @@ int GoTo::Cost()
 	// return a measure of
 	// 1 - how UNLIKELY it is for you to be here
 	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
-	return 0;
+
+	int cost = 0;
+
+	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
+	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
+
+	if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+	{
+		cost += 100;
+	}
+
+	return cost;
 }

@@ -38,10 +38,10 @@ void Action::CopyArgsFromCondition(Condition& cond)
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		SemanticRole st = cond[i].semantic;
-		if(st != OP_SEMANTIC_ROLE_NONE)
+		if(st != SEMANTIC_ROLE_NONE)
 		{
 			GetArg(st)->instance = cond[i].instance;
-			cond[i].semantic = OP_SEMANTIC_ROLE_NONE; // reset for later checks
+			cond[i].semantic = SEMANTIC_ROLE_NONE; // reset for later checks
 		}
 	}
 }
@@ -109,12 +109,12 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
-			if(cp.semantic == OP_SEMANTIC_ROLE_AGENT)
+			if(cp.semantic == SEMANTIC_ROLE_AGENT)
 			{
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
 			}
-			//else if(cp.semantic == OP_SEMANTIC_ROLE_LOCATIVE)
+			//else if(cp.semantic == SEMANTIC_ROLE_LOCATIVE)
 			//{
 			//	// push all rooms on unifyList
 			//}
@@ -293,7 +293,7 @@ ActionStatus Action::GetStatus()
 
 void Action::Dispatch(int turn)
 {
-	auto cp = GetArg(OP_SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)

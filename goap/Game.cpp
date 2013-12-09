@@ -250,7 +250,10 @@ void Game::GeneratePlot()
 		DUMP("******************************")
 		DUMP("Turn " << m_turn << " is over.")
 		DUMP("******************************")
+
+#ifdef _DEBUG
 		std::cin.get();
+#endif
 		++m_turn;
 	}
 }
@@ -333,7 +336,7 @@ void Game::PopulateRooms()
 //hard-coding the characters by passing the variables to agent's initializer method
 void Game::InitializeAgents()
 {
-	unsigned int NUMBER_OF_CHARACTERS = 10;
+	unsigned int NUMBER_OF_CHARACTERS = 3;
 	int MURDERER_ID = 0;
 
 	m_agents.clear();
@@ -344,63 +347,63 @@ void Game::InitializeAgents()
 
 	//0. Comrade Tartar
 	int locationProbability1[] = {0, 5, 50, 5, 40};
-	m_agents[0]->InitializeCharacter("Comrade Tartar", MALE
+	m_agents[0]->InitializeCharacter(m_roomManager, "Comrade Tartar", MALE
 	, "A Russia circus acrobat defected to England. A muscled and strong man that claims he has captured all the circus's bears barehanded"
 	, locationProbability1, true, true, false, true, 9, 10);
 
 	//1. Colonel Worcestershire
 	int locationProbability2[] = {0, 60, 5, 5, 30};
-	m_agents[1]->InitializeCharacter("Colonel Worcestershire", MALE
+	m_agents[1]->InitializeCharacter(m_roomManager, "Colonel Worcestershire", MALE
 	, "An old British military man. Though respected and feared by his men, old age has left visible marks on his body."
 	, locationProbability2, true, false, true, false, 8, 8);
 
 	//2. Don Gravy
 	int locationProbability3[] = {0, 30, 30, 5, 35};
-	m_agents[2]->InitializeCharacter("Don Gravy", MALE
+	m_agents[2]->InitializeCharacter(m_roomManager, "Don Gravy", MALE
 	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
 	, locationProbability3, true, true, true, true, 6, 9);
 
-	//3. Mademoiselle Velouté
-	int locationProbability4[] = {0, 30, 30, 10, 30};
-	m_agents[3]->InitializeCharacter("Mademoiselle Velouté", FEMALE
-	, "A French super model on holidays."
-	, locationProbability4, true, true, true, false, 6, 4);
+	////3. Mademoiselle Velouté
+	//int locationProbability4[] = {0, 30, 30, 10, 30};
+	//m_agents[3]->InitializeCharacter(m_roomManager, "Mademoiselle Velouté", FEMALE
+	//, "A French super model on holidays."
+	//, locationProbability4, true, true, true, false, 6, 4);
 
-	//4. Madame Béchamel
-	int locationProbability5[] = {0, 15, 20, 5, 60};
-	m_agents[4]->InitializeCharacter("Madame Béchamel", FEMALE
-	, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
-	, locationProbability5, true, true, false, false, 5, 6);
+	////4. Madame Béchamel
+	//int locationProbability5[] = {0, 15, 20, 5, 60};
+	//m_agents[4]->InitializeCharacter(m_roomManager, "Madame Béchamel", FEMALE
+	//, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
+	//, locationProbability5, true, true, false, false, 5, 6);
 
-	//5. Mrs.Hollandaise
-	int locationProbability6[] = {30, 5, 30, 5, 30};
-	m_agents[5]->InitializeCharacter("Mrs. Hollandaise", FEMALE
-	, "The maid."
-	, locationProbability6, true, true, false, true, 5, 5);
+	////5. Mrs.Hollandaise
+	//int locationProbability6[] = {30, 5, 30, 5, 30};
+	//m_agents[5]->InitializeCharacter(m_roomManager, "Mrs. Hollandaise", FEMALE
+	//, "The maid."
+	//, locationProbability6, true, true, false, true, 5, 5);
 
-	//6. Mr.Hollandaise
-	int locationProbability7[] = {30, 5, 50, 5, 10};
-	m_agents[6]->InitializeCharacter("Mr.Hollandaise", MALE
-	, "The butler. A Dutch and French descendant butler and maid husband and wife"
-	, locationProbability7, true, true, false, true, 7, 6);
+	////6. Mr.Hollandaise
+	//int locationProbability7[] = {30, 5, 50, 5, 10};
+	//m_agents[6]->InitializeCharacter(m_roomManager, "Mr.Hollandaise", MALE
+	//, "The butler. A Dutch and French descendant butler and maid husband and wife"
+	//, locationProbability7, true, true, false, true, 7, 6);
 
-	//7. Herr Duckefett
-	int locationProbability8[] = {0, 5, 50, 5, 40};
-	m_agents[7]->InitializeCharacter("Herr Duckefett", MALE
-	, "A German explorer. HAs a strange taste when it comes to women"
-	, locationProbability8, true, true, true, true, 8, 7);
+	////7. Herr Duckefett
+	//int locationProbability8[] = {0, 5, 50, 5, 40};
+	//m_agents[7]->InitializeCharacter(m_roomManager, "Herr Duckefett", MALE
+	//, "A German explorer. HAs a strange taste when it comes to women"
+	//, locationProbability8, true, true, true, true, 8, 7);
 
-	//8. prof.Custard
-	int locationProbability9[] = {0, 35, 50, 5, 10};
-	m_agents[8]->InitializeCharacter("prof.Custard", MALE
-	, "British renowned "
-	, locationProbability9, true, true, true, true, 8, 7);
+	////8. prof.Custard
+	//int locationProbability9[] = {0, 35, 50, 5, 10};
+	//m_agents[8]->InitializeCharacter(m_roomManager, "prof.Custard", MALE
+	//, "British renowned "
+	//, locationProbability9, true, true, true, true, 8, 7);
 
-	//9. Signor Bolognese
-	int locationProbability10[] = {0, 50, 5, 5, 40};
-	m_agents[9]->InitializeCharacter("Signor Bolognese", MALE
-	, "Italian, sleezy, barber, slim, fast, cheap"
-	, locationProbability10, true, true, true, true, 8, 7);
+	////9. Signor Bolognese
+	//int locationProbability10[] = {0, 50, 5, 5, 40};
+	//m_agents[9]->InitializeCharacter(m_roomManager, "Signor Bolognese", MALE
+	//, "Italian, sleezy, barber, slim, fast, cheap"
+	//, locationProbability10, true, true, true, true, 8, 7);
 
 
 	//probably just tag murderer here and move these to the agents class:

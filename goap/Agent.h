@@ -18,6 +18,7 @@ namespace GOAP
 	class ActionManager;
 	class Action;
 	class Room;
+	class RoomManager;
 
 	namespace Op
 	{
@@ -32,7 +33,7 @@ namespace GOAP
 		Agent(const Agent& other);
 		~Agent();
 
-		void InitializeCharacter(std::string name, Gender gender, 
+		void InitializeCharacter(RoomManager* rm, std::string name, Gender gender, 
 								 std::string backStory, int locationProbability[], 
 								 bool canStab, bool canStrangle, bool canShoot, 
 								 bool canBludgeon, int height, int weight);

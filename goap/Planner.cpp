@@ -155,6 +155,11 @@ void Planner::ExpandFrontier(Agent* agent)
 		m_frontier.push_back(nextGoal);
 		++condIter;
 	}
+
+	if(m_frontier.size() > 1)
+	{
+		m_frontier.sort(myCompare);
+	}
 	
 }
 

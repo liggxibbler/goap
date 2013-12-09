@@ -21,8 +21,8 @@ Take::operator ActionType()
 
 ActionStatus Take::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(OP_SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(OP_SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
 	
 	DUMP(Express(0))
 	return ACT_STAT_SUCCESS;
@@ -40,12 +40,12 @@ void Take::InitArgs()
 {
 	ConditionParameter sub, obj;
 	
-	sub.semantic = OP_SEMANTIC_ROLE_AGENT;
+	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
 	m_args.push_back(sub);
 
-	obj.semantic = OP_SEMANTIC_ROLE_PATIENT0;
+	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_OBJECT;
 	m_args.push_back(obj);
@@ -54,8 +54,8 @@ void Take::InitArgs()
 void Take::InitPreconditions()
 {
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
-	ConditionParameter sub = *GetArg(OP_SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
+		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 	
 	subNearObj[0] = sub;
 	subNearObj[0].attrib = ATTRIB_TYPE_ROOM;
@@ -69,8 +69,8 @@ void Take::InitPreconditions()
 void Take::InitEffects()
 {
 	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
-	ConditionParameter sub = *GetArg(OP_SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
+		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 	
 	subHasObj[0] = sub;
 	subHasObj[1] = obj;
@@ -80,8 +80,8 @@ void Take::InitEffects()
 
 std::string Take::Express(Agent* agent)
 {
-	auto sub = GetArg(OP_SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(OP_SEMANTIC_ROLE_PATIENT0);
+	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
+	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
 	
 	std::string _agent;
 	std::string _patient;
@@ -122,5 +122,21 @@ int Take::Cost()
 	// return a measure of
 	// 1 - if that thing doesn't BELONG to you
 	// 2 - bonus points if it BELONGS to someone else, and not a room
-	return 0;
+
+	int cost = 0;
+
+	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+
+	if(_patient->instance->GetOwner() != _agent->instance)
+	{
+		cost += 50;
+	}
+	
+	if(_patient->instance->GetOwner() != 0)
+	{
+		cost += 50;
+	}	
+
+	return cost;
 }
