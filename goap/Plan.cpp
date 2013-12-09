@@ -36,6 +36,10 @@ ActionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
 			return ACT_STAT_RUNNING;
+		case ACT_STAT_SKIP:
+			m_plan = m_plan->GetParent();
+			this->Execute(om, turn);
+			break;
 		case ACT_STAT_RUNNING:
 			//
 			//m_plan = m_plan;

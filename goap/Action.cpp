@@ -282,8 +282,12 @@ ActionStatus Action::Execute(Op::OperatorManager* om, int turn)
 {
 	// log action to local database
 	// send message to all agents in room
-	//if(! EvaluateEffects(om) )
-	//{
+	if( EvaluateEffects(om) )
+	{
+		return ACT_STAT_SKIP;
+	}
+	else
+	{
 		if( EvaluatePreconditions(om) )
 		{
 			Dispatch(turn);
@@ -294,11 +298,7 @@ ActionStatus Action::Execute(Op::OperatorManager* om, int turn)
 		{
 			return ACT_STAT_FAIL;
 		}
-	/*}
-	else
-	{
-		return ACT_STAT_SUCCESS;
-	}*/
+	}
 }
 
 ActionStatus Action::GetStatus()
@@ -336,7 +336,7 @@ bool Action::EvaluatePreconditions(Op::OperatorManager* om)
 
 bool Action::EvaluateEffects(Op::OperatorManager* om)
 {
-	for(auto effect(m_effects.begin()); effect!= m_effects.begin(); ++effect)
+	for(auto effect(m_effects.begin()); effect!= m_effects.end(); ++effect)
 	{
 		if( ! effect->Evaluate(om) )
 		{
