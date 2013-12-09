@@ -31,9 +31,9 @@ void Game::Initialize()
 {
 	m_roomManager = RoomManager::Instance();
 
+	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
 	InitializeAgents();
-	InitializeObjects();
-	m_roomManager->Initialize(m_agents.begin(), m_agents.end());
+	InitializeObjects();	
 
 	m_currentRoom = m_roomManager->GetRoom(ROOM_KITCHEN);
 }

@@ -55,6 +55,8 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 	m_backStory = backStory;
 	m_gender = gender;
 
+	rm->AddAgentProbabilities(this, locationProbability);
+
 	this->AddAction(ACTION_GOTO);
 
 	for(int i = 0; i<NUMBER_OF_ROOMS; ++i)

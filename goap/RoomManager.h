@@ -20,7 +20,7 @@ namespace GOAP
 		public:
 			
 			static RoomManager* Instance();
-			void Initialize(std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last); // get list of agents, make new room for each
+			void Initialize(/*std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last*/); // get list of agents, make new room for each
 			
 			Room* GetRoom(int id);
 			Room* GetRoom(std::string name);
@@ -33,10 +33,18 @@ namespace GOAP
 
 			void ShowBedrooms( Agent* murderer );
 
+			void AddAgentProbabilities(Agent* agent, int prob[]);
+
+			float GetProb(Agent* agent, Room* room);
+			float GetProbOthers(Agent* agent, Room* room);
+			float GetProbAlone(Agent* agent, Room* room);
+			float GetProbWillBeFound(Agent* agent, Room* room);
+
 		private:
 			std::map<RoomName, Room*> m_mapRoom;
 			std::map<Agent*, Room*> m_mapBedroom;
 			std::list<Room*> m_rooms;
+			std::map< Agent*, std::map<Room*, float> > m_probabilities;
 	};
 }
 

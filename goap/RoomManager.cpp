@@ -23,7 +23,7 @@ RoomManager* RoomManager::Instance()
 	return &rm;
 }
 
-void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last)
+void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last*/)
 {
 	Agent* agent = NULL;
 	
@@ -44,7 +44,7 @@ void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Ag
 	m_rooms.push_back(bath);
 
 	// get list of agents, make new room for each
-	Room* room = NULL;
+	/*Room* room = NULL;
 	for(auto iter = first; iter != last; ++iter)
 	{
 		agent = *iter;
@@ -57,7 +57,7 @@ void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Ag
 		agent->See(dining, false);
 		agent->See(living, false);
 		agent->See(bath, false);
-	}
+	}*/
 }
 
 Room* RoomManager::GetRoom(RoomName rn, Agent* agent)
@@ -124,4 +124,73 @@ void RoomManager::ShowBedrooms(Agent* murderer)
 	{
 		murderer->See(room->second, false);
 	}
+}
+
+void RoomManager::AddAgentProbabilities(Agent* agent, int prob[])
+{
+	Room* room = NULL;
+	std::string roomName(agent->GetName() + std::string("'s bedroom"));
+	room = new Room(roomName, ROOM_BEDROOM, agent);
+	m_mapBedroom[agent] = room;
+	m_rooms.push_back(room);
+	
+	agent->See(room, false);
+	agent->See(m_mapRoom[ROOM_KITCHEN], false);
+	agent->See(m_mapRoom[ROOM_LIVING_ROOM], false);
+	agent->See(m_mapRoom[ROOM_DINING_ROOM], false);
+	agent->See(m_mapRoom[ROOM_BATHROOM], false);
+
+	m_probabilities[agent][m_mapRoom[ROOM_KITCHEN]] = prob[0];
+	m_probabilities[agent][m_mapRoom[ROOM_LIVING_ROOM]] = prob[1];
+	m_probabilities[agent][m_mapRoom[ROOM_DINING_ROOM]] = prob[2];
+	m_probabilities[agent][m_mapRoom[ROOM_BATHROOM]] = prob[3];
+	m_probabilities[agent][room] = prob[4];
+}
+
+float RoomManager::GetProb(Agent* agent, Room* room)
+{
+	if( m_probabilities[agent].find(room) == m_probabilities[agent].end() )
+	{
+		m_probabilities[agent][room] = 0;
+	}
+
+	return m_probabilities[agent][room] / 100.0f;
+}
+
+float RoomManager::GetProbOthers(Agent* agent, Room* room)
+{
+	float prob = 1.0f;
+	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	{
+		if(record->first != agent)
+		{
+			prob *= GetProb(record->first, room) / 100.0f;
+		}
+	}
+	return prob;
+}
+float RoomManager::GetProbAlone(Agent* agent, Room* room)
+{
+	float prob = 1.0f;
+	prob *= GetProb(agent, room);
+	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	{
+		if(record->first != agent)
+		{
+			prob *= (1.0f - GetProb(record->first, room) / 100.0f);
+		}
+	}
+	return prob;
+}
+float RoomManager::GetProbWillBeFound(Agent* agent, Room* room)
+{
+	float prob = 1.0f;
+	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	{
+		if(record->first != agent)
+		{
+			prob *= (1.0f - GetProb(record->first, room) / 100.0f);
+		}
+	}
+	return 1.0f - prob;
 }
