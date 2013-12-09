@@ -31,6 +31,8 @@ namespace GOAP
 			std::list<Room*>::iterator GetFirstRoom();
 			std::list<Room*>::iterator GetLastRoom();
 
+			void ShowBedrooms( Agent* murderer );
+
 		private:
 			std::map<RoomName, Room*> m_mapRoom;
 			std::map<Agent*, Room*> m_mapBedroom;

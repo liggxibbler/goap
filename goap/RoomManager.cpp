@@ -117,3 +117,11 @@ Room* RoomManager::GetRoom(int id)
 	}
 	return 0;
 }
+
+void RoomManager::ShowBedrooms(Agent* murderer)
+{
+	for(auto room(m_mapBedroom.begin()); room != m_mapBedroom.end(); ++room)
+	{
+		murderer->See(room->second, false);
+	}
+}

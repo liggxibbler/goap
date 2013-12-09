@@ -300,6 +300,8 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	murderer->See(victim);
 	
+	m_roomManager->ShowBedrooms(murderer);
+
 	m_actors.push_back(murderer);
 	m_actors.push_back(victim);
 	m_actors.push_back(m_agents[2]);
