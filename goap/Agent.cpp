@@ -248,19 +248,21 @@ void Agent::Log(int turn, Action* action)
 	m_actionLog.push_back(ar);
 }
 
-void Agent::See(Room* room)
+void Agent::See(Room* room, bool deep)
 {
-	See((Object*)room);
+	if(deep)
+	{
+		for(auto object(room->GetFirstObject());object != room->GetLastObject();++object)
+		{
+			See(*object);
+		}
 
-	for(auto object(room->GetFirstObject());object != room->GetLastObject();++object)
-	{
-		See(*object);
+		for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+		{
+			See(*agent);
+		}
 	}
-	
-	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
-	{
-		See(*agent);
-	}
+	See((Object*)room);
 }
 
 bool Agent::GetMurder()

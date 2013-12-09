@@ -54,7 +54,7 @@ namespace GOAP
 
 		Plan* GetPlan(ActionManager* am, Op::OperatorManager* om);
 		void See(Object* obj);
-		void See(Room* room);
+		void See(Room* room, bool deep = true);
 
 		virtual int GetCompoundType();
 		virtual bool Update(RoomManager* room, int turn) override;

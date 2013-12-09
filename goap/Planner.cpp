@@ -158,6 +158,7 @@ void Planner::ExpandFrontier(Agent* agent)
 
 	if(m_frontier.size() > 1)
 	{
+		// sort frontier by cost of actions
 		m_frontier.sort(myCompare);
 	}
 	

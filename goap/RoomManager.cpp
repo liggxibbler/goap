@@ -26,25 +26,25 @@ RoomManager* RoomManager::Instance()
 void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last)
 {
 	Agent* agent = NULL;
-	Room* room = NULL;
+	
+	Room* kitchen = new Room("Kitchen", ROOM_KITCHEN, 0);
+	m_mapRoom[ROOM_KITCHEN] = kitchen;
+	m_rooms.push_back(kitchen);
 
-	room = new Room("Kitchen", ROOM_KITCHEN, 0);
-	m_mapRoom[ROOM_KITCHEN] = room;
-	m_rooms.push_back(room);
+	Room* dining = new Room("Dining Room", ROOM_DINING_ROOM, 0);
+	m_mapRoom[ROOM_DINING_ROOM] = dining;
+	m_rooms.push_back(dining);
 
-	room = new Room("Dining Room", ROOM_DINING_ROOM, 0);
-	m_mapRoom[ROOM_DINING_ROOM] = room;
-	m_rooms.push_back(room);
+	Room* living = new Room("Living Room", ROOM_LIVING_ROOM, 0);
+	m_mapRoom[ROOM_LIVING_ROOM] = living;
+	m_rooms.push_back(living);
 
-	room = new Room("Living Room", ROOM_LIVING_ROOM, 0);
-	m_mapRoom[ROOM_LIVING_ROOM] = room;
-	m_rooms.push_back(room);
-
-	room = new Room("Bathroom", ROOM_BATHROOM, 0);
-	m_mapRoom[ROOM_BATHROOM] = room;
-	m_rooms.push_back(room);
+	Room* bath = new Room("Bathroom", ROOM_BATHROOM, 0);
+	m_mapRoom[ROOM_BATHROOM] = bath;
+	m_rooms.push_back(bath);
 
 	// get list of agents, make new room for each
+	Room* room = NULL;
 	for(auto iter = first; iter != last; ++iter)
 	{
 		agent = *iter;
@@ -52,6 +52,11 @@ void RoomManager::Initialize(std::vector<Agent*>::iterator first, std::vector<Ag
 		room = new Room(roomName, ROOM_BEDROOM, agent);
 		m_mapBedroom[agent] = room;
 		m_rooms.push_back(room);
+		agent->See(room, false);
+		agent->See(kitchen, false);
+		agent->See(dining, false);
+		agent->See(living, false);
+		agent->See(bath, false);
 	}
 }
 
