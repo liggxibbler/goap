@@ -153,6 +153,8 @@ float RoomManager::GetProb(Agent* agent, Room* room)
 	{
 		m_probabilities[agent][room] = 0;
 	}
+	
+	//DUMP("% P of " << agent->GetName() << " at " << room->GetName() << " is " << m_probabilities[agent][room] / 100.0f << " %")
 
 	return m_probabilities[agent][room] / 100.0f;
 }

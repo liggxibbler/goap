@@ -55,6 +55,8 @@ namespace GOAP
 
 		virtual Object* Clone();
 
+		virtual int GetCompoundType() override;
+
 	private:
 		void ClearMarkedAgents();
 		void AddMarkedAgents();

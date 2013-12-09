@@ -119,6 +119,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 			//else if(cp.semantic == SEMANTIC_ROLE_LOCATIVE)
 			//{
 			//	// push all rooms on unifyList
+			//	DUMP("")
 			//}
 			else if(!agent->Unify(cp.type, unifyList, cp.strict))
 			{

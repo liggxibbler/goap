@@ -179,3 +179,8 @@ Object* Room::Clone()
 {
 	return new Room(*this);
 }
+
+int Room::GetCompoundType()
+{
+	return OBJ_TYPE_OBJECT | OBJ_TYPE_ROOM;
+}
