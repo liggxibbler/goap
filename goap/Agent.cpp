@@ -185,12 +185,12 @@ int Agent::GetCompoundType()
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
 }
 
-bool Agent::Update(RoomManager* rm, int turn)
+bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
 	m_bDoneMurder = false;
 	if(m_nextExecution != 0)
 	{
-		ActionStatus as = m_nextExecution->Execute(turn);
+		ActionStatus as = m_nextExecution->Execute(om, turn);
 		if (as == ACT_STAT_SUCCESS)
 		{
 			m_nextExecution = 0;

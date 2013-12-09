@@ -1,6 +1,7 @@
 #include "Action.h"
 #include "Agent.h"
 #include "Room.h"
+#include "OperatorManager.h"
 
 using namespace GOAP;
 
@@ -277,13 +278,27 @@ void Action::UpdatePrecondInstances()
 	}
 }
 
-ActionStatus Action::Execute(int turn)
+ActionStatus Action::Execute(Op::OperatorManager* om, int turn)
 {
 	// log action to local database
 	// send message to all agents in room
-	Dispatch(turn);
-	ActionStatus stat = ExecuteWorkhorse(turn);
-	return stat;
+	//if(! EvaluateEffects(om) )
+	//{
+		if( EvaluatePreconditions(om) )
+		{
+			Dispatch(turn);
+			ActionStatus stat = ExecuteWorkhorse(turn);
+			return stat;
+		}
+		else
+		{
+			return ACT_STAT_FAIL;
+		}
+	/*}
+	else
+	{
+		return ACT_STAT_SUCCESS;
+	}*/
 }
 
 ActionStatus Action::GetStatus()
@@ -305,4 +320,28 @@ void Action::Dispatch(int turn)
 bool Action::CompareCost(Action* a1, Action* a2)
 {
 	return ( a1->Cost() < a2->Cost() );
+}
+
+bool Action::EvaluatePreconditions(Op::OperatorManager* om)
+{
+	for(auto precond(m_preconds->GetFirstCondition()); precond != m_preconds->GetLastCondition(); ++precond)
+	{
+		if( ! precond->Evaluate(om) )
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool Action::EvaluateEffects(Op::OperatorManager* om)
+{
+	for(auto effect(m_effects.begin()); effect!= m_effects.begin(); ++effect)
+	{
+		if( ! effect->Evaluate(om) )
+		{
+			return false;
+		}
+	}
+	return true;
 }

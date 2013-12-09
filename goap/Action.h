@@ -16,6 +16,11 @@
 namespace GOAP
 {
 	class Agent;
+	namespace Op
+	{
+		class OperatorManager;
+	}
+
 	class Action : public IExecutable
 	{
 	public:
@@ -24,7 +29,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ActionStatus Execute(int turn) override;
+		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) override;
 		ActionStatus GetStatus();
 		virtual operator ActionType();
 
@@ -59,6 +64,9 @@ namespace GOAP
 		static bool CompareCost(Action* a1, Action* a2);
 
 		virtual int Cost() = 0;
+
+		bool EvaluatePreconditions(Op::OperatorManager* om);
+		bool EvaluateEffects(Op::OperatorManager* om);
 
 	protected:
 

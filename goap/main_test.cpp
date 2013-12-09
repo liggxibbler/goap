@@ -29,7 +29,7 @@ int main()
 	//seed = (unsigned int)time(NULL);
 	//srand(1386261647);
 	
-	srand(time(NULL));
+	//srand(time(NULL));
 
 	Game* game = new Game();
 	game->Initialize();
@@ -134,7 +134,7 @@ void other()
 	if(plan->GetStatus() == PLAN_STAT_SUCCESS)
 	{
 		ActionStatus stat = ACT_STAT_UNKNOWN;
-		while(plan->Execute(0) != ACT_STAT_SUCCESS)
+//		while(plan->Execute(0) != ACT_STAT_SUCCESS)
 		{
 		}
 	}

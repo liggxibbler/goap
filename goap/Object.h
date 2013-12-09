@@ -10,6 +10,11 @@ namespace GOAP
 	class Room;
 	class RoomManager;
 
+	namespace Op
+	{
+		class OperatorManager;
+	}
+
 	class Object
 	{
 	public:
@@ -26,7 +31,7 @@ namespace GOAP
 		int GetID();
 		Object* GetOwner();
 
-		virtual bool Update(RoomManager* rm, int turn);
+		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn);
 
 		virtual int GetCompoundType();
 
@@ -44,6 +49,7 @@ namespace GOAP
 		void SetRoom(Room* room);
 
 		virtual Object* Clone();
+		void SetOwner(Object* owner);
 
 	protected:
 		static int s_numObjects;

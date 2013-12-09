@@ -5,10 +5,14 @@
 
 namespace GOAP
 {
+	namespace Op
+	{
+		class OperatorManager;
+	}
 	class IExecutable
 	{
 	public:
-		virtual ActionStatus Execute(int turn) = 0;
+		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) = 0;
 	};
 }
 #endif

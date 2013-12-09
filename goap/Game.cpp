@@ -7,6 +7,7 @@
 #include "Blunt.h"
 #include "Squeezer.h"
 #include "Projectile.h"
+#include "OperatorManager.h"
 
 #include <iostream>
 using namespace std;
@@ -232,7 +233,7 @@ void Game::GeneratePlot()
 	{
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
-			m_murder = (*room)->Update(m_roomManager, m_turn);
+			m_murder = (*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
 			if(m_murder)
 			{
 				break;

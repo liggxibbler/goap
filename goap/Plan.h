@@ -6,6 +6,11 @@
 
 namespace GOAP
 {
+	namespace Op
+	{
+		class OperatorManager;
+	}
+
 	class Plan : public IExecutable
 	{
 	public:
@@ -14,7 +19,7 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		virtual ActionStatus Execute(int turn) override;
+		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) override;
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();

@@ -21,13 +21,13 @@ Plan::~Plan()
 {
 }
 
-ActionStatus Plan::Execute(int turn)
+ActionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 {
 	Action* action = m_plan->GetAction();
 	
 	if(action != NULL)
 	{
-		ActionStatus stat = action->Execute(turn);
+		ActionStatus stat = action->Execute(om, turn);
 		switch(stat)
 		{
 		case ACT_STAT_SUCCESS:

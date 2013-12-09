@@ -21,9 +21,11 @@ Take::operator ActionType()
 
 ActionStatus Take::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
+	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
+	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 	
+	_patient->instance->SetOwner(_agent->instance);
+
 	DUMP(Express(0))
 	return ACT_STAT_SUCCESS;
 }

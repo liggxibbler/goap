@@ -11,6 +11,11 @@ namespace GOAP
 {
 	class Agent;
 
+	namespace Op
+	{
+		class OperatorManager;
+	}
+
 	class Room : public Object
 	{
 	public:
@@ -42,7 +47,7 @@ namespace GOAP
 
 		int GetID();
 
-		virtual bool Update(RoomManager* rm, int turn);
+		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn);
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);

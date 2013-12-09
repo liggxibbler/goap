@@ -1,6 +1,7 @@
 #include "Object.h"
 #include "Room.h"
 #include "RoomManager.h"
+#include "OperatorManager.h"
 
 using namespace GOAP;
 
@@ -86,7 +87,7 @@ int Object::GetCompoundType()
 	return OBJ_TYPE_OBJECT;
 }
 
-bool Object::Update(RoomManager* rm, int turn)
+bool Object::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
 	if(m_owner != NULL)
 	{
@@ -124,4 +125,9 @@ Room* Object::GetRoom()
 Object* Object::Clone()
 {
 	return new Object(*this);
+}
+
+void Object::SetOwner(Object* owner)
+{
+	m_owner = owner;
 }
