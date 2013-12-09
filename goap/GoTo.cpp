@@ -1,5 +1,6 @@
 #include "GoTo.h"
 #include "Room.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -134,7 +135,7 @@ GoTo::operator std::string()
 	return "GoTo";
 }
 
-int GoTo::Cost()
+int GoTo::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is for you to be here

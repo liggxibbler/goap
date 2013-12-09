@@ -1,4 +1,5 @@
 #include "Stab.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -69,7 +70,7 @@ void Stab::InitArgs()
 	room.instance = NULL;
 	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	inst.strict = true;
-	//m_args.push_back(room);
+	m_args.push_back(room);
 }
 
 void Stab::InitEffects()
@@ -153,26 +154,26 @@ Stab::operator std::string()
 	return "Stab";
 }
 
-int Stab::Cost()
+int Stab::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
 	// 2 - how UNLIKELY it is for the victim to be found after being killed
-	//int cost = 0;
+	int cost = 0;
 
-	//auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
-	//auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	Object* roomOwner = _locative->instance->GetOwner();
 
-	//if (_locative->instance->GetOwner() != 0)
-	//{
-	//	cost += 1000;
-	//}
-	//if (_locative->instance->GetOwner() == _patient->instance)
-	//{
-	//	cost += 500;
-	//}
+	if (roomOwner != 0)
+	{
+		cost += 1000 * rm->GetProb((Agent*)roomOwner, (Room*)_locative->instance);
+	}
+	if (roomOwner == _patient->instance)
+	{
+		cost += 500;
+	}
+	return cost;
 
-	//return cost;
-
-	return rand() % 1000;
+	//return rand() % 1000;
 }

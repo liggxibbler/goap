@@ -21,6 +21,8 @@ namespace GOAP
 		class OperatorManager;
 	}
 
+	class RoomManager;
+
 	class Action : public IExecutable
 	{
 	public:
@@ -63,7 +65,7 @@ namespace GOAP
 
 		static bool CompareCost(Action* a1, Action* a2);
 
-		virtual int Cost() = 0;
+		virtual int Cost(RoomManager* rm) = 0;
 
 		bool EvaluatePreconditions(Op::OperatorManager* om);
 		bool EvaluateEffects(Op::OperatorManager* om);

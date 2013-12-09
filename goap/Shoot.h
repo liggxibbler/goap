@@ -19,7 +19,7 @@ namespace GOAP
 		virtual std::string Express(Agent* agent) override;
 		virtual operator std::string() override;
 
-		virtual int Cost() override;
+		virtual int Cost(RoomManager* rm) override;
 
 	private:
 		virtual ActionStatus ExecuteWorkhorse(int turn);

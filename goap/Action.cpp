@@ -2,6 +2,7 @@
 #include "Agent.h"
 #include "Room.h"
 #include "OperatorManager.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -319,7 +320,8 @@ void Action::Dispatch(int turn)
 
 bool Action::CompareCost(Action* a1, Action* a2)
 {
-	return ( a1->Cost() < a2->Cost() );
+	RoomManager* rm = RoomManager::Instance();
+	return ( a1->Cost(rm) < a2->Cost(rm) );
 }
 
 bool Action::EvaluatePreconditions(Op::OperatorManager* om)

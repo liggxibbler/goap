@@ -1,4 +1,5 @@
 #include "Strangle.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -68,7 +69,7 @@ void Strangle::InitArgs()
 	room.instance = NULL;
 	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	inst.strict = true;
-	//m_args.push_back(room);
+	m_args.push_back(room);
 }
 
 void Strangle::InitEffects()
@@ -152,7 +153,7 @@ Strangle::operator std::string()
 	return "Strangle";
 }
 
-int Strangle::Cost()
+int Strangle::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
@@ -160,18 +161,19 @@ int Strangle::Cost()
 
 	int cost = 0;
 
-	//auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
-	//auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
-	//
-	//if (_locative->instance->GetOwner() != 0)
-	//{
-	//	cost += 1000;
-	//}
-	//if (_locative->instance->GetOwner() == _patient->instance)
-	//{
-	//	cost += 500;
-	//}
-	//return cost;
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	Object* roomOwner = _locative->instance->GetOwner();
 
-	return rand() % 1000;
+	if (roomOwner != 0)
+	{
+		cost += 1000 * rm->GetProb((Agent*)roomOwner, (Room*)_locative->instance);
+	}
+	if (roomOwner == _patient->instance)
+	{
+		cost += 500;
+	}
+	return cost;
+
+	//return rand() % 1000;
 }

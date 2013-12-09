@@ -5,6 +5,7 @@
 #include "Agent.h"
 #include "ActionManager.h"
 #include "OperatorManager.h"
+#include "RoomManager.h"
 #include "OrderedPair.h"
 #include "Goal.h"
 #include "Plan.h"
@@ -41,7 +42,8 @@ namespace GOAP
 				// so the least costly action is always at the end
 				else
 				{
-					return (g1->GetAction()->Cost()) > (g1->GetAction()->Cost());
+					RoomManager* rm = RoomManager::Instance();
+					return (g1->GetAction()->Cost(rm)) > (g1->GetAction()->Cost(rm));
 				}
 			}
 		} myCompare;

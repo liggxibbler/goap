@@ -1,4 +1,5 @@
 #include "Take.h"
+#include "RoomManager.h"
 
 using namespace GOAP;
 
@@ -119,7 +120,7 @@ Take::operator std::string()
 	return "Take";
 }
 
-int Take::Cost()
+int Take::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - if that thing doesn't BELONG to you
