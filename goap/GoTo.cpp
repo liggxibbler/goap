@@ -38,7 +38,7 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 		agent->See(nextRoom);
 	}
 
-	DUMP(Express(0))
+	DUMP("       ** " << Express(0))
 
 	return ACT_STAT_SUCCESS;
 }

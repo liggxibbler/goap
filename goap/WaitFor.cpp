@@ -40,7 +40,7 @@ ActionStatus WaitFor::ExecuteWorkhorse(int turn)
 	}
 	else
 	{
-		DUMP(Express(0))
+		DUMP("       ** " << Express(0))
 		/*m_turns--;*/
 		return ACT_STAT_RUNNING;
 	}

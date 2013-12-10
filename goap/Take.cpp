@@ -27,7 +27,7 @@ ActionStatus Take::ExecuteWorkhorse(int turn)
 	
 	_patient->instance->SetOwner(_agent->instance);
 
-	DUMP(Express(0))
+	DUMP("       ** " << Express(0))
 	return ACT_STAT_SUCCESS;
 }
 

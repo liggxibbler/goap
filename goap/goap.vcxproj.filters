@@ -99,9 +99,6 @@
     <ClCompile Include="True.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="main_test.cpp">
-      <Filter>Application</Filter>
-    </ClCompile>
     <ClCompile Include="Take.cpp">
       <Filter>Source Files\Actions</Filter>
     </ClCompile>
@@ -122,9 +119,6 @@
     </ClCompile>
     <ClCompile Include="Blade.cpp">
       <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Source Files\World</Filter>
@@ -152,6 +146,12 @@
     </ClCompile>
     <ClCompile Include="WaitFor.cpp">
       <Filter>Source Files\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,6 @@
     <ClInclude Include="Room.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Telegram.h">
       <Filter>Header Files\Messages</Filter>
     </ClInclude>
@@ -275,8 +272,8 @@
     <ClInclude Include="WaitFor.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ClInclude Include="Game.h">
+      <Filter>Application</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -88,7 +88,7 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoTo.cpp" />
     <ClCompile Include="GreaterThan.cpp" />
-    <ClCompile Include="main_test.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
@@ -147,9 +147,6 @@
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />
     <ClInclude Include="WaitFor.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
