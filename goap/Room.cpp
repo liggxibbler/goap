@@ -150,23 +150,12 @@ void Room::MarkForAddition(Agent* agent)
 	m_markedForAddition.insert(agent);
 }
 
-bool Room::UpdateAgentPositions(Agent* murderer)
+bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 {
 	bool result = false;
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
-		if(m_murder)
-		// if this is the room where the murder has taken place
-		{
-			if((*addIter) != murderer)
-			// and someone other than the murderer enters it
-			{
-				// then the game is over
-				result = true;
-			}
-		}
-
 		AddAgent(*(addIter++));
 		m_numAgents++;
 	}
@@ -174,6 +163,20 @@ bool Room::UpdateAgentPositions(Agent* murderer)
 	auto delIter = m_agents.begin();
 	while(delIter != m_agents.end())
 	{
+		if(m_murder)
+		// if this is the room where the murder has taken place
+		{
+			if((*delIter) != murderer)
+			// and someone other than the murderer enters it
+			{
+				if((*delIter) != victim)
+				{
+					// then the game is over
+					result = true;
+				}
+			}
+		}
+
 		if (m_markedForDeletion.find(*delIter) != m_markedForDeletion.end())
 		{
 			// post-increment operator returns a copy, then increment

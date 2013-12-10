@@ -248,7 +248,7 @@ bool Game::GeneratePlot()
 
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
-			if((*room)->UpdateAgentPositions(m_murderer))
+			if((*room)->UpdateAgentPositions(m_murderer, m_victim))
 			{
 				m_murder = true;
 			}

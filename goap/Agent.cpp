@@ -324,9 +324,11 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 
 void Agent::GiveStatement()
 {
+	ActionRecord ar;
 	for(unsigned int i=0; i<m_actionLog.size(); ++i)
 	{
-		std::cout << "At " << m_actionLog[i].turn << " " << m_actionLog[i].action->Express(this, m_actionLog[i].room) << std::endl;
+		ar = m_actionLog[i];
+		std::cout << "At " << ar.turn << ", (" << ar.room->GetName() << ") " << m_actionLog[i].action->Express(this, ar.room) << std::endl;
 	}
 }
 

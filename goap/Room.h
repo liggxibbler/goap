@@ -51,7 +51,7 @@ namespace GOAP
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);
-		bool UpdateAgentPositions(Agent* agent);
+		bool UpdateAgentPositions(Agent* agent, Agent* victim);
 
 		virtual Object* Clone();
 
