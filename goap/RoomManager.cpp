@@ -27,19 +27,19 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 {
 	Agent* agent = NULL;
 	
-	Room* kitchen = new Room("Kitchen", ROOM_KITCHEN, 0);
+	Room* kitchen = new Room("The Kitchen", ROOM_KITCHEN, 0);
 	m_mapRoom[ROOM_KITCHEN] = kitchen;
 	m_rooms.push_back(kitchen);
 
-	Room* dining = new Room("Dining Room", ROOM_DINING_ROOM, 0);
+	Room* dining = new Room("The Dining Room", ROOM_DINING_ROOM, 0);
 	m_mapRoom[ROOM_DINING_ROOM] = dining;
 	m_rooms.push_back(dining);
 
-	Room* living = new Room("Living Room", ROOM_LIVING_ROOM, 0);
+	Room* living = new Room("The Living Room", ROOM_LIVING_ROOM, 0);
 	m_mapRoom[ROOM_LIVING_ROOM] = living;
 	m_rooms.push_back(living);
 
-	Room* bath = new Room("Bathroom", ROOM_BATHROOM, 0);
+	Room* bath = new Room("The Bathroom", ROOM_BATHROOM, 0);
 	m_mapRoom[ROOM_BATHROOM] = bath;
 	m_rooms.push_back(bath);
 
