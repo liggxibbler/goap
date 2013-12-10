@@ -51,7 +51,7 @@ namespace GOAP
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);
-		void UpdateAgentPositions();
+		bool UpdateAgentPositions(Agent* agent);
 
 		virtual Object* Clone();
 
@@ -72,6 +72,7 @@ namespace GOAP
 		int m_ID;
 
 		int m_numAgents;
+		bool m_murder;
 
 		Room* m_left;
 		Room* m_right;

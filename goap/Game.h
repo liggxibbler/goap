@@ -46,6 +46,9 @@ private:
 	GOAP::Agent* m_currentAgent;
 	GOAP::RoomManager* m_roomManager;	
 	
+	GOAP::Agent* m_murderer;
+	GOAP::Agent* m_victim;
+	
 	bool m_running;
 	bool m_murder;
 

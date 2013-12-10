@@ -20,7 +20,6 @@ namespace GOAP
 		virtual operator std::string() override;
 
 	private:
-		virtual ActionStatus ExecuteWorkhorse(int turn) override;
 		virtual void InitArgs() override;
 	};
 }

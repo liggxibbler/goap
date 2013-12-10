@@ -189,53 +189,72 @@ int Agent::GetCompoundType()
 
 bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
-	m_bDoneMurder = false;
-	if(m_nextExecution != 0)
+	//m_bDoneMurder = false;
+	
+	if(m_isAlive)
 	{
-		ActionStatus as = m_nextExecution->Execute(om, turn);
-		if (as == ACT_STAT_SUCCESS)
+		if(m_nextExecution != 0)
 		{
-			m_nextExecution = 0;
+			ActionStatus as = m_nextExecution->Execute(om, turn);
+			if (as == ACT_STAT_SUCCESS)
+			{
+				m_nextExecution = 0;
+			}
+			else if (as == ACT_STAT_SKIP)
+			{
+				m_nextExecution = 0;
+				/*Update(om, rm, turn);*/
+			}
 		}
-		else if (as == ACT_STAT_SKIP)
+		else if(m_goal != 0)
 		{
-			m_nextExecution = 0;
-			/*Update(om, rm, turn);*/
-		}
-	}
-	else if(m_goal != 0)
-	{
-		GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
-		PlanStatus ps = m_plan->GetStatus();
-		if(ps == PLAN_STAT_FAIL)
-		{
-			Room* room = rm->GetRandomRoom(this);
-			GoTo* gt = new GoTo(room, this);
-			gt->Initialize();
-			m_nextExecution = gt;
-		}
-		else if (ps == PLAN_STAT_SUCCESS)
-		{
-			m_nextExecution = m_plan;
+			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+			PlanStatus ps = m_plan->GetStatus();
+			if(ps == PLAN_STAT_FAIL)
+			{
+				Room* room = rm->GetRandomRoom(this);
+				GoTo* gt = new GoTo(room, this);
+				gt->Initialize();
+				m_nextExecution = gt;
+			}
+			else if (ps == PLAN_STAT_SUCCESS)
+			{
+				m_nextExecution = m_plan;
+			}
+			else
+			{
+				m_nextExecution = 0;
+			}
 		}
 		else
 		{
-			m_nextExecution = 0;
+			int wander = rand() % 100;
+			if(wander < 50)
+			{
+				DUMP("       **" << m_name << " be wanderin' " << turn)
+					Room* room = rm->GetRandomRoom(this);
+				GoTo* gt = new GoTo(room, this);
+				gt->Initialize();
+				m_nextExecution = gt;
+			}
 		}
 	}
+#ifdef _DEBUG
 	else
 	{
-		int wander = rand() % 100;
-		if(wander < 50)
+		std::cout << "\n" << m_name << " can't update, ";
+		switch(m_gender)
 		{
-			DUMP("       **" << m_name << " be wanderin' " << turn)
-			Room* room = rm->GetRandomRoom(this);
-			GoTo* gt = new GoTo(room, this);
-			gt->Initialize();
-			m_nextExecution = gt;
+		case MALE:
+			std::cout << "he";
+			break;
+		case FEMALE:
+			std::cout << "she";
+			break;
 		}
+		std::cout << "'s dead!\n";
 	}
-
+#endif
 	return m_bDoneMurder;
 }
 

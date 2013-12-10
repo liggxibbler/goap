@@ -6,7 +6,7 @@ using namespace GOAP;
 
 int Room::s_nextID = 0;
 
-Room::Room() : m_ID(s_nextID++), m_numAgents(0)
+Room::Room() : m_ID(s_nextID++), m_numAgents(0), m_murder(false)
 {
 	SetRoom(this);
 }
@@ -16,7 +16,8 @@ Room::Room(const Room& other) : m_ID(s_nextID++)
 	SetRoom(this);
 }
 
-Room::Room(std::string name , RoomName rn, Object* owner) : Object(name, owner), m_type(rn), m_ID(s_nextID++), m_numAgents(0)
+Room::Room(std::string name , RoomName rn, Object* owner) :
+Object(name, owner), m_type(rn), m_ID(s_nextID++), m_numAgents(0), m_murder(false)
 {
 	SetRoom(this);
 	m_attribs[ATTRIB_TYPE_NUM_AGENTS] = &m_numAgents;
@@ -118,8 +119,7 @@ RoomName Room::GetType()
 
 bool Room::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
-	bool result = false;
-	bool murder = false;
+	//m_murder = false;
 
 	DUMP("*** Updating room " << m_name << " at turn " << turn << " ***")
 
@@ -130,15 +130,14 @@ bool Room::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		murder = (*agent)->Update(om, rm, turn);
-		if( murder )
+		if( (*agent)->Update(om, rm, turn) )
 		{
-			result = true;
-			(*agent)->DoneMurder(false);
+			m_murder = true;
+			//(*agent)->DoneMurder(false);
 		}
 	}
 
-	return result;
+	return m_murder;
 }
 
 void Room::MarkForDeletion(Agent* agent)
@@ -151,11 +150,23 @@ void Room::MarkForAddition(Agent* agent)
 	m_markedForAddition.insert(agent);
 }
 
-void Room::UpdateAgentPositions()
+bool Room::UpdateAgentPositions(Agent* murderer)
 {
+	bool result = false;
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
+		if(m_murder)
+		// if this is the room where the murder has taken place
+		{
+			if((*addIter) != murderer)
+			// and someone other than the murderer enters it
+			{
+				// then the game is over
+				result = true;
+			}
+		}
+
 		AddAgent(*(addIter++));
 		m_numAgents++;
 	}
@@ -178,6 +189,8 @@ void Room::UpdateAgentPositions()
 
 	m_markedForAddition.clear();
 	m_markedForDeletion.clear();
+
+	return result;
 }
 
 Object* Room::Clone()

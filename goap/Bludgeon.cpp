@@ -15,20 +15,6 @@ Bludgeon::~Bludgeon()
 {
 }
 
-ActionStatus Bludgeon::ExecuteWorkhorse(int turn)
-{
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
-	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
-
-	DUMP("       ** " << Express(0, 0))	
-
-	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
-	Agent* agent = dynamic_cast<Agent*>(sub.instance);
-	agent->DoneMurder(true);
-	return ACT_STAT_MURDER;
-}
-
 Bludgeon::operator ActionType()
 {
 	return ACTION_BLUDGEON;

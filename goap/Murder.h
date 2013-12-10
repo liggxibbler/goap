@@ -10,7 +10,7 @@ namespace GOAP
 	{
 	public:
 		virtual int Cost(RoomManager* rm) override;
-
+		virtual ActionStatus ExecuteWorkhorse(int turn) override;
 	protected:
 		virtual void InitArgs() override;
 		virtual void InitPreconditions();

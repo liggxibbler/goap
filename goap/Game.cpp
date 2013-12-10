@@ -10,6 +10,9 @@
 #include "OperatorManager.h"
 #include <time.h>
 
+#define MAX_TURNS 50
+#define NUMBER_OF_CHARACTERS 4
+
 #include <iostream>
 using namespace std;
 
@@ -240,20 +243,16 @@ bool Game::GeneratePlot()
 	{
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
-			m_murder = (*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
-			if(m_murder)
-			{
-				break;
-			}
+			(*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
 		}
 
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
-			(*room)->UpdateAgentPositions();
+			if((*room)->UpdateAgentPositions(m_murderer))
+			{
+				m_murder = true;
+			}
 		}
-
-
-		// this deletion block copied from stackoverflow.com
 	
 		DUMP("******************************")
 		DUMP("Turn " << m_turn << " is over.")
@@ -263,7 +262,7 @@ bool Game::GeneratePlot()
 		std::cin.get();
 #endif
 		++m_turn;
-		if(m_turn >= 50)
+		if(m_turn >= MAX_TURNS)
 		{
 			std::cout << "	******************************\n";
 			std::cout << "	Hi! Don't worry! You did nothing wrong!\n";
@@ -282,7 +281,7 @@ bool Game::GeneratePlot()
 void Game::MainLoop()
 {
 	std::cout << "******************************\n";
-	std::cout << "Plot successfully generated\n";
+	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
 	std::cout << "Seed used : " << m_seed << endl;
 	std::cout << "******************************\n\n";
 
@@ -310,27 +309,29 @@ void Game::AssignRoles(/*int numWitness*/)
 	// pick (numWitness + 1) agents
 	// set as witness(es)
 	
-	Agent* murderer = m_agents[0];
-	Agent* victim = m_agents[1];
+	m_murderer = m_agents[0];
+	m_victim = m_agents[1];
 	
 	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
 	cond[0].attrib = ATTRIB_TYPE_ALIVE;
-	cond[0].instance = victim;
+	cond[0].instance = m_victim;
 	cond[0].type = OBJ_TYPE_AGENT;
 	cond[0].value = false;
 
 	Goal* goal = new Goal;
 	goal->AddCondition(cond);
-	murderer->SetGoal(goal);
+	m_murderer->SetGoal(goal);
 
-	murderer->See(victim);
-	murderer->AddAction(ACTION_WAITFOR);
+	m_murderer->See(m_victim);
+	m_murderer->AddAction(ACTION_WAITFOR);
 
-	m_roomManager->ShowBedrooms(murderer);
+	m_roomManager->ShowBedrooms(m_murderer);
 
-	m_actors.push_back(murderer);
-	m_actors.push_back(victim);
+	m_actors.push_back(m_murderer);
+	m_actors.push_back(m_victim);
 	m_actors.push_back(m_agents[2]);
+
+	m_murderer->AddAction(ACTION_TAKE);
 }
 
 void Game::PopulateRooms()
@@ -357,15 +358,15 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[5]);//dining
 	room->AddObject(m_objects[6]);	
 
-	m_roomManager->GetRandomRoom(m_agents[0])->AddAgent(m_agents[0]);
-	m_roomManager->GetRandomRoom(m_agents[1])->AddAgent(m_agents[1]);
-	m_roomManager->GetRandomRoom(m_agents[2])->AddAgent(m_agents[2]);
+	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
+	{
+		m_roomManager->GetRandomRoom(m_agents[0])->AddAgent(m_agents[i]);
+	}
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
 void Game::InitializeAgents()
 {
-	unsigned int NUMBER_OF_CHARACTERS = 3;
 	int MURDERER_ID = 0;
 
 	m_agents.clear();
@@ -392,11 +393,11 @@ void Game::InitializeAgents()
 	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
 	, locationProbability3, true, true, true, true, 6, 9);
 
-	////3. Mademoiselle Velouté
-	//int locationProbability4[] = {0, 30, 30, 10, 30};
-	//m_agents[3]->InitializeCharacter(m_roomManager, "Mademoiselle Velouté", FEMALE
-	//, "A French super model on holidays."
-	//, locationProbability4, true, true, true, false, 6, 4);
+	//3. Mademoiselle Velouté
+	int locationProbability4[] = {0, 30, 30, 10, 30};
+	m_agents[3]->InitializeCharacter(m_roomManager, "Mademoiselle Velouté", FEMALE
+	, "A French super model on holidays."
+	, locationProbability4, true, true, true, false, 6, 4);
 
 	////4. Madame Béchamel
 	//int locationProbability5[] = {0, 15, 20, 5, 60};
@@ -437,7 +438,6 @@ void Game::InitializeAgents()
 
 	//probably just tag murderer here and move these to the agents class:
 	//m_agents[MURDERER_ID]->AddAction(ACTION_GOTO);
-	m_agents[MURDERER_ID]->AddAction(ACTION_TAKE);
 }
 
 void Game::InitializeObjects()
