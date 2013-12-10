@@ -56,6 +56,7 @@ namespace GOAP
 		virtual Object* Clone();
 
 		virtual int GetCompoundType() override;
+		bool GetMurder();
 
 	private:
 		void ClearMarkedAgents();

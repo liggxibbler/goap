@@ -202,3 +202,8 @@ int Room::GetCompoundType()
 {
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_ROOM;
 }
+
+bool Room::GetMurder()
+{
+	return m_murder;
+}

@@ -8,7 +8,7 @@
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), 
+Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
@@ -20,7 +20,7 @@ Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), 
+Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_name = name;
