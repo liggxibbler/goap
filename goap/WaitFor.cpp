@@ -40,7 +40,7 @@ ActionStatus WaitFor::ExecuteWorkhorse(int turn)
 	}
 	else
 	{
-		DUMP("       ** " << Express(0))
+		DUMP("       ** " << Express(0, 0))
 		/*m_turns--;*/
 		return ACT_STAT_RUNNING;
 	}
@@ -113,7 +113,7 @@ void WaitFor::InitPreconditions()
 	m_preconds->AddCondition(position);
 }
 
-std::string WaitFor::Express(Agent* agent)
+std::string WaitFor::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_GOAL);

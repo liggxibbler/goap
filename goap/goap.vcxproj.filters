@@ -58,6 +58,12 @@
     <Filter Include="Header Files\Messages">
       <UniqueIdentifier>{a8eb70f3-793b-4b7d-8f1d-a58a2b4fa6ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Actions\Actions">
+      <UniqueIdentifier>{ec32d567-488d-4d1e-bf20-2d9eecf2e5ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Actions\Actions">
+      <UniqueIdentifier>{a97a53cf-c435-4427-8086-374a332d846b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -87,9 +93,6 @@
     <ClCompile Include="Condition.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
-    <ClCompile Include="Stab.cpp">
-      <Filter>Source Files\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Goal.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
@@ -99,14 +102,8 @@
     <ClCompile Include="True.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="Take.cpp">
-      <Filter>Source Files\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Owns.cpp">
       <Filter>Source Files\Operators</Filter>
-    </ClCompile>
-    <ClCompile Include="GoTo.cpp">
-      <Filter>Source Files\Actions</Filter>
     </ClCompile>
     <ClCompile Include="Planner.cpp">
       <Filter>Source Files\Planning</Filter>
@@ -126,32 +123,41 @@
     <ClCompile Include="Blunt.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Strangle.cpp">
-      <Filter>Source Files\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="Squeezer.cpp">
       <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Shoot.cpp">
-      <Filter>Source Files\Actions</Filter>
     </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Bludgeon.cpp">
-      <Filter>Source Files\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="RoomManager.cpp">
       <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="WaitFor.cpp">
-      <Filter>Source Files\Actions</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Application</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Bludgeon.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="GoTo.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Shoot.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Stab.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Strangle.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Take.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="WaitFor.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +188,6 @@
     <ClInclude Include="ActionManager.h">
       <Filter>Header Files\Actions</Filter>
     </ClInclude>
-    <ClInclude Include="Stab.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Condition.h">
       <Filter>Header Files\Conditions</Filter>
     </ClInclude>
@@ -206,14 +209,8 @@
     <ClInclude Include="True.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
-    <ClInclude Include="Take.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Owns.h">
       <Filter>Header Files\Operators</Filter>
-    </ClInclude>
-    <ClInclude Include="GoTo.h">
-      <Filter>Header Files\Actions</Filter>
     </ClInclude>
     <ClInclude Include="Plan.h">
       <Filter>Header Files\Planning</Filter>
@@ -251,29 +248,38 @@
     <ClInclude Include="Blunt.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Strangle.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Squeezer.h">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Shoot.h">
-      <Filter>Header Files\Actions</Filter>
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Bludgeon.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="RoomManager.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
-    <ClInclude Include="WaitFor.h">
-      <Filter>Header Files\Actions</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Bludgeon.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="GoTo.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Shoot.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Stab.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Strangle.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Take.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="WaitFor.h">
+      <Filter>Header Files\Actions\Actions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

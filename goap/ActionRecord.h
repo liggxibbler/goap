@@ -9,6 +9,7 @@ namespace GOAP
 	{
 		int turn;
 		Action* action;
+		Room* roomSnap;
 		Room* room;
 	};
 }

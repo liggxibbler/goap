@@ -259,7 +259,8 @@ void Agent::Log(int turn, Action* action)
 	ActionRecord ar;
 	ar.action = action;
 	ar.turn = turn;
-	ar.room = (Room*)m_roomInstance->Clone();
+	ar.roomSnap = (Room*)m_roomInstance->Clone();
+	ar.room = m_roomInstance;
 	m_actionLog.push_back(ar);
 }
 
@@ -292,21 +293,21 @@ void Agent::DoneMurder(bool flag)
 
 void Agent::Answer(Object* obj, QuestionType qt, int turn)
 {
-	for(unsigned int i=0; i<m_actionLog.size();++i)
+	/*for(unsigned int i=0; i<m_actionLog.size();++i)
 	{
 		if(m_actionLog[i].turn == turn)
 		{
-			std::cout << m_actionLog[i].action->Express(this);
+			std::cout << m_actionLog[i].action->Express(this, m_actionLog[i].room);
 		}
-	}
-	//GiveStatement();
+	}*/
+	GiveStatement();
 }
 
 void Agent::GiveStatement()
 {
 	for(unsigned int i=0; i<m_actionLog.size(); ++i)
 	{
-		std::cout << "At " << m_actionLog[i].turn << " " << m_actionLog[i].action->Express(this) << std::endl;
+		std::cout << "At " << m_actionLog[i].turn << " " << m_actionLog[i].action->Express(this, m_actionLog[i].room) << std::endl;
 	}
 }
 
@@ -330,4 +331,9 @@ RoomName Agent::GetNextRoom()
 Object* Agent::Clone()
 {
 	return new Agent(*this);
+}
+
+Gender Agent::GetGender()
+{
+	return m_gender;
 }

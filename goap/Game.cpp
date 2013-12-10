@@ -18,7 +18,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);
+	m_seed = (unsigned int)time(NULL);//1386704274;
 	srand(m_seed);
 }
 
@@ -281,6 +281,11 @@ bool Game::GeneratePlot()
 
 void Game::MainLoop()
 {
+	std::cout << "******************************\n";
+	std::cout << "Plot successfully generated\n";
+	std::cout << "Seed used : " << m_seed << endl;
+	std::cout << "******************************\n\n";
+
 	while(m_running)
 	{
 		if(m_roam)

@@ -6,7 +6,7 @@ using namespace GOAP;
 
 int Room::s_nextID = 0;
 
-Room::Room() : m_ID(s_nextID++)
+Room::Room() : m_ID(s_nextID++), m_numAgents(0)
 {
 	SetRoom(this);
 }
@@ -16,9 +16,10 @@ Room::Room(const Room& other) : m_ID(s_nextID++)
 	SetRoom(this);
 }
 
-Room::Room(std::string name , RoomName rn, Object* owner) : Object(name, owner), m_type(rn), m_ID(s_nextID++)
+Room::Room(std::string name , RoomName rn, Object* owner) : Object(name, owner), m_type(rn), m_ID(s_nextID++), m_numAgents(0)
 {
 	SetRoom(this);
+	m_attribs[ATTRIB_TYPE_NUM_AGENTS] = &m_numAgents;
 }
 
 Room::~Room()
@@ -98,6 +99,7 @@ Agent* Room::AddAgent(std::string name)
 	m_agents.insert(agent);
 	agent->SetRoom(this);
 	agent->See(this);
+	m_numAgents++;
 	return agent;
 }
 
@@ -106,6 +108,7 @@ void Room::AddAgent(Agent* agent)
 	m_agents.insert(agent);
 	agent->SetRoom(this);
 	agent->See(this);
+	m_numAgents++;
 }
 
 RoomName Room::GetType()
@@ -154,6 +157,7 @@ void Room::UpdateAgentPositions()
 	while(addIter != m_markedForAddition.end())
 	{
 		AddAgent(*(addIter++));
+		m_numAgents++;
 	}
 
 	auto delIter = m_agents.begin();
@@ -163,6 +167,7 @@ void Room::UpdateAgentPositions()
 		{
 			// post-increment operator returns a copy, then increment
 			m_agents.erase(delIter++);
+			m_numAgents--;
 		}
 		else
 		{

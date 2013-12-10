@@ -38,7 +38,7 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 		agent->See(nextRoom);
 	}
 
-	DUMP("       ** " << Express(0))
+	DUMP("       ** " << Express(0, 0))
 
 	return ACT_STAT_SUCCESS;
 }
@@ -96,7 +96,7 @@ void GoTo::InitPreconditions()
 	m_preconds->AddCondition(condTrue);
 }
 
-std::string GoTo::Express(Agent* agent)
+std::string GoTo::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_GOAL);
@@ -114,17 +114,39 @@ std::string GoTo::Express(Agent* agent)
 		_agent = sub->instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj->instance == room)
 	{
-		_goal = "me";
 		_verb = "came";
 	}
 	else
 	{
-		_goal = obj->instance->GetRoom()->GetName();
 		_verb = "went";
 	}
 	
+	if(obj->instance->GetOwner() == agent)
+	{
+		_goal = "my bedroom";
+	}
+	else if(obj->instance->GetOwner() == sub->instance)
+	{
+		Agent* a = (Agent*)sub->instance;
+		switch(a->GetGender())
+		{
+		case MALE:
+			_goal = "his bedroom";
+			break;
+		case FEMALE:
+			_goal = "her bedroom";
+			break;
+		default:
+			break;
+		}
+	}
+	else
+	{
+		_goal = obj->instance->GetRoom()->GetName();
+	}
+
 	std::stringstream str;
 	str << _agent << " " << _verb << " to " << _goal;
 	return str.str();
@@ -181,5 +203,17 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 	else
 	{
 		return act;
+	}
+}
+
+void GoTo::Dispatch(int turn)
+{
+	Action::Dispatch(turn);
+	
+	auto cp = GetArg(SEMANTIC_ROLE_GOAL);
+	Room* room = cp->instance->GetRoom();
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	{
+		(*agent)->Log(turn, this);
 	}
 }

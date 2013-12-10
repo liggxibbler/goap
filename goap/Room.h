@@ -71,6 +71,8 @@ namespace GOAP
 		std::set<Agent*> m_markedForAddition;
 		int m_ID;
 
+		int m_numAgents;
+
 		Room* m_left;
 		Room* m_right;
 	};

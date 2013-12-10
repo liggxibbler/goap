@@ -27,7 +27,7 @@ ActionStatus Take::ExecuteWorkhorse(int turn)
 	
 	_patient->instance->SetOwner(_agent->instance);
 
-	DUMP("       ** " << Express(0))
+	DUMP("       ** " << Express(0, 0))
 	return ACT_STAT_SUCCESS;
 }
 
@@ -81,7 +81,7 @@ void Take::InitEffects()
 	m_effects.push_back(subHasObj);
 }
 
-std::string Take::Express(Agent* agent)
+std::string Take::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);

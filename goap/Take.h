@@ -15,7 +15,7 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual Take* Clone();		
 
-		virtual std::string Express(Agent* agent) override;
+		virtual std::string Express(Agent* agent, Room* room) override;
 		virtual operator std::string() override;
 
 		virtual int Cost(RoomManager* rm) override;

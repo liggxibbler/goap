@@ -19,10 +19,11 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual GoTo* Clone();
 
-		virtual std::string Express(Agent* agent) override;
+		virtual std::string Express(Agent* agent, Room* room) override;
 		virtual operator std::string() override;
 
 		virtual int Cost(RoomManager* rm) override;
+		virtual void Dispatch(int turn) override;
 
 	private:
 		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple) override;

@@ -56,7 +56,7 @@ namespace GOAP
 		void Initialize();
 		void UpdateConditionInstances();
 
-		virtual std::string Express(Agent* agent) = 0;
+		virtual std::string Express(Agent* agent, Room* room) = 0;
 
 		virtual operator std::string() = 0;
 

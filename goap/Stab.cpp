@@ -21,7 +21,7 @@ ActionStatus Stab::ExecuteWorkhorse(int turn)
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
 	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
 
-	DUMP("       ** " << Express(0))
+	DUMP("       ** " << Express(0, 0))
 
 
 		obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
@@ -126,7 +126,7 @@ void Stab::InitPreconditions()
 	m_preconds->AddCondition(patientAtLoc);
 }
 
-std::string Stab::Express(Agent* agent)
+std::string Stab::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);

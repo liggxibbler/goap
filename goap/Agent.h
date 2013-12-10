@@ -74,6 +74,8 @@ namespace GOAP
 
 		virtual Object* Clone();
 
+		Gender GetGender();
+
 	protected:
 		void Interview();
 
