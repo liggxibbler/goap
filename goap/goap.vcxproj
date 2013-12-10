@@ -89,6 +89,7 @@
     <ClCompile Include="GoTo.cpp" />
     <ClCompile Include="GreaterThan.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Murder.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OperatorManager.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="GreaterThan.h" />
     <ClInclude Include="IExecutable.h" />
     <ClInclude Include="MessageDispatcher.h" />
+    <ClInclude Include="Murder.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="Operator.h" />

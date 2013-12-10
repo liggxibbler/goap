@@ -159,6 +159,9 @@
     <ClCompile Include="WaitFor.cpp">
       <Filter>Source Files\Actions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="Murder.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -279,6 +282,9 @@
       <Filter>Header Files\Actions\Actions</Filter>
     </ClInclude>
     <ClInclude Include="WaitFor.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Murder.h">
       <Filter>Header Files\Actions\Actions</Filter>
     </ClInclude>
   </ItemGroup>

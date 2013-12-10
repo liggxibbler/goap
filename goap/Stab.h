@@ -1,12 +1,12 @@
 #ifndef _GOAP_STAB_H_
 #define _GOAP_STAB_H_
 
-#include "Action.h"
+#include "Murder.h"
 #include "Agent.h"
 
 namespace GOAP
 {
-	class Stab : public Action
+	class Stab : public Murder
 	{
 	public:
 		Stab();
@@ -19,13 +19,9 @@ namespace GOAP
 		virtual std::string Express(Agent* agent, Room* room) override;
 		virtual operator std::string() override;
 
-		virtual int Cost(RoomManager* rm) override;
-
 	private:
-		virtual ActionStatus ExecuteWorkhorse(int turn);
-		virtual void InitArgs();
-		virtual void InitPreconditions();
-		virtual void InitEffects();
+		virtual ActionStatus ExecuteWorkhorse(int turn) override;
+		virtual void InitArgs() override;
 	};
 }
 #endif
