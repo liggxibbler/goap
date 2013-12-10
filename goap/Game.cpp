@@ -360,7 +360,7 @@ void Game::PopulateRooms()
 
 	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
 	{
-		m_roomManager->GetRandomRoom(m_agents[0])->AddAgent(m_agents[i]);
+		m_roomManager->GetRandomRoom(m_agents[i])->AddAgent(m_agents[i]);
 	}
 }
 
