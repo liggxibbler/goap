@@ -20,7 +20,7 @@ Room::Room(std::string name , RoomName rn, Object* owner) :
 Object(name, owner), m_type(rn), m_ID(s_nextID++), m_numAgents(0), m_murder(false)
 {
 	SetRoom(this);
-	m_attribs[ATTRIB_TYPE_NUM_AGENTS] = &m_numAgents;
+	m_attribs[ATTRIBUTE_NUM_AGENTS] = &m_numAgents;
 }
 
 Room::~Room()

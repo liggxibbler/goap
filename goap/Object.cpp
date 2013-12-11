@@ -9,9 +9,9 @@ int Object::s_numObjects = 0;
 
 Object::Object() : m_canBeFoundIn(0)
 {
-	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
-	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
-	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
+	m_attribs[ATTRIBUTE_POSX] = &m_posx;
+	m_attribs[ATTRIBUTE_POSY] = &m_posy;
+	m_attribs[ATTRIBUTE_ROOM] = &m_room;
 	
 	m_owner = NULL;
 	m_name = "ANONYMOUS";
@@ -21,9 +21,9 @@ Object::Object() : m_canBeFoundIn(0)
 
 Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0)
 {
-	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
-	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
-	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
+	m_attribs[ATTRIBUTE_POSX] = &m_posx;
+	m_attribs[ATTRIBUTE_POSY] = &m_posy;
+	m_attribs[ATTRIBUTE_ROOM] = &m_room;
 	m_owner = owner;
 	m_name = name;
 	m_id = s_numObjects++;
@@ -36,9 +36,9 @@ Object::Object(const Object& other)
 	m_id = other.m_id;
 	m_canBeFoundIn = other.m_canBeFoundIn;
 
-	m_attribs[ATTRIB_TYPE_POSX] = &m_posx;
-	m_attribs[ATTRIB_TYPE_POSY] = &m_posy;
-	m_attribs[ATTRIB_TYPE_ROOM] = &m_room;
+	m_attribs[ATTRIBUTE_POSX] = &m_posx;
+	m_attribs[ATTRIBUTE_POSY] = &m_posy;
+	m_attribs[ATTRIBUTE_ROOM] = &m_room;
 }
 
 Object::~Object()

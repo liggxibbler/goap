@@ -11,9 +11,9 @@ using namespace GOAP;
 Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
-	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
-	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
+	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
+	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
+	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
 	m_plan = new Plan();
 	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
@@ -24,9 +24,9 @@ Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(fa
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_name = name;
-	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
-	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
+	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
+	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
+	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 	m_planner = new Planner();
 	m_plan = new Plan();
 	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
@@ -40,9 +40,9 @@ Agent::Agent(const Agent& other) : Object(other)
 	m_weight = other.m_weight;
 	m_isAlive = other.m_isAlive;
 
-	m_attribs[ATTRIB_TYPE_HEIGHT] = &m_height;
-	m_attribs[ATTRIB_TYPE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIB_TYPE_ALIVE] = &m_isAlive;
+	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
+	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
+	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 }
 
 void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory, 

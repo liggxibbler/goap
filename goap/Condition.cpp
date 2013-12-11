@@ -10,7 +10,7 @@ Condition::Condition()
 	m_params = NULL;
 	m_numParams = 0;
 	m_layout = OP_LAYOUT_TYPE_UNDEFINED;
-	m_operatorType = OPER_TYPE_UNDEFINED;
+	m_operatorType = OPERATOR_UNDEFINED;
 	m_negate = false;
 	CreateArrays();
 }

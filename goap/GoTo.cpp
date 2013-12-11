@@ -26,7 +26,7 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
-	//sub.instance->SetAttrib(ATTRIB_TYPE_ROOM, (*(obj.instance))[ATTRIB_TYPE_ROOM]);
+	//sub.instance->SetAttrib(ATTRIBUTE_ROOM, (*(obj.instance))[ATTRIBUTE_ROOM]);
 	Room* nextRoom = obj.instance->GetRoom();
 	//sub.instance->SetRoom(room);
 	
@@ -75,16 +75,16 @@ void GoTo::InitArgs()
 
 void GoTo::InitEffects()
 {
-	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj0(*GetArg(SEMANTIC_ROLE_GOAL));
 	
 	swapSubObj1[0] = sub;
-	swapSubObj1[0].attrib = ATTRIB_TYPE_ROOM;
+	swapSubObj1[0].attrib = ATTRIBUTE_ROOM;
 	
 	swapSubObj1[1] = obj0;
-	swapSubObj1[1].attrib = ATTRIB_TYPE_ROOM;
+	swapSubObj1[1].attrib = ATTRIBUTE_ROOM;
 	
 	m_effects.push_back(swapSubObj1);	
 }
@@ -92,7 +92,7 @@ void GoTo::InitEffects()
 void GoTo::InitPreconditions()
 {
 	// subject owns instrument
-	Condition condTrue(OP_LAYOUT_TYPE_TRUE, OPER_TYPE_TRUE);
+	Condition condTrue(OP_LAYOUT_TYPE_TRUE, OPERATOR_TRUE);
 	m_preconds->AddCondition(condTrue);
 }
 

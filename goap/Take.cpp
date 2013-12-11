@@ -56,22 +56,22 @@ void Take::InitArgs()
 
 void Take::InitPreconditions()
 {
-	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 	
 	subNearObj[0] = sub;
-	subNearObj[0].attrib = ATTRIB_TYPE_ROOM;
+	subNearObj[0].attrib = ATTRIBUTE_ROOM;
 
 	subNearObj[1] = obj;
-	subNearObj[1].attrib = ATTRIB_TYPE_ROOM;
+	subNearObj[1].attrib = ATTRIBUTE_ROOM;
 
 	m_preconds->AddCondition(subNearObj);
 }
 
 void Take::InitEffects()
 {
-	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
+	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_OWNS);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 	

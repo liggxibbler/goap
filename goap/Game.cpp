@@ -21,7 +21,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);//1386704274;
+	m_seed = (unsigned int)time(NULL);//3452816845;//1386704274;
 	srand(m_seed);
 }
 
@@ -71,7 +71,7 @@ void Game::Roam()
 		for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
 		{
 			cout << item++ << ") " << (*iter)->GetName();
-			if((*iter)->GetAttrib(ATTRIB_TYPE_ALIVE) == false)
+			if((*iter)->GetAttrib(ATTRIBUTE_ALIVE) == false)
 			{
 				cout << " [DEAD]";
 			}
@@ -312,8 +312,8 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_murderer = m_agents[0];
 	m_victim = m_agents[1];
 	
-	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
-	cond[0].attrib = ATTRIB_TYPE_ALIVE;
+	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	cond[0].attrib = ATTRIBUTE_ALIVE;
 	cond[0].instance = m_victim;
 	cond[0].type = OBJ_TYPE_AGENT;
 	cond[0].value = false;

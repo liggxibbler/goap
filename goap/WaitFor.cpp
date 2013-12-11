@@ -86,29 +86,29 @@ void WaitFor::InitArgs()
 
 void WaitFor::InitEffects()
 {
-	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition goalAtLocation(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_GOAL));
-	ConditionParameter obj0(*GetArg(SEMANTIC_ROLE_LOCATIVE));
+	ConditionParameter goal(*GetArg(SEMANTIC_ROLE_GOAL));
+	ConditionParameter locative(*GetArg(SEMANTIC_ROLE_LOCATIVE));
 	
-	swapSubObj1[0] = sub;
-	swapSubObj1[0].attrib = ATTRIB_TYPE_ROOM;
+	goalAtLocation[0] = goal;
+	goalAtLocation[0].attrib = ATTRIBUTE_ROOM;
 	
-	swapSubObj1[1] = obj0;
-	swapSubObj1[1].attrib = ATTRIB_TYPE_ROOM;
+	goalAtLocation[1] = locative;
+	goalAtLocation[1].attrib = ATTRIBUTE_ROOM;
 	
-	m_effects.push_back(swapSubObj1);	
+	m_effects.push_back(goalAtLocation);	
 }
 
 void WaitFor::InitPreconditions()
 {
-	Condition position(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition position(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
 	position[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-	position[0].attrib = ATTRIB_TYPE_ROOM;
+	position[0].attrib = ATTRIBUTE_ROOM;
 
 	position[1] = *GetArg(SEMANTIC_ROLE_LOCATIVE);
-	position[1].attrib = ATTRIB_TYPE_ROOM;
+	position[1].attrib = ATTRIBUTE_ROOM;
 
 	m_preconds->AddCondition(position);
 }

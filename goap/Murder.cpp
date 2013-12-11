@@ -11,7 +11,7 @@ ActionStatus Murder::ExecuteWorkhorse(int turn)
 
 	DUMP("       ** " << Express(0, 0))
 
-	obj.instance->SetAttrib(ATTRIB_TYPE_ALIVE, false);
+	obj.instance->SetAttrib(ATTRIBUTE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
 	return ACT_STAT_MURDER;
@@ -43,11 +43,11 @@ void Murder::InitArgs()
 
 void Murder::InitEffects()
 {
-	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPER_TYPE_EQUAL);
+	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 	ConditionParameter obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
 
 	objIsDead[0] = obj;
-	objIsDead[0].attrib	= ATTRIB_TYPE_ALIVE;
+	objIsDead[0].attrib	= ATTRIBUTE_ALIVE;
 	objIsDead[0].value	= false;
 	objIsDead.SetNegate(false);
 
@@ -62,7 +62,7 @@ void Murder::InitPreconditions()
 	auto _locative(GetArg(SEMANTIC_ROLE_LOCATIVE));
 
 	// AGENT owns INSTRUMENT
-	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPER_TYPE_OWNS);
+	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPERATOR_OWNS);
 	
 	agentHasInst[0] = *_agent;
 	agentHasInst[1] = *_instrument;
@@ -71,25 +71,25 @@ void Murder::InitPreconditions()
 
 	// AGENT AT LOCATIVE
 
-	Condition agentAtLoc(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition agentAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
 	agentAtLoc[0] = *_agent;
-	agentAtLoc[0].attrib = ATTRIB_TYPE_ROOM;
+	agentAtLoc[0].attrib = ATTRIBUTE_ROOM;
 	
 	agentAtLoc[1] = *_locative;
-	agentAtLoc[1].attrib = ATTRIB_TYPE_ROOM;
+	agentAtLoc[1].attrib = ATTRIBUTE_ROOM;
 	
 	m_preconds->AddCondition(agentAtLoc);
 
 	// PATIENT AT LOCATIVE
 
-	Condition patientAtLoc(OP_LAYOUT_TYPE_OAOAB, OPER_TYPE_EQUAL);
+	Condition patientAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
 	patientAtLoc[0] = *_patient;
-	patientAtLoc[0].attrib = ATTRIB_TYPE_ROOM;
+	patientAtLoc[0].attrib = ATTRIBUTE_ROOM;
 	
 	patientAtLoc[1] = *_locative;
-	patientAtLoc[1].attrib = ATTRIB_TYPE_ROOM;
+	patientAtLoc[1].attrib = ATTRIBUTE_ROOM;
 	
 	m_preconds->AddCondition(patientAtLoc);
 }

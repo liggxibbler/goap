@@ -6,7 +6,7 @@ ConditionParameter::ConditionParameter() :
 type(OBJ_TYPE_OBJECT),
 	semantic(SEMANTIC_ROLE_NONE),
 	instance(NULL),
-	attrib(ATTRIB_TYPE_NONE),
+	attrib(ATTRIBUTE_NONE),
 	value(0),
 	strict(false)
 {}

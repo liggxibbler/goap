@@ -42,8 +42,8 @@ namespace GOAP
 				// so the least costly action is always at the end
 				else
 				{
-					RoomManager* rm = RoomManager::Instance();
-					return (g1->GetAction()->Cost(rm)) > (g1->GetAction()->Cost(rm));
+					static RoomManager* rm = RoomManager::Instance();
+					return (g1->GetAction()->Cost(rm)) > (g2->GetAction()->Cost(rm));
 				}
 			}
 		} myCompare;
