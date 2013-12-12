@@ -31,8 +31,8 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) override;
-		ActionStatus GetStatus();
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
+		ExecutionStatus GetStatus();
 		virtual operator ActionType();
 
 		Goal* GetPreconds();		
@@ -70,13 +70,16 @@ namespace GOAP
 		bool EvaluatePreconditions(Op::OperatorManager* om);
 		bool EvaluateEffects(Op::OperatorManager* om);
 
+		bool IsLogged();
+		void SetLogged();
+
 	protected:
 
 		virtual void InitArgs() = 0;
 		virtual void InitPreconditions() = 0;
 		virtual void InitEffects() = 0;
 
-		virtual ActionStatus ExecuteWorkhorse(int turn) = 0;
+		virtual ExecutionStatus ExecuteWorkhorse(int turn) = 0;
 
 		// XIBB make sure these can't run unless their respective data
 		// has been initialized
@@ -100,9 +103,11 @@ namespace GOAP
 		std::list<Condition> m_effects;
 
 		OrderedPair<Object*> m_orderedTuples;
-		ActionStatus m_status;
+		ExecutionStatus m_status;
 
 		int m_time;
+
+		bool m_logged;
 	};
 }
 #endif

@@ -12,7 +12,7 @@ namespace GOAP
 	class IExecutable
 	{
 	public:
-		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) = 0;
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) = 0;
 	};
 }
 #endif

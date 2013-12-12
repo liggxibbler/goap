@@ -32,6 +32,15 @@ Goal::Goal(const Goal& other)
 
 Goal::~Goal()
 {
+	if((m_action != 0) && (m_action->IsLogged() == false))
+	{
+		delete m_action;
+		m_action = 0;
+	}
+	for(auto child(m_children.begin()); child != m_children.end(); ++child)
+	{
+		delete (*child);
+	}
 }
 
 bool Goal::Evaluate(Op::OperatorManager* om)
@@ -160,4 +169,14 @@ void Goal::SetParent(Goal* parent)
 Action* Goal::GetAction()
 {
 	return m_action;
+}
+
+void Goal::ClearChildren()
+{
+	auto child(m_children.begin());
+	while(child != m_children.end())
+	{
+		delete (*child);
+		m_children.erase(child++);
+	}
 }

@@ -3,7 +3,7 @@
 
 using namespace GOAP;
 
-ActionStatus Murder::ExecuteWorkhorse(int turn)
+ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
@@ -14,7 +14,7 @@ ActionStatus Murder::ExecuteWorkhorse(int turn)
 	obj.instance->SetAttrib(ATTRIBUTE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
-	return ACT_STAT_MURDER;
+	return EXEC_STAT_MURDER;
 }
 
 void Murder::InitArgs()
@@ -36,8 +36,7 @@ void Murder::InitArgs()
 	// LOCATIVE
 	room.semantic = SEMANTIC_ROLE_LOCATIVE;
 	room.instance = NULL;
-	inst.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-	inst.strict = true;
+	inst.type = OBJ_TYPE_ROOM;
 	m_args.push_back(room);
 }
 
@@ -92,6 +91,17 @@ void Murder::InitPreconditions()
 	patientAtLoc[1].attrib = ATTRIBUTE_ROOM;
 	
 	m_preconds->AddCondition(patientAtLoc);
+
+	// AGENT ALONE WITH PATIENT IN LOCATIVE
+
+	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+		
+	agentAloneWithPatient[0] = *_locative;
+	agentAloneWithPatient[0].attrib = ATTRIBUTE_NUM_AGENTS;
+	agentAloneWithPatient[0].value = 2;
+
+	m_preconds->AddCondition(agentAloneWithPatient);*/
+
 }
 
 int Murder::Cost(RoomManager* rm)

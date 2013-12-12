@@ -20,7 +20,7 @@ WaitFor::~WaitFor()
 {
 }
 
-ActionStatus WaitFor::ExecuteWorkhorse(int turn)
+ExecutionStatus WaitFor::ExecuteWorkhorse(int turn)
 {
 	//if(m_turns == 0)
 	//{
@@ -36,13 +36,13 @@ ActionStatus WaitFor::ExecuteWorkhorse(int turn)
 
 	if(_goal->instance->GetRoom() == _locative->instance->GetRoom())
 	{
-		return ACT_STAT_SUCCESS;
+		return EXEC_STAT_SUCCESS;
 	}
 	else
 	{
 		DUMP("       ** " << Express(0, 0))
 		/*m_turns--;*/
-		return ACT_STAT_RUNNING;
+		return EXEC_STAT_RUNNING;
 	}
 }
 
@@ -78,7 +78,6 @@ void WaitFor::InitArgs()
 	loc.semantic = SEMANTIC_ROLE_LOCATIVE;
 	loc.instance = NULL;
 	loc.type = OBJ_TYPE_ROOM;
-	loc.strict = true;
 	m_args.push_back(loc);
 
 	m_turns = WAIT_TURNS;
@@ -97,7 +96,17 @@ void WaitFor::InitEffects()
 	goalAtLocation[1] = locative;
 	goalAtLocation[1].attrib = ATTRIBUTE_ROOM;
 	
-	m_effects.push_back(goalAtLocation);	
+	m_effects.push_back(goalAtLocation);
+
+
+	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+		
+	agentAloneWithPatient[0] = locative;
+	agentAloneWithPatient[0].attrib = ATTRIBUTE_NUM_AGENTS;
+	agentAloneWithPatient[0].value = 2;
+
+	m_effects.push_back(agentAloneWithPatient);*/
+
 }
 
 void WaitFor::InitPreconditions()

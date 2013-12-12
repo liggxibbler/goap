@@ -28,7 +28,7 @@ namespace GOAP
 	private:
 		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple) override;
 
-		virtual ActionStatus ExecuteWorkhorse(int turn);
+		virtual ExecutionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
 		virtual void InitPreconditions();
 		virtual void InitEffects();

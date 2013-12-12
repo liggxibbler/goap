@@ -125,19 +125,19 @@ namespace GOAP
 		ACTION_ACTION
 	};
 
-	enum ActionStatus
+	enum ExecutionStatus
 	{
-		ACT_STAT_INIT,
-		ACT_STAT_RUNNING,
-		ACT_STAT_FAIL,
-		ACT_STAT_SUCCESS,
-		ACT_STAT_SKIP,
-		ACT_STAT_UNKNOWN,		
+		EXEC_STAT_INIT,
+		EXEC_STAT_RUNNING,
+		EXEC_STAT_FAIL,
+		EXEC_STAT_SUCCESS,
+		EXEC_STAT_SKIP,
+		EXEC_STAT_UNKNOWN,		
 
-		ACT_STAT_MURDER,
-		ACT_STAT_NONE,
+		EXEC_STAT_MURDER,
+		EXEC_STAT_NONE,
 
-		ACT_STAT_DONE		// mark the successful execution of a plan?
+		EXEC_STAT_DONE		// mark the successful execution of a plan?
 	};
 
 	enum PlanStatus

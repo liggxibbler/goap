@@ -4,20 +4,18 @@
 
 using namespace GOAP;
 
-int Room::s_nextID = 0;
-
-Room::Room() : m_ID(s_nextID++), m_numAgents(0), m_murder(false)
+Room::Room() : Object(), m_numAgents(0), m_murder(false)
 {
 	SetRoom(this);
 }
 
-Room::Room(const Room& other) : m_ID(s_nextID++)
+Room::Room(const Room& other)
 {
 	SetRoom(this);
 }
 
 Room::Room(std::string name , RoomName rn, Object* owner) :
-Object(name, owner), m_type(rn), m_ID(s_nextID++), m_numAgents(0), m_murder(false)
+Object(name, owner), m_type(rn), m_numAgents(0), m_murder(false)
 {
 	SetRoom(this);
 	m_attribs[ATTRIBUTE_NUM_AGENTS] = &m_numAgents;
@@ -46,11 +44,6 @@ Room* Room::GetLeft()
 Room* Room::GetRight()
 {
 	return m_right;
-}
-
-int Room::GetID()
-{
-	return m_ID;
 }
 
 Object* Room::AddObject(std::string name)

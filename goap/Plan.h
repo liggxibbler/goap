@@ -19,12 +19,12 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		virtual ActionStatus Execute(Op::OperatorManager* om, int turn) override;
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();
 		PlanStatus GetStatus();
-		ActionStatus GetActionStatus();
+		ExecutionStatus GetExecutionStatus();
 		void SetStatus(PlanStatus status);
 
 	private:

@@ -46,6 +46,7 @@ namespace GOAP
 		void SetParent(Goal* parent);
 
 		Action* GetAction();
+		void ClearChildren();
 
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.

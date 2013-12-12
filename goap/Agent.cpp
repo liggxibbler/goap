@@ -195,15 +195,24 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	{
 		if(m_nextExecution != 0)
 		{
-			ActionStatus as = m_nextExecution->Execute(om, turn);
-			if (as == ACT_STAT_SUCCESS)
+			ExecutionStatus as = m_nextExecution->Execute(om, turn);
+			if (as == EXEC_STAT_SUCCESS)
 			{
 				m_nextExecution = 0;
 			}
-			else if (as == ACT_STAT_SKIP)
+			else if (as == EXEC_STAT_SKIP)
 			{
 				m_nextExecution = 0;
 				/*Update(om, rm, turn);*/
+			}
+			else if(as == EXEC_STAT_DONE)
+			{
+				m_goal = m_goal->GetParent();
+				m_nextExecution = 0;
+			}
+			else if(as == EXEC_STAT_FAIL)
+			{
+				m_plan = GetPlan(ActionManager::Instance(), om);
 			}
 		}
 		else if(m_goal != 0)

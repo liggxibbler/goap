@@ -9,6 +9,7 @@ Planner::Planner()
 
 PlanStatus Planner::Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
 {
+	ClearPlanTree();
 	m_frontier.push_back(NULL);
 	m_frontier.push_back(agent->GetGoal());
 	return DeviseWorkHorse(agent, am, om, plan);
@@ -191,4 +192,17 @@ void Planner::ClearLongLists()
 	}
 
 	//DUMP("CLEARING LONG LIST")
+}
+
+void Planner::ClearPlanTree()
+{
+	auto goal(m_frontier.begin());
+	while(goal != m_frontier.end())
+	{
+		if(*goal != 0)
+		{
+			delete *goal;
+		}
+		m_frontier.erase(goal++);
+	}
 }

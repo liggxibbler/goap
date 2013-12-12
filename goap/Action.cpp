@@ -6,7 +6,7 @@
 
 using namespace GOAP;
 
-Action::Action() : m_status(ACT_STAT_INIT)
+Action::Action() : m_status(EXEC_STAT_INIT), m_logged(false)
 {
 }
 
@@ -283,30 +283,31 @@ void Action::UpdatePrecondInstances()
 	}
 }
 
-ActionStatus Action::Execute(Op::OperatorManager* om, int turn)
+ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 {
 	// log action to local database
 	// send message to all agents in room
 	if( EvaluateEffects(om) )
 	{
-		return ACT_STAT_SKIP;
+		return EXEC_STAT_SKIP;
 	}
 	else
 	{
 		if( EvaluatePreconditions(om) )
 		{
-			ActionStatus stat = ExecuteWorkhorse(turn);
+			ExecutionStatus stat = ExecuteWorkhorse(turn);
 			Dispatch(turn);
+			this->SetLogged();
 			return stat;
 		}
 		else
 		{
-			return ACT_STAT_FAIL;
+			return EXEC_STAT_FAIL;
 		}
 	}
 }
 
-ActionStatus Action::GetStatus()
+ExecutionStatus Action::GetStatus()
 {
 	return m_status;
 }
@@ -350,4 +351,13 @@ bool Action::EvaluateEffects(Op::OperatorManager* om)
 		}
 	}
 	return true;
+}
+
+bool Action::IsLogged()
+{
+	return m_logged;
+}
+void Action::SetLogged()
+{
+	m_logged = true;
 }

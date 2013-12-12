@@ -20,7 +20,7 @@ GoTo::~GoTo()
 {
 }
 
-ActionStatus GoTo::ExecuteWorkhorse(int turn)
+ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
@@ -40,7 +40,7 @@ ActionStatus GoTo::ExecuteWorkhorse(int turn)
 
 	DUMP("       ** " << Express(0, 0))
 
-	return ACT_STAT_SUCCESS;
+	return EXEC_STAT_SUCCESS;
 }
 
 GoTo::operator ActionType()
@@ -123,7 +123,11 @@ std::string GoTo::Express(Agent* agent, Room* room)
 		_verb = "went";
 	}
 	
-	if(obj->instance->GetOwner() == agent)
+	if(agent == 0)
+	{
+		_goal = obj->instance->GetRoom()->GetName();
+	}
+	else if(obj->instance->GetOwner() == agent)
 	{
 		_goal = "my bedroom";
 	}

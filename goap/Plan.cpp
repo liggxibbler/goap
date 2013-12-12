@@ -19,39 +19,40 @@ Plan::Plan(const Plan& other)
 
 Plan::~Plan()
 {
+	delete m_plan;
 }
 
-ActionStatus Plan::Execute(Op::OperatorManager* om, int turn)
+ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 {
 	Action* action = m_plan->GetAction();
 	
 	if(action != NULL)
 	{
-		ActionStatus stat = action->Execute(om, turn);
+		ExecutionStatus stat = action->Execute(om, turn);
 		switch(stat)
 		{
-		case ACT_STAT_SUCCESS:
-		case ACT_STAT_MURDER:
+		case EXEC_STAT_SUCCESS:
+		case EXEC_STAT_MURDER:
 			// delete this one
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
-			return ACT_STAT_RUNNING;
-		case ACT_STAT_SKIP:
+			return EXEC_STAT_RUNNING;
+		case EXEC_STAT_SKIP:
 			m_plan = m_plan->GetParent();
 			return this->Execute(om, turn);
-		case ACT_STAT_RUNNING:
+		case EXEC_STAT_RUNNING:
 			//
 			//m_plan = m_plan;
 			// and no replanning is needed
 			break;
-		case ACT_STAT_FAIL:
+		case EXEC_STAT_FAIL:
 			// delete this one
-			m_plan = m_plan->GetParent();
+			//m_plan = m_plan->GetParent();
 			// but replanning is needed
 			break;
 		default:
 			// throw exception
-			return ACT_STAT_UNKNOWN;
+			return EXEC_STAT_UNKNOWN;
 			break;
 		};
 		return stat;
@@ -60,7 +61,7 @@ ActionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 	{
 		// this is the ultimate goal
 		// 
-		return ACT_STAT_SUCCESS;
+		return EXEC_STAT_DONE;
 	}
 }
 
@@ -84,7 +85,7 @@ void Plan::SetStatus(PlanStatus status)
 	m_status = status;
 }
 
-ActionStatus Plan::GetActionStatus()
+ExecutionStatus Plan::GetExecutionStatus()
 {
 	return m_plan->GetAction()->GetStatus();
 }

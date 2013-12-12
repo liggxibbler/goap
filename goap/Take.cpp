@@ -20,7 +20,7 @@ Take::operator ActionType()
 	return ACTION_TAKE;
 }
 
-ActionStatus Take::ExecuteWorkhorse(int turn)
+ExecutionStatus Take::ExecuteWorkhorse(int turn)
 {
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
@@ -28,7 +28,7 @@ ActionStatus Take::ExecuteWorkhorse(int turn)
 	_patient->instance->SetOwner(_agent->instance);
 
 	DUMP("       ** " << Express(0, 0))
-	return ACT_STAT_SUCCESS;
+	return EXEC_STAT_SUCCESS;
 }
 
 Take* Take::Clone()

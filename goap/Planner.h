@@ -48,6 +48,8 @@ namespace GOAP
 			}
 		} myCompare;
 
+		void ClearPlanTree();
+
 	private:
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, ActionManager* am);
