@@ -19,15 +19,16 @@ m_parent(parent), m_action(action), m_negate(negate)
 
 Goal::Goal(const Goal& other)
 {
-	/*std::list<Condition>::iterator condIter;
-	for(condIter = other.m_conditions.begin(); condIter != other.m_conditions.end(); ++condIter)
-	{
-		AddCondition(*condIter);
-	}
-	
+	m_parent = other.m_parent;
+	m_action = other.m_action;
 	m_negate = other.m_negate;
 	m_depth = other.m_depth;
-	m_cost = other.m_cost;*/
+	m_cost = other.m_cost;
+	
+	for(auto cond(other.m_conditions.begin()); cond != other.m_conditions.end(); ++cond)
+	{
+		m_conditions.push_back(*cond);
+	}
 }
 
 Goal::~Goal()
@@ -139,8 +140,6 @@ void Goal::RemoveCondition(Condition& cond)
 
 	CondIter rem = m_conditions.begin();
 	Condition c;
-	
-
 
 	while(rem != m_conditions.end())
 	{
@@ -179,4 +178,19 @@ void Goal::ClearChildren()
 		delete (*child);
 		m_children.erase(child++);
 	}
+}
+
+int Goal::GetNumConditions()
+{
+	return m_conditions.size();
+}
+
+void Goal::SetCost(int cost)
+{
+	m_cost = cost;
+}
+
+int Goal::GetCost()
+{
+	return m_cost;
 }

@@ -33,8 +33,17 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
 			plan->SetPlan(m_currentGoal);
-			plan->SetStatus(PLAN_STAT_SUCCESS);
-			return PLAN_STAT_SUCCESS;
+			if(plan->Validate())
+			{
+				DUMP("VALID PLAN FOUND")
+				plan->SetStatus(PLAN_STAT_SUCCESS);
+				return PLAN_STAT_SUCCESS;
+			}
+			else
+			{
+				plan->SetPlan(0);
+				DUMP("PLAN NOT VALID")
+			}
 		}
 
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
@@ -151,6 +160,7 @@ void Planner::ExpandFrontier(Agent* agent)
 		
 		nextGoal->SetAction(action);
 		nextGoal->SetParent(m_currentGoal);
+		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(RoomManager::Instance()));
 		m_currentGoal->AddChild(nextGoal);
 
 		m_frontier.push_back(nextGoal);

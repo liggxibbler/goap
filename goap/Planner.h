@@ -43,7 +43,7 @@ namespace GOAP
 				else
 				{
 					static RoomManager* rm = RoomManager::Instance();
-					return (g1->GetAction()->Cost(rm)) > (g2->GetAction()->Cost(rm));
+					return (g1->GetCost()) > (g2->GetCost());
 				}
 			}
 		} myCompare;

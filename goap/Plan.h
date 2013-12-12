@@ -27,6 +27,8 @@ namespace GOAP
 		ExecutionStatus GetExecutionStatus();
 		void SetStatus(PlanStatus status);
 
+		Goal* Validate();
+
 	private:
 		Goal* m_plan;
 		PlanStatus m_status;

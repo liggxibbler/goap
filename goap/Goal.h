@@ -48,6 +48,10 @@ namespace GOAP
 		Action* GetAction();
 		void ClearChildren();
 
+		int GetNumConditions();
+		int GetCost();
+		void SetCost(int cost);
+
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.
 											// i.e. individual goal nodes can be reached from more than on higher goal

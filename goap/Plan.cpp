@@ -89,3 +89,72 @@ ExecutionStatus Plan::GetExecutionStatus()
 {
 	return m_plan->GetAction()->GetStatus();
 }
+
+Goal* Plan::Validate()
+{
+	// Make sure this plan will satisfy every precondition of every action when executed
+	if(m_plan != 0)
+	{
+		Goal* temp = new Goal(*m_plan);
+
+		// Pool all preconditions
+		while(temp->GetParent() != 0)
+		{
+			// temp.conds += temp.parent.conds
+			for(auto cond(temp->GetParent()->GetFirstCondition());
+				cond != temp->GetParent()->GetLastCondition() ; ++cond)
+			{
+				temp->AddCondition(*cond);
+			}
+
+			for(auto effect(temp->GetAction()->GetFirstEffect());
+				effect != temp->GetAction()->GetLastEffect() ; ++effect)
+			{
+				temp->RemoveCondition(*effect);
+			}
+
+			temp->SetAction( temp->GetParent()->GetAction() );
+			temp->SetParent( temp->GetParent()->GetParent() );
+		}
+
+		temp->SetAction( m_plan->GetAction());
+		temp->SetParent( m_plan->GetParent());
+
+		while(temp->GetParent() != 0)
+		{
+			for(auto effect(temp->GetAction()->GetFirstEffect());
+				effect != temp->GetAction()->GetLastEffect() ; ++effect)
+			{
+				temp->RemoveCondition(*effect);
+			}
+
+			temp->SetAction( temp->GetParent()->GetAction() );
+			temp->SetParent( temp->GetParent()->GetParent() );
+		}
+
+		// Only True conditions should be left
+		int numTrue = 0;
+		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
+		{
+			if ( condition->GetOperatorType() == OPERATOR_TRUE)
+			{
+				numTrue++;
+			}
+		}
+
+		if (temp->GetNumConditions() == numTrue)
+		{
+			return m_plan;
+		}
+		else
+		{
+			return 0;
+		}
+
+		delete temp;
+	}
+	else
+	{
+		return 0;
+	}
+}
