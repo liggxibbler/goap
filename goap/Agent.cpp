@@ -238,7 +238,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		else
 		{
 			int wander = rand() % 100;
-			if(wander < 50)
+			if(wander < 90)
 			{
 				DUMP("       **" << m_name << " be wanderin' " << turn)
 					Room* room = rm->GetRandomRoom(this);
