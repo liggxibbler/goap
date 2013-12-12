@@ -220,3 +220,33 @@ void Condition::CopySemantics(Condition& other)
 		m_params[i].semantic = other.m_params[i].semantic;
 	}
 }
+
+bool Condition::EqualInstance(Condition& other)
+{
+	// this is logically correct and consistent,
+	// but maybe I should use a memory trick for quicker operation
+	// should this prove too slow at any point
+
+	bool result;
+	result = m_operatorType == other.m_operatorType &&
+		m_layout == other.m_layout &&
+		m_negate == other.m_negate &&
+		m_numParams == other.m_numParams;
+	
+	if(!result)
+	{
+		return false;
+	}
+	else
+	{
+		for(int i=0; i < m_numParams; i++)
+		{
+			if(m_params[i].instance != other.m_params[i].instance)
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}

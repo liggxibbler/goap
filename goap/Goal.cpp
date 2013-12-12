@@ -144,7 +144,7 @@ void Goal::RemoveCondition(Condition& cond)
 	while(rem != m_conditions.end())
 	{
 		c = *rem;
-		if(c == cond)
+		if(c.EqualInstance(cond))
 		{
 			m_conditions.erase(rem++);
 		}

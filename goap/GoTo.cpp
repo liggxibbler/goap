@@ -167,7 +167,7 @@ int GoTo::Cost(RoomManager* rm)
 	// 1 - how UNLIKELY it is for you to be here
 	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
 
-	int cost = 0;
+	int cost = 5;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
