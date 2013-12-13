@@ -22,6 +22,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-DNDEBUG" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,6 +33,77 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Action.cpp" />
+		<Unit filename="Action.h" />
+		<Unit filename="ActionList.h" />
+		<Unit filename="ActionManager.cpp" />
+		<Unit filename="ActionManager.h" />
+		<Unit filename="ActionRecord.h" />
+		<Unit filename="Agent.cpp" />
+		<Unit filename="Agent.h" />
+		<Unit filename="Blade.cpp" />
+		<Unit filename="Blade.h" />
+		<Unit filename="Bludgeon.cpp" />
+		<Unit filename="Bludgeon.h" />
+		<Unit filename="Blunt.cpp" />
+		<Unit filename="Blunt.h" />
+		<Unit filename="Common.h" />
+		<Unit filename="Condition.cpp" />
+		<Unit filename="Condition.h" />
+		<Unit filename="ConditionParameter.cpp" />
+		<Unit filename="ConditionParameter.h" />
+		<Unit filename="Counter.cpp" />
+		<Unit filename="Counter.h" />
+		<Unit filename="Entity.h" />
+		<Unit filename="Equal.cpp" />
+		<Unit filename="Equal.h" />
+		<Unit filename="Game.cpp" />
+		<Unit filename="Game.h" />
+		<Unit filename="GoTo.cpp" />
+		<Unit filename="GoTo.h" />
+		<Unit filename="Goal.cpp" />
+		<Unit filename="Goal.h" />
+		<Unit filename="GreaterThan.cpp" />
+		<Unit filename="GreaterThan.h" />
+		<Unit filename="IExecutable.h" />
+		<Unit filename="MessageDispatcher.h" />
+		<Unit filename="Murder.cpp" />
+		<Unit filename="Murder.h" />
+		<Unit filename="Object.cpp" />
+		<Unit filename="Object.h" />
+		<Unit filename="ObjectManager.h" />
+		<Unit filename="Operator.cpp" />
+		<Unit filename="Operator.h" />
+		<Unit filename="OperatorList.h" />
+		<Unit filename="OperatorManager.cpp" />
+		<Unit filename="OperatorManager.h" />
+		<Unit filename="OrderedPair.h" />
+		<Unit filename="Owns.cpp" />
+		<Unit filename="Owns.h" />
+		<Unit filename="Plan.cpp" />
+		<Unit filename="Plan.h" />
+		<Unit filename="Planner.cpp" />
+		<Unit filename="Planner.h" />
+		<Unit filename="Projectile.cpp" />
+		<Unit filename="Projectile.h" />
+		<Unit filename="Room.cpp" />
+		<Unit filename="Room.h" />
+		<Unit filename="RoomManager.cpp" />
+		<Unit filename="RoomManager.h" />
+		<Unit filename="Shoot.cpp" />
+		<Unit filename="Shoot.h" />
+		<Unit filename="Squeezer.cpp" />
+		<Unit filename="Squeezer.h" />
+		<Unit filename="Stab.cpp" />
+		<Unit filename="Stab.h" />
+		<Unit filename="Strangle.cpp" />
+		<Unit filename="Strangle.h" />
+		<Unit filename="Take.cpp" />
+		<Unit filename="Take.h" />
+		<Unit filename="True.cpp" />
+		<Unit filename="True.h" />
+		<Unit filename="WaitFor.cpp" />
+		<Unit filename="WaitFor.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />

@@ -19,7 +19,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 void Murder::InitArgs()
 {
-	ConditionParameter sub, obj, room, inst;
+	ConditionParameter sub, obj, room;
 
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
