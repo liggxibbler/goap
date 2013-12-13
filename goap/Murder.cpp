@@ -36,7 +36,8 @@ void Murder::InitArgs()
 	// LOCATIVE
 	room.semantic = SEMANTIC_ROLE_LOCATIVE;
 	room.instance = NULL;
-	inst.type = OBJ_TYPE_ROOM;
+	room.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	room.strict = true;
 	m_args.push_back(room);
 }
 
@@ -62,40 +63,40 @@ void Murder::InitPreconditions()
 
 	// AGENT owns INSTRUMENT
 	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPERATOR_OWNS);
-	
+
 	agentHasInst[0] = *_agent;
 	agentHasInst[1] = *_instrument;
-	
+
 	m_preconds->AddCondition(agentHasInst);
 
 	// AGENT AT LOCATIVE
 
 	Condition agentAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-	
+
 	agentAtLoc[0] = *_agent;
 	agentAtLoc[0].attrib = ATTRIBUTE_ROOM;
-	
+
 	agentAtLoc[1] = *_locative;
 	agentAtLoc[1].attrib = ATTRIBUTE_ROOM;
-	
+
 	m_preconds->AddCondition(agentAtLoc);
 
 	// PATIENT AT LOCATIVE
 
 	Condition patientAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-	
+
 	patientAtLoc[0] = *_patient;
 	patientAtLoc[0].attrib = ATTRIBUTE_ROOM;
-	
+
 	patientAtLoc[1] = *_locative;
 	patientAtLoc[1].attrib = ATTRIBUTE_ROOM;
-	
+
 	m_preconds->AddCondition(patientAtLoc);
 
 	// AGENT ALONE WITH PATIENT IN LOCATIVE
 
 	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-		
+
 	agentAloneWithPatient[0] = *_locative;
 	agentAloneWithPatient[0].attrib = ATTRIBUTE_NUM_AGENTS;
 	agentAloneWithPatient[0].value = 2;
@@ -109,7 +110,7 @@ int Murder::Cost(RoomManager* rm)
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
 	// 2 - how UNLIKELY it is for the victim to be found after being killed
-	
+
 	int cost = 0;
 
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
@@ -126,10 +127,10 @@ int Murder::Cost(RoomManager* rm)
 		// penalty for suspicious activity
 		cost += 500;
 	}
-	
+
 	// penalty for risk of not being found
 	cost += 1000.0f * (1.0f - rm->GetProbWillBeFound((Agent*)_patient->instance, (Room*)_locative->instance));
-	
+
 	// penalty for risk of not finding victim alone
 	cost += 1000.f * (1.0f - rm->GetProbAlone((Agent*)_patient->instance, (Room*)_locative->instance));
 

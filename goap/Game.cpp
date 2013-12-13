@@ -206,7 +206,7 @@ void Game::Interview()
 	//}
 
 	int time;
-	cout << "\nWhat time?\n>>> ";
+	cout << "\nWhat time? ( 0 to go back )\n>>> ";
 	cin >> time;
 
 	if( time == 0 )
