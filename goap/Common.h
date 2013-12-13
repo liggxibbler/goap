@@ -2,10 +2,31 @@
 #define _GOAP_COMMONS_H_
 
 #include <iostream>
+
+#ifdef _WIN32
+
 #ifdef _DEBUG
+#define _GOAP_DEBUG
+#endif
+
+#else
+
+#ifndef NDEBUG
+#define _GOAP_DEBUG
+#endif
+
+#endif
+
+#ifdef _GOAP_DEBUG
 #define DUMP(X) std::cout << std::endl << X << std::endl;
 #else
 #define DUMP(X)
+#endif
+
+#ifdef _MSC_VER
+#define _CPP_11_OVERRIDE override
+#else
+#define _CPP_11_OVERRIDE
 #endif
 
 #define NUMBER_OF_ROOMS 5
@@ -27,7 +48,7 @@ namespace GOAP
 		OBJ_TYPE_SQUEEZER	= 0x0010,
 		OBJ_TYPE_CONTAINER	= 0x0020,
 		OBJ_TYPE_ROOM		= 0x0040,
-		
+
 		OBJ_TYPE_AGENT		= 0x0100, // or living things
 		OBJ_TYPE_PERSON		= 0x0200,
 		OBJ_TYPE_LAST		= 0xf000
@@ -40,10 +61,10 @@ namespace GOAP
 		ENT_TYPE_OBJECT		= 0x0002, // either inanimate object
 		ENT_TYPE_BLADE		= 0x0004,
 		ENT_TYPE_CONTAINER	= 0x0008,
-		
+
 		ENT_TYPE_AGENT		= 0x0100, // or living thing
 		ENT_TYPE_PERSON		= 0x0200,
-		
+
 		ENT_TYPE_LAST		= 0xf000
 	};
 
@@ -78,23 +99,23 @@ namespace GOAP
 	enum SemanticRole
 	{
 		SEMANTIC_ROLE_INSTRUMENT = 0x0000,
-		
+
 		SEMANTIC_ROLE_PATIENT0,
 		SEMANTIC_ROLE_PATIENT1,
-		
+
 		SEMANTIC_ROLE_GOAL,
 		SEMANTIC_ROLE_LOCATIVE,
 
 		SEMANTIC_ROLE_AGENT,
-		
+
 		SEMANTIC_ROLE_NONE,
 		SEMANTIC_ROLE_UNDEFINED = 0xffff
 	};
 
 	enum OperatorType
 	{
-		OPERATOR_GREATER_THAN = 0x0000,		
-		
+		OPERATOR_GREATER_THAN = 0x0000,
+
 		OPERATOR_EQUAL,
 
 		OPERATOR_PROXIMITY,
@@ -113,7 +134,7 @@ namespace GOAP
 		ACTION_WANDER,
 		ACTION_TAKE,
 		ACTION_DROP,
-		
+
 		ACTION_STAB,
 		ACTION_BLUDGEON,
 		ACTION_STRANGLE,
@@ -132,7 +153,7 @@ namespace GOAP
 		EXEC_STAT_FAIL,
 		EXEC_STAT_SUCCESS,
 		EXEC_STAT_SKIP,
-		EXEC_STAT_UNKNOWN,		
+		EXEC_STAT_UNKNOWN,
 
 		EXEC_STAT_MURDER,
 		EXEC_STAT_NONE,

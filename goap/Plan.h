@@ -19,7 +19,7 @@ namespace GOAP
 		Plan(const Plan& other);
 		~Plan();
 
-		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) _CPP_11_OVERRIDE;
 		void SetPlan(Goal* goal);
 
 		Goal* GetPlan();

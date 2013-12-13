@@ -53,20 +53,20 @@ namespace GOAP
 
 		virtual Object* Clone();
 
-		virtual int GetCompoundType() override;
+		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		bool GetMurder();
 
 	private:
 		void ClearMarkedAgents();
 		void AddMarkedAgents();
-		
+
 		RoomName m_type;
 		//std::string m_name;
 		std::list<Object*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
 		std::set<Agent*> m_markedForAddition;
-		
+
 		int m_numAgents;
 		bool m_murder;
 

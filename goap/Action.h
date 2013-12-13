@@ -31,16 +31,16 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) _CPP_11_OVERRIDE;
 		ExecutionStatus GetStatus();
 		virtual operator ActionType();
 
-		Goal* GetPreconds();		
+		Goal* GetPreconds();
 		Goal* GetGoal();
 
 		CondIter GetFirstEffect();
 		CondIter GetLastEffect();
-		
+
 		CondParamIter GetFirstArg();
 		CondParamIter GetLastArg();
 
@@ -90,14 +90,14 @@ namespace GOAP
 
 		void UpdateEffectInstances();
 		void UpdatePrecondInstances();
-		
+
 		virtual void Dispatch(int turn);
 
 		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
 		std::list<ConditionParameter> m_args;
 		//std::list<Condition> m_preconds;
-		
+
 		Goal* m_preconds;
 
 		std::list<Condition> m_effects;

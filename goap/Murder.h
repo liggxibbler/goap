@@ -9,12 +9,12 @@ namespace GOAP
 	class Murder : public Action
 	{
 	public:
-		virtual int Cost(RoomManager* rm) override;
-		virtual ExecutionStatus ExecuteWorkhorse(int turn) override;
+		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE	;
+		virtual ExecutionStatus ExecuteWorkhorse(int turn) _CPP_11_OVERRIDE;
 	protected:
-		virtual void InitArgs() override;
+		virtual void InitArgs() _CPP_11_OVERRIDE;
 		virtual void InitPreconditions();
-		virtual void InitEffects() override;
+		virtual void InitEffects() _CPP_11_OVERRIDE;
 	};
 }
 #endif

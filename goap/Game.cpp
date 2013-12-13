@@ -39,7 +39,7 @@ void Game::Initialize()
 
 	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
 	InitializeAgents();
-	InitializeObjects();	
+	InitializeObjects();
 
 	m_currentRoom = m_roomManager->GetRoom(ROOM_KITCHEN);
 }
@@ -59,7 +59,7 @@ void Game::Roam()
 		cout << item++ << ") " << (*iter)->GetName() << endl;
 		m_vecObject.push_back(*iter);
 	}
-	
+
 	int witness = item;
 	cout << "\nYou can interview:\n";
 	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
@@ -87,7 +87,7 @@ void Game::Roam()
 		cout << item++ << ") " << (*iter)->GetName() << endl;
 		m_vecRoom.push_back(*iter);
 	}
-	
+
 	cout << "\n Or enter 0 to quit.\n";
 
 	cout << "\nWhat would you like to do?\n>>>";
@@ -164,7 +164,7 @@ void Game::Interview()
 	//	m_roam = true;
 	//	m_currentAgent = 0;
 	//	return;
-	//}	
+	//}
 
 	//std::string wasChar, choiceTwo;
 	//QuestionType qt2;
@@ -229,16 +229,16 @@ bool Game::Run(/*database class thing*/)
 	{
 		return false;
 	}
-	
+
 	MainLoop();
-	
+
 	return true;
 }
 
 bool Game::GeneratePlot()
 {
 	m_murder = false;
-	
+
 	while(!m_murder)
 	{
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
@@ -253,12 +253,12 @@ bool Game::GeneratePlot()
 				m_murder = true;
 			}
 		}
-	
+
 		DUMP("******************************")
 		DUMP("Turn " << m_turn << " is over.")
 		DUMP("******************************")
 
-#ifdef _DEBUG
+#ifdef _GOAP_DEBUG
 		std::cin.get();
 #endif
 		++m_turn;
@@ -308,10 +308,10 @@ void Game::AssignRoles(/*int numWitness*/)
 	// set 'murderer.goal' to be 'victim.isAlive == false'
 	// pick (numWitness + 1) agents
 	// set as witness(es)
-	
+
 	m_murderer = m_agents[0];
 	m_victim = m_agents[1];
-	
+
 	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 	cond[0].attrib = ATTRIBUTE_ALIVE;
 	cond[0].instance = m_victim;
@@ -348,7 +348,7 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[1]);
 	room->AddObject(m_objects[2]);
 	room->AddObject(m_objects[3]);
-	
+
 	room = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
 	room->AddObject(m_objects[0]);//living
 	room->AddObject(m_objects[4]);
@@ -356,7 +356,7 @@ void Game::PopulateRooms()
 
 	room = m_roomManager->GetRoom(ROOM_DINING_ROOM);
 	room->AddObject(m_objects[5]);//dining
-	room->AddObject(m_objects[6]);	
+	room->AddObject(m_objects[6]);
 
 	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
 	{
@@ -373,7 +373,7 @@ void Game::InitializeAgents()
 
 	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS ; ++i)
 		m_agents.push_back(new GOAP::Agent());
-	
+
 
 	//0. Comrade Tartar
 	int locationProbability1[] = {0, 5, 50, 5, 40};
@@ -470,11 +470,11 @@ void Game::InitializeObjects()
 	obj = new Blade("Knife");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
-	
+
 	obj = new Squeezer("Rope");
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
-	
+
 	obj = new Blunt("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);

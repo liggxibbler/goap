@@ -21,7 +21,7 @@ Condition::Condition(const Condition& other)
 	m_negate = other.m_negate;
 	m_numParams = other.m_numParams;
 	m_operatorType = other.m_operatorType;
-	
+
 	m_params = NULL;
 	if(m_numParams != 0)
 	{
@@ -38,7 +38,7 @@ Condition::Condition(const Condition& other)
 Condition::~Condition()
 {
 }
-		
+
 Condition::Condition(OperatorLayoutType layout, OperatorType oper) :
 m_layout(layout), m_operatorType(oper), m_negate(false)
 {
@@ -47,7 +47,7 @@ m_layout(layout), m_operatorType(oper), m_negate(false)
 
 bool Condition::CreateArrays()
 {
-	m_topParam = 0;	
+	m_topParam = 0;
 
 	switch(m_layout)
 	{
@@ -85,7 +85,7 @@ bool Condition::CreateArrays()
 	};
 
 	m_params = new ConditionParameter[m_numParams];
-	
+
 	return true;
 }
 
@@ -100,7 +100,7 @@ bool Condition::operator == (Condition& other)
 		m_layout == other.m_layout &&
 		m_negate == other.m_negate &&
 		m_numParams == other.m_numParams;
-	
+
 	if(!result)
 	{
 		return false;
@@ -232,7 +232,7 @@ bool Condition::EqualInstance(Condition& other)
 		m_layout == other.m_layout &&
 		m_negate == other.m_negate &&
 		m_numParams == other.m_numParams;
-	
+
 	if(!result)
 	{
 		return false;

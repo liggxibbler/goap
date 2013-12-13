@@ -35,7 +35,7 @@ Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(fa
 
 Agent::Agent(const Agent& other) : Object(other)
 {
-	
+
 	m_height = other.m_height;
 	m_weight = other.m_weight;
 	m_isAlive = other.m_isAlive;
@@ -45,13 +45,13 @@ Agent::Agent(const Agent& other) : Object(other)
 	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 }
 
-void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory, 
-								int locationProbability[], bool canStab, bool canStrangle, 
+void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory,
+								int locationProbability[], bool canStab, bool canStrangle,
 								bool canShoot, bool canBludgeon, int height, int weight)
 {
 	m_name = name;
 	m_height = height;
-	m_weight = weight; 
+	m_weight = weight;
 	m_backStory = backStory;
 	m_gender = gender;
 
@@ -148,7 +148,7 @@ bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
 			}
 		}
 	}
-	
+
 	if(result.empty())
 	{
 		return false;
@@ -190,7 +190,7 @@ int Agent::GetCompoundType()
 bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
 	//m_bDoneMurder = false;
-	
+
 	if(m_isAlive)
 	{
 		if(m_nextExecution != 0)
@@ -248,7 +248,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			}
 		}
 	}
-#ifdef _DEBUG
+#ifdef _GOAP_DEBUG
 	else
 	{
 		std::cout << "\n" << m_name << " can't update, ";
@@ -344,9 +344,9 @@ void Agent::GiveStatement()
 RoomName Agent::GetNextRoom()
 {
 	static RoomName rooms[] = {ROOM_KITCHEN, ROOM_LIVING_ROOM, ROOM_DINING_ROOM, ROOM_BATHROOM, ROOM_BEDROOM};
-	
+
 	int random = rand() % 100;
-	
+
 	int i;
 	for (i=0; i<NUMBER_OF_ROOMS;++i)
 	{

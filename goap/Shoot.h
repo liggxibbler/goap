@@ -14,13 +14,13 @@ namespace GOAP
 		~Shoot();
 
 		virtual operator ActionType();
-		virtual Shoot* Clone();		
+		virtual Shoot* Clone();
 
-		virtual std::string Express(Agent* agent, Room* room) override;
-		virtual operator std::string() override;
+		virtual std::string Express(Agent* agent, Room* room) _CPP_11_OVERRIDE;
+		virtual operator std::string() _CPP_11_OVERRIDE;
 
 	private:
-		virtual void InitArgs() override;
+		virtual void InitArgs() _CPP_11_OVERRIDE;
 	};
 }
 #endif

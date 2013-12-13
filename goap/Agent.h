@@ -33,9 +33,9 @@ namespace GOAP
 		Agent(const Agent& other);
 		~Agent();
 
-		void InitializeCharacter(RoomManager* rm, std::string name, Gender gender, 
-								 std::string backStory, int locationProbability[], 
-								 bool canStab, bool canStrangle, bool canShoot, 
+		void InitializeCharacter(RoomManager* rm, std::string name, Gender gender,
+								 std::string backStory, int locationProbability[],
+								 bool canStab, bool canStrangle, bool canShoot,
 								 bool canBludgeon, int height, int weight);
 
 		std::list<ActionType>::iterator FirstAction();
@@ -57,7 +57,7 @@ namespace GOAP
 		void See(Room* room, bool deep = true);
 
 		virtual int GetCompoundType();
-		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) override;
+		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) _CPP_11_OVERRIDE;
 		virtual void Examine();
 
 		virtual bool CanBeMurderWeapon();
@@ -81,7 +81,7 @@ namespace GOAP
 
 		Goal* m_goal;
 		std::list<ActionType> m_actions;
-		std::map<int, Object*> m_objects;	
+		std::map<int, Object*> m_objects;
 		Planner* m_planner;
 		Plan* m_plan;
 
