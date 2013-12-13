@@ -56,6 +56,8 @@ namespace GOAP
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		bool GetMurder();
 
+		void RemoveObject(Object* object);
+
 	private:
 		void ClearMarkedAgents();
 		void AddMarkedAgents();

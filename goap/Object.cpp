@@ -7,11 +7,9 @@ using namespace GOAP;
 
 int Object::s_numObjects = 0;
 
-Object::Object() : m_canBeFoundIn(0)
+Object::Object() : m_canBeFoundIn(0), m_bearer(0)
 {
-	m_attribs[ATTRIBUTE_POSX] = &m_posx;
-	m_attribs[ATTRIBUTE_POSY] = &m_posy;
-	m_attribs[ATTRIBUTE_ROOM] = &m_room;
+	InitAttribMap();
 	
 	m_owner = NULL;
 	m_name = "ANONYMOUS";
@@ -19,11 +17,10 @@ Object::Object() : m_canBeFoundIn(0)
 }
 
 
-Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0)
+Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0), m_bearer(0)
 {
-	m_attribs[ATTRIBUTE_POSX] = &m_posx;
-	m_attribs[ATTRIBUTE_POSY] = &m_posy;
-	m_attribs[ATTRIBUTE_ROOM] = &m_room;
+	InitAttribMap();
+
 	m_owner = owner;
 	m_name = name;
 	m_id = s_numObjects++;
@@ -32,6 +29,7 @@ Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0)
 Object::Object(const Object& other)
 {
 	m_owner = other.m_owner;
+	m_bearer = other.m_bearer;
 	m_name = other.m_name;
 	m_id = other.m_id;
 	m_canBeFoundIn = other.m_canBeFoundIn;
@@ -130,4 +128,21 @@ Object* Object::Clone()
 void Object::SetOwner(Object* owner)
 {
 	m_owner = owner;
+}
+
+Object* Object::GetBearer()
+{
+	return m_bearer;
+}
+void Object::SetBearer(Object* bearer)
+{
+	m_bearer = bearer;
+}
+
+void Object::InitAttribMap()
+{
+	m_attribs[ATTRIBUTE_POSX]	= &m_posx;
+	m_attribs[ATTRIBUTE_POSY]	= &m_posy;
+	m_attribs[ATTRIBUTE_ROOM]	= &m_room;
+	m_attribs[ATTRIBUTE_ID]		= &m_id;
 }
