@@ -120,6 +120,7 @@ bool Room::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	{
 		(*object)->Update(om, rm, turn);
 	}
+
 	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
@@ -149,8 +150,15 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
-		AddAgent(*(addIter++));
-		m_numAgents++;
+		if((*(*addIter))[ATTRIBUTE_ALIVE] != false)
+		{
+			AddAgent(*(addIter++));
+			m_numAgents++;
+		}
+		else
+		{
+			++addIter;
+		}
 	}
 
 	auto delIter = m_agents.begin();
@@ -173,8 +181,15 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 		if (m_markedForDeletion.find(*delIter) != m_markedForDeletion.end())
 		{
 			// post-increment operator returns a copy, then increment
-			m_agents.erase(delIter++);
-			m_numAgents--;
+			if((*(*delIter))[ATTRIBUTE_ALIVE] != false)
+			{
+				m_agents.erase(delIter++);
+				m_numAgents--;
+			}
+			else
+			{
+				++delIter;
+			}
 		}
 		else
 		{
