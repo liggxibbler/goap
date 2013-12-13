@@ -51,7 +51,13 @@ namespace GOAP
 		virtual Object* Clone();
 		void SetOwner(Object* owner);
 
+		Object* GetBearer();
+		void SetBearer(Object* bearer);
+
 	protected:
+		
+		virtual void InitAttribMap();
+
 		static int s_numObjects;
 		int m_id;
 		std::string m_name;
@@ -60,7 +66,10 @@ namespace GOAP
 		int m_posx;
 		int m_posy;
 		int m_room;
+		
 		Object* m_owner;
+		Object* m_bearer;
+
 		int m_canBeFoundIn;
 		Room* m_roomInstance;
 	};

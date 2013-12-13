@@ -203,3 +203,21 @@ bool Room::GetMurder()
 {
 	return m_murder;
 }
+
+void Room::RemoveObject(Object* obj)
+{
+	auto remove(m_objects.begin());
+	while( remove != m_objects.end() )
+	{
+		if(*remove == obj)
+		{
+			m_objects.erase(remove++);
+			obj->SetBearer(0);
+		}
+		else
+		{
+			++remove;
+		}
+	}
+	obj->SetRoom(0);
+}

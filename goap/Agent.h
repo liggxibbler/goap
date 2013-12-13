@@ -76,11 +76,17 @@ namespace GOAP
 
 		Gender GetGender();
 
+		void AddToInventory(Object* obj);
+		void RemoveFromInventory(Object* obj);
+
 	protected:
 		void Interview();
 
+		virtual void InitAttribMap() override;
+
 		Goal* m_goal;
 		std::list<ActionType> m_actions;
+		std::list<Object*> m_inventory;
 		std::map<int, Object*> m_objects;	
 		Planner* m_planner;
 		Plan* m_plan;

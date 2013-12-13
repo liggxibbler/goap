@@ -11,9 +11,7 @@ using namespace GOAP;
 Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
-	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
-	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
+	InitAttribMap();
 	m_planner = new Planner();
 	m_plan = new Plan();
 	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
@@ -24,9 +22,7 @@ Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(fa
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
 {
 	m_name = name;
-	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
-	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
+	InitAttribMap();
 	m_planner = new Planner();
 	m_plan = new Plan();
 	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
@@ -366,4 +362,35 @@ Object* Agent::Clone()
 Gender Agent::GetGender()
 {
 	return m_gender;
+}
+
+void Agent::AddToInventory(Object* obj)
+{
+	m_inventory.push_back(obj);
+	obj->SetBearer(this);
+}
+
+void Agent::RemoveFromInventory(Object* obj)
+{
+	auto remove(m_inventory.begin());
+	while( remove != m_inventory.end() )
+	{
+		if(*remove == obj)
+		{
+			m_inventory.erase(remove++);
+			obj->SetBearer(0);
+		}
+		else
+		{
+			++remove;
+		}
+	}
+}
+
+void Agent::InitAttribMap()
+{
+	Object::InitAttribMap();
+	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
+	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
+	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 }
