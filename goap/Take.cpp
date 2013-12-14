@@ -24,8 +24,10 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 {
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
-	
-	_patient->instance->SetOwner(_agent->instance);
+
+	_patient->instance->SetBearer(_agent->instance);
+	_patient->instance->SetRoom(0);
+	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
 	DUMP("       ** " << Express(0, 0))
 	return EXEC_STAT_SUCCESS;
@@ -42,7 +44,7 @@ Take* Take::Clone()
 void Take::InitArgs()
 {
 	ConditionParameter sub, obj;
-	
+
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
 	sub.type = OBJ_TYPE_AGENT;
@@ -59,7 +61,7 @@ void Take::InitPreconditions()
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
-	
+
 	subNearObj[0] = sub;
 	subNearObj[0].attrib = ATTRIBUTE_ROOM;
 
@@ -67,28 +69,53 @@ void Take::InitPreconditions()
 	subNearObj[1].attrib = ATTRIBUTE_ROOM;
 
 	m_preconds->AddCondition(subNearObj);
+
+	Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+
+	agentInventoryEmpty[0] = sub;
+	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryEmpty[0].value = 0;
+
+	m_preconds->AddCondition(agentInventoryEmpty);
 }
 
 void Take::InitEffects()
 {
-	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_OWNS);
+	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
-	
+
 	subHasObj[0] = sub;
 	subHasObj[1] = obj;
 
 	m_effects.push_back(subHasObj);
+
+	Condition patientHasNoRoom(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+
+	patientHasNoRoom[0] = obj;
+	patientHasNoRoom[0].attrib = ATTRIBUTE_ROOM;
+	patientHasNoRoom[0].value = 0;
+
+	m_effects.push_back(patientHasNoRoom);
+
+	Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+
+	agentInventoryFull[0] = sub;
+	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryFull[0].value = 1;
+
+	m_effects.push_back(agentInventoryFull);
+
 }
 
 std::string Take::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
-	
+
 	std::string _agent;
 	std::string _patient;
-	
+
 	/// XIBB /// weirdest error. agent cannot be cast down to Object*. Why?
 
 	if(sub->instance == (Object*)agent)
@@ -135,11 +162,11 @@ int Take::Cost(RoomManager* rm)
 	{
 		cost += 50;
 	}
-	
+
 	if(_patient->instance->GetOwner() != 0)
 	{
 		cost += 50;
-	}	
+	}
 
 	return cost;
 }

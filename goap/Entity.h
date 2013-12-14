@@ -14,9 +14,9 @@ namespace GOAP
 		Entity(std::string name, Entity* owner = NULL);
 		Entity(const Entity& other);
 		~Entity();
-		
+
 		int GetAttrib(AttributeType at);
-		void SetAttrib(AttributeType at, int val);
+		void SetAttribute(AttributeType at, int val);
 		virtual operator EntityType ();// = 0;
 		/*const*/ int& operator [] (AttributeType at);
 

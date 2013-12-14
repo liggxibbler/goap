@@ -9,7 +9,7 @@
 using namespace GOAP;
 
 Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
-				 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
+				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
 	m_planner = new Planner();
@@ -19,7 +19,7 @@ Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 }
 
 Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
-								 m_isAlive(true), m_isMurderer(false), m_isVictim(false)
+								 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	m_name = name;
 	InitAttribMap();
@@ -35,10 +35,12 @@ Agent::Agent(const Agent& other) : Object(other)
 	m_height = other.m_height;
 	m_weight = other.m_weight;
 	m_isAlive = other.m_isAlive;
+	m_inventory = other.m_inventory;
 
 	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
 	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
+	m_attribs[ATTRIBUTE_INVENTORY] = &m_inventory;
 }
 
 void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory,
@@ -364,33 +366,11 @@ Gender Agent::GetGender()
 	return m_gender;
 }
 
-void Agent::AddToInventory(Object* obj)
-{
-	m_inventory.push_back(obj);
-	obj->SetBearer(this);
-}
-
-void Agent::RemoveFromInventory(Object* obj)
-{
-	auto remove(m_inventory.begin());
-	while( remove != m_inventory.end() )
-	{
-		if(*remove == obj)
-		{
-			m_inventory.erase(remove++);
-			obj->SetBearer(0);
-		}
-		else
-		{
-			++remove;
-		}
-	}
-}
-
 void Agent::InitAttribMap()
 {
 	Object::InitAttribMap();
 	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
 	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
+	m_attribs[ATTRIBUTE_INVENTORY] = &m_inventory;
 }

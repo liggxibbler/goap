@@ -22,9 +22,9 @@ namespace GOAP
 		Object(std::string name, Object* owner = NULL);
 		Object(const Object& other);
 		~Object();
-		
+
 		int GetAttrib(AttributeType at);
-		void SetAttrib(AttributeType at, int val);
+		void SetAttribute(AttributeType at, int val);
 		virtual operator ObjectType ();// = 0;
 		/*const*/ int& operator [] (AttributeType at);
 
@@ -55,7 +55,7 @@ namespace GOAP
 		void SetBearer(Object* bearer);
 
 	protected:
-		
+
 		virtual void InitAttribMap();
 
 		static int s_numObjects;
@@ -66,7 +66,7 @@ namespace GOAP
 		int m_posx;
 		int m_posy;
 		int m_room;
-		
+
 		Object* m_owner;
 		Object* m_bearer;
 

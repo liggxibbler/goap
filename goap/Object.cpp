@@ -5,12 +5,12 @@
 
 using namespace GOAP;
 
-int Object::s_numObjects = 0;
+int Object::s_numObjects = 1;
 
 Object::Object() : m_canBeFoundIn(0), m_bearer(0)
 {
 	InitAttribMap();
-	
+
 	m_owner = NULL;
 	m_name = "ANONYMOUS";
 	m_id = s_numObjects++;
@@ -43,14 +43,14 @@ Object::~Object()
 {
 	// TBI
 }
-	
-		
+
+
 int Object::GetAttrib(AttributeType at)
 {
 	return *m_attribs[at];
 }
 
-void Object::SetAttrib(AttributeType at, int val)
+void Object::SetAttribute(AttributeType at, int val)
 {
 	*m_attribs[at] = val;
 }
@@ -112,7 +112,14 @@ bool Object::CanBeMurderWeapon()
 void Object::SetRoom(Room* room)
 {
 	m_roomInstance = room;
-	m_room = room->GetID();
+	if(m_room != 0)
+	{
+	    m_room = room->GetID();
+	}
+	else
+	{
+	    m_room = 0;
+	}
 }
 
 Room* Object::GetRoom()

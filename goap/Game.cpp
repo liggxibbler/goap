@@ -324,14 +324,14 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	m_murderer->See(m_victim);
 	m_murderer->AddAction(ACTION_WAITFOR);
+    m_murderer->AddAction(ACTION_TAKE);
+    m_murderer->AddAction(ACTION_DROP);
 
 	m_roomManager->ShowBedrooms(m_murderer);
 
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
 	m_actors.push_back(m_agents[2]);
-
-	m_murderer->AddAction(ACTION_TAKE);
 }
 
 void Game::PopulateRooms()

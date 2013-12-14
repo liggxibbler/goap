@@ -26,14 +26,14 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
-	//sub.instance->SetAttrib(ATTRIBUTE_ROOM, (*(obj.instance))[ATTRIBUTE_ROOM]);
+	//sub.instance->SetAttribute(ATTRIBUTE_ROOM, (*(obj.instance))[ATTRIBUTE_ROOM]);
 	Room* nextRoom = obj.instance->GetRoom();
 	//sub.instance->SetRoom(room);
-	
+
 	if(oldRoom != nextRoom)
 	{
-		Agent* agent = dynamic_cast<Agent*>(sub.instance);
-		oldRoom->MarkForDeletion(agent);		
+		Agent* agent = (Agent*)(sub.instance);
+		oldRoom->MarkForDeletion(agent);
 		nextRoom->MarkForAddition(agent);
 		agent->See(nextRoom);
 	}
@@ -58,7 +58,7 @@ GoTo* GoTo::Clone()
 void GoTo::InitArgs()
 {
 	ConditionParameter sub, obj1;
-	
+
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = m_agent;
@@ -76,17 +76,17 @@ void GoTo::InitArgs()
 void GoTo::InitEffects()
 {
 	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-	
+
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj0(*GetArg(SEMANTIC_ROLE_GOAL));
-	
+
 	swapSubObj1[0] = sub;
 	swapSubObj1[0].attrib = ATTRIBUTE_ROOM;
-	
+
 	swapSubObj1[1] = obj0;
 	swapSubObj1[1].attrib = ATTRIBUTE_ROOM;
-	
-	m_effects.push_back(swapSubObj1);	
+
+	m_effects.push_back(swapSubObj1);
 }
 
 void GoTo::InitPreconditions()
@@ -100,7 +100,7 @@ std::string GoTo::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
 	auto obj = GetArg(SEMANTIC_ROLE_GOAL);
-	
+
 	std::string _agent;
 	std::string _goal;
 	std::string _verb;
@@ -122,7 +122,7 @@ std::string GoTo::Express(Agent* agent, Room* room)
 	{
 		_verb = "went";
 	}
-	
+
 	if(agent == 0)
 	{
 		_goal = obj->instance->GetRoom()->GetName();
@@ -213,7 +213,7 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 void GoTo::Dispatch(int turn)
 {
 	Action::Dispatch(turn);
-	
+
 	auto cp = GetArg(SEMANTIC_ROLE_GOAL);
 	Room* room = cp->instance->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)

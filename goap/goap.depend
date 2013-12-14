@@ -19,10 +19,10 @@
 	<string>
 	<sstream>
 
-1386943643 /home/liggxibbler/Projects/goap/goap/Common.h
+1387038973 /home/liggxibbler/Projects/goap/goap/Common.h
 	<iostream>
 
-1386938208 /home/liggxibbler/Projects/goap/goap/Object.h
+1387039659 /home/liggxibbler/Projects/goap/goap/Object.h
 	"Common.h"
 	<map>
 	<string>
@@ -59,7 +59,7 @@
 1386938208 /home/liggxibbler/Projects/goap/goap/IExecutable.h
 	"Common.h"
 
-1386940679 /home/liggxibbler/Projects/goap/goap/Agent.h
+1387038872 /home/liggxibbler/Projects/goap/goap/Agent.h
 	"Common.h"
 	"Object.h"
 	"Condition.h"
@@ -76,7 +76,7 @@
 
 1386938208 /home/liggxibbler/Projects/goap/goap/ActionRecord.h
 
-1386942302 /home/liggxibbler/Projects/goap/goap/Room.h
+1386989301 /home/liggxibbler/Projects/goap/goap/Room.h
 	<string>
 	<list>
 	<set>
@@ -89,7 +89,7 @@
 	<vector>
 	<list>
 
-1386938208 source:/home/liggxibbler/Projects/goap/goap/ActionManager.cpp
+1387038682 source:/home/liggxibbler/Projects/goap/goap/ActionManager.cpp
 	"ActionManager.h"
 
 1386938208 /home/liggxibbler/Projects/goap/goap/ActionManager.h
@@ -98,10 +98,11 @@
 	"Common.h"
 	<map>
 
-1386938208 /home/liggxibbler/Projects/goap/goap/ActionList.h
+1387038682 /home/liggxibbler/Projects/goap/goap/ActionList.h
 	"Stab.h"
 	"GoTo.h"
 	"Take.h"
+	"Drop.h"
 	"Bludgeon.h"
 	"Strangle.h"
 	"Shoot.h"
@@ -138,7 +139,7 @@
 	"Action.h"
 	"Agent.h"
 
-1386942302 source:/home/liggxibbler/Projects/goap/goap/Agent.cpp
+1387039457 source:/home/liggxibbler/Projects/goap/goap/Agent.cpp
 	"Agent.h"
 	"Planner.h"
 	"Action.h"
@@ -174,7 +175,7 @@
 1386938208 /home/liggxibbler/Projects/goap/goap/Blunt.h
 	"Object.h"
 
-1386944120 source:/home/liggxibbler/Projects/goap/goap/Condition.cpp
+1386989301 source:/home/liggxibbler/Projects/goap/goap/Condition.cpp
 	"Condition.h"
 	"OperatorManager.h"
 	"Operator.h"
@@ -191,7 +192,7 @@
 1386938208 /home/liggxibbler/Projects/goap/goap/Equal.h
 	"Operator.h"
 
-1386943726 source:/home/liggxibbler/Projects/goap/goap/Game.cpp
+1387038682 source:/home/liggxibbler/Projects/goap/goap/Game.cpp
 	"Game.h"
 	"Object.h"
 	"Agent.h"
@@ -214,7 +215,7 @@
 1386938208 /home/liggxibbler/Projects/goap/goap/Projectile.h
 	"Object.h"
 
-1386938208 source:/home/liggxibbler/Projects/goap/goap/GoTo.cpp
+1387039742 source:/home/liggxibbler/Projects/goap/goap/GoTo.cpp
 	"GoTo.h"
 	"Room.h"
 	"RoomManager.h"
@@ -229,11 +230,11 @@
 1386938208 /home/liggxibbler/Projects/goap/goap/GreaterThan.h
 	"Operator.h"
 
-1386944110 source:/home/liggxibbler/Projects/goap/goap/Murder.cpp
+1387039659 source:/home/liggxibbler/Projects/goap/goap/Murder.cpp
 	"Murder.h"
 	"RoomManager.h"
 
-1386938208 source:/home/liggxibbler/Projects/goap/goap/Object.cpp
+1387039659 source:/home/liggxibbler/Projects/goap/goap/Object.cpp
 	"Object.h"
 	"Room.h"
 	"RoomManager.h"
@@ -271,7 +272,7 @@
 1386938208 source:/home/liggxibbler/Projects/goap/goap/Projectile.cpp
 	"Projectile.h"
 
-1386938208 source:/home/liggxibbler/Projects/goap/goap/Room.cpp
+1386989301 source:/home/liggxibbler/Projects/goap/goap/Room.cpp
 	"Room.h"
 	"Object.h"
 	"Agent.h"
@@ -297,7 +298,7 @@
 	"Strangle.h"
 	"RoomManager.h"
 
-1386938208 source:/home/liggxibbler/Projects/goap/goap/Take.cpp
+1387039659 source:/home/liggxibbler/Projects/goap/goap/Take.cpp
 	"Take.h"
 	"RoomManager.h"
 
@@ -324,4 +325,17 @@
 	"Room.h"
 	"Game.h"
 	<ctime>
+
+1387038682 /home/liggxibbler/Projects/goap/goap/Drop.h
+	"Action.h"
+
+1387038973 source:/home/liggxibbler/Projects/goap/goap/Drop.cpp
+	"Drop.h"
+	"RoomManager.h"
+
+1387038681 source:/home/liggxibbler/Projects/goap/goap/Has.cpp
+	"Has.h"
+
+1387038681 /home/liggxibbler/Projects/goap/goap/Has.h
+	"Operator.h"
 

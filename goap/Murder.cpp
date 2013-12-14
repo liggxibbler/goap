@@ -11,7 +11,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 	DUMP("       ** " << Express(0, 0))
 
-	obj.instance->SetAttrib(ATTRIBUTE_ALIVE, false);
+	obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
 	return EXEC_STAT_MURDER;
@@ -62,7 +62,7 @@ void Murder::InitPreconditions()
 	auto _locative(GetArg(SEMANTIC_ROLE_LOCATIVE));
 
 	// AGENT owns INSTRUMENT
-	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPERATOR_OWNS);
+	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 
 	agentHasInst[0] = *_agent;
 	agentHasInst[1] = *_instrument;
