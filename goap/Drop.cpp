@@ -26,8 +26,9 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
-	_patient->instance->SetBearer(0);
-	_agent->instance->GetRoom()->AddObject(_patient->instance);
+	STUFF* patient = (STUFF*)_patient->instance;
+	patient->SetBearer(0);
+	_agent->instance->GetRoom()->AddObject((STUFF*)_patient->instance);
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
@@ -54,7 +55,7 @@ void Drop::InitArgs()
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
-	obj.type = OBJ_TYPE_OBJECT;
+	obj.type = OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 	obj.strict = true;
 	m_args.push_back(obj);
 }

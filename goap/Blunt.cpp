@@ -25,7 +25,7 @@ Blunt::operator GOAP::ObjectType()
 
 int Blunt::GetCompoundType()
 {
-	return OBJ_TYPE_BLUNT | OBJ_TYPE_OBJECT;
+	return OBJ_TYPE_BLUNT | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 }
 
 bool Blunt::CanBeMurderWeapon()

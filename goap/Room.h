@@ -5,7 +5,7 @@
 #include <list>
 #include <set>
 #include "Common.h"
-#include "Object.h"
+#include "STUFF.h"
 
 namespace GOAP
 {
@@ -29,16 +29,16 @@ namespace GOAP
 		Room* GetLeft();
 		Room* GetRight();
 
-		Object* AddObject(std::string name);
-		void AddObject(Object* obj);
+		STUFF* AddObject(std::string name);
+		void AddObject(STUFF* obj);
 
 		Agent* AddAgent(std::string name);
 		void AddAgent(Agent* agent);
 
 		//std::string GetName();
 
-		std::list<Object*>::iterator GetFirstObject();
-		std::list<Object*>::iterator GetLastObject();
+		std::list<STUFF*>::iterator GetFirstObject();
+		std::list<STUFF*>::iterator GetLastObject();
 
 		std::set<Agent*>::iterator GetFirstAgent();
 		std::set<Agent*>::iterator GetLastAgent();
@@ -52,11 +52,13 @@ namespace GOAP
 		bool UpdateAgentPositions(Agent* agent, Agent* victim);
 
 		virtual Object* Clone();
+		virtual void Examine() _CPP_11_OVERRIDE;
+		virtual operator ObjectType ();
 
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		bool GetMurder();
 
-		void RemoveObject(Object* object);
+		void RemoveObject(STUFF* obj);
 
 		void ResetAgentUpdateFlags();
 
@@ -66,7 +68,7 @@ namespace GOAP
 
 		RoomName m_type;
 		//std::string m_name;
-		std::list<Object*> m_objects;
+		std::list<STUFF*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
 		std::set<Agent*> m_markedForAddition;

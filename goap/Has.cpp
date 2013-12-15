@@ -5,7 +5,7 @@ using namespace GOAP::Op;
 
 bool Has::EvaluateOOB ()
 {
-	if ( m_params[1].instance->GetBearer() == m_params[0].instance )
+	if ( m_params[1].instance->GetAttrib(ATTRIBUTE_BEARER) == m_params[0].instance->GetID() )
 	{
 		return true;
 	}

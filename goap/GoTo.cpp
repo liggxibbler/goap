@@ -32,7 +32,7 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 
 	if( nextRoom == 0 )
 	{
-		if(obj.instance->GetBearer() == sub.instance)
+		if(obj.instance->GetAttrib(ATTRIBUTE_BEARER) == sub.instance->GetID())
 		{
 			return EXEC_STAT_SUCCESS;
 		}

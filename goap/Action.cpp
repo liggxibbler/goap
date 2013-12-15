@@ -34,18 +34,42 @@ bool Action::MightSatisfy(Condition& cond)
 	return false;
 }
 
-void Action::CopyArgsFromCondition(Condition& cond)
+bool Action::CopyArgsFromCondition(Condition& cond)
 {
+	bool result = true;
 	CondParamIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		SemanticRole st = cond[i].semantic;
 		if(st != SEMANTIC_ROLE_NONE)
 		{
-			GetArg(st)->instance = cond[i].instance;
+			auto arg = GetArg(st);
+			if(arg->strict)
+			{
+				if(arg->type == cond[i].type)
+				{
+					arg->instance = cond[i].instance;
+				}
+				else
+				{
+					result = false;
+				}
+			}
+			else
+			{
+				if(arg->type & cond[i].type)
+				{
+					arg->instance = cond[i].instance;
+				}
+				else
+				{
+					result = false;
+				}
+			}			
 			cond[i].semantic = SEMANTIC_ROLE_NONE; // reset for later checks
 		}
 	}
+	return result;
 }
 
 CondParamIter Action::GetArg(SemanticRole st)

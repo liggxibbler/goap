@@ -46,15 +46,15 @@ Room* Room::GetRight()
 	return m_right;
 }
 
-Object* Room::AddObject(std::string name)
+STUFF* Room::AddObject(std::string name)
 {
-	Object* obj = new Object(name);
+	STUFF* obj = new STUFF(name);
 	m_objects.push_back(obj);
 	obj->SetRoom(this);
 	return obj;
 }
 
-void Room::AddObject(Object* obj)
+void Room::AddObject(STUFF* obj)
 {
 	m_objects.push_back(obj);
 	obj->SetRoom(this);
@@ -66,12 +66,12 @@ void Room::AddObject(Object* obj)
 //	return m_name;
 //}
 
-std::list<Object*>::iterator Room::GetFirstObject()
+std::list<STUFF*>::iterator Room::GetFirstObject()
 {
 	return m_objects.begin();
 }
 
-std::list<Object*>::iterator Room::GetLastObject()
+std::list<STUFF*>::iterator Room::GetLastObject()
 {
 	return m_objects.end();
 }
@@ -219,7 +219,7 @@ bool Room::GetMurder()
 	return m_murder;
 }
 
-void Room::RemoveObject(Object* obj)
+void Room::RemoveObject(STUFF* obj)
 {
 	auto remove(m_objects.begin());
 	while( remove != m_objects.end() )
@@ -242,4 +242,13 @@ void Room::ResetAgentUpdateFlags()
 	{
 		(*agent)->ResetUpdateFlag();
 	}
+}
+
+Room::operator ObjectType ()
+{
+	return OBJ_TYPE_ROOM;
+}
+
+void Room::Examine()
+{
 }

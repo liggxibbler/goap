@@ -265,7 +265,6 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 
 void Agent::Examine()
 {
-	Object::Examine();
 	Interview();
 }
 

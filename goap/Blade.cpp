@@ -25,7 +25,7 @@ Blade::operator GOAP::ObjectType()
 
 int Blade::GetCompoundType()
 {
-	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT;
+	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 }
 
 bool Blade::CanBeMurderWeapon()

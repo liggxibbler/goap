@@ -16,11 +16,11 @@ namespace GOAP
 		virtual operator ObjectType () _CPP_11_OVERRIDE;
 		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) _CPP_11_OVERRIDE;
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
-		virtual void MayBeFoundIn(int) _CPP_11_OVERRIDE;
 		virtual void Examine() _CPP_11_OVERRIDE;
-		virtual bool CanBeMurderWeapon() _CPP_11_OVERRIDE;
 		virtual Object* Clone() _CPP_11_OVERRIDE;
 
+		void MayBeFoundIn(int);
+		bool CanBeMurderWeapon();
 		Object* GetBearer();
 		void SetBearer(Object* bearer);
 
@@ -28,6 +28,7 @@ namespace GOAP
 
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
 		Object* m_bearer;
+		int	m_bearerID;
 		int m_canBeFoundIn;
 
 	};

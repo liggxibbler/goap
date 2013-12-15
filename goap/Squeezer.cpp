@@ -25,7 +25,7 @@ Squeezer::operator GOAP::ObjectType()
 
 int Squeezer::GetCompoundType()
 {
-	return OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT;
+	return OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 }
 
 bool Squeezer::CanBeMurderWeapon()

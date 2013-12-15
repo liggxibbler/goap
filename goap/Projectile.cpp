@@ -25,7 +25,7 @@ Projectile::operator GOAP::ObjectType()
 
 int Projectile::GetCompoundType()
 {
-	return OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT;
+	return OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 }
 
 bool Projectile::CanBeMurderWeapon()

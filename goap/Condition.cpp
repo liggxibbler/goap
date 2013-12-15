@@ -118,7 +118,7 @@ bool Condition::operator == (Condition& other)
 			}
 			else
 			{
-				differentTypes = m_params[i].type & other.m_params[i].type == 0;
+				differentTypes = (((m_params[i].type) & (other.m_params[i].type)) == 0);
 			}
 
 			if(differentTypes || (m_params[i].attrib != other.m_params[i].attrib))

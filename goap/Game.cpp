@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "Object.h"
+#include "STUFF.h"
 #include "Agent.h"
 #include "Room.h"
 #include "Blade.h"
@@ -479,13 +479,13 @@ void Game::InitializeObjects()
 	*/
 
 	m_objects.clear();
-	Object* obj = 0;
+	STUFF* obj = 0;
 
-	obj = new Object("Clock");
+	obj = new STUFF("Clock");
 	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
-	obj = new Object("Cup");
+	obj = new STUFF("Cup");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
@@ -497,15 +497,15 @@ void Game::InitializeObjects()
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
 
-	obj = new Object("Statue");
+	obj = new STUFF("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);
 
-	obj = new Object("Lamp");
+	obj = new STUFF("Lamp");
 	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
-	obj = new Object("Table");
+	obj = new STUFF("Table");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM | ROOM_LIVING_ROOM);
 	m_objects.push_back(obj);
 

@@ -7,7 +7,7 @@ using namespace GOAP;
 
 int Object::s_numObjects = 1;
 
-Object::Object() : m_canBeFoundIn(0), m_bearer(0)
+Object::Object()
 {
 	InitAttribMap();
 
@@ -17,7 +17,7 @@ Object::Object() : m_canBeFoundIn(0), m_bearer(0)
 }
 
 
-Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0), m_bearer(0)
+Object::Object(std::string name, Object* owner)
 {
 	InitAttribMap();
 
@@ -29,14 +29,10 @@ Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0), m_bearer(0)
 Object::Object(const Object& other)
 {
 	m_owner = other.m_owner;
-	m_bearer = other.m_bearer; /// XXX = 0
 	m_name = other.m_name;
 	m_id = other.m_id;
-	m_canBeFoundIn = other.m_canBeFoundIn;
 
-	m_attribs[ATTRIBUTE_POSX] = &m_posx;
-	m_attribs[ATTRIBUTE_POSY] = &m_posy;
-	m_attribs[ATTRIBUTE_ROOM] = &m_room;
+	InitAttribMap();
 }
 
 Object::~Object()
@@ -85,29 +81,6 @@ int Object::GetCompoundType() // XXX = 0
 	return OBJ_TYPE_OBJECT;
 }
 
-bool Object::Update(Op::OperatorManager* om, RoomManager* rm, int turn) // XXX
-{
-	if(m_bearer != 0)
-	{
-		SetRoom(m_bearer->GetRoom());
-	}		
-	return true;
-}
-
-void Object::Examine() // XXX = 0
-{
-}
-
-void Object::MayBeFoundIn(int rooms) // XXX
-{
-	m_canBeFoundIn |= rooms;
-}
-
-bool Object::CanBeMurderWeapon() // XXX
-{
-	return false;
-}
-
 void Object::SetRoom(Room* room)
 {
 	m_roomInstance = room;
@@ -126,23 +99,9 @@ Room* Object::GetRoom()
 	return m_roomInstance;
 }
 
-Object* Object::Clone()
-{
-	return new Object(*this);
-}
-
 void Object::SetOwner(Object* owner)
 {
 	m_owner = owner;
-}
-
-Object* Object::GetBearer() // XXX
-{
-	return m_bearer;
-}
-void Object::SetBearer(Object* bearer) // XXX
-{
-	m_bearer = bearer;
 }
 
 void Object::InitAttribMap()

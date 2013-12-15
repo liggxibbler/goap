@@ -26,8 +26,9 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
-	_patient->instance->SetBearer(_agent->instance);
-	_patient->instance->GetRoom()->RemoveObject(_patient->instance);
+	STUFF* patient = (STUFF*)_patient->instance;
+	patient->SetBearer(_agent->instance);
+	_patient->instance->GetRoom()->RemoveObject((STUFF*)_patient->instance);
 	_patient->instance->SetRoom(_agent->instance->GetRoom());
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
@@ -55,7 +56,7 @@ void Take::InitArgs()
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
-	obj.type = OBJ_TYPE_OBJECT;
+	obj.type = OBJ_TYPE_STUFF;
 	obj.strict = false;
 	m_args.push_back(obj);
 }

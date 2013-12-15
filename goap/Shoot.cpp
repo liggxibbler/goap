@@ -36,7 +36,7 @@ void Shoot::InitArgs()
 	//INSTRUMENT
 	inst.semantic = SEMANTIC_ROLE_INSTRUMENT;
 	inst.instance = NULL;
-	inst.type = OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT;
+	inst.type = OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
 	inst.strict = true;
 	m_args.push_back(inst);
 }

@@ -35,17 +35,13 @@ namespace GOAP
 		Room* GetRoom();
 		void SetRoom(Room* room);
 
-		virtual Object* Clone();
 		void SetOwner(Object* owner);
 
-		virtual operator ObjectType (); // = 0;
-		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn);// XXX = 0
-		virtual int GetCompoundType(); // XXX = 0
-		virtual void Examine(); // XXX = 0
-		virtual void MayBeFoundIn(int); // XXX
-		virtual bool CanBeMurderWeapon(); /// XXX
-		Object* GetBearer(); // XXX
-		void SetBearer(Object* bearer); // XXX
+		virtual Object* Clone() = 0;
+		virtual operator ObjectType () = 0;
+		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) = 0;
+		virtual int GetCompoundType() = 0;
+		virtual void Examine() = 0;
 
 	protected:
 
@@ -61,9 +57,6 @@ namespace GOAP
 
 		Object* m_owner;
 		Room* m_roomInstance;
-
-		Object* m_bearer; // XXX
-		int m_canBeFoundIn; // XXX
 	};
 }
 
