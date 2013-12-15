@@ -168,6 +168,9 @@
     <ClCompile Include="Has.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
+    <ClCompile Include="STUFF.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -223,9 +226,6 @@
     </ClInclude>
     <ClInclude Include="Plan.h">
       <Filter>Header Files\Planning</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Planner.h">
       <Filter>Header Files\Planning</Filter>
@@ -298,6 +298,9 @@
     </ClInclude>
     <ClInclude Include="Has.h">
       <Filter>Header Files\Operators</Filter>
+    </ClInclude>
+    <ClInclude Include="STUFF.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

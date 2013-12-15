@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Blunt::Blunt() : Object()
+Blunt::Blunt() : STUFF()
 {
 }
 
-Blunt::Blunt(std::string name) : Object(name)
+Blunt::Blunt(std::string name) : STUFF(name)
 {
 }
 

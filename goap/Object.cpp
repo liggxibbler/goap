@@ -29,7 +29,7 @@ Object::Object(std::string name, Object* owner) : m_canBeFoundIn(0), m_bearer(0)
 Object::Object(const Object& other)
 {
 	m_owner = other.m_owner;
-	m_bearer = other.m_bearer;
+	m_bearer = other.m_bearer; /// XXX = 0
 	m_name = other.m_name;
 	m_id = other.m_id;
 	m_canBeFoundIn = other.m_canBeFoundIn;
@@ -55,7 +55,7 @@ void Object::SetAttribute(AttributeType at, int val)
 	*m_attribs[at] = val;
 }
 
-Object::operator GOAP::ObjectType()
+Object::operator GOAP::ObjectType() /// XXX = 0
 {
 	return OBJ_TYPE_OBJECT;
 }
@@ -80,34 +80,30 @@ std::string Object::GetName()
 	return m_name;
 }
 
-int Object::GetCompoundType()
+int Object::GetCompoundType() // XXX = 0
 {
 	return OBJ_TYPE_OBJECT;
 }
 
-bool Object::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
+bool Object::Update(Op::OperatorManager* om, RoomManager* rm, int turn) // XXX
 {
-	if(m_owner != NULL)
+	if(m_bearer != 0)
 	{
-		// set my position to my parent's position
-		if(m_bearer != 0)
-		{
-			SetRoom(m_bearer->GetRoom());
-		}		
-	}
+		SetRoom(m_bearer->GetRoom());
+	}		
 	return true;
 }
 
-void Object::Examine()
+void Object::Examine() // XXX = 0
 {
 }
 
-void Object::MayBeFoundIn(int rooms)
+void Object::MayBeFoundIn(int rooms) // XXX
 {
 	m_canBeFoundIn |= rooms;
 }
 
-bool Object::CanBeMurderWeapon()
+bool Object::CanBeMurderWeapon() // XXX
 {
 	return false;
 }
@@ -140,11 +136,11 @@ void Object::SetOwner(Object* owner)
 	m_owner = owner;
 }
 
-Object* Object::GetBearer()
+Object* Object::GetBearer() // XXX
 {
 	return m_bearer;
 }
-void Object::SetBearer(Object* bearer)
+void Object::SetBearer(Object* bearer) // XXX
 {
 	m_bearer = bearer;
 }

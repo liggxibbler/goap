@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Squeezer::Squeezer() : Object()
+Squeezer::Squeezer() : STUFF()
 {
 }
 
-Squeezer::Squeezer(std::string name) : Object(name)
+Squeezer::Squeezer(std::string name) : STUFF(name)
 {
 }
 

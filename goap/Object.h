@@ -25,25 +25,12 @@ namespace GOAP
 
 		int GetAttrib(AttributeType at);
 		void SetAttribute(AttributeType at, int val);
-		virtual operator ObjectType ();// = 0;
-		/*const*/ int& operator [] (AttributeType at);
+		int& operator [] (AttributeType at);
 
 		int GetID();
 		Object* GetOwner();
 
-		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn);
-
-		virtual int GetCompoundType();
-
 		std::string GetName();
-
-		//void OnMessage(Telegram& msg);
-
-		virtual void Examine();
-
-		void MayBeFoundIn(int);
-
-		virtual bool CanBeMurderWeapon();
 
 		Room* GetRoom();
 		void SetRoom(Room* room);
@@ -51,8 +38,14 @@ namespace GOAP
 		virtual Object* Clone();
 		void SetOwner(Object* owner);
 
-		Object* GetBearer();
-		void SetBearer(Object* bearer);
+		virtual operator ObjectType (); // = 0;
+		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn);// XXX = 0
+		virtual int GetCompoundType(); // XXX = 0
+		virtual void Examine(); // XXX = 0
+		virtual void MayBeFoundIn(int); // XXX
+		virtual bool CanBeMurderWeapon(); /// XXX
+		Object* GetBearer(); // XXX
+		void SetBearer(Object* bearer); // XXX
 
 	protected:
 
@@ -62,16 +55,15 @@ namespace GOAP
 		int m_id;
 		std::string m_name;
 		std::map<AttributeType, int*> m_attribs;
-		//Position m_position;
 		int m_posx;
 		int m_posy;
 		int m_room;
 
 		Object* m_owner;
-		Object* m_bearer;
-
-		int m_canBeFoundIn;
 		Room* m_roomInstance;
+
+		Object* m_bearer; // XXX
+		int m_canBeFoundIn; // XXX
 	};
 }
 

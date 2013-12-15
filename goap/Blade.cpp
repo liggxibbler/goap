@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Blade::Blade() : Object()
+Blade::Blade() : STUFF()
 {
 }
 
-Blade::Blade(std::string name) : Object(name)
+Blade::Blade(std::string name) : STUFF(name)
 {
 }
 

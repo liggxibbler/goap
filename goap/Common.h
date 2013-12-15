@@ -50,9 +50,10 @@ namespace GOAP
 		OBJ_TYPE_SQUEEZER	= 0x0010,
 		OBJ_TYPE_CONTAINER	= 0x0020,
 		OBJ_TYPE_ROOM		= 0x0040,
-
+		OBJ_TYPE_STUFF		= 0x0080,
 		OBJ_TYPE_AGENT		= 0x0100, // or living things
 		OBJ_TYPE_PERSON		= 0x0200,
+		
 		OBJ_TYPE_LAST		= 0xf000
 	};
 

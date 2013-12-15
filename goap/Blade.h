@@ -1,11 +1,11 @@
 #ifndef _GOAP_BLADE_H_
 #define _GOAP_BLADE_H_
 
-#include "Object.h"
+#include "STUFF.h"
 
 namespace GOAP
 {
-	class Blade : public Object
+	class Blade : public STUFF
 	{
 	public:
 		Blade();

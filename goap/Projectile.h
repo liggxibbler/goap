@@ -1,11 +1,11 @@
 #ifndef _GOAP_PROJECTILE_H_
 #define _GOAP_PROJECTILE_H_
 
-#include "Object.h"
+#include "STUFF.h"
 
 namespace GOAP
 {
-	class Projectile : public Object
+	class Projectile : public STUFF
 	{
 	public:
 		Projectile();

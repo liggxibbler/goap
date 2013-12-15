@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Projectile::Projectile() : Object()
+Projectile::Projectile() : STUFF()
 {
 }
 
-Projectile::Projectile(std::string name) : Object(name)
+Projectile::Projectile(std::string name) : STUFF(name)
 {
 }
 
