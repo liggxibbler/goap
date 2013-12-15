@@ -24,13 +24,15 @@ void Murder::InitArgs()
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
-	sub.type = OBJ_TYPE_AGENT;
+	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(sub);
 
 	// OBJECT
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
-	obj.type = OBJ_TYPE_AGENT;
+	obj.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	obj.strict = true;
 	m_args.push_back(obj);
 
 	// LOCATIVE

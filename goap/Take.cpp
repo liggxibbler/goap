@@ -49,12 +49,14 @@ void Take::InitArgs()
 
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
-	sub.type = OBJ_TYPE_AGENT;
+	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(sub);
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_OBJECT;
+	obj.strict = true;
 	m_args.push_back(obj);
 }
 
@@ -76,7 +78,7 @@ void Take::InitPreconditions()
 
 	agentInventoryEmpty[0] = sub;
 	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
-	agentInventoryEmpty[0].value = 0;
+	agentInventoryEmpty[0].value = false;
 
 	m_preconds->AddCondition(agentInventoryEmpty);
 }
@@ -104,7 +106,7 @@ void Take::InitEffects()
 
 	agentInventoryFull[0] = sub;
 	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
-	agentInventoryFull[0].value = 1;
+	agentInventoryFull[0].value = true;
 
 	m_effects.push_back(agentInventoryFull);
 

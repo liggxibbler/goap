@@ -41,6 +41,7 @@ namespace GOAP
 
 	enum ObjectType
 	{
+		OBJ_TYPE_NONE		= 0x0000,
 		OBJ_TYPE_OBJECT		= 0x0001, // either inanimate objects
 		OBJ_TYPE_BLADE		= 0x0002,
 		OBJ_TYPE_BLUNT		= 0x0004,

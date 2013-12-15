@@ -28,6 +28,7 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 
 	_patient->instance->SetBearer(0);
 	_agent->instance->GetRoom()->AddObject(_patient->instance);
+	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
 	return EXEC_STAT_SUCCESS;
@@ -47,12 +48,14 @@ void Drop::InitArgs()
 
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
-	sub.type = OBJ_TYPE_AGENT;
+	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(sub);
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_OBJECT;
+	obj.strict = true;
 	m_args.push_back(obj);
 }
 
@@ -66,6 +69,15 @@ void Drop::InitPreconditions()
 	agentHasPatient[1] = patient;
 
 	m_preconds->AddCondition(agentHasPatient);
+
+	Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+
+	agentInventoryFull[0] = agent;
+	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryFull[0].value = true;
+
+	m_preconds->AddCondition(agentInventoryFull);
+
 }
 
 void Drop::InitEffects()
@@ -95,7 +107,7 @@ void Drop::InitEffects()
 
 	agentInventoryEmpty[0] = agent;
 	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
-	agentInventoryEmpty[0].value = 0;
+	agentInventoryEmpty[0].value = false;
 
 	m_effects.push_back(agentInventoryEmpty);
 }
@@ -167,4 +179,9 @@ int Drop::Cost(RoomManager* rm)
 		}
 	}
 	return cost;
+}
+
+void Drop::UpdateConditionInstances()
+{
+	Action::UpdateConditionInstances();
 }

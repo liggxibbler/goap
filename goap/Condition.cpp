@@ -110,10 +110,11 @@ bool Condition::operator == (Condition& other)
 		for(int i=0; i < m_numParams; i++)
 		{
 			static bool differentTypes;
-			if(false/*m_params[i].strict || other.m_params[i].strict*/)
-			// TESTING STRICTNESS IS NOT NECESSARY HERE, ONLY IN Action::GetPossibleInstances()
+			differentTypes = false;
+
+			if(m_params[i].strict)
 			{
-				//differentTypes = m_params[i].type != other.m_params[i].type;
+				differentTypes = m_params[i].type != other.m_params[i].type;
 			}
 			else
 			{

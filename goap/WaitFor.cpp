@@ -65,19 +65,22 @@ void WaitFor::InitArgs()
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = m_agent;
-	sub.type = OBJ_TYPE_AGENT;
+	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(sub);
 
 	// OBJECT
 	obj1.semantic = SEMANTIC_ROLE_GOAL;
 	obj1.instance = m_dest;
-	obj1.type = OBJ_TYPE_AGENT;
+	obj1.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(obj1);
 
 	// LOCATIVE
 	loc.semantic = SEMANTIC_ROLE_LOCATIVE;
 	loc.instance = NULL;
-	loc.type = OBJ_TYPE_ROOM;
+	loc.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	loc.strict = true;
 	m_args.push_back(loc);
 
 	m_turns = WAIT_TURNS;
@@ -111,15 +114,15 @@ void WaitFor::InitEffects()
 
 void WaitFor::InitPreconditions()
 {
-	Condition position(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
-	position[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-	position[0].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[0] = *GetArg(SEMANTIC_ROLE_AGENT);
+	agentAtLocative[0].attrib = ATTRIBUTE_ROOM;
 
-	position[1] = *GetArg(SEMANTIC_ROLE_LOCATIVE);
-	position[1].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[1] = *GetArg(SEMANTIC_ROLE_LOCATIVE);
+	agentAtLocative[1].attrib = ATTRIBUTE_ROOM;
 
-	m_preconds->AddCondition(position);
+	m_preconds->AddCondition(agentAtLocative);
 }
 
 std::string WaitFor::Express(Agent* agent, Room* room)

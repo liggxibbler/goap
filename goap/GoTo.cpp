@@ -75,7 +75,8 @@ void GoTo::InitArgs()
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = m_agent;
-	sub.type = OBJ_TYPE_AGENT;
+	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.strict = true;
 	m_args.push_back(sub);
 
 	// OBJECT
@@ -88,18 +89,18 @@ void GoTo::InitArgs()
 
 void GoTo::InitEffects()
 {
-	Condition swapSubObj1(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentNearGoal(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj0(*GetArg(SEMANTIC_ROLE_GOAL));
+	ConditionParameter agent(*GetArg(SEMANTIC_ROLE_AGENT));
+	ConditionParameter goal(*GetArg(SEMANTIC_ROLE_GOAL));
 
-	swapSubObj1[0] = sub;
-	swapSubObj1[0].attrib = ATTRIBUTE_ROOM;
+	agentNearGoal[0] = agent;
+	agentNearGoal[0].attrib = ATTRIBUTE_ROOM;
 
-	swapSubObj1[1] = obj0;
-	swapSubObj1[1].attrib = ATTRIBUTE_ROOM;
+	agentNearGoal[1] = goal;
+	agentNearGoal[1].attrib = ATTRIBUTE_ROOM;
 
-	m_effects.push_back(swapSubObj1);
+	m_effects.push_back(agentNearGoal);
 }
 
 void GoTo::InitPreconditions()

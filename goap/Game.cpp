@@ -323,7 +323,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 	cond[0].attrib = ATTRIBUTE_ALIVE;
 	cond[0].instance = m_victim;
-	cond[0].type = OBJ_TYPE_AGENT;
+	cond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	cond[0].value = false;
 
 	Goal* goal = new Goal;

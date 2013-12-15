@@ -90,7 +90,10 @@ bool Object::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	if(m_owner != NULL)
 	{
 		// set my position to my parent's position
-		SetRoom(m_owner->GetRoom());
+		if(m_bearer != 0)
+		{
+			SetRoom(m_bearer->GetRoom());
+		}		
 	}
 	return true;
 }

@@ -54,7 +54,7 @@ namespace GOAP
 		CondParamIter GetArg(Object* obj);
 
 		void Initialize();
-		void UpdateConditionInstances();
+		virtual void UpdateConditionInstances();
 
 		virtual std::string Express(Agent* agent, Room* room) = 0;
 

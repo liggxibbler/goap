@@ -45,7 +45,6 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 				DUMP("PLAN NOT VALID")
 			}
 		}
-
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
 		ExpandFrontier(agent);					// finalize possible actions
 		ClearLongLists();						// clear candidate list

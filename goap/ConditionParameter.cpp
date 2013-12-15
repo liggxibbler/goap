@@ -3,7 +3,7 @@
 using namespace GOAP;
 
 ConditionParameter::ConditionParameter() :
-type(OBJ_TYPE_OBJECT),
+type(OBJ_TYPE_NONE),
 	semantic(SEMANTIC_ROLE_NONE),
 	instance(NULL),
 	attrib(ATTRIBUTE_NONE),

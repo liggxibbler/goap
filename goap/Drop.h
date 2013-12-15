@@ -20,6 +20,8 @@ namespace GOAP
 
 		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE;
 
+		virtual void UpdateConditionInstances() _CPP_11_OVERRIDE;
+
 	private:
 		virtual ExecutionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();
