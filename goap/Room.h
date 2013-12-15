@@ -58,6 +58,8 @@ namespace GOAP
 
 		void RemoveObject(Object* object);
 
+		void ResetAgentUpdateFlags();
+
 	private:
 		void ClearMarkedAgents();
 		void AddMarkedAgents();

@@ -1,5 +1,6 @@
 #include "Drop.h"
 #include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -26,7 +27,7 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
 	_patient->instance->SetBearer(0);
-	_patient->instance->SetRoom(_agent->instance->GetRoom());
+	_agent->instance->GetRoom()->AddObject(_patient->instance);
 
 	DUMP("       ** " << Express(0, 0))
 	return EXEC_STAT_SUCCESS;
@@ -149,15 +150,21 @@ int Drop::Cost(RoomManager* rm)
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
 
-	if(_patient->instance->GetOwner() != _agent->instance)
+	if(_patient->instance == 0)
 	{
-		cost += 50;
+		cost += 5;
 	}
-
-	if(_patient->instance->GetOwner() != 0)
+	else
 	{
-		cost += 50;
-	}
+		if(_patient->instance->GetOwner() != _agent->instance)
+		{
+			cost += 50;
+		}
 
+		if(_patient->instance->GetOwner() != 0)
+		{
+			cost += 50;
+		}
+	}
 	return cost;
 }

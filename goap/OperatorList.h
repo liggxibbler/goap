@@ -5,5 +5,6 @@
 #include "GreaterThan.h"
 #include "True.h"
 #include "Owns.h"
+#include "Has.h"
 
 #endif

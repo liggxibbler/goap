@@ -170,7 +170,11 @@ int WaitFor::Cost(RoomManager* rm)
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
 
-	if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+	if(_room->instance == 0)
+	{
+		// THROW EXCEPTION
+	}
+	else if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
 	{
 		cost += 100;
 	}

@@ -227,7 +227,6 @@ void Room::RemoveObject(Object* obj)
 		if(*remove == obj)
 		{
 			m_objects.erase(remove++);
-			obj->SetBearer(0);
 		}
 		else
 		{
@@ -235,4 +234,12 @@ void Room::RemoveObject(Object* obj)
 		}
 	}
 	obj->SetRoom(0);
+}
+
+void Room::ResetAgentUpdateFlags()
+{
+	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+	{
+		(*agent)->ResetUpdateFlag();
+	}
 }

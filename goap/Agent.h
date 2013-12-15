@@ -76,6 +76,8 @@ namespace GOAP
 
 		Gender GetGender();
 
+		void ResetUpdateFlag();
+
 	protected:
 		void Interview();
 
@@ -100,6 +102,8 @@ namespace GOAP
 		bool m_bDoneMurder;
 		bool m_isVictim;
 		bool m_isMurderer;
+
+		bool m_updated;
 
 		IExecutable* m_nextExecution;
 

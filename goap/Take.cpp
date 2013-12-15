@@ -1,5 +1,6 @@
 #include "Take.h"
 #include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -26,6 +27,7 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
 	_patient->instance->SetBearer(_agent->instance);
+	_patient->instance->GetRoom()->RemoveObject(_patient->instance);
 	_patient->instance->SetRoom(0);
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
@@ -157,16 +159,22 @@ int Take::Cost(RoomManager* rm)
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
-
-	if(_patient->instance->GetOwner() != _agent->instance)
+	
+	if(_patient->instance == 0)
 	{
-		cost += 50;
+		cost += 5;
 	}
-
-	if(_patient->instance->GetOwner() != 0)
+	else
 	{
-		cost += 50;
-	}
+		if(_patient->instance->GetOwner() != _agent->instance)
+		{
+			cost += 50;
+		}
 
+		if(_patient->instance->GetOwner() != 0)
+		{
+			cost += 50;
+		}
+	}
 	return cost;
 }

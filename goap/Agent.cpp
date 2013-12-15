@@ -8,7 +8,7 @@
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
+Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
@@ -18,7 +18,7 @@ Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false),
+Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	m_name = name;
@@ -37,10 +37,7 @@ Agent::Agent(const Agent& other) : Object(other)
 	m_isAlive = other.m_isAlive;
 	m_inventory = other.m_inventory;
 
-	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
-	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
-	m_attribs[ATTRIBUTE_INVENTORY] = &m_inventory;
+	InitAttribMap();
 }
 
 void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory,
@@ -189,7 +186,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 {
 	//m_bDoneMurder = false;
 
-	if(m_isAlive)
+	if( m_isAlive && ( m_updated == false ) )
 	{
 		if(m_nextExecution != 0)
 		{
@@ -245,6 +242,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				m_nextExecution = gt;
 			}
 		}
+		m_updated = true;
 	}
 #ifdef _GOAP_DEBUG
 	else
@@ -335,7 +333,7 @@ void Agent::GiveStatement()
 	for(unsigned int i=0; i<m_actionLog.size(); ++i)
 	{
 		ar = m_actionLog[i];
-		std::cout << "At " << ar.turn << ", (" << ar.room->GetName() << ") " << m_actionLog[i].action->Express(this, ar.room) << std::endl;
+		std::cout << "At " << ar.turn << ", (" << ar.room->GetName() << ") " << m_actionLog[i].action->Express(this, ar.room) << "\n" << std::endl;
 	}
 }
 
@@ -373,4 +371,9 @@ void Agent::InitAttribMap()
 	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
 	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
 	m_attribs[ATTRIBUTE_INVENTORY] = &m_inventory;
+}
+
+void Agent::ResetUpdateFlag()
+{
+	m_updated = false;
 }

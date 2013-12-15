@@ -112,7 +112,7 @@ bool Object::CanBeMurderWeapon()
 void Object::SetRoom(Room* room)
 {
 	m_roomInstance = room;
-	if(m_room != 0)
+	if(room != 0)
 	{
 	    m_room = room->GetID();
 	}

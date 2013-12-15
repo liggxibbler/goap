@@ -93,7 +93,7 @@ void Murder::InitPreconditions()
 
 	m_preconds->AddCondition(patientAtLoc);
 
-	// AGENT ALONE WITH PATIENT IN LOCATIVE
+	// AGENT ALONE WITH PATIENT
 
 	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 

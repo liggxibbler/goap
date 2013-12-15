@@ -83,7 +83,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 			action = am->GetAction(*actIter);
 			if( action->MightSatisfy(*condsIter) )
 			{
-				DUMP("Found action candidate of type " << (std::string)(*action))
+				//DUMP("Found action candidate of type " << (std::string)(*action))
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
 				action->CopyArgsFromCondition(*condsIter);
 				action->UpdateConditionInstances();

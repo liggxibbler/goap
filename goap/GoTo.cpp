@@ -30,6 +30,19 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 	Room* nextRoom = obj.instance->GetRoom();
 	//sub.instance->SetRoom(room);
 
+	if( nextRoom == 0 )
+	{
+		if(obj.instance->GetBearer() == sub.instance)
+		{
+			return EXEC_STAT_SUCCESS;
+		}
+		else
+		{
+			// AND THROW AN EXCEPTION
+			return EXEC_STAT_FAIL;
+		}
+	}
+
 	if(oldRoom != nextRoom)
 	{
 		Agent* agent = (Agent*)(sub.instance);
@@ -171,10 +184,17 @@ int GoTo::Cost(RoomManager* rm)
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
-
-	if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+	
+	if(_room->instance == 0)
 	{
-		cost += 100;
+		cost += 5;
+	}
+	else if (_room->instance->GetRoom() != 0)
+	{
+		if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+		{
+			cost += 100;
+		}
 	}
 
 	return cost;

@@ -10,6 +10,7 @@ OperatorManager::OperatorManager()
 	m_mapOperator[OPERATOR_GREATER_THAN]	= new GreaterThan();
 	m_mapOperator[OPERATOR_TRUE]			= new True();
 	m_mapOperator[OPERATOR_OWNS]			= new Owns();
+	m_mapOperator[OPERATOR_HAS]				= new Has();
 }
 
 OperatorManager::OperatorManager(const OperatorManager& other)

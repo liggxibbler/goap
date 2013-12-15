@@ -295,13 +295,18 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 	{
 		if( EvaluatePreconditions(om) )
 		{
-			ExecutionStatus stat = ExecuteWorkhorse(turn);
 			Dispatch(turn);
+			ExecutionStatus stat = ExecuteWorkhorse(turn);
 			this->SetLogged();
 			return stat;
 		}
 		else
 		{
+#ifdef _GOAP_DEBUG
+			std::string _str = (std::string)(*this);
+			DUMP("Can't " << _str << ".")
+			std::cin.get();
+#endif
 			return EXEC_STAT_FAIL;
 		}
 	}

@@ -162,6 +162,12 @@
     <ClCompile Include="Murder.cpp">
       <Filter>Source Files\Actions\Actions</Filter>
     </ClCompile>
+    <ClCompile Include="Drop.cpp">
+      <Filter>Source Files\Actions\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="Has.cpp">
+      <Filter>Source Files\Operators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -286,6 +292,12 @@
     </ClInclude>
     <ClInclude Include="Murder.h">
       <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Drop.h">
+      <Filter>Header Files\Actions\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="Has.h">
+      <Filter>Header Files\Operators</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

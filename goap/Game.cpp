@@ -241,6 +241,9 @@ bool Game::GeneratePlot()
 
 	while(!m_murder)
 	{
+		// update murderer first to avoid artefacts
+		m_murderer->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
+
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
 			(*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
@@ -252,6 +255,11 @@ bool Game::GeneratePlot()
 			{
 				m_murder = true;
 			}
+		}
+
+		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+		{
+			(*room)->ResetAgentUpdateFlags();
 		}
 
 		DUMP("******************************")
@@ -475,7 +483,7 @@ void Game::InitializeObjects()
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
 
-	obj = new Blunt("Statue");
+	obj = new Object("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);
 
