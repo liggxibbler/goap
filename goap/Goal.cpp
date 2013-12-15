@@ -139,12 +139,10 @@ void Goal::RemoveCondition(Condition& cond)
 	// http://stackoverflow.com/users/46821/michael-kristofik
 
 	CondIter rem = m_conditions.begin();
-	Condition c;
-
+	
 	while(rem != m_conditions.end())
 	{
-		c = *rem;
-		if(c.EqualInstance(cond))
+		if(rem->EqualInstance(cond))
 		{
 			m_conditions.erase(rem++);
 		}
@@ -193,4 +191,9 @@ void Goal::SetCost(int cost)
 int Goal::GetCost()
 {
 	return m_cost;
+}
+
+void Goal::SetDepth(int depth)
+{
+	m_depth = depth;
 }

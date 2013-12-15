@@ -19,7 +19,8 @@ namespace GOAP
 		virtual operator std::string() _CPP_11_OVERRIDE;
 
 		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE;
-
+		
+		virtual void UpdateConditionInstances();
 	private:
 		virtual ExecutionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();

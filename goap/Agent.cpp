@@ -73,15 +73,15 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 	}
 	if (canBludgeon)
 	{
-		this->AddAction(ACTION_BLUDGEON);
+		//this->AddAction(ACTION_BLUDGEON);
 	}
 	if (canShoot)
 	{
-		this->AddAction(ACTION_SHOOT);
+		//this->AddAction(ACTION_SHOOT);
 	}
 	if (canStrangle)
 	{
-		this->AddAction(ACTION_STRANGLE);
+		//this->AddAction(ACTION_STRANGLE);
 	}
 }
 
@@ -257,7 +257,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			std::cout << "she";
 			break;
 		}
-		std::cout << "'s dead!\n";
+		std::cout << "'s either dead or up to date!\n";
 	}
 #endif
 	return m_bDoneMurder;

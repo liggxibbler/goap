@@ -19,6 +19,7 @@
 
 #ifdef _GOAP_DEBUG
 #define DUMP(X) std::cout << std::endl << X << std::endl;
+#define DUMP_NL(X) std::cout << X;
 #else
 #define DUMP(X)
 #endif

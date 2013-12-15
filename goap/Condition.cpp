@@ -230,10 +230,10 @@ bool Condition::EqualInstance(Condition& other)
 	// should this prove too slow at any point
 
 	bool result;
-	result = m_operatorType == other.m_operatorType &&
-		m_layout == other.m_layout &&
-		m_negate == other.m_negate &&
-		m_numParams == other.m_numParams;
+	result = ( (m_operatorType == other.m_operatorType) &&
+		(m_layout == other.m_layout) &&
+		(m_negate == other.m_negate) &&
+		(m_numParams == other.m_numParams) );
 
 	if(!result)
 	{

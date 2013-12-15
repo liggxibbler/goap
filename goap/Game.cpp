@@ -222,9 +222,7 @@ void Game::Interview()
 
 bool Game::Run(/*database class thing*/)
 {
-	AssignRoles();
 	bool result = false;
-	PopulateRooms();
 	if (!GeneratePlot())
 	{
 		return false;
@@ -237,6 +235,9 @@ bool Game::Run(/*database class thing*/)
 
 bool Game::GeneratePlot()
 {
+	AssignRoles();
+	PopulateRooms();
+
 	m_murder = false;
 
 	while(!m_murder)
@@ -326,14 +327,26 @@ void Game::AssignRoles(/*int numWitness*/)
 	cond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	cond[0].value = false;
 
+	//m_objects[2]->SetBearer(m_murderer);
+	//m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);
+
+	//GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	//cond2[0].instance = m_murderer;
+	//cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	////cond2[0].attrib = ATTRIBUTE_ROOM;
+	//cond2[1].instance = m_objects[2];
+	//cond2[1].type = OBJ_TYPE_OBJECT;
+	////cond2[1].attrib = ATTRIBUTE_ROOM;
+
 	Goal* goal = new Goal;
+	goal->SetDepth(0);
 	goal->AddCondition(cond);
 	m_murderer->SetGoal(goal);
 
 	m_murderer->See(m_victim);
 	m_murderer->AddAction(ACTION_WAITFOR);
     m_murderer->AddAction(ACTION_TAKE);
-    m_murderer->AddAction(ACTION_DROP);
+    //m_murderer->AddAction(ACTION_DROP);
 
 	m_roomManager->ShowBedrooms(m_murderer);
 
@@ -366,7 +379,8 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[5]);//dining
 	room->AddObject(m_objects[6]);
 
-	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
+	m_roomManager->GetRoom(ROOM_KITCHEN, m_agents[0])->AddAgent(m_agents[0]);
+	for(int i=1; i<NUMBER_OF_CHARACTERS;++i)
 	{
 		m_roomManager->GetRandomRoom(m_agents[i])->AddAgent(m_agents[i]);
 	}

@@ -141,7 +141,7 @@ std::string Drop::Express(Agent* agent, Room* room)
 	}
 
 	std::stringstream str;
-	str << _agent << " took " << _patient;
+	str << _agent << " dropped " << _patient;
 
 	return str.str();
 }

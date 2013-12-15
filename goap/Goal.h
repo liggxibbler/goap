@@ -37,6 +37,7 @@ namespace GOAP
 		//bool operator < (Goal& other);
 
 		int GetDepth();
+		void SetDepth(int depth);
 
 		Goal* Combine(Goal* other);
 

@@ -24,7 +24,8 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			break;
 		}
 
-		DUMP("Address of current goal is " << m_currentGoal )
+		//DUMP("Address of current goal is " << m_currentGoal )
+		DUMP_NL( "Trying goal at " << m_currentGoal << " with " << m_currentGoal->GetNumConditions() << " conditions...\n")
 		if(m_currentGoal->Evaluate(om))
 		{
 			/*
@@ -45,6 +46,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 				DUMP("PLAN NOT VALID")
 			}
 		}
+		DUMP_NL( "No success...\n")
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
 		ExpandFrontier(agent);					// finalize possible actions
 		ClearLongLists();						// clear candidate list
@@ -71,18 +73,25 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 
 	Action* action = NULL;
 	
-	for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
+	for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
 	{
-		// XIBB this is risky, if duplicates are possible, they will happen
-		// XIBB it would be better if the action long list is a map.first,
-		// XIBB and the condition long list is a map.second list of conditions
-
-		for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
+		for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
 		{
+			// XIBB this is risky, if duplicates are possible, they will happen
+			// XIBB it would be better if the action long list is a map.first,
+			// XIBB and the condition long list is a map.second list of conditions
+
+
 			action = am->GetAction(*actIter);
 			if( action->MightSatisfy(*condsIter) )
 			{
-				//DUMP("Found action candidate of type " << (std::string)(*action))
+#ifdef _GOAP_DEBUG
+				for(int i=0; i<m_currentGoal->GetDepth();++i)
+				{
+					std::cout << ".";
+				}
+				std::cout << "Found action candidate of type " << (std::string)(*action) << std::endl;
+#endif
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
 				action->CopyArgsFromCondition(*condsIter);
 				action->UpdateConditionInstances();
@@ -90,6 +99,14 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
 			}
 		}
+#ifdef _GOAP_DEBUG
+		for(int i=0; i<m_currentGoal->GetDepth();++i)
+		{
+			std::cout << ".";
+		}
+		std::cout << "Candidate of type " << (std::string)(*action) << " can't help" << std::endl;
+#endif
+
 	}
 }
 
@@ -160,6 +177,7 @@ void Planner::ExpandFrontier(Agent* agent)
 		nextGoal->SetAction(action);
 		nextGoal->SetParent(m_currentGoal);
 		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(RoomManager::Instance()));
+		nextGoal->SetDepth(m_currentGoal->GetDepth() + 1);
 		m_currentGoal->AddChild(nextGoal);
 
 		m_frontier.push_back(nextGoal);

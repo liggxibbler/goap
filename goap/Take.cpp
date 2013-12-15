@@ -28,7 +28,7 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 
 	_patient->instance->SetBearer(_agent->instance);
 	_patient->instance->GetRoom()->RemoveObject(_patient->instance);
-	_patient->instance->SetRoom(0);
+	_patient->instance->SetRoom(_agent->instance->GetRoom());
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
 	DUMP("       ** " << Express(0, 0))
@@ -56,7 +56,7 @@ void Take::InitArgs()
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_OBJECT;
-	obj.strict = true;
+	obj.strict = false;
 	m_args.push_back(obj);
 }
 
@@ -179,4 +179,9 @@ int Take::Cost(RoomManager* rm)
 		}
 	}
 	return cost;
+}
+
+void Take::UpdateConditionInstances()
+{
+	Action::UpdateConditionInstances();
 }

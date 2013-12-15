@@ -136,7 +136,12 @@ Goal* Plan::Validate()
 		int numTrue = 0;
 		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
 		{
-			if ( condition->GetOperatorType() == OPERATOR_TRUE)
+			if ( condition->GetOperatorType() == OPERATOR_TRUE )
+			{
+				numTrue++;
+			}
+
+			if( condition->Evaluate(Op::OperatorManager::Instance()) )
 			{
 				numTrue++;
 			}
