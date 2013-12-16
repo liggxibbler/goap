@@ -5,6 +5,7 @@
 #include "RoomManager.h"
 //#include "Wander.h"
 #include "ActionRecord.h"
+#include <conio.h>
 
 using namespace GOAP;
 
@@ -329,31 +330,44 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 void Agent::GiveStatement()
 {
 	int answer = -1;
+	
 	while(answer != 0)
 	{
 		ActionRecord ar;
+		std::cout << "========================\n\n";
+		std::cout << "You are interviewing " << m_name << ":\n\n";
+
 		for(unsigned int i=0; i<m_actionLog.size(); ++i)
 		{
 			ar = m_actionLog[i];
-			std::cout << i+1 << ". At " << ar.turn << ", " << m_actionLog[i].action->Express(this, ar.room) << "\n" << std::endl;
+			std::cout << i+1 << ". At " << ar.turn << ", " << m_actionLog[i].action->Express(this, ar.room) << "\n";
 		}
 
 		std::cout << "\nEnter statement number for details, 0 to go back\n";
 		std::cout << ">>> ";	
 		std::cin >> answer;
 		int j = answer - 1;
-		if( j < m_actionLog.size() )
+		if( j>=0 && j < m_actionLog.size() )
 		{
 			auto room = m_actionLog[j].roomSnap;
-			std::cout << "\nAt " << m_actionLog[j].turn << ", in " << room->GetName() << " there was:\n";
+			std::cout << "\nI remember that at " << m_actionLog[j].turn << ", in " << room->GetName() << " there was:\n\n";
 			for(auto prop(room->GetFirstObject()); prop != room->GetLastObject(); ++prop)
 			{
 				std::cout << "-> " << (*prop)->GetName() << "\n";
 			}
 			for(auto agent(room->GetFirstAgent()); agent != room->GetLastAgent(); ++agent)
 			{
-				std::cout << "-> " << (*agent)->GetName() << "\n";
+				if(*agent == this)
+				{
+					std::cout << "-> Myself\n";
+				}
+				else
+				{
+					std::cout << "-> " << (*agent)->GetName() << "\n";
+				}
 			}
+			std::cout << "\nPress any key to continue the interview" << std::endl;
+			_getch();
 		}
 	}
 
