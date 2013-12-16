@@ -73,15 +73,15 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 	}
 	if (canBludgeon)
 	{
-		//this->AddAction(ACTION_BLUDGEON);
+		this->AddAction(ACTION_BLUDGEON);
 	}
 	if (canShoot)
 	{
-		//this->AddAction(ACTION_SHOOT);
+		this->AddAction(ACTION_SHOOT);
 	}
 	if (canStrangle)
 	{
-		//this->AddAction(ACTION_STRANGLE);
+		this->AddAction(ACTION_STRANGLE);
 	}
 }
 

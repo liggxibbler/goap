@@ -494,7 +494,7 @@ void Game::InitializeObjects()
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
 
-	obj = new Prop("Statue");
+	obj = new Blunt("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);
 
