@@ -236,7 +236,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			if(wander < 90)
 			{
 				DUMP("       **" << m_name << " be wanderin' " << turn)
-					Room* room = rm->GetRandomRoom(this);
+				Room* room = rm->GetRandomRoom(this);
 				GoTo* gt = new GoTo(room, this);
 				gt->Initialize();
 				m_nextExecution = gt;
@@ -328,12 +328,35 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 
 void Agent::GiveStatement()
 {
-	ActionRecord ar;
-	for(unsigned int i=0; i<m_actionLog.size(); ++i)
+	int answer = -1;
+	while(answer != 0)
 	{
-		ar = m_actionLog[i];
-		std::cout << "At " << ar.turn << ", (" << ar.room->GetName() << ") " << m_actionLog[i].action->Express(this, ar.room) << "\n" << std::endl;
+		ActionRecord ar;
+		for(unsigned int i=0; i<m_actionLog.size(); ++i)
+		{
+			ar = m_actionLog[i];
+			std::cout << i+1 << ". At " << ar.turn << ", " << m_actionLog[i].action->Express(this, ar.room) << "\n" << std::endl;
+		}
+
+		std::cout << "\nEnter statement number for details, 0 to go back\n";
+		std::cout << ">>> ";	
+		std::cin >> answer;
+		int j = answer - 1;
+		if( j < m_actionLog.size() )
+		{
+			auto room = m_actionLog[j].roomSnap;
+			std::cout << "\nAt " << m_actionLog[j].turn << ", in " << room->GetName() << " there was:\n";
+			for(auto prop(room->GetFirstObject()); prop != room->GetLastObject(); ++prop)
+			{
+				std::cout << "-> " << (*prop)->GetName() << "\n";
+			}
+			for(auto agent(room->GetFirstAgent()); agent != room->GetLastAgent(); ++agent)
+			{
+				std::cout << "-> " << (*agent)->GetName() << "\n";
+			}
+		}
 	}
+
 }
 
 RoomName Agent::GetNextRoom()

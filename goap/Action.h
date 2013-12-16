@@ -73,6 +73,8 @@ namespace GOAP
 		bool IsLogged();
 		void SetLogged();
 
+		virtual void Debug();
+
 	protected:
 
 		virtual void InitArgs() = 0;

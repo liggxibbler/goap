@@ -55,8 +55,8 @@ void Drop::InitArgs()
 
 	patient.semantic = SEMANTIC_ROLE_PATIENT0;
 	patient.instance = NULL;
-	patient.type = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
-	patient.strict = true;
+	patient.type = OBJ_TYPE_PROP;
+	patient.strict = false;
 	m_args.push_back(patient);
 }
 
@@ -71,13 +71,13 @@ void Drop::InitPreconditions()
 
 	m_preconds->AddCondition(agentHasPatient);
 
-	Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
 	agentInventoryFull[0] = agent;
 	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
 	agentInventoryFull[0].value = true;
 
-	m_preconds->AddCondition(agentInventoryFull);
+	m_preconds->AddCondition(agentInventoryFull);*/
 
 }
 
@@ -94,23 +94,13 @@ void Drop::InitEffects()
 
 	m_effects.push_back(agentDoesNotHavePatient);
 
-	Condition patientAtAgent_sRoom(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-
-	patientAtAgent_sRoom[0] = patient;
-	patientAtAgent_sRoom[0].attrib = ATTRIBUTE_ROOM;
-
-	patientAtAgent_sRoom[1] = agent;
-	patientAtAgent_sRoom[1].attrib = ATTRIBUTE_ROOM;
-
-	m_effects.push_back(patientAtAgent_sRoom);
-
-	Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
 	agentInventoryEmpty[0] = agent;
 	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
 	agentInventoryEmpty[0].value = false;
 
-	m_effects.push_back(agentInventoryEmpty);
+	m_effects.push_back(agentInventoryEmpty);*/
 }
 
 std::string Drop::Express(Agent* agent, Room* room)
@@ -182,7 +172,16 @@ int Drop::Cost(RoomManager* rm)
 	return cost;
 }
 
-void Drop::UpdateConditionInstances()
+void Drop::UpdateConditionInstances() // XXX
 {
 	Action::UpdateConditionInstances();
+}
+
+bool Drop::MightSatisfy(Condition& cond)
+{
+	return Action::MightSatisfy(cond);
+}
+
+void Drop::Debug()
+{
 }

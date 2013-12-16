@@ -13,7 +13,16 @@ Room::Room() : Object(), m_numAgents(0), m_murder(false)
 Room::Room(const Room& other)
 {
 	m_room = m_id;
+	m_name = other.m_name;
 	m_roomInstance = this;
+	for(auto prop(other.m_objects.begin()); prop != other.m_objects.end(); ++prop)
+	{
+		m_objects.push_back(*prop);
+	}
+	for(auto agent(other.m_agents.begin()); agent != other.m_agents.end(); ++agent)
+	{
+		m_agents.insert(*agent);
+	}
 }
 
 Room::Room(std::string name , RoomName rn, Object* owner) :

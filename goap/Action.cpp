@@ -372,3 +372,7 @@ void Action::SetLogged()
 {
 	m_logged = true;
 }
+
+void Action::Debug()
+{
+}

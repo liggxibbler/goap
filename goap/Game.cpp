@@ -21,7 +21,10 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);//3452816845;//1386704274;
+	m_seed = 1387226864;//(unsigned int)time(NULL);
+	//1387226864;// with this one, tartar drops the rope and leaves the room
+	//1387221411;// this one fails to stab
+	//1387226550;// this one succeeds and plans a drop if no one wanders
 	srand(m_seed);
 }
 
@@ -90,7 +93,7 @@ void Game::Roam()
 
 	cout << "\n Or enter 0 to quit.\n";
 
-	cout << "\nWhat would you like to do?\n>>>";
+	cout << "\nWhat would you like to do?\n>>> ";
 	int answer;
 	cin >> answer;
 
@@ -205,8 +208,8 @@ void Game::Interview()
 	//	question = qt2;
 	//}
 
-	int time;
-	cout << "\nWhat time? ( 0 to go back )\n>>> ";
+	/*int time;
+	cout << "\nEnter 0 to go back \n>>> ";
 	cin >> time;
 
 	if( time == 0 )
@@ -214,10 +217,13 @@ void Game::Interview()
 		m_roam = true;
 		m_currentAgent = 0;
 		return;
-	}
+	}*/
 
 	//m_currentAgent->Answer(qObject, question, answer);
-	m_currentAgent->Answer(0, Q_ACTION, time);
+	m_currentAgent->Answer(0, Q_ACTION, 0);
+	m_roam = true;
+	m_currentAgent = 0;
+	return;
 }
 
 bool Game::Run(/*database class thing*/)
@@ -348,7 +354,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_murderer->See(m_victim);
 	m_murderer->AddAction(ACTION_WAITFOR);
     m_murderer->AddAction(ACTION_TAKE);
-    //m_murderer->AddAction(ACTION_DROP);
+    m_murderer->AddAction(ACTION_DROP);
 
 	m_roomManager->ShowBedrooms(m_murderer);
 
@@ -381,9 +387,10 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[5]);//dining
 	room->AddObject(m_objects[6]);
 
-	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
+	m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
+	for(int i=1; i<NUMBER_OF_CHARACTERS;++i)
 	{
-		m_roomManager->GetRandomRoom(m_agents[i])->AddAgent(m_agents[i]);
+		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_agents[i]);
 	}
 }
 

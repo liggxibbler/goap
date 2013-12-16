@@ -136,7 +136,7 @@ void Planner::ExpandFrontier(Agent* agent)
 	{
 		act = *iter;
 		cond = *condIter;
-		int numInst = act->GetPossibleInstances(agent, instances); 
+		int numInst = act->GetPossibleInstances(agent, instances);
 		if(numInst == 0)
 		{
 			// this action cannot be used in the plan at this point
@@ -146,6 +146,7 @@ void Planner::ExpandFrontier(Agent* agent)
 		}
 		else
 		{
+			act->Debug();
 			for(int i=0; i< numInst; i++)
 			{
 				m_condRemoveList.push_back(cond);
@@ -174,7 +175,7 @@ void Planner::ExpandFrontier(Agent* agent)
 		{
 			nextGoal->AddCondition(*precond);
 		}
-		
+
 		nextGoal->SetAction(action);
 		nextGoal->SetParent(m_currentGoal);
 		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(RoomManager::Instance()));

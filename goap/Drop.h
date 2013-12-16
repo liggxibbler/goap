@@ -22,6 +22,10 @@ namespace GOAP
 
 		virtual void UpdateConditionInstances() _CPP_11_OVERRIDE;
 
+		virtual bool MightSatisfy(Condition& cond); // XXX
+
+		virtual void Debug() _CPP_11_OVERRIDE;
+
 	private:
 		virtual ExecutionStatus ExecuteWorkhorse(int turn);
 		virtual void InitArgs();

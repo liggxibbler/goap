@@ -14,6 +14,18 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
 	Agent* agent = dynamic_cast<Agent*>(sub.instance);
 	agent->DoneMurder(true);
+
+	// Make murderer drop murder weapon
+	Goal* loseMurderWeapon = new Goal;
+	
+	Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	notHaveMurderWeapon.SetNegate(true);
+	notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
+	notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
+
+	agent->GetGoal()->SetParent(loseMurderWeapon);
+
 	return EXEC_STAT_MURDER;
 }
 

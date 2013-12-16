@@ -95,21 +95,14 @@ void Take::InitEffects()
 
 	m_effects.push_back(subHasObj);
 
-	//Condition patientHasNoRoom(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
-	//patientHasNoRoom[0] = obj;
-	//patientHasNoRoom[0].attrib = ATTRIBUTE_ROOM;
-	//patientHasNoRoom[0].value = 0;
-
-	//m_effects.push_back(patientHasNoRoom);
-
-	Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
 	agentInventoryFull[0] = sub;
 	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
 	agentInventoryFull[0].value = true;
 
-	m_effects.push_back(agentInventoryFull);
+	m_effects.push_back(agentInventoryFull);*/
 
 }
 
