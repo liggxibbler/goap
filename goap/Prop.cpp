@@ -72,10 +72,10 @@ int Prop::GetCompoundType()
 	return OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
 }
 
-Prop::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_PROP;
-}
+//Prop::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_PROP;
+//}
 
 void Prop::InitAttribMap()
 {

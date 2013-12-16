@@ -18,10 +18,10 @@ Squeezer::~Squeezer()
 {
 }
 
-Squeezer::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_SQUEEZER;
-}
+//Squeezer::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_SQUEEZER;
+//}
 
 int Squeezer::GetCompoundType()
 {

@@ -48,6 +48,7 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 			if( arg->MatchesTypeOf(cond[i].instance) )
 			{
 				arg->instance = cond[i].instance;
+				//arg->type = arg->instance->GetCompoundType();
 			}
 			else
 			{

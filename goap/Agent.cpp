@@ -89,10 +89,10 @@ Agent::~Agent()
 {
 }
 
-Agent::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_AGENT;
-}
+//Agent::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_AGENT;
+//}
 
 Goal* Agent::GetGoal()
 {

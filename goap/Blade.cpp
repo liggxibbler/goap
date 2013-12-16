@@ -18,10 +18,10 @@ Blade::~Blade()
 {
 }
 
-Blade::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_BLADE;
-}
+//Blade::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_BLADE;
+//}
 
 int Blade::GetCompoundType()
 {

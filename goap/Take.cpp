@@ -75,13 +75,13 @@ void Take::InitPreconditions()
 
 	m_preconds->AddCondition(subNearObj);
 
-	Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
 	agentInventoryEmpty[0] = sub;
 	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
 	agentInventoryEmpty[0].value = false;
 
-	m_preconds->AddCondition(agentInventoryEmpty);
+	m_preconds->AddCondition(agentInventoryEmpty);*/
 }
 
 void Take::InitEffects()

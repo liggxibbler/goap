@@ -18,10 +18,10 @@ Blunt::~Blunt()
 {
 }
 
-Blunt::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_BLUNT;
-}
+//Blunt::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_BLUNT;
+//}
 
 int Blunt::GetCompoundType()
 {

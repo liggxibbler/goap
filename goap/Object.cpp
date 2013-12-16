@@ -51,10 +51,10 @@ void Object::SetAttribute(AttributeType at, int val)
 	*m_attribs[at] = val;
 }
 
-Object::operator GOAP::ObjectType() /// XXX = 0
-{
-	return OBJ_TYPE_OBJECT;
-}
+//Object::operator GOAP::ObjectType() /// XXX = 0
+//{
+//	return OBJ_TYPE_OBJECT;
+//}
 
 int& Object::operator[] (AttributeType at)
 {

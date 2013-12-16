@@ -38,7 +38,7 @@ namespace GOAP
 		void SetOwner(Object* owner);
 
 		virtual Object* Clone() = 0;
-		virtual operator ObjectType () = 0;
+		//virtual operator ObjectType () = 0;
 		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) = 0;
 		virtual int GetCompoundType() = 0;
 		virtual void Examine() = 0;

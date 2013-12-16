@@ -43,7 +43,7 @@ bool Equal::EvaluateOAOAB ()
 bool Equal::EvaluateOOB ()
 {
 	bool result;
-	if ( *(m_params[0].instance) == *(m_params[1].instance) )
+	if ( (m_params[0].instance) == (m_params[1].instance) )
 	{
 		result = true;
 	}

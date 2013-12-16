@@ -25,6 +25,8 @@ namespace GOAP
 		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE;
 		virtual void Dispatch(int turn) _CPP_11_OVERRIDE;
 
+		virtual bool MightSatisfy(Condition& cond); // XXX
+
 	private:
 		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple) _CPP_11_OVERRIDE;
 

@@ -44,7 +44,7 @@ namespace GOAP
 		CondParamIter GetFirstArg();
 		CondParamIter GetLastArg();
 
-		bool MightSatisfy(Condition& cond);
+		virtual bool MightSatisfy(Condition& cond); // XXX
 		bool CopyArgsFromCondition(Condition& cond);
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);

@@ -70,20 +70,20 @@ GoTo* GoTo::Clone()
 
 void GoTo::InitArgs()
 {
-	ConditionParameter sub, obj1;
+	ConditionParameter agent, goal;
 
 	// SUBJECT
-	sub.semantic = SEMANTIC_ROLE_AGENT;
-	sub.instance = m_agent;
-	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	sub.strict = true;
-	m_args.push_back(sub);
+	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.instance = m_agent;
+	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.strict = true;
+	m_args.push_back(agent);
 
 	// OBJECT
-	obj1.semantic = SEMANTIC_ROLE_GOAL;
-	obj1.instance = m_dest;
-	obj1.type = OBJ_TYPE_OBJECT;
-	m_args.push_back(obj1);
+	goal.semantic = SEMANTIC_ROLE_GOAL;
+	goal.instance = m_dest;
+	goal.type = OBJ_TYPE_OBJECT;
+	m_args.push_back(goal);
 
 }
 
@@ -238,4 +238,9 @@ void GoTo::Dispatch(int turn)
 	{
 		(*agent)->Log(turn, this);
 	}
+}
+
+bool GoTo::MightSatisfy(Condition& cond)
+{
+	return Action::MightSatisfy(cond);
 }

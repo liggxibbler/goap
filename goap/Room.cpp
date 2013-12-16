@@ -247,10 +247,10 @@ void Room::ResetAgentUpdateFlags()
 	}
 }
 
-Room::operator ObjectType ()
-{
-	return OBJ_TYPE_ROOM;
-}
+//Room::operator ObjectType ()
+//{
+//	return OBJ_TYPE_ROOM;
+//}
 
 void Room::Examine()
 {

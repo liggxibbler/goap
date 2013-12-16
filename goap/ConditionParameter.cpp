@@ -4,7 +4,7 @@
 using namespace GOAP;
 
 ConditionParameter::ConditionParameter() :
-type(OBJ_TYPE_NONE),
+	type(OBJ_TYPE_NONE),
 	semantic(SEMANTIC_ROLE_NONE),
 	instance(NULL),
 	attrib(ATTRIBUTE_NONE),
@@ -45,9 +45,12 @@ bool ConditionParameter::MatchesTypeOf(const ConditionParameter& other)
 	}
 	else
 	{
-		if( (type & other.type) == 0 )
+		if((type & OBJ_TYPE_OBJECT) == 0)
 		{
-			result = false;
+			if( (type & other.type) == 0 )
+			{
+				result = false;
+			}
 		}
 	}
 	return result;

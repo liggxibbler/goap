@@ -53,7 +53,7 @@ namespace GOAP
 
 		virtual Object* Clone();
 		virtual void Examine() _CPP_11_OVERRIDE;
-		virtual operator ObjectType ();
+		//virtual operator ObjectType ();
 
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		bool GetMurder();

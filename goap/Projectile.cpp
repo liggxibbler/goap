@@ -18,10 +18,10 @@ Projectile::~Projectile()
 {
 }
 
-Projectile::operator GOAP::ObjectType()
-{
-	return OBJ_TYPE_PROJECTILE;
-}
+//Projectile::operator GOAP::ObjectType()
+//{
+//	return OBJ_TYPE_PROJECTILE;
+//}
 
 int Projectile::GetCompoundType()
 {

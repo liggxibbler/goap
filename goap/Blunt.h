@@ -13,7 +13,7 @@ namespace GOAP
 		Blunt(const Blunt& other);
 		~Blunt();
 
-		virtual operator ObjectType();
+		//virtual operator ObjectType();
 		virtual int GetCompoundType ();
 		virtual bool CanBeMurderWeapon();
 	};

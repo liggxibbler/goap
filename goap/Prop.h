@@ -13,7 +13,7 @@ namespace GOAP
 		~Prop();
 
 	public:
-		virtual operator ObjectType () _CPP_11_OVERRIDE;
+		//virtual operator ObjectType () _CPP_11_OVERRIDE;
 		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) _CPP_11_OVERRIDE;
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		virtual void Examine() _CPP_11_OVERRIDE;

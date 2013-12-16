@@ -13,7 +13,7 @@ namespace GOAP
 		Projectile(const Projectile& other);
 		~Projectile();
 
-		virtual operator ObjectType();
+		//virtual operator ObjectType();
 		virtual int GetCompoundType ();
 		virtual bool CanBeMurderWeapon();
 	};

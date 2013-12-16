@@ -321,32 +321,32 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_murderer = m_agents[0];
 	m_victim = m_agents[1];
 
-	GOAP::Condition cond(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-	cond[0].attrib = ATTRIBUTE_ALIVE;
-	cond[0].instance = m_victim;
-	cond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	cond[0].value = false;
+	GOAP::Condition vicIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	vicIsDead[0].attrib = ATTRIBUTE_ALIVE;
+	vicIsDead[0].instance = m_victim;
+	vicIsDead[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	vicIsDead[0].value = false;
 
-	/*m_objects[2]->SetBearer(m_murderer);
-	m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);*/
+	///*m_objects[2]->SetBearer(m_murderer);
+	//m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);*/
 
-	m_murderer->See(m_objects[7]);
+	//m_murderer->See(m_objects[7]);
 
-	GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	cond2[0].instance = m_murderer;
-	cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	//cond2[0].attrib = ATTRIBUTE_ROOM;
-	cond2[1].instance = m_objects[7];
-	cond2[1].type = OBJ_TYPE_PROP;
-	//cond2[1].attrib = ATTRIBUTE_ROOM;
+	//GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	//cond2[0].instance = m_murderer;
+	//cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	////cond2[0].attrib = ATTRIBUTE_ROOM;
+	//cond2[1].instance = m_objects[7];
+	//cond2[1].type = m_objects[7]->GetCompoundType();
+	////cond2[1].attrib = ATTRIBUTE_ROOM;
 
 	Goal* goal = new Goal;
 	goal->SetDepth(0);
-	goal->AddCondition(cond2);
+	goal->AddCondition(vicIsDead);
 	m_murderer->SetGoal(goal);
 
 	m_murderer->See(m_victim);
-	//m_murderer->AddAction(ACTION_WAITFOR);
+	m_murderer->AddAction(ACTION_WAITFOR);
     m_murderer->AddAction(ACTION_TAKE);
     //m_murderer->AddAction(ACTION_DROP);
 
@@ -381,8 +381,7 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[5]);//dining
 	room->AddObject(m_objects[6]);
 
-	m_roomManager->GetRoom(ROOM_KITCHEN, m_agents[0])->AddAgent(m_agents[0]);
-	for(int i=1; i<NUMBER_OF_CHARACTERS;++i)
+	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
 	{
 		m_roomManager->GetRandomRoom(m_agents[i])->AddAgent(m_agents[i]);
 	}
@@ -458,10 +457,6 @@ void Game::InitializeAgents()
 	//m_agents[9]->InitializeCharacter(m_roomManager, "Signor Bolognese", MALE
 	//, "Italian, sleezy, barber, slim, fast, cheap"
 	//, locationProbability10, true, true, true, true, 8, 7);
-
-
-	//probably just tag murderer here and move these to the agents class:
-	//m_agents[MURDERER_ID]->AddAction(ACTION_GOTO);
 }
 
 void Game::InitializeObjects()

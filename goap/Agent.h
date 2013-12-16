@@ -44,7 +44,7 @@ namespace GOAP
 		std::map<int, Object*>::iterator FirstObject();
 		std::map<int, Object*>::iterator LastObject();
 
-		virtual operator ObjectType ();
+		//virtual operator ObjectType ();
 		Goal* GetGoal();
 		void SetGoal(Goal* goal);
 
