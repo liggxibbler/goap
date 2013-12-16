@@ -5,7 +5,7 @@
 #include <list>
 #include <set>
 #include "Common.h"
-#include "STUFF.h"
+#include "Prop.h"
 
 namespace GOAP
 {
@@ -29,16 +29,16 @@ namespace GOAP
 		Room* GetLeft();
 		Room* GetRight();
 
-		STUFF* AddObject(std::string name);
-		void AddObject(STUFF* obj);
+		Prop* AddObject(std::string name);
+		void AddObject(Prop* obj);
 
 		Agent* AddAgent(std::string name);
 		void AddAgent(Agent* agent);
 
 		//std::string GetName();
 
-		std::list<STUFF*>::iterator GetFirstObject();
-		std::list<STUFF*>::iterator GetLastObject();
+		std::list<Prop*>::iterator GetFirstObject();
+		std::list<Prop*>::iterator GetLastObject();
 
 		std::set<Agent*>::iterator GetFirstAgent();
 		std::set<Agent*>::iterator GetLastAgent();
@@ -58,7 +58,7 @@ namespace GOAP
 		virtual int GetCompoundType() _CPP_11_OVERRIDE;
 		bool GetMurder();
 
-		void RemoveObject(STUFF* obj);
+		void RemoveObject(Prop* obj);
 
 		void ResetAgentUpdateFlags();
 
@@ -68,7 +68,7 @@ namespace GOAP
 
 		RoomName m_type;
 		//std::string m_name;
-		std::list<STUFF*> m_objects;
+		std::list<Prop*> m_objects;
 		std::set<Agent*> m_agents;
 		std::set<Agent*> m_markedForDeletion;
 		std::set<Agent*> m_markedForAddition;

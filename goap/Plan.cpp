@@ -132,31 +132,33 @@ Goal* Plan::Validate()
 			temp->SetParent( temp->GetParent()->GetParent() );
 		}
 
-		// Only True conditions should be left
-		int numTrue = 0;
-		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
-		{
-			if ( condition->GetOperatorType() == OPERATOR_TRUE )
-			{
-				numTrue++;
-			}
+		//// Only True conditions should be left
+		//int numTrue = 0;
+		//for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
+		//{
+		//	if ( condition->GetOperatorType() == OPERATOR_TRUE )
+		//	{
+		//		numTrue++;
+		//	}
 
-			if( condition->Evaluate(Op::OperatorManager::Instance()) )
-			{
-				numTrue++;
-			}
-		}
-
-		if (temp->GetNumConditions() == numTrue)
+		//	if( condition->Evaluate(Op::OperatorManager::Instance()) )
+		//	{
+		//		numTrue++;
+		//	}
+		//}
+		
+		if (temp->GetNumConditions() == 0)
 		{
+			delete temp;
+			temp = 0;
 			return m_plan;
 		}
 		else
 		{
+			delete temp;
+			temp = 0;
 			return 0;
 		}
-
-		delete temp;
 	}
 	else
 	{

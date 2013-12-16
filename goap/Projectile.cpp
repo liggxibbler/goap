@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Projectile::Projectile() : STUFF()
+Projectile::Projectile() : Prop()
 {
 }
 
-Projectile::Projectile(std::string name) : STUFF(name)
+Projectile::Projectile(std::string name) : Prop(name)
 {
 }
 
@@ -25,7 +25,7 @@ Projectile::operator GOAP::ObjectType()
 
 int Projectile::GetCompoundType()
 {
-	return OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
+	return OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
 }
 
 bool Projectile::CanBeMurderWeapon()

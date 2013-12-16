@@ -1,16 +1,16 @@
-#ifndef _GOAP_STUFF_H_
-#define _GOAP_STUFF_H_
+#ifndef _GOAP_PROP_H_
+#define _GOAP_PROP_H_
 
 #include "Object.h"
 namespace GOAP
 {
-	class STUFF : public Object
+	class Prop : public Object
 	{
 	public:
-		STUFF();
-		STUFF(std::string name, Object* owner = NULL);
-		STUFF(const STUFF& other);
-		~STUFF();
+		Prop();
+		Prop(std::string name, Object* owner = NULL);
+		Prop(const Prop& other);
+		~Prop();
 
 	public:
 		virtual operator ObjectType () _CPP_11_OVERRIDE;

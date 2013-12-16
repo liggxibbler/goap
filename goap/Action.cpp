@@ -44,28 +44,16 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 		if(st != SEMANTIC_ROLE_NONE)
 		{
 			auto arg = GetArg(st);
-			if(arg->strict)
+			
+			if( arg->MatchesTypeOf(cond[i].instance) )
 			{
-				if(arg->type == cond[i].type)
-				{
-					arg->instance = cond[i].instance;
-				}
-				else
-				{
-					result = false;
-				}
+				arg->instance = cond[i].instance;
 			}
 			else
 			{
-				if(arg->type & cond[i].type)
-				{
-					arg->instance = cond[i].instance;
-				}
-				else
-				{
-					result = false;
-				}
-			}			
+				result = false;
+			}
+
 			cond[i].semantic = SEMANTIC_ROLE_NONE; // reset for later checks
 		}
 	}
@@ -360,14 +348,7 @@ bool Action::CompareCost(Action* a1, Action* a2)
 
 bool Action::EvaluatePreconditions(Op::OperatorManager* om)
 {
-	for(auto precond(m_preconds->GetFirstCondition()); precond != m_preconds->GetLastCondition(); ++precond)
-	{
-		if( ! precond->Evaluate(om) )
-		{
-			return false;
-		}
-	}
-	return true;
+	return m_preconds->Evaluate(om);
 }
 
 bool Action::EvaluateEffects(Op::OperatorManager* om)

@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Squeezer::Squeezer() : STUFF()
+Squeezer::Squeezer() : Prop()
 {
 }
 
-Squeezer::Squeezer(std::string name) : STUFF(name)
+Squeezer::Squeezer(std::string name) : Prop(name)
 {
 }
 
@@ -25,7 +25,7 @@ Squeezer::operator GOAP::ObjectType()
 
 int Squeezer::GetCompoundType()
 {
-	return OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
+	return OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
 }
 
 bool Squeezer::CanBeMurderWeapon()

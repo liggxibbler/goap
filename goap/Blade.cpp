@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Blade::Blade() : STUFF()
+Blade::Blade() : Prop()
 {
 }
 
-Blade::Blade(std::string name) : STUFF(name)
+Blade::Blade(std::string name) : Prop(name)
 {
 }
 
@@ -25,7 +25,7 @@ Blade::operator GOAP::ObjectType()
 
 int Blade::GetCompoundType()
 {
-	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
+	return OBJ_TYPE_BLADE | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
 }
 
 bool Blade::CanBeMurderWeapon()

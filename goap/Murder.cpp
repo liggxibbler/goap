@@ -19,21 +19,21 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 void Murder::InitArgs()
 {
-	ConditionParameter sub, obj, room;
+	ConditionParameter agent, patient, room;
 
-	// SUBJECT
-	sub.semantic = SEMANTIC_ROLE_AGENT;
-	sub.instance = NULL;
-	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	sub.strict = true;
-	m_args.push_back(sub);
+	// AGENT
+	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.instance = NULL;
+	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.strict = true;
+	m_args.push_back(agent);
 
-	// OBJECT
-	obj.semantic = SEMANTIC_ROLE_PATIENT0;
-	obj.instance = NULL;
-	obj.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	obj.strict = true;
-	m_args.push_back(obj);
+	// PATIENT
+	patient.semantic = SEMANTIC_ROLE_PATIENT0;
+	patient.instance = NULL;
+	patient.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	patient.strict = true;
+	m_args.push_back(patient);
 
 	// LOCATIVE
 	room.semantic = SEMANTIC_ROLE_LOCATIVE;

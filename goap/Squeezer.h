@@ -1,11 +1,11 @@
 #ifndef _GOAP_SQUEEZER_H_
 #define _GOAP_SQUEEZER_H_
 
-#include "STUFF.h"
+#include "Prop.h"
 
 namespace GOAP
 {
-	class Squeezer : public STUFF
+	class Squeezer : public Prop
 	{
 	public:
 		Squeezer();

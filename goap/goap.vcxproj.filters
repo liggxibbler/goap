@@ -168,7 +168,7 @@
     <ClCompile Include="Has.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="STUFF.cpp">
+    <ClCompile Include="Prop.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,7 +299,7 @@
     <ClInclude Include="Has.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
-    <ClInclude Include="STUFF.h">
+    <ClInclude Include="Prop.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>

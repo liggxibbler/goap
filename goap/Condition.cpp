@@ -112,15 +112,8 @@ bool Condition::operator == (Condition& other)
 			static bool differentTypes;
 			differentTypes = false;
 
-			if(m_params[i].strict)
-			{
-				differentTypes = m_params[i].type != other.m_params[i].type;
-			}
-			else
-			{
-				differentTypes = (((m_params[i].type) & (other.m_params[i].type)) == 0);
-			}
-
+			differentTypes = !m_params[i].MatchesTypeOf(other.m_params[i]);
+			
 			if(differentTypes || (m_params[i].attrib != other.m_params[i].attrib))
 			{
 				return false;

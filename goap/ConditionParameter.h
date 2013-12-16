@@ -12,6 +12,9 @@ namespace GOAP
 		ConditionParameter(const ConditionParameter& other);
 		ConditionParameter& operator = (ConditionParameter& other);
 		
+		bool MatchesTypeOf(const ConditionParameter& other);
+		bool MatchesTypeOf(Object* other);
+
 		//ObjectType			type;	// XIBB this should be an int, in order to allow multiple type flags
 									// e.g. an object can be a blade >>> type = OBJECT | BLADE i.e. both
 		int					type;

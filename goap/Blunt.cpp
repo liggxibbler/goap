@@ -2,11 +2,11 @@
 
 using namespace GOAP;
 
-Blunt::Blunt() : STUFF()
+Blunt::Blunt() : Prop()
 {
 }
 
-Blunt::Blunt(std::string name) : STUFF(name)
+Blunt::Blunt(std::string name) : Prop(name)
 {
 }
 
@@ -25,7 +25,7 @@ Blunt::operator GOAP::ObjectType()
 
 int Blunt::GetCompoundType()
 {
-	return OBJ_TYPE_BLUNT | OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
+	return OBJ_TYPE_BLUNT | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
 }
 
 bool Blunt::CanBeMurderWeapon()

@@ -1,11 +1,11 @@
 #ifndef _GOAP_BLUNT_H_
 #define _GOAP_BLUNT_H_
 
-#include "STUFF.h"
+#include "Prop.h"
 
 namespace GOAP
 {
-	class Blunt : public STUFF
+	class Blunt : public Prop
 	{
 	public:
 		Blunt();

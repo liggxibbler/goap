@@ -13,6 +13,8 @@
 #include <list>
 #include <map>
 
+#define MAX_PLAN_DEPTH 5
+
 namespace GOAP
 {
 	class Planner

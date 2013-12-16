@@ -1,11 +1,11 @@
 #ifndef _GOAP_BLADE_H_
 #define _GOAP_BLADE_H_
 
-#include "STUFF.h"
+#include "Prop.h"
 
 namespace GOAP
 {
-	class Blade : public STUFF
+	class Blade : public Prop
 	{
 	public:
 		Blade();

@@ -26,10 +26,10 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
-	STUFF* patient = (STUFF*)_patient->instance;
+	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(_agent->instance);
-	_patient->instance->GetRoom()->RemoveObject((STUFF*)_patient->instance);
-	_patient->instance->SetRoom(_agent->instance->GetRoom());
+	//_patient->instance->GetRoom()->RemoveObject((Prop*)_patient->instance);
+	//_patient->instance->SetRoom(_agent->instance->GetRoom());
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
 	DUMP("       ** " << Express(0, 0))
@@ -56,7 +56,7 @@ void Take::InitArgs()
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT0;
 	obj.instance = NULL;
-	obj.type = OBJ_TYPE_STUFF;
+	obj.type = OBJ_TYPE_PROP;
 	obj.strict = false;
 	m_args.push_back(obj);
 }
@@ -95,13 +95,13 @@ void Take::InitEffects()
 
 	m_effects.push_back(subHasObj);
 
-	Condition patientHasNoRoom(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	//Condition patientHasNoRoom(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
-	patientHasNoRoom[0] = obj;
-	patientHasNoRoom[0].attrib = ATTRIBUTE_ROOM;
-	patientHasNoRoom[0].value = 0;
+	//patientHasNoRoom[0] = obj;
+	//patientHasNoRoom[0].attrib = ATTRIBUTE_ROOM;
+	//patientHasNoRoom[0].value = 0;
 
-	m_effects.push_back(patientHasNoRoom);
+	//m_effects.push_back(patientHasNoRoom);
 
 	Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 

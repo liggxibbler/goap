@@ -6,18 +6,21 @@ using namespace GOAP;
 
 Room::Room() : Object(), m_numAgents(0), m_murder(false)
 {
-	SetRoom(this);
+	m_room = m_id;
+	m_roomInstance = this;
 }
 
 Room::Room(const Room& other)
 {
-	SetRoom(this);
+	m_room = m_id;
+	m_roomInstance = this;
 }
 
 Room::Room(std::string name , RoomName rn, Object* owner) :
 Object(name, owner), m_type(rn), m_numAgents(0), m_murder(false)
 {
-	SetRoom(this);
+	m_room = m_id;
+	m_roomInstance = this;
 	m_attribs[ATTRIBUTE_NUM_AGENTS] = &m_numAgents;
 }
 
@@ -46,15 +49,15 @@ Room* Room::GetRight()
 	return m_right;
 }
 
-STUFF* Room::AddObject(std::string name)
+Prop* Room::AddObject(std::string name)
 {
-	STUFF* obj = new STUFF(name);
+	Prop* obj = new Prop(name);
 	m_objects.push_back(obj);
 	obj->SetRoom(this);
 	return obj;
 }
 
-void Room::AddObject(STUFF* obj)
+void Room::AddObject(Prop* obj)
 {
 	m_objects.push_back(obj);
 	obj->SetRoom(this);
@@ -66,12 +69,12 @@ void Room::AddObject(STUFF* obj)
 //	return m_name;
 //}
 
-std::list<STUFF*>::iterator Room::GetFirstObject()
+std::list<Prop*>::iterator Room::GetFirstObject()
 {
 	return m_objects.begin();
 }
 
-std::list<STUFF*>::iterator Room::GetLastObject()
+std::list<Prop*>::iterator Room::GetLastObject()
 {
 	return m_objects.end();
 }
@@ -219,7 +222,7 @@ bool Room::GetMurder()
 	return m_murder;
 }
 
-void Room::RemoveObject(STUFF* obj)
+void Room::RemoveObject(Prop* obj)
 {
 	auto remove(m_objects.begin());
 	while( remove != m_objects.end() )

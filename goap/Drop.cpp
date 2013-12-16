@@ -26,9 +26,9 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
 	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
 
-	STUFF* patient = (STUFF*)_patient->instance;
+	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(0);
-	_agent->instance->GetRoom()->AddObject((STUFF*)_patient->instance);
+	_agent->instance->GetRoom()->AddObject((Prop*)_patient->instance);
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
@@ -45,19 +45,19 @@ Drop* Drop::Clone()
 
 void Drop::InitArgs()
 {
-	ConditionParameter sub, obj;
+	ConditionParameter agent, patient;
 
-	sub.semantic = SEMANTIC_ROLE_AGENT;
-	sub.instance = NULL;
-	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	sub.strict = true;
-	m_args.push_back(sub);
+	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.instance = NULL;
+	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.strict = true;
+	m_args.push_back(agent);
 
-	obj.semantic = SEMANTIC_ROLE_PATIENT0;
-	obj.instance = NULL;
-	obj.type = OBJ_TYPE_OBJECT | OBJ_TYPE_STUFF;
-	obj.strict = true;
-	m_args.push_back(obj);
+	patient.semantic = SEMANTIC_ROLE_PATIENT0;
+	patient.instance = NULL;
+	patient.type = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
+	patient.strict = true;
+	m_args.push_back(patient);
 }
 
 void Drop::InitPreconditions()

@@ -20,12 +20,20 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; m_currentGoal = PickNextGoal() )
 	{
 		if(m_currentGoal == NULL)
+		// Searched entire action space up to max depth
 		{
 			break;
 		}
 
-		//DUMP("Address of current goal is " << m_currentGoal )
-		DUMP_NL( "Trying goal at " << m_currentGoal << " with " << m_currentGoal->GetNumConditions() << " conditions...\n")
+		DUMP_NL( "Trying level " << m_currentGoal->GetDepth() << " goal at " <<
+			m_currentGoal << " with " << m_currentGoal->GetNumConditions() << " conditions...\n")
+		
+		if(m_currentGoal->GetDepth() > MAX_PLAN_DEPTH)
+		{
+			// Don't process goals that need more than MAX_PLAN_DPETH actions
+			continue;
+		}
+
 		if(m_currentGoal->Evaluate(om))
 		{
 			/*
@@ -46,7 +54,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 				DUMP("PLAN NOT VALID")
 			}
 		}
-		DUMP_NL( "No success...\n")
+		DUMP( "===Expanding frontier")
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
 		ExpandFrontier(agent);					// finalize possible actions
 		ClearLongLists();						// clear candidate list
@@ -61,8 +69,8 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 {
 	/*
-	for each condition in that goal:
-		for all actions in agent:
+	for all actions in agent:
+		for each condition in that goal:
 			if action may satisfy condition: i.e. has effect that may satisfy condition
 				copy condition to action
 				add action to long list
@@ -82,31 +90,24 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 			// XIBB and the condition long list is a map.second list of conditions
 
 
-			action = am->GetAction(*actIter);
+			action = am->GetAction(*actIter); // get action prototype
 			if( action->MightSatisfy(*condsIter) )
 			{
-#ifdef _GOAP_DEBUG
-				for(int i=0; i<m_currentGoal->GetDepth();++i)
-				{
-					std::cout << ".";
-				}
-				std::cout << "Found action candidate of type " << (std::string)(*action) << std::endl;
-#endif
+				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << (std::string)(*action))
 				action = am->GetNewAction(*actIter); // to keep the prototype untouched
-				action->CopyArgsFromCondition(*condsIter);
-				action->UpdateConditionInstances();
-				m_actionLongList.push_back(action);
-				m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
+				if (action->CopyArgsFromCondition(*condsIter) == true)
+				{
+					action->UpdateConditionInstances();
+					m_actionLongList.push_back(action);
+					m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
+				}
+				else
+				{
+					std::cout << "Something's not right" << (std::string)(*action) << std::endl;
+					std::cin.get();
+				}				
 			}
 		}
-#ifdef _GOAP_DEBUG
-		for(int i=0; i<m_currentGoal->GetDepth();++i)
-		{
-			std::cout << ".";
-		}
-		std::cout << "Candidate of type " << (std::string)(*action) << " can't help" << std::endl;
-#endif
-
 	}
 }
 

@@ -105,9 +105,6 @@ void GoTo::InitEffects()
 
 void GoTo::InitPreconditions()
 {
-	// subject owns instrument
-	Condition condTrue(OP_LAYOUT_TYPE_TRUE, OPERATOR_TRUE);
-	m_preconds->AddCondition(condTrue);
 }
 
 std::string GoTo::Express(Agent* agent, Room* room)

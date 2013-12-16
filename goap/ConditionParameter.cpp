@@ -1,4 +1,5 @@
 #include "ConditionParameter.h"
+#include "Object.h"
 
 using namespace GOAP;
 
@@ -30,4 +31,45 @@ ConditionParameter& ConditionParameter::operator = (ConditionParameter& other)
 	value = other.value;
 	strict = other.strict;
 	return *this;
+}
+
+bool ConditionParameter::MatchesTypeOf(const ConditionParameter& other)
+{
+	bool result = true;
+	if(strict)
+	{
+		if( type != other.type )
+		{
+			result = false;
+		}
+	}
+	else
+	{
+		if( (type & other.type) == 0 )
+		{
+			result = false;
+		}
+	}
+	return result;
+}
+
+bool ConditionParameter::MatchesTypeOf(Object* other)
+{
+	bool result = true;
+	int iType = type;
+	if(strict)
+	{
+		if( iType != other->GetCompoundType() )
+		{
+			result = false;
+		}
+	}
+	else
+	{
+		if( (iType & other->GetCompoundType()) == 0 )
+		{
+			result = false;
+		}
+	}
+	return result;
 }

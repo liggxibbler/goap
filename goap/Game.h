@@ -7,7 +7,7 @@
 namespace GOAP
 {
 	class Agent;
-	class STUFF;
+	class Prop;
 }
 
 class Game
@@ -31,7 +31,7 @@ public:
 	void MainLoop();
 
 private:
-	std::vector<GOAP::STUFF*> m_vecObject;
+	std::vector<GOAP::Prop*> m_vecObject;
 	std::vector<GOAP::Agent*> m_vecAgent;
 	std::vector<GOAP::Room*> m_vecRoom;
 
@@ -56,7 +56,7 @@ private:
 	unsigned int m_seed;
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
-	std::vector<GOAP::STUFF*>	m_objects;
+	std::vector<GOAP::Prop*>	m_objects;
 };
 
 #endif

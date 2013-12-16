@@ -44,6 +44,8 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 								int locationProbability[], bool canStab, bool canStrangle,
 								bool canShoot, bool canBludgeon, int height, int weight)
 {
+	this->AddAction(ACTION_GOTO);
+
 	m_name = name;
 	m_height = height;
 	m_weight = weight;
@@ -51,8 +53,6 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 	m_gender = gender;
 
 	rm->AddAgentProbabilities(this, locationProbability);
-
-	this->AddAction(ACTION_GOTO);
 
 	for(int i = 0; i<NUMBER_OF_ROOMS; ++i)
 	{

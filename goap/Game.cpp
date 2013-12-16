@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include "STUFF.h"
+#include "Prop.h"
 #include "Agent.h"
 #include "Room.h"
 #include "Blade.h"
@@ -327,24 +327,26 @@ void Game::AssignRoles(/*int numWitness*/)
 	cond[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	cond[0].value = false;
 
-	//m_objects[2]->SetBearer(m_murderer);
-	//m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);
+	/*m_objects[2]->SetBearer(m_murderer);
+	m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);*/
 
-	//GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	//cond2[0].instance = m_murderer;
-	//cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	////cond2[0].attrib = ATTRIBUTE_ROOM;
-	//cond2[1].instance = m_objects[2];
-	//cond2[1].type = OBJ_TYPE_OBJECT;
-	////cond2[1].attrib = ATTRIBUTE_ROOM;
+	m_murderer->See(m_objects[7]);
+
+	GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	cond2[0].instance = m_murderer;
+	cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	//cond2[0].attrib = ATTRIBUTE_ROOM;
+	cond2[1].instance = m_objects[7];
+	cond2[1].type = OBJ_TYPE_PROP;
+	//cond2[1].attrib = ATTRIBUTE_ROOM;
 
 	Goal* goal = new Goal;
 	goal->SetDepth(0);
-	goal->AddCondition(cond);
+	goal->AddCondition(cond2);
 	m_murderer->SetGoal(goal);
 
 	m_murderer->See(m_victim);
-	m_murderer->AddAction(ACTION_WAITFOR);
+	//m_murderer->AddAction(ACTION_WAITFOR);
     m_murderer->AddAction(ACTION_TAKE);
     //m_murderer->AddAction(ACTION_DROP);
 
@@ -479,13 +481,13 @@ void Game::InitializeObjects()
 	*/
 
 	m_objects.clear();
-	STUFF* obj = 0;
+	Prop* obj = 0;
 
-	obj = new STUFF("Clock");
+	obj = new Prop("Clock");
 	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
-	obj = new STUFF("Cup");
+	obj = new Prop("Cup");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
@@ -497,15 +499,15 @@ void Game::InitializeObjects()
 	obj->MayBeFoundIn(ROOM_KITCHEN);
 	m_objects.push_back(obj);
 
-	obj = new STUFF("Statue");
+	obj = new Prop("Statue");
 	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
 	m_objects.push_back(obj);
 
-	obj = new STUFF("Lamp");
+	obj = new Prop("Lamp");
 	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
 	m_objects.push_back(obj);
 
-	obj = new STUFF("Table");
+	obj = new Prop("Table");
 	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM | ROOM_LIVING_ROOM);
 	m_objects.push_back(obj);
 

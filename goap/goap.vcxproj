@@ -105,7 +105,7 @@
     <ClCompile Include="Squeezer.cpp" />
     <ClCompile Include="Stab.cpp" />
     <ClCompile Include="Strangle.cpp" />
-    <ClCompile Include="STUFF.cpp" />
+    <ClCompile Include="Prop.cpp" />
     <ClCompile Include="Take.cpp" />
     <ClCompile Include="True.cpp" />
     <ClCompile Include="WaitFor.cpp" />
@@ -149,7 +149,7 @@
     <ClInclude Include="Squeezer.h" />
     <ClInclude Include="Stab.h" />
     <ClInclude Include="Strangle.h" />
-    <ClInclude Include="STUFF.h" />
+    <ClInclude Include="Prop.h" />
     <ClInclude Include="Take.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="True.h" />

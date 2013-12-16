@@ -22,6 +22,7 @@
 #define DUMP_NL(X) std::cout << X;
 #else
 #define DUMP(X)
+#define DUMP_NL(X)
 #endif
 
 #ifdef _MSC_VER
@@ -43,32 +44,18 @@ namespace GOAP
 	enum ObjectType
 	{
 		OBJ_TYPE_NONE		= 0x0000,
-		OBJ_TYPE_OBJECT		= 0x0001, // either inanimate objects
-		OBJ_TYPE_BLADE		= 0x0002,
+		OBJ_TYPE_OBJECT		= 0x0001, // always and object
+		OBJ_TYPE_BLADE		= 0x0002, // either inanimate objects
 		OBJ_TYPE_BLUNT		= 0x0004,
 		OBJ_TYPE_PROJECTILE = 0x0008,
 		OBJ_TYPE_SQUEEZER	= 0x0010,
 		OBJ_TYPE_CONTAINER	= 0x0020,
 		OBJ_TYPE_ROOM		= 0x0040,
-		OBJ_TYPE_STUFF		= 0x0080,
+		OBJ_TYPE_PROP		= 0x0080,
 		OBJ_TYPE_AGENT		= 0x0100, // or living things
 		OBJ_TYPE_PERSON		= 0x0200,
 		
 		OBJ_TYPE_LAST		= 0xf000
-	};
-
-	enum EntityType
-	{
-		ENT_TYPE_ENTITY		= 0x0001, // always an entity
-
-		ENT_TYPE_OBJECT		= 0x0002, // either inanimate object
-		ENT_TYPE_BLADE		= 0x0004,
-		ENT_TYPE_CONTAINER	= 0x0008,
-
-		ENT_TYPE_AGENT		= 0x0100, // or living thing
-		ENT_TYPE_PERSON		= 0x0200,
-
-		ENT_TYPE_LAST		= 0xf000
 	};
 
 	enum AttributeType
