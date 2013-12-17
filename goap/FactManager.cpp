@@ -5,7 +5,12 @@ using namespace GOAP;
 
 void FactManager::Initialize(std::vector<Agent*>& agents)
 {
-	//	extract time of latest recorded event, latestTime
+	//	latestTime = 0
+	//// extract latest event time
+	//	for each agent
+	//		if latestTime < agent.lastRecord.turn
+	//			latestTime = agent.lastRecord.turn
+	//// populate table
 	//	for each agent
 	//		lastTime = 0
 	//		for each event
