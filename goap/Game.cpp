@@ -400,8 +400,8 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[5]);//dining
 	room->AddObject(m_objects[6]);
 
-	m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
-	for(int i=1; i<NUMBER_OF_CHARACTERS;++i)
+	//m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
+	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
 	{
 		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_agents[i]);
 	}

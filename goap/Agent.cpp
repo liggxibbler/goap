@@ -341,7 +341,20 @@ void Agent::GiveStatement()
 		for(unsigned int i=0; i<m_actionLog.size(); ++i)
 		{
 			ar = m_actionLog[i];
-			
+
+			bool suspect = false;
+
+			if(m_isMurderer)
+			{
+				ActionType at = *ar.action;
+				int numWitness = ar.action->GetNumWitness();
+				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
+
+				if ((numWitness > numSuspect) && (ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
+				{
+					suspect = true;
+				}
+			}
 
 			if(oldTurn != ar.turn)
 			{
@@ -352,20 +365,14 @@ void Agent::GiveStatement()
 				std::cout << i+1 << ".\t";
 			}
 			std::cout  << ", " << m_actionLog[i].action->Express(this, ar.room);
-			oldTurn = ar.turn;
 			
-			if(m_isMurderer)
+			if(suspect)
 			{
-				ActionType at = *ar.action;
-				int numWitness = ar.action->GetNumWitness();
-				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
-
-				if ((numWitness > numSuspect) && (ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
-				{
-					std::cout << " [SUSPECT]";
-				}
+				std::cout << " [SUSPECT]";
 			}
+
 			std::cout << "\n";
+			oldTurn = ar.turn;
 		}
 
 		std::cout << "\nEnter statement number for details, 0 to go back\n";
