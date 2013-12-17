@@ -10,7 +10,7 @@
 #include "OperatorManager.h"
 #include <time.h>
 
-#define MAX_TURNS 50
+#define MAX_TURNS 10
 #define NUMBER_OF_CHARACTERS 4
 
 #include <iostream>
@@ -22,6 +22,8 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1387321436;// puts victim in two rooms at the end
+	//1387319010;// perfect crime in less than 10 moves
 	//1387307608;// perfect crime
 	//1387226864;// with this one, tartar drops the rope and leaves the room
 	//1387221411;// this one fails to stab
@@ -291,11 +293,9 @@ bool Game::GeneratePlot()
 		if(m_turn >= MAX_TURNS)
 		{
 			std::cout << "	******************************\n";
-			std::cout << "	Hi! Don't worry! You did nothing wrong!\n";
-			std::cout << "	The program has failed.\n";
-			std::cout << "	******************************\n";
-			std::cout << "	Please tell Alborz that seed " << m_seed << " doesn't work," <<endl;
-			std::cout << "	then restart the program.\n\n	It's not you, it's me\n";
+			std::cout << "	I have failed you.\n";
+			std::cout << "	Seed " << m_seed << " doesn't work," <<endl;
+			std::cout << "	\n\n	It's not you, it's me\n";
 			std::cout << "	******************************\n";
 			std::cin.get();
 			return false;

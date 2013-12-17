@@ -13,12 +13,12 @@ ActionManager::ActionManager()
 	m_mapAction[ACTION_WAITFOR]		= new WaitFor();
     m_mapAction[ACTION_DROP]        = new Drop();
 
-	m_mapSuspect[ACTION_STAB]		= 2;
+	m_mapSuspect[ACTION_STAB]		= 1;
 	m_mapSuspect[ACTION_GOTO]		= 0;
 	m_mapSuspect[ACTION_TAKE]		= 1;
-	m_mapSuspect[ACTION_BLUDGEON]	= 2;
-	m_mapSuspect[ACTION_STRANGLE]	= 2;
-	m_mapSuspect[ACTION_SHOOT]		= 2;
+	m_mapSuspect[ACTION_BLUDGEON]	= 1;
+	m_mapSuspect[ACTION_STRANGLE]	= 1;
+	m_mapSuspect[ACTION_SHOOT]		= 1;
 	m_mapSuspect[ACTION_WAITFOR]	= 0;
     m_mapSuspect[ACTION_DROP]       = 1;
 

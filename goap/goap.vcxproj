@@ -125,6 +125,7 @@
     <ClInclude Include="Counter.h" />
     <ClInclude Include="Drop.h" />
     <ClInclude Include="Equal.h" />
+    <ClInclude Include="FactManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GoTo.h" />

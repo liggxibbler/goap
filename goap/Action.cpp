@@ -337,7 +337,10 @@ void Action::Dispatch(int turn)
 	Room* room = agent->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 	{
-		m_numWitness++;
+		if((*agent)->IsVictim() == false)
+		{
+			m_numWitness++;
+		}
 		(*agent)->Log(turn, this);
 	}
 }
