@@ -6,7 +6,7 @@
 
 using namespace GOAP;
 
-Action::Action() : m_status(EXEC_STAT_INIT), m_logged(false)
+Action::Action() : m_status(EXEC_STAT_INIT), m_logged(false), m_numWitness(0)
 {
 }
 
@@ -308,9 +308,8 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 	{
 		if( EvaluatePreconditions(om) )
 		{
-			Dispatch(turn);
 			ExecutionStatus stat = ExecuteWorkhorse(turn);
-			this->SetLogged();
+			Dispatch(turn);
 			return stat;
 		}
 		else
@@ -333,10 +332,12 @@ ExecutionStatus Action::GetStatus()
 void Action::Dispatch(int turn)
 {
 	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 	{
+		m_numWitness++;
 		(*agent)->Log(turn, this);
 	}
 }
@@ -375,4 +376,9 @@ void Action::SetLogged()
 
 void Action::Debug()
 {
+}
+
+int Action::GetNumWitness()
+{
+	return m_numWitness;
 }

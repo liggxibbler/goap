@@ -236,6 +236,7 @@ void GoTo::Dispatch(int turn)
 	Room* room = cp->instance->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 	{
+		m_numWitness++;
 		(*agent)->Log(turn, this);
 	}
 }

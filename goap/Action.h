@@ -33,7 +33,7 @@ namespace GOAP
 		virtual Action* Clone() = 0;
 		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) _CPP_11_OVERRIDE;
 		ExecutionStatus GetStatus();
-		virtual operator ActionType();
+		virtual operator ActionType() = 0;
 
 		Goal* GetPreconds();
 		Goal* GetGoal();
@@ -75,6 +75,8 @@ namespace GOAP
 
 		virtual void Debug();
 
+		int GetNumWitness();
+
 	protected:
 
 		virtual void InitArgs() = 0;
@@ -108,6 +110,7 @@ namespace GOAP
 		ExecutionStatus m_status;
 
 		int m_time;
+		int m_numWitness;
 
 		bool m_logged;
 	};

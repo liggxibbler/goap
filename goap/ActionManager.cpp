@@ -13,6 +13,15 @@ ActionManager::ActionManager()
 	m_mapAction[ACTION_WAITFOR]		= new WaitFor();
     m_mapAction[ACTION_DROP]        = new Drop();
 
+	m_mapSuspect[ACTION_STAB]		= 2;
+	m_mapSuspect[ACTION_GOTO]		= 1000;
+	m_mapSuspect[ACTION_TAKE]		= 1;
+	m_mapSuspect[ACTION_BLUDGEON]	= 2;
+	m_mapSuspect[ACTION_STRANGLE]	= 2;
+	m_mapSuspect[ACTION_SHOOT]		= 2;
+	m_mapSuspect[ACTION_WAITFOR]	= 1000;
+    m_mapSuspect[ACTION_DROP]       = 1;
+
 	InitializePrototypes();
 }
 
@@ -49,4 +58,9 @@ ActionManager* ActionManager::Instance()
 {
 	static ActionManager am;
 	return &am;
+}
+
+int ActionManager::GetSuspicion(ActionType at)
+{
+	return m_mapSuspect[at];
 }

@@ -69,6 +69,7 @@ namespace GOAP
 
 		void Answer(Object* obj, QuestionType qt, int turn);
 		void GiveStatement();
+		void Lie(ActionRecord& ar, unsigned int& numStatement);
 
 		RoomName GetNextRoom();
 
@@ -77,6 +78,14 @@ namespace GOAP
 		Gender GetGender();
 
 		void ResetUpdateFlag();
+
+		void SetAsMurderer();
+		void ResetMurdererFlag();
+		bool IsMurderer();
+
+		void SetAsVictim();
+		void ResetVictimFlag();
+		bool IsVictim();
 
 	protected:
 		void Interview();

@@ -21,7 +21,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = 1387226864;//(unsigned int)time(NULL);
+	m_seed = (unsigned int)time(NULL);
 	//1387226864;// with this one, tartar drops the rope and leaves the room
 	//1387221411;// this one fails to stab
 	//1387226550;// this one succeeds and plans a drop if no one wanders
@@ -229,13 +229,23 @@ void Game::Interview()
 bool Game::Run(/*database class thing*/)
 {
 	bool result = false;
-	if (!GeneratePlot())
+	while(m_running)
 	{
-		return false;
+		if (!GeneratePlot())
+		{
+			return false;
+		}
+
+		MainLoop();
+		// prompt for another go
+		// if yes :  
+		// clear agents, 
+		// clear rooms,
+		// delete actions
+		// 
+		// initialize agents,
+		// m_running = true;
 	}
-
-	MainLoop();
-
 	return true;
 }
 
@@ -325,7 +335,10 @@ void Game::AssignRoles(/*int numWitness*/)
 	// set as witness(es)
 
 	m_murderer = m_agents[0];
+	m_agents[0]->SetAsMurderer();
+
 	m_victim = m_agents[1];
+	m_agents[1]->SetAsVictim();
 
 	GOAP::Condition vicIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 	vicIsDead[0].attrib = ATTRIBUTE_ALIVE;

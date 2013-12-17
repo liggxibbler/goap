@@ -21,11 +21,15 @@ namespace GOAP
 		static ActionManager* Instance();
 
 		Action* GetAction(ActionType at);
+		int GetSuspicion(ActionType);
+
 		Action* GetNewAction(ActionType at);
 		void InitializePrototypes();
+		
 
 	private:
 		std::map<ActionType, Action*> m_mapAction;
+		std::map<ActionType, int> m_mapSuspect;
 	};
 }
 

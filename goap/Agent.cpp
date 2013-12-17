@@ -138,7 +138,7 @@ bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
 		}
 		else
 		{
-			if(obj->GetCompoundType() & ot != 0)
+			if((obj->GetCompoundType() & ot) != 0)
 			{
 				result.push_back(obj);
 			}
@@ -337,20 +337,45 @@ void Agent::GiveStatement()
 		std::cout << "========================\n\n";
 		std::cout << "You are interviewing " << m_name << ":\n\n";
 
+		int oldTurn = -1;
 		for(unsigned int i=0; i<m_actionLog.size(); ++i)
 		{
 			ar = m_actionLog[i];
-			std::cout << i+1 << ". At " << ar.turn << ", " << m_actionLog[i].action->Express(this, ar.room) << "\n";
+			
+
+			if(oldTurn != ar.turn)
+			{
+				std::cout << i+1 << ". At " << TURN2TIME(ar.turn);
+			}
+			else
+			{
+				std::cout << i+1 << ".\t";
+			}
+			std::cout  << ", " << m_actionLog[i].action->Express(this, ar.room);
+			oldTurn = ar.turn;
+			
+			if(m_isMurderer)
+			{
+				ActionType at = *ar.action;
+				int numWitness = ar.action->GetNumWitness();
+				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
+
+				if ((numWitness > numSuspect) && (ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
+				{
+					std::cout << " [SUSPECT]";
+				}
+			}
+			std::cout << "\n";
 		}
 
 		std::cout << "\nEnter statement number for details, 0 to go back\n";
 		std::cout << ">>> ";	
 		std::cin >> answer;
-		int j = answer - 1;
+		unsigned int j = answer - 1;
 		if( j>=0 && j < m_actionLog.size() )
 		{
 			auto room = m_actionLog[j].roomSnap;
-			std::cout << "\nI remember that at " << m_actionLog[j].turn << ", in " << room->GetName() << " there was:\n\n";
+			std::cout << "\nIn " << room->GetName() <<" at " << TURN2TIME(m_actionLog[j].turn) << " there was:\n\n";
 			for(auto prop(room->GetFirstObject()); prop != room->GetLastObject(); ++prop)
 			{
 				std::cout << "-> " << (*prop)->GetName() << "\n";
@@ -412,4 +437,35 @@ void Agent::InitAttribMap()
 void Agent::ResetUpdateFlag()
 {
 	m_updated = false;
+}
+
+void Agent::Lie(ActionRecord& ar, unsigned int& numStatement)
+{
+	std::cout << numStatement+1 << ". At " << TURN2TIME(ar.turn) << ", " << m_actionLog[numStatement].action->Express(this, ar.room) << "\n";
+}
+
+void Agent::SetAsMurderer()
+{
+	m_isMurderer = true;
+}
+void Agent::ResetMurdererFlag()
+{
+	m_isMurderer = false;
+}
+bool Agent::IsMurderer()
+{
+	return m_isMurderer;
+}
+
+void Agent::SetAsVictim()
+{
+	m_isVictim = true;
+}
+void Agent::ResetVictimFlag()
+{
+	m_isVictim= false;
+}
+bool Agent::IsVictim()
+{
+	return m_isVictim;
 }
