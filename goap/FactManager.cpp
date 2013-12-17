@@ -27,7 +27,10 @@ void FactManager::Initialize(std::vector<Agent*>& agents)
 
 FactManager::SeenRecord	FactManager::LastSeen(Agent* target, int turn)
 {
-
+	//	for time = turn, step back
+	//		for each agent in m_agents
+	//			if chart[agent][time] == chart[target][time]
+	//				return agent, time // but this is worng if there are multiple agents
 }
 
 FactManager* FactManager::Instance()
