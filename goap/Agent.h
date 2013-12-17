@@ -19,6 +19,7 @@ namespace GOAP
 	class Action;
 	class Room;
 	class RoomManager;
+	class FactManager;
 
 	namespace Op
 	{
@@ -28,6 +29,9 @@ namespace GOAP
 	class Agent : public Object
 	{
 	public:
+
+		friend class FactManager;
+
 		Agent();
 		Agent(std::string name);
 		Agent(const Agent& other);

@@ -85,6 +85,7 @@
     <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Drop.cpp" />
     <ClCompile Include="Equal.cpp" />
+    <ClCompile Include="FactManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GoTo.cpp" />
