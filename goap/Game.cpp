@@ -22,6 +22,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1387307608;// perfect crime
 	//1387226864;// with this one, tartar drops the rope and leaves the room
 	//1387221411;// this one fails to stab
 	//1387226550;// this one succeeds and plans a drop if no one wanders

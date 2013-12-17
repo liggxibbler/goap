@@ -329,6 +329,10 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 
 void Agent::GiveStatement()
 {
+	// Need to take victim and FactManager as arguments
+	// Need FactManager
+	// 
+
 	int answer = -1;
 	
 	while(answer != 0)
@@ -342,31 +346,37 @@ void Agent::GiveStatement()
 		{
 			ar = m_actionLog[i];
 
-			bool suspect = false;
+			bool agentIsSuspect = false;
+			bool actionIsSuspect = false;
 
 			if(m_isMurderer)
 			{
 				ActionType at = *ar.action;
 				int numWitness = ar.action->GetNumWitness();
 				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
+				actionIsSuspect = (numSuspect > 0);
 
-				if ((numWitness > numSuspect) && (ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
+				if ( actionIsSuspect && (numWitness > numSuspect) &&
+					(ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
 				{
-					suspect = true;
+					agentIsSuspect = true;
 				}
 			}
 
-			if(oldTurn != ar.turn)
+			if(!actionIsSuspect && !agentIsSuspect)
 			{
-				std::cout << i+1 << ". At " << TURN2TIME(ar.turn);
+				if(oldTurn != ar.turn)
+				{
+					std::cout << i+1 << ". At " << TURN2TIME(ar.turn);
+				}
+				else
+				{
+					std::cout << i+1 << ".\t";
+				}
+				std::cout  << ", " << m_actionLog[i].action->Express(this, ar.room);
 			}
-			else
-			{
-				std::cout << i+1 << ".\t";
-			}
-			std::cout  << ", " << m_actionLog[i].action->Express(this, ar.room);
-			
-			if(suspect)
+
+			if(agentIsSuspect)
 			{
 				std::cout << " [SUSPECT]";
 			}
