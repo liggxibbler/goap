@@ -144,6 +144,11 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		}
 		else
 		{
+			if(cp.semantic == SEMANTIC_ROLE_AGENT && cp.instance != agent)
+			{
+				// can't plan for others to do things
+				return 0;
+			}
 			comboList.push_back(std::vector<Object*>(1, cp.instance));
 		}
 	}
