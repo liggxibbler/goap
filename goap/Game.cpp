@@ -23,7 +23,8 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);
+	m_seed = 1387381488;//(unsigned int)time(NULL);
+	//1387381488;// PERFECT
 	//1387378188;// perfect in 15 turns + victim in two rooms
 	//////////////////////////////////////////////////////////
 	//1387321436;// puts victim in two rooms at the end
