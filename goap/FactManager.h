@@ -26,12 +26,14 @@ namespace GOAP
 			}
 		};
 
-		bool	LastSeen(Agent* target, int turn, SeenRecord& sr);
+		bool LastSeen(Agent* target, int turn, SeenRecord& sr);
 		static FactManager* Instance();
 
 		void Initialize(std::vector<Agent*>& agents);
 
 		Room* GetRoom (Agent* agent, int turn);
+
+		int* GetAloneTimes(Agent* agent, int turn);
 
 	private:
 		FactManager();

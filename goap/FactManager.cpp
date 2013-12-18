@@ -114,3 +114,15 @@ Room* FactManager::GetRoom (Agent* agent, int turn)
 {
 	return m_roomChart[agent][turn];
 }
+
+int* FactManager::GetAloneTimes(Agent* agent, int turn)
+{
+	for(int time=turn; time >=0; time++)
+	{
+		// if agent is alone
+		//	add time to vector
+	}
+	//	if(vector is not empty)
+	//		return vector
+	//	return null
+}

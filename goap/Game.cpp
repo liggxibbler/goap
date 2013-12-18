@@ -25,8 +25,8 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 	m_roomManager = 0;
 	m_seed = 1387321436;//(unsigned int)time(NULL);
 	//1387381488;// PERFECT
-	//////////////////////////////////////////////////////////
 	//1387321436;// PERFECT
+	//////////////////////////////////////////////////////////
 	//1387369232;// perfect crime in 10 turns
 	//1387319010;// perfect crime in less than 10 turns
 	//1387307608;// perfect crime
@@ -67,8 +67,15 @@ void Game::Roam()
 	int item = 1;
 	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 	{
-		cout << item++ << ") " << (*iter)->GetName() << endl;
-		m_vecObject.push_back(*iter);
+		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
+		{
+			item++;
+		}
+		else
+		{
+			cout << item++ << ") " << (*iter)->GetName() << endl;
+			m_vecObject.push_back(*iter);
+		}
 	}
 
 	int witness = item;
@@ -118,6 +125,7 @@ void Game::Roam()
 
 	if(answer < witness)// examine
 	{
+
 		//examine(answer-1);
 	}
 	else if(answer>=witness && answer <iRoom)//agent
