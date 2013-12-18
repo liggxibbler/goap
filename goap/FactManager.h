@@ -1,6 +1,7 @@
 #ifndef _GOAP_FACTMANAGER_H_
 #define _GOAP_FACTMANAGER_H_
 
+#include <list>
 #include <set>
 #include <map>
 #include <vector>
@@ -17,7 +18,7 @@ namespace GOAP
 		struct SeenRecord
 		{
 		public:
-			Agent* who;
+			std::list<Agent*> who;
 			int when;
 			Room* where_;
 			SeenRecord():who(0), when(0), where_(0)
@@ -25,8 +26,8 @@ namespace GOAP
 			}
 		};
 
-		SeenRecord	LastSeen(Agent* target, int turn);
-		FactManager* Instance();
+		bool	LastSeen(Agent* target, int turn, SeenRecord& sr);
+		static FactManager* Instance();
 
 		void Initialize(std::vector<Agent*>& agents);
 

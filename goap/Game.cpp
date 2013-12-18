@@ -10,6 +10,8 @@
 #include "OperatorManager.h"
 #include <time.h>
 
+#include "FactManager.h"
+
 #define MAX_TURNS 10
 #define NUMBER_OF_CHARACTERS 4
 
@@ -23,7 +25,8 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
 	//1387321436;// puts victim in two rooms at the end
-	//1387319010;// perfect crime in less than 10 moves
+	//1387369232;// perfect crime in 10 turns
+	//1387319010;// perfect crime in less than 10 turns
 	//1387307608;// perfect crime
 	//1387226864;// with this one, tartar drops the rope and leaves the room
 	//1387221411;// this one fails to stab
@@ -94,6 +97,12 @@ void Game::Roam()
 		m_vecRoom.push_back(*iter);
 	}
 
+#ifdef _GOAP_DEBUG
+	int iMap = item;
+	cout << "\nOr:\n";
+	cout << item << ") SEE THE MAP" << endl;
+#endif
+
 	cout << "\n Or enter 0 to quit.\n";
 
 	cout << "\nWhat would you like to do?\n>>> ";
@@ -118,6 +127,12 @@ void Game::Roam()
 	{
 		m_currentRoom = m_vecRoom[answer - iRoom];
 	}
+	#ifdef _GOAP_DEBUG
+	else if(answer == iMap)
+	{
+		DisplayRoomMap();
+	}
+	#endif
 	else
 	{
 		// bad answer, do over
@@ -238,6 +253,8 @@ bool Game::Run(/*database class thing*/)
 		{
 			return false;
 		}
+
+		FactManager::Instance()->Initialize(m_agents);
 
 		MainLoop();
 		// prompt for another go
@@ -530,4 +547,16 @@ void Game::InitializeObjects()
 	obj = new Projectile("Gun");
 	obj->MayBeFoundIn(ROOM_BEDROOM);
 	m_objects.push_back(obj);
+}
+
+void Game::DisplayRoomMap()
+{
+	/*for(time)
+	{
+		for(agent)
+		{
+			cout << factmgr[agent][time];
+		}
+	}*/
+	std::cout << "\n	MAP! I HAVE A MAP!\n";
 }

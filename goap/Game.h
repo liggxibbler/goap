@@ -30,6 +30,8 @@ public:
 	bool GeneratePlot();
 	void MainLoop();
 
+	void DisplayRoomMap();
+
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
 	std::vector<GOAP::Agent*> m_vecAgent;
