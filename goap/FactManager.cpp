@@ -109,3 +109,8 @@ FactManager* FactManager::Instance()
 FactManager::FactManager()
 {
 }
+
+Room* FactManager::GetRoom (Agent* agent, int turn)
+{
+	return m_roomChart[agent][turn];
+}

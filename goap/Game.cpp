@@ -12,7 +12,7 @@
 
 #include "FactManager.h"
 
-#define MAX_TURNS 10
+#define MAX_TURNS 20
 #define NUMBER_OF_CHARACTERS 4
 
 #include <iostream>
@@ -24,6 +24,8 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1387378188;// perfect in 15 turns + victim in two rooms
+	//////////////////////////////////////////////////////////
 	//1387321436;// puts victim in two rooms at the end
 	//1387369232;// perfect crime in 10 turns
 	//1387319010;// perfect crime in less than 10 turns
@@ -352,11 +354,18 @@ void Game::AssignRoles(/*int numWitness*/)
 	// pick (numWitness + 1) agents
 	// set as witness(es)
 
-	m_murderer = m_agents[0];
-	m_agents[0]->SetAsMurderer();
+	int MURDERER = rand() % NUMBER_OF_CHARACTERS;
+	int VICTIM = rand() % NUMBER_OF_CHARACTERS;
+	if (VICTIM == MURDERER)
+	{
+		VICTIM = (MURDERER + 1) % NUMBER_OF_CHARACTERS;
+	}
 
-	m_victim = m_agents[1];
-	m_agents[1]->SetAsVictim();
+	m_murderer = m_agents[MURDERER];
+	m_murderer->SetAsMurderer();
+
+	m_victim = m_agents[VICTIM];
+	m_victim->SetAsVictim();
 
 	GOAP::Condition vicIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 	vicIsDead[0].attrib = ATTRIBUTE_ALIVE;
@@ -558,5 +567,21 @@ void Game::DisplayRoomMap()
 			cout << factmgr[agent][time];
 		}
 	}*/
+	FactManager* fm = FactManager::Instance();
+	std::cout << "\n******************************\n\n";
+	for(int turn=1; turn<m_turn; ++turn)
+	{
+		cout << turn << ".	";
+		for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+		{
+			int id = 0;
+			if(fm->GetRoom(*agent, turn) != 0)
+			{
+				id = fm->GetRoom(*agent, turn)->GetID();
+			}
+			cout << id << "	";
+		}
+		cout << endl;
+	}
 	std::cout << "\n	MAP! I HAVE A MAP!\n";
 }

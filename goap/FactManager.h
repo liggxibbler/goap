@@ -31,6 +31,8 @@ namespace GOAP
 
 		void Initialize(std::vector<Agent*>& agents);
 
+		Room* GetRoom (Agent* agent, int turn);
+
 	private:
 		FactManager();
 		std::set<Agent*> m_agents;
