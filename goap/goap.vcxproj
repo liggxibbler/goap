@@ -157,6 +157,9 @@
     <ClInclude Include="True.h" />
     <ClInclude Include="WaitFor.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram11.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
