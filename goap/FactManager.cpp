@@ -124,5 +124,5 @@ int* FactManager::GetAloneTimes(Agent* agent, int turn)
 	}
 	//	if(vector is not empty)
 	//		return vector
-	//	return null
+	return 0;
 }
