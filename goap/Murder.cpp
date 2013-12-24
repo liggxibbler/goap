@@ -12,7 +12,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	DUMP("       ** " << Express(0, 0))
 
 	obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
-	Agent* agent = dynamic_cast<Agent*>(sub.instance);
+	Agent* agent = (Agent*)(sub.instance);
 	agent->DoneMurder(true);
 
 	// Make murderer drop murder weapon
