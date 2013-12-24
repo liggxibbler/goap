@@ -28,6 +28,7 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(0);
+	patient->SetRoom(_agent->instance->GetRoom());
 	_agent->instance->GetRoom()->AddObject((Prop*)_patient->instance);
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
 

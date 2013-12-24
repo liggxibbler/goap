@@ -166,20 +166,6 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 		{
 			AddAgent(*(addIter++));
 			m_numAgents++;
-			if(m_murder)
-				// if this is the room where the murder has taken place
-			{
-				if((*addIter) != murderer)
-					// and someone other than the murderer enters it
-				{
-					if((*addIter) != victim)
-						// the dead don't walk, but whatever!
-					{
-						// then the game is over
-						result = true;
-					}
-				}
-			}
 		}
 		else
 		{
@@ -213,6 +199,20 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 
 	m_markedForAddition.clear();
 	m_markedForDeletion.clear();
+
+	if(m_murder)
+		// if this is the room where the murder has taken place
+	{
+		for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+		{
+			if(((*agent) != murderer) && ((*agent) != victim))
+				// and someone other than the murderer or the victim is in it
+			{
+				// then the plot is ready
+					result = true;
+			}
+		}
+	}
 
 	return result;
 }
