@@ -41,7 +41,7 @@ Agent::Agent(const Agent& other) : Object(other)
 	InitAttribMap();
 }
 
-void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender, std::string backStory,
+void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory,
 								int locationProbability[], bool canStab, bool canStrangle,
 								bool canShoot, bool canBludgeon, int height, int weight)
 {
@@ -53,18 +53,9 @@ void Agent::InitializeCharacter(RoomManager* rm, std::string name, Gender gender
 	m_backStory = backStory;
 	m_gender = gender;
 
-	rm->AddAgentProbabilities(this, locationProbability);
-
 	for(int i = 0; i<NUMBER_OF_ROOMS; ++i)
 	{
-		if(i==0)
-		{
-			m_locationProbability[i] = locationProbability[i];
-		}
-		else
-		{
-			m_locationProbability[i] = locationProbability[i] + locationProbability[i-1];
-		}
+		m_locationProbability[i] = locationProbability[i];	
 	}
 
 	//give actions based on the "can" booleans:
@@ -422,9 +413,11 @@ RoomName Agent::GetNextRoom()
 	int random = rand() % 100;
 
 	int i;
+	int roullette = 0;
 	for (i=0; i<NUMBER_OF_ROOMS;++i)
 	{
-		if (random < m_locationProbability[i])
+		roullette += m_locationProbability[i];
+		if (random < roullette)
 		{
 			return rooms[i];
 		}
@@ -485,4 +478,9 @@ void Agent::ResetVictimFlag()
 bool Agent::IsVictim()
 {
 	return m_isVictim;
+}
+
+int* Agent::GetProbabilities()
+{
+	return m_locationProbability;
 }

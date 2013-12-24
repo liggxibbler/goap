@@ -69,9 +69,12 @@ bool ConditionParameter::MatchesTypeOf(Object* other)
 	}
 	else
 	{
-		if( (iType & other->GetCompoundType()) == 0 )
+		if((type & OBJ_TYPE_OBJECT) == 0)
 		{
-			result = false;
+			if( (iType & other->GetCompoundType()) == 0 )
+			{
+				result = false;
+			}
 		}
 	}
 	return result;

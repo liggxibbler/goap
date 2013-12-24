@@ -126,8 +126,9 @@ void RoomManager::ShowBedrooms(Agent* murderer)
 	}
 }
 
-void RoomManager::AddAgentProbabilities(Agent* agent, int prob[])
+void RoomManager::AddAgentProbabilities(Agent* agent)
 {
+	int* prob = agent->GetProbabilities();
 	Room* room = NULL;
 	std::string roomName(agent->GetName() + std::string("'s bedroom"));
 	room = new Room(roomName, ROOM_BEDROOM, agent);

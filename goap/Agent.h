@@ -37,7 +37,7 @@ namespace GOAP
 		Agent(const Agent& other);
 		~Agent();
 
-		void InitializeCharacter(RoomManager* rm, std::string name, Gender gender,
+		void InitializeCharacter(std::string name, Gender gender,
 								 std::string backStory, int locationProbability[],
 								 bool canStab, bool canStrangle, bool canShoot,
 								 bool canBludgeon, int height, int weight);
@@ -90,6 +90,8 @@ namespace GOAP
 		void SetAsVictim();
 		void ResetVictimFlag();
 		bool IsVictim();
+
+		int* GetProbabilities();
 
 	protected:
 		void Interview();

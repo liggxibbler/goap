@@ -33,7 +33,7 @@ namespace GOAP
 
 			void ShowBedrooms( Agent* murderer );
 
-			void AddAgentProbabilities(Agent* agent, int prob[]);
+			void AddAgentProbabilities(Agent* agent);
 
 			float GetProb(Agent* agent, Room* room);
 			float GetProbOthers(Agent* agent, Room* room);

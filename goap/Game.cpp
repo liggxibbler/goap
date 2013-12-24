@@ -13,7 +13,8 @@
 #include "FactManager.h"
 
 #define MAX_TURNS 20
-#define NUMBER_OF_CHARACTERS 4
+#define NUMBER_OF_CHARACTERS	10
+#define NUMBER_OF_ACTORS		4
 
 #include <iostream>
 using namespace std;
@@ -23,7 +24,10 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = 1387321436;//(unsigned int)time(NULL);
+	m_seed = (unsigned int)time(NULL);
+	//1387925039;// PERFECT, false termination
+	//////////////////////////////////////////////////////////
+	//1387912431;// Interesting: veloute saw taking of knife, but not killing
 	//1387381488;// PERFECT
 	//1387321436;// PERFECT
 	//////////////////////////////////////////////////////////
@@ -67,7 +71,7 @@ void Game::Roam()
 	int item = 1;
 	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 	{
-		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
+		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) == 0)
 		{
 			item++;
 		}
@@ -264,7 +268,7 @@ bool Game::Run(/*database class thing*/)
 			return false;
 		}
 
-		FactManager::Instance()->Initialize(m_agents);
+		FactManager::Instance()->Initialize(m_actors);
 
 		MainLoop();
 		// prompt for another go
@@ -362,17 +366,37 @@ void Game::AssignRoles(/*int numWitness*/)
 	// pick (numWitness + 1) agents
 	// set as witness(es)
 
-	int MURDERER = rand() % NUMBER_OF_CHARACTERS;
-	int VICTIM = rand() % NUMBER_OF_CHARACTERS;
-	if (VICTIM == MURDERER)
+	int character_array[NUMBER_OF_CHARACTERS];
+	int role_array[NUMBER_OF_ACTORS];
+
+	for(int index = 0; index < NUMBER_OF_CHARACTERS; ++index)
 	{
-		VICTIM = (MURDERER + 1) % NUMBER_OF_CHARACTERS;
+		character_array[index] = 0;
+	}
+	for(int role = 0; role < NUMBER_OF_ACTORS; ++role)
+	{
+		// Pick random agent for each role
+		// Make sure collisions are handled
+		// In the end, role_array will contain the indices
+		//  of agents for each role
+		// The roles are:
+		// 0  : Murderer
+		// 1  : Victim
+		// 2+ : Witnesses
+		int index = rand() % NUMBER_OF_CHARACTERS;
+		while(character_array[index] != 0 )
+		{
+			++index;
+		}
+		character_array[index] = role;
+		role_array[role] = index;
 	}
 
-	m_murderer = m_agents[MURDERER];
+
+	m_murderer = m_agents[role_array[0]];
 	m_murderer->SetAsMurderer();
 
-	m_victim = m_agents[VICTIM];
+	m_victim = m_agents[role_array[1]];
 	m_victim->SetAsVictim();
 
 	GOAP::Condition vicIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
@@ -408,7 +432,14 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
-	m_actors.push_back(m_agents[2]);
+	m_actors.push_back(m_agents[role_array[2]]);
+	m_actors.push_back(m_agents[role_array[3]]);
+
+	for(auto actor(m_actors.begin()); actor != m_actors.end() ; ++actor )
+	{
+		m_roomManager->AddAgentProbabilities(*actor);
+	}
+	
 }
 
 void Game::PopulateRooms()
@@ -436,9 +467,9 @@ void Game::PopulateRooms()
 	room->AddObject(m_objects[6]);
 
 	//m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
-	for(int i=0; i<NUMBER_OF_CHARACTERS;++i)
+	for(int i=0; i<NUMBER_OF_ACTORS; ++i)
 	{
-		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_agents[i]);
+		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_actors[i]);
 	}
 }
 
@@ -449,69 +480,69 @@ void Game::InitializeAgents()
 
 	m_agents.clear();
 
-	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS ; ++i)
+	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS; ++i)
 		m_agents.push_back(new GOAP::Agent());
 
 
 	//0. Comrade Tartar
 	int locationProbability1[] = {0, 5, 50, 5, 40};
-	m_agents[0]->InitializeCharacter(m_roomManager, "Comrade Tartar", MALE
+	m_agents[0]->InitializeCharacter("Comrade Tartar", MALE
 	, "A Russia circus acrobat defected to England. A muscled and strong man that claims he has captured all the circus's bears barehanded"
 	, locationProbability1, true, true, false, true, 9, 10);
 
 	//1. Colonel Worcestershire
 	int locationProbability2[] = {0, 60, 5, 5, 30};
-	m_agents[1]->InitializeCharacter(m_roomManager, "Colonel Worcestershire", MALE
+	m_agents[1]->InitializeCharacter("Colonel Worcestershire", MALE
 	, "An old British military man. Though respected and feared by his men, old age has left visible marks on his body."
 	, locationProbability2, true, false, true, false, 8, 8);
 
 	//2. Don Gravy
 	int locationProbability3[] = {0, 30, 30, 5, 35};
-	m_agents[2]->InitializeCharacter(m_roomManager, "Don Gravy", MALE
+	m_agents[2]->InitializeCharacter("Don Gravy", MALE
 	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
 	, locationProbability3, true, true, true, true, 6, 9);
 
 	//3. Mademoiselle Velouté
 	int locationProbability4[] = {0, 30, 30, 10, 30};
-	m_agents[3]->InitializeCharacter(m_roomManager, "Mademoiselle Velouté", FEMALE
+	m_agents[3]->InitializeCharacter("Mademoiselle Velouté", FEMALE
 	, "A French super model on holidays."
 	, locationProbability4, true, true, true, false, 6, 4);
 
-	////4. Madame Béchamel
-	//int locationProbability5[] = {0, 15, 20, 5, 60};
-	//m_agents[4]->InitializeCharacter(m_roomManager, "Madame Béchamel", FEMALE
-	//, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
-	//, locationProbability5, true, true, false, false, 5, 6);
+	//4. Madame Béchamel
+	int locationProbability5[] = {0, 15, 20, 5, 60};
+	m_agents[4]->InitializeCharacter("Madame Béchamel", FEMALE
+	, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
+	, locationProbability5, true, true, false, false, 5, 6);
 
-	////5. Mrs.Hollandaise
-	//int locationProbability6[] = {30, 5, 30, 5, 30};
-	//m_agents[5]->InitializeCharacter(m_roomManager, "Mrs. Hollandaise", FEMALE
-	//, "The maid."
-	//, locationProbability6, true, true, false, true, 5, 5);
+	//5. Mrs.Hollandaise
+	int locationProbability6[] = {30, 5, 30, 5, 30};
+	m_agents[5]->InitializeCharacter("Mrs. Hollandaise", FEMALE
+	, "The maid."
+	, locationProbability6, true, true, false, true, 5, 5);
 
-	////6. Mr.Hollandaise
-	//int locationProbability7[] = {30, 5, 50, 5, 10};
-	//m_agents[6]->InitializeCharacter(m_roomManager, "Mr.Hollandaise", MALE
-	//, "The butler. A Dutch and French descendant butler and maid husband and wife"
-	//, locationProbability7, true, true, false, true, 7, 6);
+	//6. Mr.Hollandaise
+	int locationProbability7[] = {30, 5, 50, 5, 10};
+	m_agents[6]->InitializeCharacter("Mr.Hollandaise", MALE
+	, "The butler. A Dutch and French descendant butler and maid husband and wife"
+	, locationProbability7, true, true, false, true, 7, 6);
 
-	////7. Herr Duckefett
-	//int locationProbability8[] = {0, 5, 50, 5, 40};
-	//m_agents[7]->InitializeCharacter(m_roomManager, "Herr Duckefett", MALE
-	//, "A German explorer. HAs a strange taste when it comes to women"
-	//, locationProbability8, true, true, true, true, 8, 7);
+	//7. Herr Duckefett
+	int locationProbability8[] = {0, 5, 50, 5, 40};
+	m_agents[7]->InitializeCharacter("Herr Duckefett", MALE
+	, "A German explorer. HAs a strange taste when it comes to women"
+	, locationProbability8, true, true, true, true, 8, 7);
 
-	////8. prof.Custard
-	//int locationProbability9[] = {0, 35, 50, 5, 10};
-	//m_agents[8]->InitializeCharacter(m_roomManager, "prof.Custard", MALE
-	//, "British renowned "
-	//, locationProbability9, true, true, true, true, 8, 7);
+	//8. prof.Custard
+	int locationProbability9[] = {0, 35, 50, 5, 10};
+	m_agents[8]->InitializeCharacter("Prof.Custard", MALE
+	, "British renowned "
+	, locationProbability9, true, true, true, true, 8, 7);
 
-	////9. Signor Bolognese
-	//int locationProbability10[] = {0, 50, 5, 5, 40};
-	//m_agents[9]->InitializeCharacter(m_roomManager, "Signor Bolognese", MALE
-	//, "Italian, sleezy, barber, slim, fast, cheap"
-	//, locationProbability10, true, true, true, true, 8, 7);
+	//9. Signor Bolognese
+	int locationProbability10[] = {0, 50, 5, 5, 40};
+	m_agents[9]->InitializeCharacter("Signor Bolognese", MALE
+	, "Italian, sleezy, barber, slim, fast, cheap"
+	, locationProbability10, true, true, true, true, 8, 7);
 }
 
 void Game::InitializeObjects()
