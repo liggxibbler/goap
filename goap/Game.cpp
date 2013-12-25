@@ -25,6 +25,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1387930815;/ /Absolutely perfect
 	//1387929138;// AWESOME
 	//1387926598;// PERFECT
 	//////////////////////////////////////////////////////////
@@ -388,6 +389,7 @@ void Game::AssignRoles(/*int numWitness*/)
 		while(character_array[index] != 0 )
 		{
 			++index;
+			index %= NUMBER_OF_CHARACTERS;
 		}
 		character_array[index] = role;
 		role_array[role] = index;
