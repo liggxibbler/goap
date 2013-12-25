@@ -373,7 +373,7 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	for(int index = 0; index < NUMBER_OF_CHARACTERS; ++index)
 	{
-		character_array[index] = 0;
+		character_array[index] = -1;
 	}
 	for(int role = 0; role < NUMBER_OF_ACTORS; ++role)
 	{
@@ -386,7 +386,7 @@ void Game::AssignRoles(/*int numWitness*/)
 		// 1  : Victim
 		// 2+ : Witnesses
 		int index = rand() % NUMBER_OF_CHARACTERS;
-		while(character_array[index] != 0 )
+		while(character_array[index] != -1 )
 		{
 			++index;
 			index %= NUMBER_OF_CHARACTERS;
