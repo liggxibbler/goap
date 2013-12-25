@@ -25,6 +25,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1387929138;// AWESOME
 	//1387926598;// PERFECT
 	//////////////////////////////////////////////////////////
 	//1387912431;// Interesting: veloute saw taking of knife, but not killing
