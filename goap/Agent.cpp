@@ -216,6 +216,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			else if (ps == PLAN_STAT_SUCCESS)
 			{
 				m_nextExecution = m_plan;
+				this->Update(om, rm, turn); // XIBB?
 			}
 			else
 			{
