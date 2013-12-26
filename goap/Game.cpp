@@ -391,7 +391,7 @@ void Game::AssignRoles(/*int numWitness*/)
 			++index;
 			index %= NUMBER_OF_CHARACTERS;
 		}
-		character_array[index] = role;
+		character_array[index] = role + 1;
 		role_array[role] = index;
 	}
 
