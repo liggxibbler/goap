@@ -1,5 +1,6 @@
 #include "Murder.h"
 #include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -151,4 +152,64 @@ int Murder::Cost(RoomManager* rm)
 	return cost;
 
 	//return rand() % 1000;
+}
+
+void Murder::SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative)
+{
+	GetArg(SEMANTIC_ROLE_AGENT)->instance = agent;
+	GetArg(SEMANTIC_ROLE_PATIENT0)->instance = patient;
+	GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance = instrument;
+	GetArg(SEMANTIC_ROLE_LOCATIVE)->instance = locative;
+}
+
+void Murder::Dispatch(int turn)
+{
+	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	this->SetLogged();
+	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Room* room = agent->GetRoom();
+	
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	{
+		if((*agent)->IsVictim() == false)
+		{
+			m_numWitness++;
+		}
+		if( ! (*agent)->IsMurderer() ) // Treat murdere differently
+		{
+			(*agent)->Log(turn, this);
+		}
+	}
+	
+	switch(m_numWitness)
+	{
+	case 1:
+		// YOU WHERE ALONE
+		// LIE ABOUT WHERE YOU WERE
+		break;
+	case 2:
+		{
+			// SOMEONE SAW YOU
+			// PIN IT ON THEM
+			Murder* murder = (Murder*)this->Clone();
+			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+			{
+				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
+				{
+					murder->SetArguments(*agent,
+						(Agent*)GetArg(SEMANTIC_ROLE_PATIENT0)->instance,
+						GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance,
+						(Room*)GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance);
+				}
+			}
+			Agent* falseAgent = (Agent*)cp->instance;
+			falseAgent->Log(turn, murder);
+			break;
+		}
+	default:
+		// MORE THAN ONE PERSON SAW YOU
+		// THIS IS NOT A GOOD SCENARIO
+		break;
+	};
+
 }

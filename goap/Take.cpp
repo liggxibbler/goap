@@ -1,6 +1,7 @@
 #include "Take.h"
 #include "RoomManager.h"
-#include "Room.h"
+#include "Agent.h"
+#include "Prop.h"
 
 using namespace GOAP;
 
@@ -114,9 +115,7 @@ std::string Take::Express(Agent* agent, Room* room)
 	std::string _agent;
 	std::string _patient;
 
-	/// XIBB /// weirdest error. agent cannot be cast down to Object*. Why?
-
-	if(sub->instance == (Object*)agent)
+	if(sub->instance == agent)
 	{
 		_agent = "I";
 	}
@@ -125,7 +124,7 @@ std::string Take::Express(Agent* agent, Room* room)
 		_agent = sub->instance->GetName();
 	}
 
-	if(obj->instance == (Object*)agent)
+	if(obj->instance == agent)
 	{
 		_patient = "me";
 	}

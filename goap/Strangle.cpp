@@ -1,5 +1,6 @@
 #include "Strangle.h"
 #include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 

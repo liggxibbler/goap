@@ -345,16 +345,16 @@ void Agent::GiveStatement()
 				ActionType at = *ar.action;
 				int numWitness = ar.action->GetNumWitness();
 				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
-				actionIsSuspect = (numSuspect > 0);
+				//actionIsSuspect = (numSuspect > 0); // XIBB
 
 				if ( actionIsSuspect && (numWitness > numSuspect) &&
 					(ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
 				{
-					agentIsSuspect = true;
+					//agentIsSuspect = true;// XIBB
 				}
 			}
 
-			if(!actionIsSuspect && !agentIsSuspect)
+			if(true)//!actionIsSuspect && !agentIsSuspect)// XIBB
 			{
 				if(oldTurn != ar.turn)
 				{

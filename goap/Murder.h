@@ -11,6 +11,10 @@ namespace GOAP
 	public:
 		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE	;
 		virtual ExecutionStatus ExecuteWorkhorse(int turn) _CPP_11_OVERRIDE;
+
+		void SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative);
+		virtual void Dispatch(int turn);
+
 	protected:
 		virtual void InitArgs() _CPP_11_OVERRIDE;
 		virtual void InitPreconditions();
