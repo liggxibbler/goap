@@ -24,9 +24,13 @@ int main()
 	//seed = (unsigned int)time(NULL);
 	//srand(1386261647);
 
+	Action::OpenFile();
+
 	Game* game = new Game();
 	game->Initialize();
 	game->Run();
+
+	Action::CloseFile();
 
 	return 0;
 }

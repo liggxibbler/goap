@@ -12,6 +12,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <fstream>
 
 namespace GOAP
 {
@@ -77,6 +78,11 @@ namespace GOAP
 
 		int GetNumWitness();
 
+		void DumpToFile(int turn);
+
+		static void OpenFile();
+		static void CloseFile();
+
 	protected:
 
 		virtual void InitArgs() = 0;
@@ -113,6 +119,7 @@ namespace GOAP
 		int m_numWitness;
 
 		bool m_logged;
+		static std::ofstream s_outFile;
 	};
 }
 #endif

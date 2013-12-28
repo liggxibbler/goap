@@ -196,6 +196,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				m_goal = m_goal->GetParent();
 				m_nextExecution = 0;
+				this->Update(om, rm, turn);
 			}
 			else if(as == EXEC_STAT_FAIL)
 			{

@@ -117,6 +117,8 @@ Room* FactManager::GetRoom (Agent* agent, int turn)
 
 int* FactManager::GetAloneTimes(Agent* agent, int turn)
 {
+	std::vector<int> turns;
+
 	for(int time=turn; time >=0; time++)
 	{
 		// if agent is alone

@@ -6,6 +6,8 @@
 
 using namespace GOAP;
 
+std::ofstream Action::s_outFile;
+
 Action::Action() : m_status(EXEC_STAT_INIT), m_logged(false), m_numWitness(0)
 {
 }
@@ -315,6 +317,9 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 		{
 			ExecutionStatus stat = ExecuteWorkhorse(turn);
 			Dispatch(turn);
+
+			Action::DumpToFile(turn);
+
 			return stat;
 		}
 		else
@@ -389,4 +394,19 @@ void Action::Debug()
 int Action::GetNumWitness()
 {
 	return m_numWitness;
+}
+
+void Action::OpenFile()
+{
+	s_outFile.open("action_dump.txt");
+}
+
+void Action::CloseFile()
+{
+	s_outFile.close();
+}
+
+void Action::DumpToFile(int turn)
+{
+	s_outFile << TURN2TIME(turn) << "\t" <<Express(0, 0) << std::endl;
 }

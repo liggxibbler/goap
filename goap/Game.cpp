@@ -14,7 +14,7 @@
 
 #define MAX_TURNS 20
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		4
+#define NUMBER_OF_ACTORS		3
 
 #include <iostream>
 using namespace std;
@@ -112,11 +112,11 @@ void Game::Roam()
 		m_vecRoom.push_back(*iter);
 	}
 
-#ifdef _GOAP_DEBUG
+//#ifdef _GOAP_DEBUG
 	int iMap = item;
 	cout << "\nOr:\n";
 	cout << item << ") SEE THE MAP" << endl;
-#endif
+//#endif
 
 	cout << "\n Or enter 0 to quit.\n";
 
@@ -143,12 +143,12 @@ void Game::Roam()
 	{
 		m_currentRoom = m_vecRoom[answer - iRoom];
 	}
-	#ifdef _GOAP_DEBUG
+	//#ifdef _GOAP_DEBUG
 	else if(answer == iMap)
 	{
 		DisplayRoomMap();
 	}
-	#endif
+	//#endif
 	else
 	{
 		// bad answer, do over
@@ -435,9 +435,10 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
-	m_actors.push_back(m_agents[role_array[2]]);
-	m_actors.push_back(m_agents[role_array[3]]);
-
+	for(int otherRoles = 2; otherRoles < NUMBER_OF_ACTORS; ++otherRoles)
+	{
+		m_actors.push_back(m_agents[role_array[otherRoles]]);
+	}
 	for(auto actor(m_actors.begin()); actor != m_actors.end() ; ++actor )
 	{
 		m_roomManager->AddAgentProbabilities(*actor);
@@ -614,7 +615,7 @@ void Game::DisplayRoomMap()
 	for(int turn=1; turn<m_turn; ++turn)
 	{
 		cout << turn << ".	";
-		for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+		for(auto agent(m_actors.begin()); agent != m_actors.end(); ++agent)
 		{
 			int id = 0;
 			if(fm->GetRoom(*agent, turn) != 0)
