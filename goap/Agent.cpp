@@ -6,10 +6,11 @@
 //#include "Wander.h"
 #include "ActionRecord.h"
 #include <conio.h>
+#include <algorithm>
 
 using namespace GOAP;
 
-Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
+Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
@@ -19,7 +20,7 @@ Agent::Agent() : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_goal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
+Agent::Agent(std::string name) : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	m_name = name;
@@ -88,7 +89,7 @@ Agent::~Agent()
 
 Goal* Agent::GetGoal()
 {
-	return m_goal;
+	return m_currentGoal;
 }
 
 std::list<ActionType>::iterator Agent::FirstAction()
@@ -151,13 +152,13 @@ void Agent::AddAction(ActionType at)
 
 void Agent::SetGoal(Goal* goal)
 {
-	m_goal = goal;
+	m_currentGoal = goal;
 }
 
 Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
 	//Plan* plan = new Plan();
-	if( m_planner->Devise(this, am, om, m_goal->GetPlan()) == PLAN_STAT_SUCCESS)
+	if( m_planner->Devise(this, am, om, m_currentGoal->GetPlan()) == PLAN_STAT_SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}
@@ -194,19 +195,22 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			}
 			else if(as == EXEC_STAT_DONE)
 			{
-				m_goal = m_goal->GetParent();
+				//m_currentGoal = m_currentGoal->GetParent();
+				m_goals.remove(m_currentGoal);
+				m_currentGoal = *(m_goals.begin());
+
 				m_nextExecution = 0;
-				this->Update(om, rm, turn);
+				this->Update(om, rm, turn); // need replanning! must waist know thyme
 			}
 			else if(as == EXEC_STAT_FAIL)
 			{
 				m_plan = GetPlan(ActionManager::Instance(), om);
 			}
 		}
-		else if(m_goal != 0)
+		else if(m_currentGoal != 0)
 		{
 			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
-			PlanStatus ps = m_goal->GetPlan()->GetStatus();
+			PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
 			if(ps == PLAN_STAT_FAIL)
 			{
 				Room* room = rm->GetRandomRoom(this);
@@ -216,7 +220,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			}
 			else if (ps == PLAN_STAT_SUCCESS)
 			{
-				m_nextExecution = m_goal->GetPlan();
+				m_nextExecution = m_currentGoal->GetPlan();
 				this->Update(om, rm, turn); // XIBB?
 			}
 			else
@@ -485,4 +489,16 @@ bool Agent::IsVictim()
 int* Agent::GetProbabilities()
 {
 	return m_locationProbability;
+}
+
+void Agent::AddGoal(Goal* goal)
+{
+	m_goals.push_back(goal);
+	SortGoals();
+	m_currentGoal = *(m_goals.begin());
+}
+
+void Agent::SortGoals()
+{
+	m_goals.sort(m_compare);
 }

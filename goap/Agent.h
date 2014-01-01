@@ -93,12 +93,25 @@ namespace GOAP
 
 		int* GetProbabilities();
 
+		void AddGoal(Goal* goal);
+
 	protected:
+
 		void Interview();
-
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
+		void SortGoals();
+		
+		class GoalCpr
+		{
+		public:
+			bool operator () (Goal* g1, Goal* g2)
+			{
+				return (g1->GetPriority() > g2->GetPriority());
+			}
+		} m_compare;
 
-		Goal* m_goal;
+		Goal* m_currentGoal;
+		std::list<Goal*> m_goals;
 		std::list<ActionType> m_actions;
 
 		int m_inventory;

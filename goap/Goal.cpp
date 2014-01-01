@@ -40,11 +40,15 @@ m_parent(parent), m_action(action), m_negate(negate)
 
 Goal::~Goal()
 {
-	if((m_action != 0) && (m_action->IsLogged() == false))
-	{
-		delete m_action;
-		m_action = 0;
-	}
+	// IS THIS NECESSARY?
+	//if(m_action != 0)
+	//{
+	//	if(m_action->IsLogged() == false)
+	//	{
+	//		delete m_action;
+	//		m_action = 0;
+	//	}
+	//}
 	for(auto child(m_children.begin()); child != m_children.end(); ++child)
 	{
 		delete (*child);
@@ -208,4 +212,14 @@ void Goal::SetDepth(int depth)
 Plan* Goal::GetPlan()
 {
 	return m_plan;
+}
+
+void Goal::SetPriority(int priority)
+{
+	m_priority = priority;
+}
+
+int Goal::GetPriority()
+{
+	return m_priority;
 }
