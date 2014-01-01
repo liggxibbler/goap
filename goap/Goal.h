@@ -11,6 +11,7 @@ namespace GOAP
 	typedef std::list<ConditionParameter>::iterator CondParamIter;
 
 	class Action;
+	class Plan;
 
 	class Goal
 	{
@@ -18,7 +19,7 @@ namespace GOAP
 
 		Goal();
 		Goal(Goal* parent, Action* action, bool negate);
-		Goal(const Goal& other);
+		//Goal(const Goal& other);
 		~Goal();
 
 		bool Evaluate(Op::OperatorManager* om);
@@ -53,6 +54,8 @@ namespace GOAP
 		int GetCost();
 		void SetCost(int cost);
 
+		Plan* GetPlan();
+
 	private:
 		Goal* m_parent;						// XIBB Theoretically, there can be multiple parents. So be careful.
 											// i.e. individual goal nodes can be reached from more than on higher goal
@@ -63,6 +66,7 @@ namespace GOAP
 
 		int m_depth;						// How many goals are stacked on top?
 		int m_cost;							// Minimum cost so far from this state to ultimate goal
+		Plan* m_plan;
 	};
 }
 

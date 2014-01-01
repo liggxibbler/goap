@@ -157,7 +157,7 @@ void Agent::SetGoal(Goal* goal)
 Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
 	//Plan* plan = new Plan();
-	if( m_planner->Devise(this, am, om, m_plan) == PLAN_STAT_SUCCESS)
+	if( m_planner->Devise(this, am, om, m_goal->GetPlan()) == PLAN_STAT_SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}
@@ -206,7 +206,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		else if(m_goal != 0)
 		{
 			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
-			PlanStatus ps = m_plan->GetStatus();
+			PlanStatus ps = m_goal->GetPlan()->GetStatus();
 			if(ps == PLAN_STAT_FAIL)
 			{
 				Room* room = rm->GetRandomRoom(this);
@@ -216,7 +216,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			}
 			else if (ps == PLAN_STAT_SUCCESS)
 			{
-				m_nextExecution = m_plan;
+				m_nextExecution = m_goal->GetPlan();
 				this->Update(om, rm, turn); // XIBB?
 			}
 			else

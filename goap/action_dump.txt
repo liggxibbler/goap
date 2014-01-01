@@ -1,14 +1,12 @@
+00:10	Mademoiselle Velouté went to Mademoiselle Velouté's bedroom
 00:10	Madame Béchamel went to The Kitchen
-00:10	Colonel Worcestershire went to The Living Room
-00:10	Don Gravy went to Don Gravy's bedroom
-00:20	Madame Béchamel took Rope
-00:30	Madame Béchamel went to The Living Room
-00:30	Colonel Worcestershire went to The Bathroom
-00:30	Don Gravy went to The Living Room
-00:40	Madame Béchamel strangled Don Gravy with Rope
-00:50	Madame Béchamel dropped Rope
-00:50	Colonel Worcestershire went to Colonel Worcestershire's bedroom
-01:10	Madame Béchamel went to The Dining Room
-01:20	Colonel Worcestershire went to The Kitchen
-01:30	Madame Béchamel went to The Living Room
-01:40	Colonel Worcestershire went to The Living Room
+00:20	Mr.Hollandaise went to The Living Room
+00:30	Mademoiselle Velouté went to The Living Room
+00:30	Madame Béchamel went to Madame Béchamel's bedroom
+00:40	Mademoiselle Velouté took Gun
+00:40	Mr.Hollandaise went to The Bathroom
+00:50	Mademoiselle Velouté went to The Dining Room
+00:50	Madame Béchamel went to The Dining Room
+01:00	Mademoiselle Velouté shot Madame Béchamel with Gun
+01:10	Mademoiselle Velouté dropped Gun
+01:10	Mr.Hollandaise went to The Dining Room

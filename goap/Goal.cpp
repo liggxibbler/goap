@@ -1,5 +1,6 @@
 #include "Goal.h"
 #include "Action.h"
+#include "Plan.h"
 
 using namespace GOAP;
 
@@ -9,27 +10,33 @@ Goal::Goal()
 	m_parent = NULL;
 	m_depth = 0;
 	m_cost = 0;
+	m_plan = new Plan();
+	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
 	m_negate = false;
 }
 
 Goal::Goal(Goal* parent, Action* action, bool negate) :
 m_parent(parent), m_action(action), m_negate(negate)
 {
+	m_depth = 0;
+	m_cost = 0;
+	m_plan = new Plan();
+	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
 }
 
-Goal::Goal(const Goal& other)
-{
-	m_parent = other.m_parent;
-	m_action = other.m_action;
-	m_negate = other.m_negate;
-	m_depth = other.m_depth;
-	m_cost = other.m_cost;
-	
-	for(auto cond(other.m_conditions.begin()); cond != other.m_conditions.end(); ++cond)
-	{
-		m_conditions.push_back(*cond);
-	}
-}
+//Goal::Goal(const Goal& other)
+//{
+//	m_parent = other.m_parent;
+//	m_action = other.m_action;
+//	m_negate = other.m_negate;
+//	m_depth = other.m_depth;
+//	m_cost = other.m_cost;
+//	
+//	for(auto cond(other.m_conditions.begin()); cond != other.m_conditions.end(); ++cond)
+//	{
+//		m_conditions.push_back(*cond);
+//	}
+//}
 
 Goal::~Goal()
 {
@@ -196,4 +203,9 @@ int Goal::GetCost()
 void Goal::SetDepth(int depth)
 {
 	m_depth = depth;
+}
+
+Plan* Goal::GetPlan()
+{
+	return m_plan;
 }
