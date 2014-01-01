@@ -155,7 +155,8 @@ Goal* Plan::Validate()
 		}
 		else
 		{
-			delete temp;
+			//Goal::~Goal is not written correctly, redo!
+			//delete temp;
 			temp = 0;
 			return 0;
 		}

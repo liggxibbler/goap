@@ -1,11 +1,18 @@
-00:10	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-00:10	Herr Duckefett went to The Living Room
-00:30	Mrs. Hollandaise went to The Living Room
-00:30	Colonel Worcestershire went to The Kitchen
-00:30	Mr.Hollandaise went to The Bathroom
-00:40	Mrs. Hollandaise took Statue
-00:50	Mrs. Hollandaise waited for Colonel Worcestershire
-00:50	Colonel Worcestershire went to The Living Room
-00:50	Herr Duckefett went to Herr Duckefett's bedroom
-00:50	Mr.Hollandaise went to The Dining Room
-01:00	Mrs. Hollandaise hit Colonel Worcestershire in the head with Statue
+00:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
+00:10	Signor Bolognese went to The Living Room
+00:30	Don Gravy went to The Kitchen
+00:30	Signor Bolognese went to Signor Bolognese's bedroom
+00:30	Colonel Worcestershire went to The Living Room
+00:50	Comrade Tartar went to The Kitchen
+00:50	Don Gravy went to The Living Room
+00:50	Colonel Worcestershire went to The Dining Room
+00:50	Signor Bolognese went to The Kitchen
+01:00	Comrade Tartar took Rope
+01:10	Comrade Tartar went to The Living Room
+01:10	Signor Bolognese went to The Dining Room
+01:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
+01:20	Comrade Tartar strangled Don Gravy with Rope
+01:30	Comrade Tartar dropped Rope
+01:30	Signor Bolognese went to The Kitchen
+01:30	Colonel Worcestershire went to The Kitchen
+01:40	Comrade Tartar took Gun

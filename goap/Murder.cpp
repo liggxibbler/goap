@@ -24,7 +24,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
 	notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
 	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
-	loseMurderWeapon->SetPriority(100);
+	loseMurderWeapon->SetPriority(19);
 
 	agent->AddGoal(loseMurderWeapon);
 

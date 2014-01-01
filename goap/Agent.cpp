@@ -197,7 +197,10 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				//m_currentGoal = m_currentGoal->GetParent();
 				m_goals.remove(m_currentGoal);
-				m_currentGoal = *(m_goals.begin());
+				if(m_goals.size() > 0)
+				{
+					m_currentGoal = *(m_goals.begin());
+				}
 
 				m_nextExecution = 0;
 				this->Update(om, rm, turn); // need replanning! must waist know thyme
