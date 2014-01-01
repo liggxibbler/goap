@@ -201,6 +201,10 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				{
 					m_currentGoal = *(m_goals.begin());
 				}
+				else
+				{
+					m_currentGoal = 0;
+				}
 
 				m_nextExecution = 0;
 				this->Update(om, rm, turn); // need replanning! must waist know thyme
