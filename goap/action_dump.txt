@@ -1,33 +1,24 @@
-00:00	Comrade Tartar went to Comrade Tartar's bedroom
-00:10	Comrade Tartar went to The Bathroom
-00:10	Don Gravy went to The Kitchen
-00:10	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-00:20	Comrade Tartar went to The Kitchen
-00:30	Comrade Tartar took Rope
-00:30	Don Gravy went to Don Gravy's bedroom
-00:30	Signor Bolognese went to The Bathroom
-00:30	Mr.Hollandaise went to The Bathroom
-00:40	Comrade Tartar went to The Living Room
-00:50	Comrade Tartar waited for Signor Bolognese
-00:50	Mr.Hollandaise went to The Living Room
-00:50	Signor Bolognese went to Signor Bolognese's bedroom
-00:50	Don Gravy went to The Kitchen
-01:00	Comrade Tartar waited for Signor Bolognese
-01:10	Comrade Tartar waited for Signor Bolognese
-01:10	Don Gravy went to The Living Room
-01:10	Mr.Hollandaise went to The Bathroom
-01:10	Signor Bolognese went to The Dining Room
-01:20	Comrade Tartar waited for Signor Bolognese
-01:30	Comrade Tartar waited for Signor Bolognese
-01:30	Signor Bolognese went to The Bathroom
-01:30	Don Gravy went to The Kitchen
-01:30	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-01:40	Comrade Tartar waited for Signor Bolognese
-01:50	Comrade Tartar waited for Signor Bolognese
-01:50	Don Gravy went to Don Gravy's bedroom
-01:50	Signor Bolognese went to The Living Room
-01:50	Mr.Hollandaise went to The Dining Room
-02:00	Comrade Tartar strangled Signor Bolognese with Rope
-02:10	Comrade Tartar dropped Rope
-02:10	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-02:10	Don Gravy went to The Living Room
+00:10	Mademoiselle Velouté went to The Kitchen
+00:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
+00:10	Herr Duckefett went to The Kitchen
+00:20	Mademoiselle Velouté took Rope
+00:30	Mademoiselle Velouté went to The Dining Room
+00:30	Herr Duckefett went to Herr Duckefett's bedroom
+00:40	Mademoiselle Velouté waited for Herr Duckefett
+00:50	Mademoiselle Velouté waited for Herr Duckefett
+00:50	Herr Duckefett went to The Living Room
+01:00	Mademoiselle Velouté waited for Herr Duckefett
+01:10	Mademoiselle Velouté waited for Herr Duckefett
+01:10	Herr Duckefett went to The Bathroom
+01:20	Mademoiselle Velouté waited for Herr Duckefett
+01:30	Mademoiselle Velouté waited for Herr Duckefett
+01:40	Mademoiselle Velouté waited for Herr Duckefett
+01:50	Mademoiselle Velouté waited for Herr Duckefett
+01:50	Herr Duckefett went to The Dining Room
+01:50	Colonel Worcestershire went to The Bathroom
+02:00	Mademoiselle Velouté strangled Herr Duckefett with Rope
+02:10	Mademoiselle Velouté dropped Rope
+02:10	Colonel Worcestershire went to The Living Room
+02:20	Mademoiselle Velouté went to The Living Room
+02:30	Mademoiselle Velouté took Gun
+02:30	Colonel Worcestershire went to The Dining Room

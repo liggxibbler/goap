@@ -14,7 +14,7 @@
 
 #define MAX_TURNS 20
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		4
+#define NUMBER_OF_ACTORS		3
 
 #include <iostream>
 using namespace std;
@@ -24,7 +24,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = 1388623276;//(unsigned int)time(NULL);
+	m_seed = (unsigned int)time(NULL);
 	//1388591446;// Nothing special
 	//1387930815;/ /Absolutely perfect
 	//1387929138;// AWESOME
