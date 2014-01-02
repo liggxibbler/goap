@@ -410,3 +410,8 @@ void Action::DumpToFile(int turn)
 {
 	s_outFile << TURN2TIME(turn) << "\t" <<Express(0, 0) << std::endl;
 }
+
+Goal* Action::FollowupGoal()
+{
+	return 0;
+}

@@ -95,12 +95,17 @@ namespace GOAP
 
 		void AddGoal(Goal* goal);
 
+		bool PeekGoal();
+		void PickCurrentGoal();
+
 	protected:
 
 		void Interview();
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
 		void SortGoals();
-		
+
+	protected:
+
 		class GoalCpr
 		{
 		public:

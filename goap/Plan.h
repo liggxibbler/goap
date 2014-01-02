@@ -29,9 +29,17 @@ namespace GOAP
 
 		Goal* Validate();
 
+		virtual Goal* FollowupGoal();
+
+		virtual void Pause();
+		virtual void Resume();
+
 	private:
 		Goal* m_plan;
 		PlanStatus m_status;
+		Goal* m_lastPlan;
+		ExecutionStatus m_execStat;
+		ExecutionStatus m_ExecStatStored;
 	};
 }
 

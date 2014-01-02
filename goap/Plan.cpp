@@ -6,6 +6,7 @@ using namespace GOAP;
 Plan::Plan()
 {
 	m_plan = NULL;
+	m_lastPlan = NULL;
 }
 
 Plan::Plan(Goal* goal) : m_plan(goal)
@@ -29,17 +30,21 @@ ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 	if(action != NULL)
 	{
 		ExecutionStatus stat = action->Execute(om, turn);
+		m_execStat = stat;
 		switch(stat)
 		{
 		case EXEC_STAT_SUCCESS:
 		case EXEC_STAT_MURDER:
 			// delete this one
+			m_lastPlan = m_plan;
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
-			return EXEC_STAT_RUNNING;
+			m_execStat = EXEC_STAT_RUNNING;
+			break;
 		case EXEC_STAT_SKIP:
 			m_plan = m_plan->GetParent();
-			return this->Execute(om, turn);
+			m_execStat = this->Execute(om, turn);
+			break;
 		case EXEC_STAT_RUNNING:
 			//
 			//m_plan = m_plan;
@@ -52,16 +57,17 @@ ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 			break;
 		default:
 			// throw exception
-			return EXEC_STAT_UNKNOWN;
+			m_execStat = EXEC_STAT_UNKNOWN;
 			break;
 		};
-		return stat;
+		return m_execStat;
 	}
 	else
 	{
 		// this is the ultimate goal
-		// 
-		return EXEC_STAT_DONE;
+		//
+		m_execStat = EXEC_STAT_DONE;
+		return m_execStat;
 	}
 }
 
@@ -87,7 +93,7 @@ void Plan::SetStatus(PlanStatus status)
 
 ExecutionStatus Plan::GetExecutionStatus()
 {
-	return m_plan->GetAction()->GetStatus();
+	return m_execStat;
 }
 
 Goal* Plan::Validate()
@@ -165,4 +171,20 @@ Goal* Plan::Validate()
 	{
 		return 0;
 	}
+}
+
+Goal* Plan::FollowupGoal()
+{
+	return m_lastPlan->GetAction()->FollowupGoal();
+}
+
+void Plan::Pause()
+{
+	m_ExecStatStored = m_execStat;
+	m_execStat = EXEC_STAT_PAUSED;
+}
+
+void Plan::Resume()
+{
+	m_execStat = m_ExecStatStored;
 }

@@ -83,6 +83,8 @@ namespace GOAP
 		static void OpenFile();
 		static void CloseFile();
 
+		virtual Goal* FollowupGoal();
+
 	protected:
 
 		virtual void InitArgs() = 0;

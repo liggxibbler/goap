@@ -434,6 +434,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	goal->SetPriority(10);
 	m_murderer->AddGoal(goal);
 
+	m_murderer->PickCurrentGoal();
 
 	m_murderer->See(m_victim);
 	m_murderer->AddAction(ACTION_WAITFOR);

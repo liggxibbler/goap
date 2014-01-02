@@ -15,6 +15,8 @@ namespace GOAP
 		void SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative);
 		virtual void Dispatch(int turn);
 
+		virtual Goal* FollowupGoal();
+
 	protected:
 		virtual void InitArgs() _CPP_11_OVERRIDE;
 		virtual void InitPreconditions();

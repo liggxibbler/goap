@@ -1,34 +1,22 @@
+00:10	Mrs. Hollandaise went to The Kitchen
 00:10	Madame Béchamel went to The Kitchen
-00:10	Mrs. Hollandaise went to The Bathroom
-00:10	Herr Duckefett went to The Kitchen
-00:10	Signor Bolognese went to The Living Room
-00:20	Madame Béchamel took Rope
-00:30	Madame Béchamel went to The Dining Room
-00:30	Herr Duckefett went to The Dining Room
-00:30	Signor Bolognese went to Signor Bolognese's bedroom
-00:40	Madame Béchamel waited for Mrs. Hollandaise
-00:50	Madame Béchamel waited for Mrs. Hollandaise
-00:50	Herr Duckefett went to The Kitchen
-01:00	Madame Béchamel waited for Mrs. Hollandaise
-01:10	Madame Béchamel waited for Mrs. Hollandaise
-01:10	Signor Bolognese went to The Living Room
-01:20	Madame Béchamel waited for Mrs. Hollandaise
-01:20	Mrs. Hollandaise went to Mrs. Hollandaise's bedroom
-01:30	Madame Béchamel waited for Mrs. Hollandaise
-01:30	Herr Duckefett went to The Living Room
-01:40	Madame Béchamel waited for Mrs. Hollandaise
-01:40	Mrs. Hollandaise went to The Living Room
-01:50	Madame Béchamel waited for Mrs. Hollandaise
-01:50	Herr Duckefett went to Herr Duckefett's bedroom
-01:50	Signor Bolognese went to The Kitchen
-02:00	Madame Béchamel waited for Mrs. Hollandaise
-02:10	Madame Béchamel waited for Mrs. Hollandaise
-02:10	Signor Bolognese went to Signor Bolognese's bedroom
-02:10	Mrs. Hollandaise went to The Dining Room
-02:20	Madame Béchamel strangled Mrs. Hollandaise with Rope
-02:30	Madame Béchamel dropped Rope
-02:30	Signor Bolognese went to The Bathroom
-02:40	Madame Béchamel went to The Living Room
-02:50	Madame Béchamel took Gun
-02:50	Signor Bolognese went to The Living Room
-02:50	Herr Duckefett went to The Living Room
+00:10	Mr.Hollandaise went to The Living Room
+00:20	Mrs. Hollandaise took Rope
+00:20	Herr Duckefett went to The Kitchen
+00:30	Mrs. Hollandaise went to The Dining Room
+00:30	Madame Béchamel went to The Living Room
+00:30	Mr.Hollandaise went to The Bathroom
+00:40	Mrs. Hollandaise waited for Madame Béchamel
+00:50	Mrs. Hollandaise waited for Madame Béchamel
+00:50	Herr Duckefett went to The Living Room
+00:50	Mr.Hollandaise went to Mr.Hollandaise's bedroom
+01:00	Mrs. Hollandaise waited for Madame Béchamel
+01:10	Mrs. Hollandaise waited for Madame Béchamel
+01:10	Madame Béchamel went to Madame Béchamel's bedroom
+01:10	Herr Duckefett went to Herr Duckefett's bedroom
+01:10	Mr.Hollandaise went to The Dining Room
+01:20	Mrs. Hollandaise waited for Madame Béchamel
+01:30	Mrs. Hollandaise waited for Madame Béchamel
+01:30	Madame Béchamel went to The Dining Room
+01:30	Herr Duckefett went to The Bathroom
+01:40	Mrs. Hollandaise strangled Madame Béchamel with Rope

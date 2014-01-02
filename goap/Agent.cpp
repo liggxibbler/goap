@@ -181,6 +181,21 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 
 	if( m_isAlive && ( m_updated == false ) )
 	{
+		if( m_currentGoal != 0)
+		{
+			if( PeekGoal() && ( m_currentGoal->GetPlan()->GetExecutionStatus() == EXEC_STAT_PAUSED ) )
+			{
+				m_currentGoal->GetPlan()->Resume();
+				m_nextExecution = m_currentGoal->GetPlan();
+			}
+			else if( !PeekGoal() )
+			{
+				m_currentGoal->GetPlan()->Pause();
+				PickCurrentGoal();
+				m_nextExecution = m_currentGoal->GetPlan();
+			}
+		}
+
 		if(m_nextExecution != 0)
 		{
 			ExecutionStatus as = m_nextExecution->Execute(om, turn);
@@ -197,13 +212,14 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				//m_currentGoal = m_currentGoal->GetParent();
 				m_goals.remove(m_currentGoal);
-				if(m_goals.size() > 0)
+				
+				if(m_nextExecution->FollowupGoal() != 0)
 				{
-					m_currentGoal = *(m_goals.begin());
+					this->AddGoal(m_nextExecution->FollowupGoal());
 				}
 				else
 				{
-					m_currentGoal = 0;
+					PickCurrentGoal();
 				}
 
 				m_nextExecution = 0;
@@ -213,27 +229,26 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				m_plan = GetPlan(ActionManager::Instance(), om);
 			}
-		}
+		}	
 		else if(m_currentGoal != 0)
 		{
-			GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
-			PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
-			if(ps == PLAN_STAT_FAIL)
-			{
-				Room* room = rm->GetRandomRoom(this);
-				GoTo* gt = new GoTo(room, this);
-				gt->Initialize();
-				m_nextExecution = gt;
-			}
-			else if (ps == PLAN_STAT_SUCCESS)
+			if(m_currentGoal->GetPlan()->GetStatus() == PLAN_STAT_SUCCESS)
 			{
 				m_nextExecution = m_currentGoal->GetPlan();
-				this->Update(om, rm, turn); // XIBB?
 			}
 			else
 			{
-				m_nextExecution = 0;
+				GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
+				if(ps == PLAN_STAT_FAIL)
+				{
+					Room* room = rm->GetRandomRoom(this);
+					GoTo* gt = new GoTo(room, this);
+					gt->Initialize();
+					m_nextExecution = gt;
+				}
 			}
+			this->Update(om, rm, turn); // XIBB?
 		}
 		else
 		{
@@ -502,10 +517,39 @@ void Agent::AddGoal(Goal* goal)
 {
 	m_goals.push_back(goal);
 	SortGoals();
-	m_currentGoal = *(m_goals.begin());
+	//m_currentGoal = *(m_goals.begin());
 }
 
 void Agent::SortGoals()
 {
 	m_goals.sort(m_compare);
+}
+
+bool Agent::PeekGoal()
+{
+	if(m_currentGoal == 0)
+	{
+		return false;
+	}
+
+	if( m_goals.size() > 0 )
+	{
+		return ( m_currentGoal == m_goals.front() );
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void Agent::PickCurrentGoal()
+{
+	if( m_goals.size() > 0 )
+	{
+		m_currentGoal = m_goals.front();
+	}
+	else
+	{
+		m_currentGoal = 0;
+	}
 }

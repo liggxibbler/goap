@@ -5,6 +5,7 @@
 
 namespace GOAP
 {
+	class Goal;
 	namespace Op
 	{
 		class OperatorManager;
@@ -13,6 +14,9 @@ namespace GOAP
 	{
 	public:
 		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) = 0;
+		virtual Goal* FollowupGoal() = 0;
+		//virtual void Pause() = 0;
+		//virtual void Resume() = 0;
 	};
 }
 #endif
