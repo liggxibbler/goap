@@ -192,7 +192,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				m_currentGoal->GetPlan()->Pause();
 				PickCurrentGoal();
-				m_nextExecution = m_currentGoal->GetPlan();
+				m_nextExecution = 0;
 			}
 		}
 
@@ -215,7 +215,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				
 				if(m_nextExecution->FollowupGoal() != 0)
 				{
-					this->AddGoal(m_nextExecution->FollowupGoal());
+					//this->AddGoal(m_nextExecution->FollowupGoal());
 				}
 				else
 				{

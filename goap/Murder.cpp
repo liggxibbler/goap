@@ -16,6 +16,17 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	Agent* agent = (Agent*)(sub.instance);
 	agent->DoneMurder(true);
 
+	Goal* loseMurderWeapon = new Goal;
+	
+	Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	notHaveMurderWeapon.SetNegate(true);
+	notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
+	notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
+	loseMurderWeapon->SetPriority(21);
+
+	agent->AddGoal(loseMurderWeapon);
+
 	return EXEC_STAT_MURDER;
 }
 
