@@ -225,9 +225,10 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				m_nextExecution = 0;
 				this->Update(om, rm, turn); // need replanning! must waist know thyme
 			}
-			else if(as == EXEC_STAT_FAIL)
+			else if(as == EXEC_STAT_FAIL) // XIBB - this is very bad replanning!!!
 			{
-				m_plan = GetPlan(ActionManager::Instance(), om);
+				m_currentGoal->GetPlan()->SetStatus(PLAN_STAT_FAIL);
+				m_nextExecution = 0;
 			}
 		}	
 		else if(m_currentGoal != 0)

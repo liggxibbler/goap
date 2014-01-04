@@ -2,6 +2,8 @@
 
 using namespace GOAP;
 
+int Prop::s_value = 0;
+
 Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_canBeFoundIn(0), m_bearer(0)
 {
 	InitAttribMap();
@@ -84,4 +86,14 @@ void Prop::InitAttribMap()
 
 void Prop::Examine()
 {
+}
+
+void Prop::IncreaseValue()
+{
+	s_value += 100;
+}
+
+int Prop::GetValue()
+{
+	return s_value;
 }

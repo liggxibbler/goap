@@ -16,6 +16,12 @@ namespace GOAP
 		//virtual operator ObjectType();
 		virtual int GetCompoundType ();
 		virtual bool CanBeMurderWeapon();
+
+		virtual void IncreaseValue();
+		virtual int GetValue();
+
+	private:
+		static int s_value;
 	};
 }
 

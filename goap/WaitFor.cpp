@@ -210,6 +210,11 @@ Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
 	auto _agent = act->GetArg(SEMANTIC_ROLE_AGENT);
 	auto _goal = act->GetArg(SEMANTIC_ROLE_GOAL);
 
+	if(_goal->instance->GetCompoundType() != (OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT))
+	{
+		return 0;
+	}
+
 	if(_agent->instance == _goal->instance)
 	{
 		return 0;

@@ -2,6 +2,8 @@
 
 using namespace GOAP;
 
+int Blade::s_value = 0;
+
 Blade::Blade() : Prop()
 {
 }
@@ -31,4 +33,14 @@ int Blade::GetCompoundType()
 bool Blade::CanBeMurderWeapon()
 {
 	return true;
+}
+
+void Blade::IncreaseValue()
+{
+	s_value += 100;
+}
+
+int Blade::GetValue()
+{
+	return s_value;
 }

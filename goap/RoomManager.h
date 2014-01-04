@@ -42,6 +42,8 @@ namespace GOAP
 
 			void ClearRooms();
 
+			void ShowEveryhting(Agent* seer);
+
 		private:
 			std::map<RoomName, Room*> m_mapRoom;
 			std::map<Agent*, Room*> m_mapBedroom;

@@ -2,6 +2,8 @@
 
 using namespace GOAP;
 
+int Projectile::s_value = 0;
+
 Projectile::Projectile() : Prop()
 {
 }
@@ -31,4 +33,14 @@ int Projectile::GetCompoundType()
 bool Projectile::CanBeMurderWeapon()
 {
 	return true;
+}
+
+void Projectile::IncreaseValue()
+{
+	s_value += 100;
+}
+
+int Projectile::GetValue()
+{
+	return s_value;
 }

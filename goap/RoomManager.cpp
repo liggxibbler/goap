@@ -217,3 +217,11 @@ void RoomManager::ClearRooms()
 		}
 	}*/
 }
+
+void RoomManager::ShowEveryhting(Agent* seer)
+{
+	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	{
+		seer->See(*room, true);
+	}
+}

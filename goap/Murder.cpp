@@ -1,6 +1,7 @@
 #include "Murder.h"
 #include "RoomManager.h"
 #include "Room.h"
+#include "FactManager.h"
 
 using namespace GOAP;
 
@@ -186,6 +187,7 @@ void Murder::Dispatch(int turn)
 	case 1:
 		// YOU WHERE ALONE
 		// LIE ABOUT WHERE YOU WERE
+		
 		break;
 	case 2:
 		{
@@ -196,10 +198,7 @@ void Murder::Dispatch(int turn)
 			{
 				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
 				{
-					murder->SetArguments(*agent,
-						(Agent*)GetArg(SEMANTIC_ROLE_PATIENT0)->instance,
-						GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance,
-						(Room*)GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance);
+					murder->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
 				}
 			}
 			Agent* falseAgent = (Agent*)cp->instance;

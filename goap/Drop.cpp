@@ -47,7 +47,7 @@ Drop* Drop::Clone()
 
 void Drop::InitArgs()
 {
-	ConditionParameter agent, patient;
+	ConditionParameter agent, patient, locative;
 
 	agent.semantic = SEMANTIC_ROLE_AGENT;
 	agent.instance = NULL;
@@ -60,18 +60,35 @@ void Drop::InitArgs()
 	patient.type = OBJ_TYPE_PROP;
 	patient.strict = false;
 	m_args.push_back(patient);
+
+	locative.semantic = SEMANTIC_ROLE_LOCATIVE;
+	locative.instance = NULL;
+	locative.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	locative.strict = true;
+	m_args.push_back(locative);
 }
 
 void Drop::InitPreconditions()
 {
-	Condition agentHasPatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT0);
+		patient = *GetArg(SEMANTIC_ROLE_PATIENT0),
+		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
+
+	Condition agentHasPatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 
 	agentHasPatient[0] = agent;
 	agentHasPatient[1] = patient;
 
 	m_preconds->AddCondition(agentHasPatient);
+
+	Condition agentAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	
+	agentAtLocative[0] = agent;
+	agentAtLocative[0].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[1] = locative;
+	agentAtLocative[1].attrib = ATTRIBUTE_ROOM;
+
+	m_preconds->AddCondition(agentAtLocative);
 
 	/*Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 
@@ -85,16 +102,26 @@ void Drop::InitPreconditions()
 
 void Drop::InitEffects()
 {
+	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
+		patient = *GetArg(SEMANTIC_ROLE_PATIENT0),
+		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
+
 	Condition agentDoesNotHavePatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 	agentDoesNotHavePatient.SetNegate(true);
-
-	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT0);
 
 	agentDoesNotHavePatient[0] = agent;
 	agentDoesNotHavePatient[1] = patient;
 
 	m_effects.push_back(agentDoesNotHavePatient);
+
+	Condition patientAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	
+	patientAtLocative[0] = patient;
+	patientAtLocative[0].attrib = ATTRIBUTE_ROOM;
+	patientAtLocative[1] = locative;
+	patientAtLocative[1].attrib = ATTRIBUTE_ROOM;
+
+	m_effects.push_back(patientAtLocative);
 
 	/*Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
 

@@ -8,13 +8,14 @@
 #include "Squeezer.h"
 #include "Projectile.h"
 #include "OperatorManager.h"
+#include "Action.h"
 #include <time.h>
 
 #include "FactManager.h"
 
 #define MAX_TURNS 20
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		3
+#define NUMBER_OF_ACTORS		4
 
 #include <iostream>
 using namespace std;
@@ -25,8 +26,10 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
+	//////////////////////////////////////////////////////////
 	//1388591446;// Nothing special
-	//1387930815;/ /Absolutely perfect
+	//1387930815;// Absolutely perfect
 	//1387929138;// AWESOME
 	//1387926598;// PERFECT
 	//////////////////////////////////////////////////////////
@@ -70,8 +73,20 @@ void Game::Roam()
 
 	cout << "========================\n\n";
 	cout << "You are in the " << m_currentRoom->GetName() << "\n\n";
-	cout << "You can see(examine):\n";
 	int item = 1;
+
+	int iRoom = item;
+	cout << "\nYou can go to:\n";
+	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
+	{
+		cout << item++ << ") " << (*iter)->GetName() << endl;
+		m_vecRoom.push_back(*iter);
+	}
+
+	int iItem = item;
+	
+	cout << "\nYou can see(examine):\n";
+	
 	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 	{
 		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) == 0)
@@ -105,14 +120,6 @@ void Game::Roam()
 		}
 	}
 
-	int iRoom = item;
-	cout << "\nYou can go to:\n";
-	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
-	{
-		cout << item++ << ") " << (*iter)->GetName() << endl;
-		m_vecRoom.push_back(*iter);
-	}
-
 //#ifdef _GOAP_DEBUG
 	int iMap = item;
 	cout << "\nOr:\n";
@@ -130,19 +137,19 @@ void Game::Roam()
 		m_running = false;
 	}
 
-	if(answer < witness)// examine
+	if(answer>=iRoom && answer < iItem)//change room
+	{
+		m_currentRoom = m_vecRoom[answer - iRoom];
+	}
+	else if(answer >= iItem && answer < witness )// examine
 	{
 
 		//examine(answer-1);
 	}
-	else if(answer>=witness && answer <iRoom)//agent
+	else if(answer>=witness && answer <iMap)//agent
 	{
 		m_currentAgent = m_vecAgent[answer - witness];
 		m_roam = false;
-	}
-	else if(answer>=iRoom && answer < item)//change room
-	{
-		m_currentRoom = m_vecRoom[answer - iRoom];
 	}
 	//#ifdef _GOAP_DEBUG
 	else if(answer == iMap)
@@ -298,6 +305,44 @@ bool Game::GeneratePlot()
 		// update murderer first to avoid artefacts
 		m_murderer->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
 
+		if(m_turn == 0)
+		{
+			Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
+			while(murderGoal->GetParent()->GetParent() != 0)
+			// find goal whose action is the murder
+			{
+				murderGoal = murderGoal->GetParent();
+			}			
+			
+			// extract the murder instrument
+			Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
+			instrument->IncreaseValue();
+			Goal* goal = 0;
+			// make thief want all props of the same type as the instrument
+			for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
+			{
+				if(item->second->GetCompoundType() == instrument->GetCompoundType())
+				{
+					Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+
+					wantItem[0].instance = (*item).second;
+					wantItem[0].type = (*item).second->GetCompoundType();
+					wantItem[0].attrib = ATTRIBUTE_ROOM;
+					wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
+					wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+					wantItem[1].attrib = ATTRIBUTE_ROOM;
+
+					goal = new Goal;
+					goal->SetDepth(0);
+					goal->AddCondition(wantItem);
+					goal->SetPriority(20);
+
+					m_actors[2]->AddGoal(goal);
+					m_actors[2]->PickCurrentGoal();
+				}
+			}
+		}
+
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 		{
 			(*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
@@ -385,7 +430,8 @@ void Game::AssignRoles(/*int numWitness*/)
 		// The roles are:
 		// 0  : Murderer
 		// 1  : Victim
-		// 2+ : Witnesses
+		// 2  : Thief
+		// 3+ : Witnesses
 		int index = rand() % NUMBER_OF_CHARACTERS;
 		while(character_array[index] != -1 )
 		{
@@ -414,27 +460,11 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	//m_murderer->See(m_objects[7]);
 
-	GOAP::Condition cond2(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	cond2[0].instance = m_murderer;
-	cond2[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
-	//cond2[0].attrib = ATTRIBUTE_ROOM;
-	cond2[1].instance = m_objects[7];
-	cond2[1].type = m_objects[7]->GetCompoundType();
-	//cond2[1].attrib = ATTRIBUTE_ROOM;
-
 	Goal* goal = new Goal;
 	goal->SetDepth(0);
 	goal->AddCondition(vicIsDead);
-	goal->SetPriority(20);
-	m_murderer->AddGoal(goal);
-
-	goal = new Goal;
-	goal->SetDepth(0);
-	goal->AddCondition(cond2);
 	goal->SetPriority(10);
 	m_murderer->AddGoal(goal);
-
-	m_murderer->PickCurrentGoal();
 
 	m_murderer->See(m_victim);
 	m_murderer->AddAction(ACTION_WAITFOR);
@@ -453,7 +483,26 @@ void Game::AssignRoles(/*int numWitness*/)
 	{
 		m_roomManager->AddAgentProbabilities(*actor);
 	}
+
+	m_murderer->PickCurrentGoal();
 	
+	/*GOAP::Condition cond2(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	cond2[0].instance = m_objects[7];
+	cond2[0].type = m_objects[7]->GetCompoundType();
+	cond2[0].attrib = ATTRIBUTE_ROOM;
+	cond2[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_agents[role_array[2]]);
+	cond2[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	cond2[1].attrib = ATTRIBUTE_ROOM;
+
+	goal = new Goal;
+	goal->SetDepth(0);
+	goal->AddCondition(cond2);
+	goal->SetPriority(20);*/
+
+	m_agents[role_array[2]]->AddAction(ACTION_TAKE);
+	m_agents[role_array[2]]->AddAction(ACTION_DROP);
+	////m_victim->AddGoal(goal);
+	m_agents[role_array[2]]->PickCurrentGoal();
 }
 
 void Game::PopulateRooms()
@@ -485,6 +534,10 @@ void Game::PopulateRooms()
 	{
 		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_actors[i]);
 	}
+
+	// Show everything to murderer and thief
+	RoomManager::Instance()->ShowEveryhting( m_actors[0] );
+	RoomManager::Instance()->ShowEveryhting( m_actors[2] );
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method

@@ -1,24 +1,20 @@
-00:10	Mademoiselle Velouté went to The Kitchen
-00:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
-00:10	Herr Duckefett went to The Kitchen
-00:20	Mademoiselle Velouté took Rope
-00:30	Mademoiselle Velouté went to The Dining Room
-00:30	Herr Duckefett went to Herr Duckefett's bedroom
-00:40	Mademoiselle Velouté waited for Herr Duckefett
-00:50	Mademoiselle Velouté waited for Herr Duckefett
-00:50	Herr Duckefett went to The Living Room
-01:00	Mademoiselle Velouté waited for Herr Duckefett
-01:10	Mademoiselle Velouté waited for Herr Duckefett
-01:10	Herr Duckefett went to The Bathroom
-01:20	Mademoiselle Velouté waited for Herr Duckefett
-01:30	Mademoiselle Velouté waited for Herr Duckefett
-01:40	Mademoiselle Velouté waited for Herr Duckefett
-01:50	Mademoiselle Velouté waited for Herr Duckefett
-01:50	Herr Duckefett went to The Dining Room
-01:50	Colonel Worcestershire went to The Bathroom
-02:00	Mademoiselle Velouté strangled Herr Duckefett with Rope
-02:10	Mademoiselle Velouté dropped Rope
-02:10	Colonel Worcestershire went to The Living Room
-02:20	Mademoiselle Velouté went to The Living Room
-02:30	Mademoiselle Velouté took Gun
-02:30	Colonel Worcestershire went to The Dining Room
+00:00	Herr Duckefett went to The Kitchen
+00:00	Prof.Custard went to The Kitchen
+00:10	Herr Duckefett took Rope
+00:10	Prof.Custard took Rope
+00:10	Mr.Hollandaise went to The Living Room
+00:20	Herr Duckefett went to The Dining Room
+00:20	Prof.Custard went to Prof.Custard's bedroom
+00:30	Don Gravy went to The Bathroom
+00:30	Mr.Hollandaise went to The Bathroom
+00:30	Prof.Custard dropped Rope
+00:40	Herr Duckefett went to The Living Room
+00:50	Herr Duckefett took Gun
+00:50	Don Gravy went to The Dining Room
+00:50	Mr.Hollandaise went to Mr.Hollandaise's bedroom
+01:00	Herr Duckefett went to The Dining Room
+01:10	Herr Duckefett shot Don Gravy with Gun
+01:10	Mr.Hollandaise went to The Living Room
+01:20	Herr Duckefett went to The Kitchen
+01:30	Herr Duckefett dropped Gun
+01:30	Mr.Hollandaise went to The Dining Room

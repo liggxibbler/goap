@@ -2,6 +2,8 @@
 
 using namespace GOAP;
 
+int Squeezer::s_value = 0;
+
 Squeezer::Squeezer() : Prop()
 {
 }
@@ -31,4 +33,14 @@ int Squeezer::GetCompoundType()
 bool Squeezer::CanBeMurderWeapon()
 {
 	return true;
+}
+
+void Squeezer::IncreaseValue()
+{
+	s_value += 100;
+}
+
+int Squeezer::GetValue()
+{
+	return s_value;
 }

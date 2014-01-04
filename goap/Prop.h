@@ -24,13 +24,16 @@ namespace GOAP
 		Object* GetBearer();
 		void SetBearer(Object* bearer);
 
+		virtual void IncreaseValue();
+		virtual int GetValue();
 	protected:
 
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
 		Object* m_bearer;
 		int	m_bearerID;
 		int m_canBeFoundIn;
-
+	private:
+		static int s_value;
 	};
 }
 #endif
