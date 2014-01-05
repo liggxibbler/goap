@@ -17,7 +17,7 @@ Room::Room(const Room& other)
 	m_roomInstance = this;
 	for(auto prop(other.m_objects.begin()); prop != other.m_objects.end(); ++prop)
 	{
-		m_objects.push_back(*prop);
+		m_objects.insert(*prop);
 	}
 	for(auto agent(other.m_agents.begin()); agent != other.m_agents.end(); ++agent)
 	{
@@ -61,14 +61,18 @@ Room* Room::GetRight()
 Prop* Room::AddObject(std::string name)
 {
 	Prop* obj = new Prop(name);
-	m_objects.push_back(obj);
+	m_objects.insert(obj);
 	obj->SetRoom(this);
 	return obj;
 }
 
 void Room::AddObject(Prop* obj)
 {
-	m_objects.push_back(obj);
+	if(obj->GetRoom() != 0)
+	{
+		obj->GetRoom()->RemoveObject(obj);
+	}
+	m_objects.insert(obj);
 	obj->SetRoom(this);
 }
 
@@ -78,12 +82,12 @@ void Room::AddObject(Prop* obj)
 //	return m_name;
 //}
 
-std::list<Prop*>::iterator Room::GetFirstObject()
+std::set<Prop*>::iterator Room::GetFirstObject()
 {
 	return m_objects.begin();
 }
 
-std::list<Prop*>::iterator Room::GetLastObject()
+std::set<Prop*>::iterator Room::GetLastObject()
 {
 	return m_objects.end();
 }

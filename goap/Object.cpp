@@ -7,7 +7,7 @@ using namespace GOAP;
 
 int Object::s_numObjects = 1;
 
-Object::Object()
+Object::Object() : m_roomInstance(0)
 {
 	InitAttribMap();
 
@@ -17,7 +17,7 @@ Object::Object()
 }
 
 
-Object::Object(std::string name, Object* owner)
+Object::Object(std::string name, Object* owner) : m_roomInstance(0)
 {
 	InitAttribMap();
 

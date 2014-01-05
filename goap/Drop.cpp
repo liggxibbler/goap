@@ -29,8 +29,7 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(0);
-	patient->SetRoom(_agent->instance->GetRoom());
-	_agent->instance->GetRoom()->AddObject((Prop*)_patient->instance);
+	_agent->instance->GetRoom()->AddObject(patient);
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
@@ -176,27 +175,29 @@ int Drop::Cost(RoomManager* rm)
 	// 2 - bonus points if it BELONGS to someone else, and not a room
 
 	int cost = 0;
+	int fitness = 1;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
 
-	if(_patient->instance == 0)
-	{
-		cost += 5;
-	}
-	else
-	{
-		if(_patient->instance->GetOwner() != _agent->instance)
-		{
-			cost += 50;
-		}
 
-		if(_patient->instance->GetOwner() != 0)
-		{
-			cost += 50;
-		}
+	if(_locative->instance->GetOwner() != 0)
+	{
+		cost += 10;
 	}
-	return cost;
+
+	if( _locative->instance->GetOwner() != _agent->instance )
+	{
+		cost += 20;
+	}
+
+	if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
+	{
+		fitness += 1;
+	}
+
+	return (cost + 10/fitness);
 }
 
 void Drop::UpdateConditionInstances() // XXX

@@ -4,12 +4,12 @@ using namespace GOAP;
 
 int Prop::s_value = 0;
 
-Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_canBeFoundIn(0), m_bearer(0)
+Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
 {
 	InitAttribMap();
 }
 
-Prop::Prop() : Object(), m_canBeFoundIn(0), m_bearer(0)
+Prop::Prop() : Object(), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
 {
 	InitAttribMap();
 }

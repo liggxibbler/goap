@@ -25,7 +25,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);
+	m_seed = 1388872701;//(unsigned int)time(NULL);
 	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
 	//////////////////////////////////////////////////////////
 	//1388591446;// Nothing special
@@ -89,9 +89,9 @@ void Game::Roam()
 	
 	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 	{
-		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) == 0)
+		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
 		{
-			item++;
+			//item++;
 		}
 		else
 		{

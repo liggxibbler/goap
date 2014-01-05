@@ -2,6 +2,7 @@
 #include "RoomManager.h"
 #include "Agent.h"
 #include "Prop.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -29,7 +30,8 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(_agent->instance);
-	//_patient->instance->GetRoom()->RemoveObject((Prop*)_patient->instance);
+	patient->GetRoom()->RemoveObject(patient);
+	patient->SetRoom(_agent->instance->GetRoom());
 	//_patient->instance->SetRoom(_agent->instance->GetRoom());
 	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
 
