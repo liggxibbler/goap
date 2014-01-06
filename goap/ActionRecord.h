@@ -21,7 +21,7 @@ namespace GOAP
 		std::stringstream ss;
 		ss.fill('0');
 		ss.width(2);
-		ss << turns * 10 / 60;
+		ss << turns * 10 / 60 + 18;
 		ss.width(1);
 		ss << ":";
 		ss.width(2);

@@ -385,6 +385,8 @@ void Agent::GiveStatement()
 
 			if(true)//!actionIsSuspect && !agentIsSuspect)// XIBB
 			{
+				std::cout.fill(' ');
+				std::cout.width(2);
 				if(oldTurn != ar.turn)
 				{
 					std::cout << i+1 << ". At " << TURN2TIME(ar.turn);
@@ -393,7 +395,7 @@ void Agent::GiveStatement()
 				{
 					std::cout << i+1 << ".\t";
 				}
-				std::cout  << ", " << m_actionLog[i].action->Express(this, ar.room);
+				std::cout  << "\t| " << m_actionLog[i].action->Express(this, ar.room) << "\n";
 			}
 
 			if(agentIsSuspect)

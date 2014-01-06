@@ -1,19 +1,29 @@
-00:00	Herr Duckefett went to The Kitchen
-00:00	Prof.Custard went to The Kitchen
-00:10	Herr Duckefett took Rope
-00:10	Prof.Custard took Rope
-00:10	Mr.Hollandaise went to The Living Room
-00:20	Herr Duckefett went to The Dining Room
-00:20	Prof.Custard went to Prof.Custard's bedroom
-00:30	Don Gravy went to The Bathroom
-00:30	Mr.Hollandaise went to The Bathroom
-00:30	Prof.Custard dropped Rope
-00:40	Herr Duckefett went to The Living Room
-00:50	Herr Duckefett took Gun
-00:50	Don Gravy went to The Dining Room
-00:50	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-01:00	Herr Duckefett went to The Dining Room
-01:10	Herr Duckefett shot Don Gravy with Gun
-01:10	Mr.Hollandaise went to The Living Room
-01:20	Herr Duckefett dropped Gun
-01:30	Mr.Hollandaise went to The Dining Room
+18:00	Colonel Worcestershire went to The Living Room
+18:00	Don Gravy went to The Living Room
+18:10	Colonel Worcestershire took Gun
+18:10	Mademoiselle Velouté went to The Kitchen
+18:10	Don Gravy took Gun
+18:20	Colonel Worcestershire went to The Dining Room
+18:20	Don Gravy went to Don Gravy's bedroom
+18:30	Comrade Tartar went to The Kitchen
+18:30	Don Gravy dropped Gun
+18:40	Colonel Worcestershire went to The Kitchen
+18:50	Colonel Worcestershire took Knife
+18:50	Comrade Tartar went to The Living Room
+18:50	Don Gravy went to The Kitchen
+19:00	Colonel Worcestershire went to The Dining Room
+19:00	Mademoiselle Velouté went to The Dining Room
+19:10	Colonel Worcestershire waited for Comrade Tartar
+19:10	Comrade Tartar went to The Bathroom
+19:20	Colonel Worcestershire waited for Comrade Tartar
+19:20	Mademoiselle Velouté went to The Kitchen
+19:30	Colonel Worcestershire waited for Comrade Tartar
+19:40	Colonel Worcestershire waited for Comrade Tartar
+19:40	Don Gravy went to The Bathroom
+19:40	Mademoiselle Velouté went to Mademoiselle Velouté's bedroom
+19:50	Colonel Worcestershire waited for Comrade Tartar
+20:00	Colonel Worcestershire waited for Comrade Tartar
+20:00	Comrade Tartar went to The Dining Room
+20:00	Don Gravy went to The Dining Room
+20:00	Mademoiselle Velouté went to The Kitchen
+20:10	Colonel Worcestershire stabbed Comrade Tartar with Knife

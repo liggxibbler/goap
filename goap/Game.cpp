@@ -25,7 +25,7 @@ using namespace GOAP;
 Game::Game() : m_roam(true), m_running(true), m_turn(0)
 {
 	m_roomManager = 0;
-	m_seed = 1388872701;//(unsigned int)time(NULL);
+	m_seed = (unsigned int)time(NULL);
 	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
 	//////////////////////////////////////////////////////////
 	//1388591446;// Nothing special
@@ -71,46 +71,62 @@ void Game::Roam()
 	m_vecObject.clear();
 	m_vecRoom.clear();
 
-	cout << "========================\n\n";
+	cout << "=======================================\n\n";
 	cout << "You are in the " << m_currentRoom->GetName() << "\n\n";
 	int item = 1;
 
 	int iRoom = item;
-	cout << "\nYou can go to:\n";
+	
+	cout << "\n-----------------------\n";
+	cout << "\n* You can go to:\n\n";
 	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
 	{
-		cout << item++ << ") " << (*iter)->GetName() << endl;
+		std::cout.fill(' ');
+		std::cout.width(2);
+		cout << item++ << ". " << (*iter)->GetName() << endl;
 		m_vecRoom.push_back(*iter);
 	}
 
 	int iItem = item;
-	
-	cout << "\nYou can see(examine):\n";
-	
-	for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
+
+	cout << "\n-----------------------\n";
+	cout << "\n* You can see(examine):\n\n";
+	if(m_currentRoom->GetFirstObject() == m_currentRoom->GetLastObject())
 	{
-		if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
+		cout << "[NOTHING]\n";
+	}
+	else
+	{	
+		for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 		{
-			//item++;
-		}
-		else
-		{
-			cout << item++ << ") " << (*iter)->GetName() << endl;
-			m_vecObject.push_back(*iter);
+			if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
+			{
+				//item++;
+			}
+			else
+			{
+				std::cout.fill(' ');
+				std::cout.width(2);
+				cout << item++ << ". " << (*iter)->GetName() << endl;
+				m_vecObject.push_back(*iter);
+			}
 		}
 	}
 
 	int witness = item;
-	cout << "\nYou can interview:\n";
+	cout << "\n-----------------------\n";
+	cout << "\n* You can interview:\n\n";
 	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
 	{
-		cout << "\n[NOBODY]\n";
+		cout << "[NOBODY]\n";
 	}
 	else
 	{
 		for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
 		{
-			cout << item++ << ") " << (*iter)->GetName();
+			std::cout.fill(' ');
+			std::cout.width(2);
+			cout << item++ << ". " << (*iter)->GetName();
 			if((*iter)->GetAttrib(ATTRIBUTE_ALIVE) == false)
 			{
 				cout << " [DEAD]";
@@ -119,14 +135,14 @@ void Game::Roam()
 			m_vecAgent.push_back(*iter);
 		}
 	}
-
+	cout << "\n-----------------------\n";
 //#ifdef _GOAP_DEBUG
 	int iMap = item;
 	cout << "\nOr:\n";
 	cout << item << ") SEE THE MAP" << endl;
 //#endif
 
-	cout << "\n Or enter 0 to quit.\n";
+	cout << "\n* Or enter 0 to quit.\n";
 
 	cout << "\nWhat would you like to do?\n>>> ";
 	int answer;
