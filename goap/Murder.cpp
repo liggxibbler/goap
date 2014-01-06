@@ -8,7 +8,7 @@ using namespace GOAP;
 ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 {
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT0));
+	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT));
 	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
 
 	DUMP("       ** " << Express(0, 0))
@@ -43,7 +43,7 @@ void Murder::InitArgs()
 	m_args.push_back(agent);
 
 	// PATIENT
-	patient.semantic = SEMANTIC_ROLE_PATIENT0;
+	patient.semantic = SEMANTIC_ROLE_PATIENT;
 	patient.instance = NULL;
 	patient.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	patient.strict = true;
@@ -60,7 +60,7 @@ void Murder::InitArgs()
 void Murder::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-	ConditionParameter obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
+	ConditionParameter obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	objIsDead[0] = obj;
 	objIsDead[0].attrib	= ATTRIBUTE_ALIVE;
@@ -73,7 +73,7 @@ void Murder::InitEffects()
 void Murder::InitPreconditions()
 {
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
+	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
 	auto _instrument(GetArg(SEMANTIC_ROLE_INSTRUMENT));
 	auto _locative(GetArg(SEMANTIC_ROLE_LOCATIVE));
 
@@ -129,7 +129,7 @@ int Murder::Cost(RoomManager* rm)
 
 	int cost = 0;
 
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
 	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
 	Object* roomOwner = _locative->instance->GetOwner();
 
@@ -158,7 +158,7 @@ int Murder::Cost(RoomManager* rm)
 void Murder::SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative)
 {
 	GetArg(SEMANTIC_ROLE_AGENT)->instance = agent;
-	GetArg(SEMANTIC_ROLE_PATIENT0)->instance = patient;
+	GetArg(SEMANTIC_ROLE_PATIENT)->instance = patient;
 	GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance = instrument;
 	GetArg(SEMANTIC_ROLE_LOCATIVE)->instance = locative;
 }

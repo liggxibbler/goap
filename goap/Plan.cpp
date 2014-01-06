@@ -139,21 +139,21 @@ Goal* Plan::Validate()
 		}
 
 		//// Only True conditions should be left
-		//int numTrue = 0;
-		//for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
-		//{
+		int numTrue = 0;
+		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
+		{
 		//	if ( condition->GetOperatorType() == OPERATOR_TRUE )
 		//	{
 		//		numTrue++;
 		//	}
 
-		//	if( condition->Evaluate(Op::OperatorManager::Instance()) )
-		//	{
-		//		numTrue++;
-		//	}
-		//}
+			if( condition->Evaluate(Op::OperatorManager::Instance()) )
+			{
+				numTrue++;
+			}
+		}
 		
-		if (temp->GetNumConditions() == 0)
+		if (temp->GetNumConditions() == numTrue)
 		{
 			delete temp;
 			temp = 0;

@@ -18,7 +18,7 @@
 #endif
 
 #ifdef _GOAP_DEBUG
-#define DUMP(X) std::cout << std::endl << X << std::endl;
+#define DUMP(X) //std::cout << std::endl << X << std::endl;
 #define DUMP_NL(X) std::cout << X;
 #else
 #define DUMP(X)
@@ -93,7 +93,7 @@ namespace GOAP
 	{
 		SEMANTIC_ROLE_INSTRUMENT = 0x0000,
 
-		SEMANTIC_ROLE_PATIENT0,
+		SEMANTIC_ROLE_PATIENT,
 		SEMANTIC_ROLE_PATIENT1,
 
 		SEMANTIC_ROLE_GOAL,

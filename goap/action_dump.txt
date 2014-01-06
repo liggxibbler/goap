@@ -15,6 +15,5 @@
 01:00	Herr Duckefett went to The Dining Room
 01:10	Herr Duckefett shot Don Gravy with Gun
 01:10	Mr.Hollandaise went to The Living Room
-01:20	Herr Duckefett went to The Living Room
-01:30	Herr Duckefett went to Herr Duckefett's bedroom
+01:20	Herr Duckefett dropped Gun
 01:30	Mr.Hollandaise went to The Dining Room

@@ -174,24 +174,16 @@ GoTo::operator std::string()
 
 int GoTo::Cost(RoomManager* rm)
 {
-	// return a measure of
-	// 1 - how UNLIKELY it is for you to be here
-	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
-
-	int cost = 5;
+	int cost = 30;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
 	
-	if(_room->instance == 0)
-	{
-		cost += 5;
-	}
-	else if (_room->instance->GetRoom() != 0)
+	if (_room->instance->GetRoom() != 0)
 	{
 		if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
 		{
-			cost += 100;
+			cost += 10;
 		}
 	}
 

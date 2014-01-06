@@ -26,7 +26,7 @@ Take::operator ActionType()
 ExecutionStatus Take::ExecuteWorkhorse(int turn)
 {
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
+	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(_agent->instance);
@@ -57,7 +57,7 @@ void Take::InitArgs()
 	sub.strict = true;
 	m_args.push_back(sub);
 
-	obj.semantic = SEMANTIC_ROLE_PATIENT0;
+	obj.semantic = SEMANTIC_ROLE_PATIENT;
 	obj.instance = NULL;
 	obj.type = OBJ_TYPE_PROP;
 	obj.strict = false;
@@ -68,7 +68,7 @@ void Take::InitPreconditions()
 {
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
+		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	subNearObj[0] = sub;
 	subNearObj[0].attrib = ATTRIBUTE_ROOM;
@@ -91,7 +91,7 @@ void Take::InitEffects()
 {
 	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
 	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(SEMANTIC_ROLE_PATIENT0);
+		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	subHasObj[0] = sub;
 	subHasObj[1] = obj;
@@ -112,7 +112,7 @@ void Take::InitEffects()
 std::string Take::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
 
 	std::string _agent;
 	std::string _patient;
@@ -155,7 +155,7 @@ int Take::Cost(RoomManager* rm)
 	int cost = 0;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
 	
 	if(_patient->instance == 0)
 	{

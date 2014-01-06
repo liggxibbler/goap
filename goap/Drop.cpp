@@ -25,7 +25,7 @@ Drop::operator ActionType()
 ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 {
 	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT0));
+	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(0);
@@ -54,7 +54,7 @@ void Drop::InitArgs()
 	agent.strict = true;
 	m_args.push_back(agent);
 
-	patient.semantic = SEMANTIC_ROLE_PATIENT0;
+	patient.semantic = SEMANTIC_ROLE_PATIENT;
 	patient.instance = NULL;
 	patient.type = OBJ_TYPE_PROP;
 	patient.strict = false;
@@ -70,7 +70,7 @@ void Drop::InitArgs()
 void Drop::InitPreconditions()
 {
 	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT0),
+		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
 		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
 
 	Condition agentHasPatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
@@ -102,7 +102,7 @@ void Drop::InitPreconditions()
 void Drop::InitEffects()
 {
 	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT0),
+		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
 		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
 
 	Condition agentDoesNotHavePatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
@@ -134,7 +134,7 @@ void Drop::InitEffects()
 std::string Drop::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
 
 	std::string _agent;
 	std::string _patient;
@@ -175,29 +175,29 @@ int Drop::Cost(RoomManager* rm)
 	// 2 - bonus points if it BELONGS to someone else, and not a room
 
 	int cost = 0;
-	int fitness = 1;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
 	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
 
 
 	if(_locative->instance->GetOwner() != 0)
+	// If the room has now owner, i.e. public room
 	{
-		cost += 10;
+		cost = 60;
+	}
+	else if( _locative->instance->GetOwner() != _agent->instance )
+	// if the room has an owner that isn't the dropper
+	{
+		cost = 10;
+	}
+	else if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
+	// if the room belongs to the owner of the object
+	{
+		cost = 5;
 	}
 
-	if( _locative->instance->GetOwner() != _agent->instance )
-	{
-		cost += 20;
-	}
-
-	if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
-	{
-		fitness += 1;
-	}
-
-	return (cost + 10/fitness);
+	return cost;
 }
 
 void Drop::UpdateConditionInstances() // XXX

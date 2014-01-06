@@ -44,7 +44,7 @@ void Stab::InitArgs()
 std::string Stab::Express(Agent* agent, Room* room)
 {
 	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT0);
+	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
 	auto ins = GetArg(SEMANTIC_ROLE_INSTRUMENT);
 
 	std::string _agent;
