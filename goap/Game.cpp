@@ -9,6 +9,7 @@
 #include "Projectile.h"
 #include "OperatorManager.h"
 #include "Action.h"
+#include <conio.h>
 #include <time.h>
 
 #include "FactManager.h"
@@ -72,24 +73,24 @@ void Game::Roam()
 	m_vecRoom.clear();
 
 	cout << "=======================================\n\n";
-	cout << "You are in the " << m_currentRoom->GetName() << "\n\n";
+	cout << "You are in " << m_currentRoom->GetName() << "\n\n";
 	int item = 1;
 
 	int iRoom = item;
 	
-	cout << "\n-----------------------\n";
+	cout << "-----------------------\n";
 	cout << "\n* You can go to:\n\n";
 	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
 	{
 		std::cout.fill(' ');
 		std::cout.width(2);
-		cout << item++ << ". " << (*iter)->GetName() << endl;
+		cout << item++ << ". " << (*iter)->GetName() << "\n" << endl;
 		m_vecRoom.push_back(*iter);
 	}
 
 	int iItem = item;
 
-	cout << "\n-----------------------\n";
+	cout << "-----------------------\n";
 	cout << "\n* You can see(examine):\n\n";
 	if(m_currentRoom->GetFirstObject() == m_currentRoom->GetLastObject())
 	{
@@ -107,14 +108,14 @@ void Game::Roam()
 			{
 				std::cout.fill(' ');
 				std::cout.width(2);
-				cout << item++ << ". " << (*iter)->GetName() << endl;
+				cout << item++ << ". " << (*iter)->GetName() << "\n" << endl;
 				m_vecObject.push_back(*iter);
 			}
 		}
 	}
 
 	int witness = item;
-	cout << "\n-----------------------\n";
+	cout << "-----------------------\n";
 	cout << "\n* You can interview:\n\n";
 	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
 	{
@@ -131,11 +132,11 @@ void Game::Roam()
 			{
 				cout << " [DEAD]";
 			}
-			cout << endl;
+			cout << "\n" << endl;
 			m_vecAgent.push_back(*iter);
 		}
 	}
-	cout << "\n-----------------------\n";
+	cout << "-----------------------\n";
 //#ifdef _GOAP_DEBUG
 	int iMap = item;
 	cout << "\nOr:\n";
@@ -164,8 +165,23 @@ void Game::Roam()
 	}
 	else if(answer>=witness && answer <iMap)//agent
 	{
-		m_currentAgent = m_vecAgent[answer - witness];
-		m_roam = false;
+		Agent* aWitness = m_vecAgent[answer - witness];
+		if(aWitness->GetAttrib(ATTRIBUTE_ALIVE) == true)
+		{
+			m_currentAgent = aWitness;
+			m_roam = false;
+		}
+		else
+		{
+#ifdef _GOAP_DEBUG
+			m_currentAgent = aWitness;
+			m_roam = false;
+#else
+			std::cout << "\n" << aWitness->GetName() << " is dead and unable to answer you." << std::endl;
+			std::cout << "\n--Press any key to continue\n";
+			_getch();
+#endif
+		}
 	}
 	//#ifdef _GOAP_DEBUG
 	else if(answer == iMap)
@@ -279,6 +295,9 @@ void Game::Interview()
 
 	//m_currentAgent->Answer(qObject, question, answer);
 	m_currentAgent->Answer(0, Q_ACTION, 0);
+	
+	// ACCUSE
+	
 	m_roam = true;
 	m_currentAgent = 0;
 	return;

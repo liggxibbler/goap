@@ -86,8 +86,8 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 		for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
 		{
 			// XIBB this is risky, if duplicates are possible, they will happen
-			// XIBB it would be better if the action long list is a map.first,
-			// XIBB and the condition long list is a map.second list of conditions
+			// XIBB it would be better if the action long list contains keys mapped to
+			// XIBB the condition long list as a list of conditions
 
 
 			action = am->GetAction(*actIter); // get action prototype
