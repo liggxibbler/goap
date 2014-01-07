@@ -155,7 +155,7 @@ Goal* Plan::Validate()
 		
 		if (temp->GetNumConditions() == numTrue)
 		{
-			delete temp;
+//			delete temp;
 			temp = 0;
 			return m_plan;
 		}
