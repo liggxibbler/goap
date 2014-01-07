@@ -222,6 +222,8 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 
 void GoTo::Dispatch(int turn)
 {
+	// Make sure the GoTo action's GOAL is a room, not an object
+	GetArg(SEMANTIC_ROLE_GOAL)->instance = GetArg(SEMANTIC_ROLE_GOAL)->instance->GetRoom();
 	Action::Dispatch(turn);
 
 	auto cp = GetArg(SEMANTIC_ROLE_GOAL);

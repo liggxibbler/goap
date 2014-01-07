@@ -27,6 +27,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1389116123;// tug of war!
 	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
 	//////////////////////////////////////////////////////////
 	//1388591446;// Nothing special
@@ -401,7 +402,7 @@ bool Game::GeneratePlot()
 		DUMP("******************************")
 
 #ifdef _GOAP_DEBUG
-		//std::cin.get();
+		std::cin.get();
 #endif
 		if(m_actors[1]->GetAttrib(ATTRIBUTE_ALIVE) == false && m_timeOfDeath == 0)
 		{
@@ -741,16 +742,16 @@ void Game::DisplayRoomMap()
 void Game::DisplayIntroduction()
 {
 	int m_murderWeapon = 0;
-	std::cout << "Good evening. I'm Constable Sauce. Redcurrant Sauce.\n\n\
-Thank you for helping Scotland Yard with this case.\n\n\
-We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\
-dead in" << m_actors[1]->GetRoom()->GetName()<< ".\n\n\
-The coroner times the death at " << TURN2TIME(m_timeOfDeath) << ".\n\n\
-He believes that the victim was killed by a " << m_murderWeapon << "(like a ??? or a ???).\n\n\
-I've gathered all other residents in the living room for you to interview.\n\n\
-You can go around the house and examine different rooms if you like.\n\n\
-I know with your talent you can solve the case in no time,\n\n\
-Just tell me when you are ready to accuse someone...\n\n\
+	std::cout << "\n\n\tGood evening. I'm Constable Sauce. Redcurrant Sauce.\n\n\t\
+Thank you for helping Scotland Yard with this case.\n\n\t\
+We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\t\
+dead in " << m_actors[1]->GetRoom()->GetName()<< ".\n\n\t\
+The coroner times the death at " << TURN2TIME(m_timeOfDeath) << ".\n\n\t\
+He believes that the victim was killed by a " << m_murderWeapon << "(like a ??? or a ???).\n\n\t\
+I've gathered all other residents in the living room to be interviewed.\n\n\t\
+You can go around the house and examine different rooms if you like.\n\n\t\
+I know with your talent you can solve the case in no time,\n\n\t\
+Just tell me when you are ready to accuse someone...\n\n\t\
 Or if you are just bored and want to go home.\n\n" << std::endl;
 	std::cout << "--Press any key to continue\n";
 	_getch();
