@@ -19,9 +19,11 @@ namespace GOAP
 
 		virtual void IncreaseValue();
 		virtual int GetValue();
+		virtual int GetNumberOfInstances();
 
 	private:
 		static int s_value;
+		static int s_numInstances;
 	};
 }
 

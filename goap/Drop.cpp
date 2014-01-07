@@ -187,6 +187,7 @@ int Drop::Cost(RoomManager* rm)
 		cost = 60;
 	}
 	else if( _locative->instance->GetOwner() == _agent->instance )
+	// if the room is the dropper's room
 	{
 		cost = 40;
 	}

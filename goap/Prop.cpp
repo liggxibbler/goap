@@ -3,14 +3,17 @@
 using namespace GOAP;
 
 int Prop::s_value = 0;
+int Prop::s_numInstances = 0;
 
 Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
 {
+	++s_numInstances;
 	InitAttribMap();
 }
 
 Prop::Prop() : Object(), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
 {
+	++s_numInstances;
 	InitAttribMap();
 }
 
@@ -96,4 +99,9 @@ void Prop::IncreaseValue()
 int Prop::GetValue()
 {
 	return s_value;
+}
+
+int Prop::GetNumberOfInstances()
+{
+	return s_numInstances;
 }

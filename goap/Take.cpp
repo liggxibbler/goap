@@ -152,27 +152,25 @@ int Take::Cost(RoomManager* rm)
 	// 1 - if that thing doesn't BELONG to you
 	// 2 - bonus points if it BELONGS to someone else, and not a room
 
-	int cost = 0;
+	int cost;
 
 	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
 	
-	if(_patient->instance == 0)
+	if(_patient->instance->GetOwner() == 0)
 	{
-		cost += 5;
+		cost = 10;
 	}
-	else
+	else if(_patient->instance->GetOwner() != _agent->instance)
 	{
-		if(_patient->instance->GetOwner() != _agent->instance)
-		{
-			cost += 50;
-		}
-
-		if(_patient->instance->GetOwner() != 0)
-		{
-			cost += 50;
-		}
+		cost = 50;
 	}
+	else if(_patient->instance->GetOwner() == _agent->instance)
+	{
+		cost = 0;
+	}
+	
+	
 	return cost;
 }
 

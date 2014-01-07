@@ -213,7 +213,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				//m_currentGoal = m_currentGoal->GetParent();
 				m_goals.remove(m_currentGoal);
 				
-				if(m_nextExecution->FollowupGoal() != 0)
+				if(false)//m_nextExecution->FollowupGoal() != 0)
 				{
 					//this->AddGoal(m_nextExecution->FollowupGoal());
 				}
@@ -352,11 +352,12 @@ void Agent::GiveStatement()
 	// Need to take victim and FactManager as arguments
 	// Need FactManager
 	// 
-
 	int answer = -1;
 	
 	while(answer != 0)
 	{
+		system("cls");
+
 		ActionRecord ar;
 		std::cout << "========================\n\n";
 		std::cout << "You are interviewing " << m_name << ":\n\n";

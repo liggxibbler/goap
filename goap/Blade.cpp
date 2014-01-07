@@ -3,13 +3,16 @@
 using namespace GOAP;
 
 int Blade::s_value = 0;
+int Blade::s_numInstances = 0;
 
 Blade::Blade() : Prop()
 {
+	++s_numInstances;
 }
 
 Blade::Blade(std::string name) : Prop(name)
 {
+	++s_numInstances;
 }
 
 Blade::Blade(const Blade& other)
@@ -43,4 +46,9 @@ void Blade::IncreaseValue()
 int Blade::GetValue()
 {
 	return s_value;
+}
+
+int Blade::GetNumberOfInstances()
+{
+	return s_numInstances;
 }

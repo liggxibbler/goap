@@ -10,25 +10,33 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
 	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT));
 	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
+	ConditionParameter loc(*GetArg(SEMANTIC_ROLE_LOCATIVE));
 
-	DUMP("       ** " << Express(0, 0))
+	if(true)//loc.instance->GetAttrib(ATTRIBUTE_NUM_AGENTS) <= 3)
+	{
+		DUMP("       ** " << Express(0, 0))
 
-	obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
-	Agent* agent = (Agent*)(sub.instance);
-	agent->DoneMurder(true);
+			obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
+		Agent* agent = (Agent*)(sub.instance);
+		agent->DoneMurder(true);
 
-	Goal* loseMurderWeapon = new Goal;
-	
-	Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	notHaveMurderWeapon.SetNegate(true);
-	notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-	notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
-	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
-	loseMurderWeapon->SetPriority(21);
+		Goal* loseMurderWeapon = new Goal;
 
-	agent->AddGoal(loseMurderWeapon);
+		Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+		notHaveMurderWeapon.SetNegate(true);
+		notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
+		notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
+		loseMurderWeapon->AddCondition(notHaveMurderWeapon);
+		loseMurderWeapon->SetPriority(21);
 
-	return EXEC_STAT_MURDER;
+		agent->AddGoal(loseMurderWeapon);
+
+		return EXEC_STAT_MURDER;
+	}
+	else
+	{
+		return EXEC_STAT_RUNNING;
+	}
 }
 
 void Murder::InitArgs()
@@ -126,12 +134,21 @@ int Murder::Cost(RoomManager* rm)
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
 	// 2 - how UNLIKELY it is for the victim to be found after being killed
+	// 3 - number of instances of instrument class
+	// 4 - owner of instrument
 
 	int cost = 0;
 
 	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
 	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	auto _instrument = GetArg(SEMANTIC_ROLE_INSTRUMENT);
+
 	Object* roomOwner = _locative->instance->GetOwner();
+	
+	Prop* inst = (Prop*)(_instrument->instance);
+
+	// Prefer instruments with many instances
+	cost += 100 / ( 1 + inst->GetNumberOfInstances() );
 
 	if (roomOwner != 0)
 	{

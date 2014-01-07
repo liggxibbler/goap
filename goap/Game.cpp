@@ -23,7 +23,7 @@ using namespace std;
 
 using namespace GOAP;
 
-Game::Game() : m_roam(true), m_running(true), m_turn(0)
+Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
@@ -63,7 +63,7 @@ void Game::Initialize()
 	InitializeAgents();
 	InitializeObjects();
 
-	m_currentRoom = m_roomManager->GetRoom(ROOM_KITCHEN);
+	m_currentRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
 }
 
 void Game::Roam()
@@ -401,8 +401,12 @@ bool Game::GeneratePlot()
 		DUMP("******************************")
 
 #ifdef _GOAP_DEBUG
-		std::cin.get();
+		//std::cin.get();
 #endif
+		if(m_actors[1]->GetAttrib(ATTRIBUTE_ALIVE) == false && m_timeOfDeath == 0)
+		{
+			m_timeOfDeath = m_turn;
+		}
 		++m_turn;
 		if(m_turn >= MAX_TURNS)
 		{
@@ -425,14 +429,21 @@ void Game::MainLoop()
 	std::cout << "Seed used : " << m_seed << endl;
 	std::cout << "******************************\n\n";
 
+	system("cls");
+
+	DisplayIntroduction();
+	MoveActorsToLivingRoom();
+
 	while(m_running)
 	{
 		if(m_roam)
 		{
+			system("cls");
 			Roam();
 		}
 		else
 		{
+			system("cls");
 			Interview();
 		}
 	}
@@ -725,4 +736,39 @@ void Game::DisplayRoomMap()
 		cout << endl;
 	}
 	std::cout << "\n	MAP! I HAVE A MAP!\n";
+}
+
+void Game::DisplayIntroduction()
+{
+	int m_murderWeapon = 0;
+	std::cout << "Good evening. I'm Constable Sauce. Redcurrant Sauce.\n\n\
+Thank you for helping Scotland Yard with this case.\n\n\
+We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\
+dead in" << m_actors[1]->GetRoom()->GetName()<< ".\n\n\
+The coroner times the death at " << TURN2TIME(m_timeOfDeath) << ".\n\n\
+He believes that the victim was killed by a " << m_murderWeapon << "(like a ??? or a ???).\n\n\
+I've gathered all other residents in the living room for you to interview.\n\n\
+You can go around the house and examine different rooms if you like.\n\n\
+I know with your talent you can solve the case in no time,\n\n\
+Just tell me when you are ready to accuse someone...\n\n\
+Or if you are just bored and want to go home.\n\n" << std::endl;
+	std::cout << "--Press any key to continue\n";
+	_getch();
+}
+
+void Game::MoveActorsToLivingRoom()
+{
+	Room* livingRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
+	for(int actor = 0; actor < NUMBER_OF_ACTORS; ++actor)
+	{
+		if(actor != 1)
+		{
+			m_actors[actor]->GetRoom()->MarkForDeletion(m_actors[actor]);
+			livingRoom->AddAgent(m_actors[actor]);
+		}
+	}
+	for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+	{
+		(*room)->UpdateAgentPositions(m_murderer, m_victim);
+	}
 }

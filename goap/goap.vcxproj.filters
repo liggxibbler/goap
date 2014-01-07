@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Actions\Actions">
       <UniqueIdentifier>{a97a53cf-c435-4427-8086-374a332d846b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Objects\Props">
+      <UniqueIdentifier>{8b23896d-8148-4b8f-badd-9567931abb52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Objects\Prop">
+      <UniqueIdentifier>{8afb63b9-6678-4d12-81c6-6178ea29d7c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Equal.cpp">
@@ -114,20 +120,8 @@
     <ClCompile Include="ConditionParameter.cpp">
       <Filter>Source Files\Conditions</Filter>
     </ClCompile>
-    <ClCompile Include="Blade.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Source Files\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Blunt.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Squeezer.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Projectile.cpp">
-      <Filter>Source Files\Objects</Filter>
     </ClCompile>
     <ClCompile Include="RoomManager.cpp">
       <Filter>Source Files\World</Filter>
@@ -168,11 +162,23 @@
     <ClCompile Include="Has.cpp">
       <Filter>Source Files\Operators</Filter>
     </ClCompile>
-    <ClCompile Include="Prop.cpp">
-      <Filter>Source Files\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="FactManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Blade.cpp">
+      <Filter>Source Files\Objects\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="Blunt.cpp">
+      <Filter>Source Files\Objects\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>Source Files\Objects\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="Prop.cpp">
+      <Filter>Source Files\Objects\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="Squeezer.cpp">
+      <Filter>Source Files\Objects\Prop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +242,6 @@
     <ClInclude Include="ConditionParameter.h">
       <Filter>Header Files\Conditions</Filter>
     </ClInclude>
-    <ClInclude Include="Blade.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
@@ -256,15 +259,6 @@
     </ClInclude>
     <ClInclude Include="ActionRecord.h">
       <Filter>Header Files\Actions</Filter>
-    </ClInclude>
-    <ClInclude Include="Blunt.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Squeezer.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Projectile.h">
-      <Filter>Header Files\Objects</Filter>
     </ClInclude>
     <ClInclude Include="RoomManager.h">
       <Filter>Header Files\World</Filter>
@@ -302,11 +296,23 @@
     <ClInclude Include="Has.h">
       <Filter>Header Files\Operators</Filter>
     </ClInclude>
-    <ClInclude Include="Prop.h">
-      <Filter>Header Files\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="FactManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Blade.h">
+      <Filter>Header Files\Objects\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Blunt.h">
+      <Filter>Header Files\Objects\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Prop.h">
+      <Filter>Header Files\Objects\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Squeezer.h">
+      <Filter>Header Files\Objects\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>Header Files\Objects\Props</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

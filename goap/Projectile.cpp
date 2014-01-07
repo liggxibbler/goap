@@ -3,13 +3,16 @@
 using namespace GOAP;
 
 int Projectile::s_value = 0;
+int Projectile::s_numInstances = 0;
 
 Projectile::Projectile() : Prop()
 {
+	++s_numInstances;
 }
 
 Projectile::Projectile(std::string name) : Prop(name)
 {
+	++s_numInstances;
 }
 
 Projectile::Projectile(const Projectile& other)
@@ -43,4 +46,9 @@ void Projectile::IncreaseValue()
 int Projectile::GetValue()
 {
 	return s_value;
+}
+
+int Projectile::GetNumberOfInstances()
+{
+	return s_numInstances;
 }

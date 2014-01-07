@@ -327,7 +327,7 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 #ifdef _GOAP_DEBUG
 			std::string _str = (std::string)(*this);
 			DUMP(GetArg(SEMANTIC_ROLE_AGENT)->instance->GetName() << " can't " << _str << ".")
-			std::cin.get();
+			//std::cin.get();
 #endif
 			return EXEC_STAT_FAIL;
 		}

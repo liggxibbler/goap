@@ -26,6 +26,9 @@ namespace GOAP
 
 		virtual void IncreaseValue();
 		virtual int GetValue();
+
+		virtual int GetNumberOfInstances();
+
 	protected:
 
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
@@ -34,6 +37,7 @@ namespace GOAP
 		int m_canBeFoundIn;
 	private:
 		static int s_value;
+		static int s_numInstances;
 	};
 }
 #endif

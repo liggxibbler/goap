@@ -31,6 +31,8 @@ public:
 	void MainLoop();
 
 	void DisplayRoomMap();
+	void DisplayIntroduction();
+	void MoveActorsToLivingRoom();
 
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
@@ -59,6 +61,8 @@ private:
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
 	std::vector<GOAP::Prop*>	m_objects;
+
+	int m_timeOfDeath;
 };
 
 #endif

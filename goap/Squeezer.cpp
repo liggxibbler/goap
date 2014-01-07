@@ -3,13 +3,16 @@
 using namespace GOAP;
 
 int Squeezer::s_value = 0;
+int Squeezer::s_numInstances = 0;
 
 Squeezer::Squeezer() : Prop()
 {
+	++s_numInstances;
 }
 
 Squeezer::Squeezer(std::string name) : Prop(name)
 {
+	++s_numInstances;
 }
 
 Squeezer::Squeezer(const Squeezer& other)
@@ -43,4 +46,9 @@ void Squeezer::IncreaseValue()
 int Squeezer::GetValue()
 {
 	return s_value;
+}
+
+int Squeezer::GetNumberOfInstances()
+{
+	return s_numInstances;
 }
