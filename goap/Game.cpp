@@ -23,10 +23,11 @@ using namespace std;
 
 using namespace GOAP;
 
-Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0)
+Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_accuser(0)
 {
 	m_roomManager = 0;
 	m_seed = (unsigned int)time(NULL);
+	//1389116877;// confusing. good.
 	//1389116123;// tug of war!
 	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
 	//////////////////////////////////////////////////////////
@@ -58,6 +59,7 @@ Game::~Game()
 
 void Game::Initialize()
 {
+	m_accuser = new Accuser;
 	m_roomManager = RoomManager::Instance();
 
 	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
@@ -138,13 +140,13 @@ void Game::Roam()
 		}
 	}
 	cout << "-----------------------\n";
-//#ifdef _GOAP_DEBUG
 	int iMap = item;
+#ifdef _GOAP_DEBUG
 	cout << "\nOr:\n";
 	cout << item << ") SEE THE MAP" << endl;
-//#endif
+#endif
 
-	cout << "\n* Or enter 0 to quit.\n";
+	cout << "\n*0. Return to Constable Sauce.\n";
 
 	cout << "\nWhat would you like to do?\n>>> ";
 	int answer;
@@ -152,7 +154,7 @@ void Game::Roam()
 
 	if (answer == 0)
 	{
-		m_running = false;
+		m_running = ReturnToConstable();
 	}
 
 	if(answer>=iRoom && answer < iItem)//change room
@@ -184,12 +186,12 @@ void Game::Roam()
 #endif
 		}
 	}
-	//#ifdef _GOAP_DEBUG
+#ifdef _GOAP_DEBUG
 	else if(answer == iMap)
 	{
 		DisplayRoomMap();
 	}
-	//#endif
+#endif
 	else
 	{
 		// bad answer, do over
@@ -402,7 +404,7 @@ bool Game::GeneratePlot()
 		DUMP("******************************")
 
 #ifdef _GOAP_DEBUG
-		std::cin.get();
+		GETKEY;
 #endif
 		if(m_actors[1]->GetAttrib(ATTRIBUTE_ALIVE) == false && m_timeOfDeath == 0)
 		{
@@ -550,6 +552,8 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_agents[role_array[2]]->AddAction(ACTION_DROP);
 	////m_victim->AddGoal(goal);
 	m_agents[role_array[2]]->PickCurrentGoal();
+
+	m_accuser->Initialize(m_actors[0], m_actors[2], m_actors[3]);
 }
 
 void Game::PopulateRooms()
@@ -777,4 +781,61 @@ void Game::MoveActorsToLivingRoom()
 	{
 		(*room)->UpdateAgentPositions(m_murderer, m_victim);
 	}
+}
+
+bool Game::ReturnToConstable()
+{
+	int answer = -1;
+	bool done = false;
+	while(!done)
+	{
+		system("cls");
+		std::cout << "===============================================\n";
+		std::cout << "\nYou are talking to Constable Sauce\n\n";
+		std::cout << "\nHe asks if you are ready to:\"\n\n";
+		std::cout << "1. Accuse someone\n\n";
+		std::cout << "2. Continue your investigation\n\n";
+		std::cout << "Or\n\n 0. Rage quit\n\n";
+		std::cout << ">>> ";
+		//accuse?
+		//leave?
+		//continue?
+		std::cin >> answer;
+		switch(answer)
+		{
+		case 0:
+			// nag
+			return false;
+		case 1:
+			return Accuse();
+		case 2:
+			return true;
+		default:
+			break;
+		}
+	}
+}
+
+bool Game::Accuse()
+// returns whether the game should continue
+{
+	if(m_accuser->Prompt())
+	{
+		if(m_accuser->Submit())
+		{
+			std::cout << "\n\nYay! You won!\n\n";
+			_getch();
+			return false;
+		}
+		else
+		{
+			std::cout << "\n\nNo! You got the wrong guy! The right guy killed everyone!";
+			_getch();
+			return false;
+		}
+	}
+	else
+	{
+		return true;
+	}	
 }

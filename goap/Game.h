@@ -2,6 +2,7 @@
 #define _GAME_H_
 
 #include "RoomManager.h"
+#include "Accuser.h"
 #include <vector>
 
 namespace GOAP
@@ -21,7 +22,7 @@ public:
 	
 	void Roam();
 	void Interview();
-	void Accuse();
+	bool Accuse();
 
 	bool Run(/*database class thing*/);
 	
@@ -33,6 +34,7 @@ public:
 	void DisplayRoomMap();
 	void DisplayIntroduction();
 	void MoveActorsToLivingRoom();
+	bool ReturnToConstable();
 
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
@@ -63,6 +65,7 @@ private:
 	std::vector<GOAP::Prop*>	m_objects;
 
 	int m_timeOfDeath;
+	Accuser* m_accuser;
 };
 
 #endif

@@ -1,39 +1,13 @@
-18:00	Mademoiselle Velouté went to The Kitchen
-18:00	Mrs. Hollandaise went to The Kitchen
-18:10	Mademoiselle Velouté took Rope
-18:10	Mrs. Hollandaise went to Mrs. Hollandaise's bedroom
-18:20	Mademoiselle Velouté went to The Living Room
-18:20	Signor Bolognese went to The Kitchen
-18:30	Mademoiselle Velouté waited for Signor Bolognese
-18:30	Mr.Hollandaise went to The Living Room
-18:30	Mrs. Hollandaise went to The Kitchen
-18:40	Mademoiselle Velouté waited for Signor Bolognese
-18:40	Mrs. Hollandaise took Rope
-18:40	Signor Bolognese went to The Living Room
-19:00	Mademoiselle Velouté took Gun
-19:00	Mrs. Hollandaise went to Mrs. Hollandaise's bedroom
-19:00	Signor Bolognese went to The Kitchen
-19:10	Mademoiselle Velouté waited for Signor Bolognese
-19:10	Mr.Hollandaise went to The Dining Room
-19:10	Mrs. Hollandaise dropped Rope
-19:20	Mademoiselle Velouté waited for Signor Bolognese
-19:20	Signor Bolognese went to Signor Bolognese's bedroom
-19:30	Mademoiselle Velouté waited for Signor Bolognese
-19:30	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-19:40	Mademoiselle Velouté waited for Signor Bolognese
-19:40	Signor Bolognese went to The Bathroom
-19:50	Mademoiselle Velouté waited for Signor Bolognese
-19:50	Mrs. Hollandaise went to The Bathroom
-19:50	Mr.Hollandaise went to The Bathroom
-20:00	Mademoiselle Velouté waited for Signor Bolognese
-20:00	Signor Bolognese went to The Living Room
-20:10	Mademoiselle Velouté shot Signor Bolognese with Gun
-20:10	Mrs. Hollandaise went to Mrs. Hollandaise's bedroom
-20:10	Mr.Hollandaise went to The Kitchen
-20:20	Mademoiselle Velouté went to Signor Bolognese's bedroom
-20:30	Mademoiselle Velouté dropped Gun
-20:30	Mr.Hollandaise went to Mr.Hollandaise's bedroom
-20:30	Mrs. Hollandaise went to The Bathroom
-20:50	Mademoiselle Velouté went to The Bathroom
-20:50	Mr.Hollandaise went to The Bathroom
-21:00	Mrs. Hollandaise went to The Dining Room
+18:00	Madame Béchamel went to The Kitchen
+18:00	Herr Duckefett went to The Kitchen
+18:10	Madame Béchamel took Rope
+18:10	Herr Duckefett went to Herr Duckefett's bedroom
+18:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
+18:10	Prof.Custard went to Prof.Custard's bedroom
+18:30	Madame Béchamel went to The Dining Room
+18:30	Prof.Custard went to The Dining Room
+18:30	Herr Duckefett went to The Kitchen
+18:30	Colonel Worcestershire went to The Kitchen
+18:40	Madame Béchamel strangled Prof.Custard with Rope
+18:40	Herr Duckefett took Rope
+18:50	Colonel Worcestershire went to The Dining Room

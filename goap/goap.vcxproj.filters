@@ -180,6 +180,9 @@
     <ClCompile Include="Squeezer.cpp">
       <Filter>Source Files\Objects\Prop</Filter>
     </ClCompile>
+    <ClCompile Include="Accuser.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -313,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>Header Files\Objects\Props</Filter>
+    </ClInclude>
+    <ClInclude Include="Accuser.h">
+      <Filter>Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
