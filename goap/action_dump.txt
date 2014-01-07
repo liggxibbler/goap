@@ -1,0 +1,22 @@
+18:00	Mademoiselle Velouté went to The Kitchen
+18:00	Don Gravy went to The Kitchen
+18:10	Mademoiselle Velouté took Rope
+18:10	Don Gravy took Rope
+18:10	Colonel Worcestershire went to Colonel Worcestershire's bedroom
+18:10	Madame Béchamel went to Madame Béchamel's bedroom
+18:20	Mademoiselle Velouté went to The Living Room
+18:20	Don Gravy went to Don Gravy's bedroom
+18:30	Mademoiselle Velouté waited for Colonel Worcestershire
+18:30	Colonel Worcestershire went to The Living Room
+18:30	Don Gravy dropped Rope
+18:30	Madame Béchamel went to The Living Room
+18:50	Mademoiselle Velouté took Gun
+18:50	Madame Béchamel went to The Dining Room
+18:50	Don Gravy went to The Dining Room
+19:00	Mademoiselle Velouté shot Colonel Worcestershire with Gun
+19:10	Mademoiselle Velouté went to Colonel Worcestershire's bedroom
+19:10	Don Gravy went to The Kitchen
+19:10	Madame Béchamel went to The Kitchen
+19:20	Mademoiselle Velouté dropped Gun
+19:30	Don Gravy went to Don Gravy's bedroom
+19:40	Mademoiselle Velouté went to The Kitchen

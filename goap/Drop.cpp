@@ -181,15 +181,19 @@ int Drop::Cost(RoomManager* rm)
 	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
 
 
-	if(_locative->instance->GetOwner() != 0)
-	// If the room has now owner, i.e. public room
+	if(_locative->instance->GetOwner() == 0)
+	// If the room has no owner, i.e. public room
 	{
 		cost = 60;
+	}
+	else if( _locative->instance->GetOwner() == _agent->instance )
+	{
+		cost = 40;
 	}
 	else if( _locative->instance->GetOwner() != _agent->instance )
 	// if the room has an owner that isn't the dropper
 	{
-		cost = 10;
+		cost = 20;
 	}
 	else if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
 	// if the room belongs to the owner of the object
