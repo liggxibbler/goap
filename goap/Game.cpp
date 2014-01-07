@@ -116,7 +116,7 @@ void Game::Roam()
 
 	int witness = item;
 	cout << "-----------------------\n";
-	cout << "\n* You can interview:\n\n";
+	cout << "\n* You can interview\\examine:\n\n";
 	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
 	{
 		cout << "[NOBODY]\n";
@@ -177,7 +177,7 @@ void Game::Roam()
 			m_currentAgent = aWitness;
 			m_roam = false;
 #else
-			std::cout << "\n" << aWitness->GetName() << " is dead and unable to answer you." << std::endl;
+			std::cout << "\n" << aWitness->GetName() << " was killed at " << TURN2TIME(m_timeOfDeath) << " with a " << "WEAPON" << "." << std::endl;
 			std::cout << "\n--Press any key to continue\n";
 			_getch();
 #endif
@@ -763,10 +763,15 @@ void Game::MoveActorsToLivingRoom()
 	{
 		if(actor != 1)
 		{
-			m_actors[actor]->GetRoom()->MarkForDeletion(m_actors[actor]);
-			livingRoom->AddAgent(m_actors[actor]);
+			Room* room = m_actors[actor]->GetRoom();
+			if(room != livingRoom)
+			{
+				m_actors[actor]->GetRoom()->MarkForDeletion(m_actors[actor]);
+				livingRoom->AddAgent(m_actors[actor]);
+			}
 		}
 	}
+
 	for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
 	{
 		(*room)->UpdateAgentPositions(m_murderer, m_victim);
