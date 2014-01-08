@@ -36,6 +36,9 @@ public:
 	void MoveActorsToLivingRoom();
 	bool ReturnToConstable();
 
+	void GetMurderWeapon();
+	void SetGoalOfThief();
+
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
 	std::vector<GOAP::Agent*> m_vecAgent;
@@ -66,6 +69,11 @@ private:
 
 	int m_timeOfDeath;
 	Accuser* m_accuser;
+
+	GOAP::Prop* m_murderWeapon;
+	std::string m_murderWeaponType;
+	std::string m_weaponExample1;
+	std::string m_weaponExample2;
 };
 
 #endif

@@ -89,6 +89,7 @@ void Prop::InitAttribMap()
 
 void Prop::Examine()
 {
+
 }
 
 void Prop::IncreaseValue()
@@ -104,4 +105,14 @@ int Prop::GetValue()
 int Prop::GetNumberOfInstances()
 {
 	return s_numInstances;
+}
+
+std::string Prop::GetDescription()
+{
+	return m_description;
+}
+
+void Prop::SetDescription(std::string desc)
+{
+	m_description = desc;
 }

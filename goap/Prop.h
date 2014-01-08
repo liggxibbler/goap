@@ -28,6 +28,9 @@ namespace GOAP
 		virtual int GetValue();
 
 		virtual int GetNumberOfInstances();
+		
+		std::string GetDescription();
+		void SetDescription(std::string desc);
 
 	protected:
 
@@ -35,6 +38,8 @@ namespace GOAP
 		Object* m_bearer;
 		int	m_bearerID;
 		int m_canBeFoundIn;
+		std::string m_description;
+
 	private:
 		static int s_value;
 		static int s_numInstances;

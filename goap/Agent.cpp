@@ -557,3 +557,13 @@ void Agent::PickCurrentGoal()
 		m_currentGoal = 0;
 	}
 }
+
+std::vector<ActionRecord>::iterator Agent::GetFirstActionRecord()
+{
+	return m_actionLog.begin();
+}
+
+std::vector<ActionRecord>::iterator Agent::GetLastActionRecord()
+{
+	return m_actionLog.end();
+}

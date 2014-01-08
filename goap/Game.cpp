@@ -94,7 +94,7 @@ void Game::Roam()
 	int iItem = item;
 
 	cout << "-----------------------\n";
-	cout << "\n* You can see(examine):\n\n";
+	cout << "\n* You can examine:\n\n";
 	if(m_currentRoom->GetFirstObject() == m_currentRoom->GetLastObject())
 	{
 		cout << "[NOTHING]\n";
@@ -119,7 +119,7 @@ void Game::Roam()
 
 	int witness = item;
 	cout << "-----------------------\n";
-	cout << "\n* You can interview\\examine:\n\n";
+	cout << "\n* You can interview/examine:\n\n";
 	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
 	{
 		cout << "[NOBODY]\n";
@@ -163,7 +163,10 @@ void Game::Roam()
 	}
 	else if(answer >= iItem && answer < witness )// examine
 	{
-
+		Prop* prop = m_vecObject[answer - iItem];
+		std::cout << "\n" << prop->GetName() << " : " << prop->GetDescription() << std::endl;
+		std::cout << "\n--Press any key to continue\n";
+		_getch();
 		//examine(answer-1);
 	}
 	else if(answer>=witness && answer <iMap)//agent
@@ -180,7 +183,7 @@ void Game::Roam()
 			m_currentAgent = aWitness;
 			m_roam = false;
 #else
-			std::cout << "\n" << aWitness->GetName() << " was killed at " << TURN2TIME(m_timeOfDeath) << " with a " << "WEAPON" << "." << std::endl;
+			std::cout << "\n" << aWitness->GetName() << " was killed at " << TURN2TIME(m_timeOfDeath) << " with a " << m_murderWeaponType << "." << std::endl;
 			std::cout << "\n--Press any key to continue\n";
 			_getch();
 #endif
@@ -345,40 +348,7 @@ bool Game::GeneratePlot()
 
 		if(m_turn == 0)
 		{
-			Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
-			while(murderGoal->GetParent()->GetParent() != 0)
-			// find goal whose action is the murder
-			{
-				murderGoal = murderGoal->GetParent();
-			}			
-			
-			// extract the murder instrument
-			Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
-			instrument->IncreaseValue();
-			Goal* goal = 0;
-			// make thief want all props of the same type as the instrument
-			for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
-			{
-				if(item->second->GetCompoundType() == instrument->GetCompoundType())
-				{
-					Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-
-					wantItem[0].instance = (*item).second;
-					wantItem[0].type = (*item).second->GetCompoundType();
-					wantItem[0].attrib = ATTRIBUTE_ROOM;
-					wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
-					wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-					wantItem[1].attrib = ATTRIBUTE_ROOM;
-
-					goal = new Goal;
-					goal->SetDepth(0);
-					goal->AddCondition(wantItem);
-					goal->SetPriority(20);
-
-					m_actors[2]->AddGoal(goal);
-					m_actors[2]->PickCurrentGoal();
-				}
-			}
+			SetGoalOfThief();
 		}
 
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
@@ -406,10 +376,14 @@ bool Game::GeneratePlot()
 #ifdef _GOAP_DEBUG
 		GETKEY;
 #endif
+		// Record time of death
 		if(m_actors[1]->GetAttrib(ATTRIBUTE_ALIVE) == false && m_timeOfDeath == 0)
 		{
+			GetMurderWeapon();
 			m_timeOfDeath = m_turn;
 		}
+
+
 		++m_turn;
 		if(m_turn >= MAX_TURNS)
 		{
@@ -751,7 +725,8 @@ Thank you for helping Scotland Yard with this case.\n\n\t\
 We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\t\
 dead in " << m_actors[1]->GetRoom()->GetName()<< ".\n\n\t\
 The coroner times the death at " << TURN2TIME(m_timeOfDeath) << ".\n\n\t\
-He believes that the victim was killed by a " << m_murderWeapon << "(like a ??? or a ???).\n\n\t\
+He believes that the victim was killed by " << m_murderWeaponType << "\n\n\
+(like " << m_weaponExample1 << " or " << m_weaponExample2 << ").\n\n\t\
 I've gathered all other residents in the living room to be interviewed.\n\n\t\
 You can go around the house and examine different rooms if you like.\n\n\t\
 I know with your talent you can solve the case in no time,\n\n\t\
@@ -838,4 +813,80 @@ bool Game::Accuse()
 	{
 		return true;
 	}	
+}
+
+void Game::GetMurderWeapon()
+{
+	for(auto record(m_actors[1]->GetFirstActionRecord()); record != m_actors[1]->GetLastActionRecord();
+		++record)
+	{
+		ActionType at = *(record->action);
+		if (at == ACTION_STAB || at == ACTION_BLUDGEON || at == ACTION_STRANGLE || at == ACTION_SHOOT)
+		{
+			switch(at)
+			{
+			case ACTION_STAB:
+				m_murderWeaponType = "a blade (stabbed)";
+				m_weaponExample1 = "a knife";
+				m_weaponExample1 = "a sword";
+				break;
+			case ACTION_BLUDGEON:
+				m_murderWeaponType = "a projectile (shot)";
+				m_weaponExample1 = "a gun";
+				m_weaponExample1 = "a pistol";
+				break;
+			case ACTION_STRANGLE:
+				m_murderWeaponType = "a string (strangled)";
+				m_weaponExample1 = "a rope";
+				m_weaponExample1 = "a cord";
+				break;
+			case ACTION_SHOOT:
+				m_murderWeaponType = "a blunt object (bludgeoned)";
+				m_weaponExample1 = "a coconut";
+				m_weaponExample1 = "a trophy";
+				break;
+			default:
+				// WRONG
+				break;
+			}
+		}
+	}
+}
+
+void Game::SetGoalOfThief()
+{
+	Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
+			while(murderGoal->GetParent()->GetParent() != 0)
+			// find goal whose action is the murder
+			{
+				murderGoal = murderGoal->GetParent();
+			}			
+			
+			// extract the murder instrument
+			Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
+			instrument->IncreaseValue();
+			Goal* goal = 0;
+			// make thief want all props of the same type as the instrument
+			for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
+			{
+				if(item->second->GetCompoundType() == instrument->GetCompoundType())
+				{
+					Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+
+					wantItem[0].instance = (*item).second;
+					wantItem[0].type = (*item).second->GetCompoundType();
+					wantItem[0].attrib = ATTRIBUTE_ROOM;
+					wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
+					wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+					wantItem[1].attrib = ATTRIBUTE_ROOM;
+
+					goal = new Goal;
+					goal->SetDepth(0);
+					goal->AddCondition(wantItem);
+					goal->SetPriority(20);
+
+					m_actors[2]->AddGoal(goal);
+					m_actors[2]->PickCurrentGoal();
+				}
+			}
 }

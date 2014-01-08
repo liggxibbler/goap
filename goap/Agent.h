@@ -64,7 +64,7 @@ namespace GOAP
 		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) _CPP_11_OVERRIDE;
 		virtual void Examine() _CPP_11_OVERRIDE;
 
-		virtual bool CanBeMurderWeapon();
+		virtual bool CanBeMurderWeapon(); // XXX
 
 		void Log(int turn, Action* action);
 
@@ -97,6 +97,9 @@ namespace GOAP
 
 		bool PeekGoal();
 		void PickCurrentGoal();
+
+		std::vector<ActionRecord>::iterator GetFirstActionRecord();
+		std::vector<ActionRecord>::iterator GetLastActionRecord();
 
 	protected:
 
