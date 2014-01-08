@@ -148,7 +148,7 @@ int Murder::Cost(RoomManager* rm)
 	Prop* inst = (Prop*)(_instrument->instance);
 
 	// Prefer instruments with many instances
-	cost += 100 / ( 1 + inst->GetNumberOfInstances() );
+	cost += 10 / ( 1 + inst->GetNumberOfInstances() );
 
 	if (roomOwner != 0)
 	{

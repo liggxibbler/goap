@@ -183,6 +183,9 @@
     <ClCompile Include="Accuser.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="Game_InitializeObjects.cpp">
+      <Filter>Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">

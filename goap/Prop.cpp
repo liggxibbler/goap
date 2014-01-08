@@ -5,13 +5,13 @@ using namespace GOAP;
 int Prop::s_value = 0;
 int Prop::s_numInstances = 0;
 
-Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
+Prop::Prop(std::string name, Object* owner) : Object(name, owner), m_bearer(0), m_bearerID(0)
 {
 	++s_numInstances;
 	InitAttribMap();
 }
 
-Prop::Prop() : Object(), m_canBeFoundIn(0), m_bearer(0), m_bearerID(0)
+Prop::Prop() : Object(), m_bearer(0), m_bearerID(0)
 {
 	++s_numInstances;
 	InitAttribMap();
@@ -57,9 +57,9 @@ bool Prop::CanBeMurderWeapon()
 	return false;
 }
 
-void Prop::MayBeFoundIn(int rooms)
+void Prop::MayBeFoundIn(RoomName rooms)
 {
-	m_canBeFoundIn |= rooms;
+	m_canBeFoundIn = rooms;
 }
 
 bool Prop::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
@@ -115,4 +115,9 @@ std::string Prop::GetDescription()
 void Prop::SetDescription(std::string desc)
 {
 	m_description = desc;
+}
+
+RoomName Prop::MayBeFoundIn()
+{
+	return m_canBeFoundIn;
 }

@@ -218,7 +218,7 @@ void RoomManager::ClearRooms()
 	}*/
 }
 
-void RoomManager::ShowEveryhting(Agent* seer)
+void RoomManager::ShowEverything(Agent* seer)
 {
 	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
 	{

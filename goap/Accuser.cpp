@@ -21,7 +21,7 @@ void Accuser::Initialize(GOAP::Agent* murderer, GOAP::Agent* thief, GOAP::Agent*
 
 bool Accuser::Submit()
 {
-	if ( m_allegedMurderer == m_murderer && m_allegedThief == m_thief)
+	if ( m_allegedMurderer == m_murderer )
 	{
 		return true;
 	}
@@ -58,30 +58,7 @@ bool Accuser::Prompt()
 			AccuseMurderer(murderer - 1);
 		}
 
-		int thief = -1;
-
-		while(thief < 1 || thief > 3)
-		{
-			std::cout << "===============================================\n\n";
-			std::cout << "Who do you think was the thief?\n\n";
-			std::cout << "1. " << m_murderer->GetName() << "\n\n";
-			std::cout << "2. " << m_witness->GetName() << "\n\n";
-			std::cout << "3. " << m_thief->GetName() << "\n\n";
-			std::cout << "0. Go back to Constable Sauce\n\n";
-			std::cout << ">>> ";
-
-			std::cin >> thief;
-
-			if(thief == 0)
-			{
-				return false;
-			}
-
-			AccuseThief(thief - 1);
-		}
-
-		std::cout << "So you think that " << m_allegedMurderer->GetName() << " was the killer,\n\n";
-		std::cout << "And " << m_allegedThief->GetName() << " was the thief?\n\n";
+		std::cout << "So you think that " << m_allegedMurderer->GetName() << " was the killer?\n\n";
 		std::cout << "(Y/N) >>> ";
 		char answer;
 		std::cin >> answer;

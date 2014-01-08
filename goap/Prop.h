@@ -19,7 +19,8 @@ namespace GOAP
 		virtual void Examine() _CPP_11_OVERRIDE;
 		virtual Object* Clone() _CPP_11_OVERRIDE;
 
-		void MayBeFoundIn(int);
+		void MayBeFoundIn(RoomName);
+		RoomName MayBeFoundIn();
 		bool CanBeMurderWeapon();
 		Object* GetBearer();
 		void SetBearer(Object* bearer);
@@ -37,7 +38,7 @@ namespace GOAP
 		virtual void InitAttribMap() _CPP_11_OVERRIDE;
 		Object* m_bearer;
 		int	m_bearerID;
-		int m_canBeFoundIn;
+		RoomName m_canBeFoundIn;
 		std::string m_description;
 
 	private:

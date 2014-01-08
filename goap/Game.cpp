@@ -340,15 +340,23 @@ bool Game::GeneratePlot()
 	PopulateRooms();
 
 	m_murder = false;
+	bool thiefHasGoal = false;
 
 	while(!m_murder)
 	{
 		// update murderer first to avoid artefacts
 		m_murderer->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
 
-		if(m_turn == 0)
+		if(!thiefHasGoal)
 		{
-			SetGoalOfThief();
+			if(m_murderer->GetGoal()->GetFirstCondition()->GetOperatorLayoutType() == OP_LAYOUT_TYPE_OAVB)
+			{
+				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PLAN_STAT_SUCCESS)
+				{
+					SetGoalOfThief();
+					thiefHasGoal = true;
+				}
+			}
 		}
 
 		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
@@ -540,29 +548,21 @@ void Game::PopulateRooms()
 	*/
 	// kitchen, living, dining
 
-	Room* room = m_roomManager->GetRoom(ROOM_KITCHEN); //kitchen
-	room->AddObject(m_objects[1]);
-	room->AddObject(m_objects[2]);
-	room->AddObject(m_objects[3]);
-
-	room = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
-	room->AddObject(m_objects[0]);//living
-	room->AddObject(m_objects[4]);
-	room->AddObject(m_objects[7]);
-
-	room = m_roomManager->GetRoom(ROOM_DINING_ROOM);
-	room->AddObject(m_objects[5]);//dining
-	room->AddObject(m_objects[6]);
+	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
+	{
+		Room* room = m_roomManager->GetRoom((*object)->MayBeFoundIn());
+		room->AddObject(*object);
+	}
 
 	//m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
 	for(int i=0; i<NUMBER_OF_ACTORS; ++i)
 	{
-		m_roomManager->GetRoom(ROOM_DINING_ROOM)->AddAgent(m_actors[i]);
+		m_roomManager->GetRoom(ROOM_BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
 	}
 
 	// Show everything to murderer and thief
-	RoomManager::Instance()->ShowEveryhting( m_actors[0] );
-	RoomManager::Instance()->ShowEveryhting( m_actors[2] );
+	RoomManager::Instance()->ShowEverything( m_actors[0] );
+	RoomManager::Instance()->ShowEverything( m_actors[2] );
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
@@ -635,58 +635,6 @@ void Game::InitializeAgents()
 	m_agents[9]->InitializeCharacter("Signor Bolognese", MALE
 	, "Italian, sleezy, barber, slim, fast, cheap"
 	, locationProbability10, true, true, true, true, 8, 7);
-}
-
-void Game::InitializeObjects()
-{
-	/*
-	clock
-	scissors
-	mirror
-	bottle
-	kettle
-	toaster
-	fork
-	chemicals
-	cups
-	drinks
-	foods
-	*/
-
-	m_objects.clear();
-	Prop* obj = 0;
-
-	obj = new Prop("Clock");
-	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
-	m_objects.push_back(obj);
-
-	obj = new Prop("Cup");
-	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
-	m_objects.push_back(obj);
-
-	obj = new Blade("Knife");
-	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM);
-	m_objects.push_back(obj);
-
-	obj = new Squeezer("Rope");
-	obj->MayBeFoundIn(ROOM_KITCHEN);
-	m_objects.push_back(obj);
-
-	obj = new Blunt("Statue");
-	obj->MayBeFoundIn(ROOM_LIVING_ROOM | ROOM_BEDROOM);
-	m_objects.push_back(obj);
-
-	obj = new Prop("Lamp");
-	obj->MayBeFoundIn(ROOM_BATHROOM | ROOM_BEDROOM | ROOM_LIVING_ROOM | ROOM_DINING_ROOM);
-	m_objects.push_back(obj);
-
-	obj = new Prop("Table");
-	obj->MayBeFoundIn(ROOM_KITCHEN | ROOM_DINING_ROOM | ROOM_LIVING_ROOM);
-	m_objects.push_back(obj);
-
-	obj = new Projectile("Gun");
-	obj->MayBeFoundIn(ROOM_BEDROOM);
-	m_objects.push_back(obj);
 }
 
 void Game::DisplayRoomMap()
@@ -765,7 +713,7 @@ bool Game::ReturnToConstable()
 	while(!done)
 	{
 		system("cls");
-		std::cout << "===============================================\n";
+		std::cout << "==================================\n";
 		std::cout << "\nYou are talking to Constable Sauce\n\n";
 		std::cout << "\nHe asks if you are ready to:\"\n\n";
 		std::cout << "1. Accuse someone\n\n";
@@ -804,7 +752,7 @@ bool Game::Accuse()
 		}
 		else
 		{
-			std::cout << "\n\nNo! You got the wrong guy! The right guy killed everyone!";
+			std::cout << "\n\nYou were wrong! The real killer was " << m_murderer->GetName() << "!";
 			_getch();
 			return false;
 		}
@@ -828,22 +776,22 @@ void Game::GetMurderWeapon()
 			case ACTION_STAB:
 				m_murderWeaponType = "a blade (stabbed)";
 				m_weaponExample1 = "a knife";
-				m_weaponExample1 = "a sword";
+				m_weaponExample2 = "a sword";
 				break;
 			case ACTION_BLUDGEON:
-				m_murderWeaponType = "a projectile (shot)";
-				m_weaponExample1 = "a gun";
-				m_weaponExample1 = "a pistol";
+				m_murderWeaponType = "a blunt object (bludgeoned)";
+				m_weaponExample1 = "a coconut";
+				m_weaponExample2 = "a trophy";
 				break;
 			case ACTION_STRANGLE:
 				m_murderWeaponType = "a string (strangled)";
 				m_weaponExample1 = "a rope";
-				m_weaponExample1 = "a cord";
+				m_weaponExample2 = "a cord";
 				break;
 			case ACTION_SHOOT:
-				m_murderWeaponType = "a blunt object (bludgeoned)";
-				m_weaponExample1 = "a coconut";
-				m_weaponExample1 = "a trophy";
+				m_murderWeaponType = "a projectile (shot)";
+				m_weaponExample1 = "a gun";
+				m_weaponExample2 = "a pistol";
 				break;
 			default:
 				// WRONG
@@ -856,37 +804,37 @@ void Game::GetMurderWeapon()
 void Game::SetGoalOfThief()
 {
 	Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
-			while(murderGoal->GetParent()->GetParent() != 0)
-			// find goal whose action is the murder
-			{
-				murderGoal = murderGoal->GetParent();
-			}			
-			
-			// extract the murder instrument
-			Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
-			instrument->IncreaseValue();
-			Goal* goal = 0;
-			// make thief want all props of the same type as the instrument
-			for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
-			{
-				if(item->second->GetCompoundType() == instrument->GetCompoundType())
-				{
-					Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	while(murderGoal->GetParent()->GetParent() != 0)
+		// find goal whose action is the murder
+	{
+		murderGoal = murderGoal->GetParent();
+	}			
 
-					wantItem[0].instance = (*item).second;
-					wantItem[0].type = (*item).second->GetCompoundType();
-					wantItem[0].attrib = ATTRIBUTE_ROOM;
-					wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
-					wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-					wantItem[1].attrib = ATTRIBUTE_ROOM;
+	// extract the murder instrument
+	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
+	instrument->IncreaseValue();
+	Goal* goal = 0;
+	// make thief want all props of the same type as the instrument
+	for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
+	{
+		if(item->second->GetCompoundType() == instrument->GetCompoundType())
+		{
+			Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 
-					goal = new Goal;
-					goal->SetDepth(0);
-					goal->AddCondition(wantItem);
-					goal->SetPriority(20);
+			wantItem[0].instance = (*item).second;
+			wantItem[0].type = (*item).second->GetCompoundType();
+			wantItem[0].attrib = ATTRIBUTE_ROOM;
+			wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
+			wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+			wantItem[1].attrib = ATTRIBUTE_ROOM;
 
-					m_actors[2]->AddGoal(goal);
-					m_actors[2]->PickCurrentGoal();
-				}
-			}
+			goal = new Goal;
+			goal->SetDepth(0);
+			goal->AddCondition(wantItem);
+			goal->SetPriority(20);
+
+			m_actors[2]->AddGoal(goal);
+			m_actors[2]->PickCurrentGoal();
+		}
+	}
 }
