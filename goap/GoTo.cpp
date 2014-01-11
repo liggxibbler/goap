@@ -22,8 +22,8 @@ GoTo::~GoTo()
 
 ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_GOAL));
+	Argument sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	Argument obj(*GetArg(SEMANTIC_ROLE_GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
 	//sub.instance->SetAttribute(ATTRIBUTE_ROOM, (*(obj.instance))[ATTRIBUTE_ROOM]);
@@ -70,7 +70,7 @@ GoTo* GoTo::Clone()
 
 void GoTo::InitArgs()
 {
-	ConditionParameter agent, goal;
+	Argument agent, goal;
 
 	// SUBJECT
 	agent.semantic = SEMANTIC_ROLE_AGENT;
@@ -91,8 +91,8 @@ void GoTo::InitEffects()
 {
 	Condition agentNearGoal(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 
-	ConditionParameter agent(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter goal(*GetArg(SEMANTIC_ROLE_GOAL));
+	Argument agent(*GetArg(SEMANTIC_ROLE_AGENT));
+	Argument goal(*GetArg(SEMANTIC_ROLE_GOAL));
 
 	agentNearGoal[0] = agent;
 	agentNearGoal[0].attrib = ATTRIBUTE_ROOM;
@@ -196,7 +196,7 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	CondParamIter cpIter;
+	ArgIter cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();

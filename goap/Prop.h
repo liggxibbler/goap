@@ -13,11 +13,11 @@ namespace GOAP
 		~Prop();
 
 	public:
-		//virtual operator ObjectType () _CPP_11_OVERRIDE;
-		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) _CPP_11_OVERRIDE;
-		virtual int GetCompoundType() _CPP_11_OVERRIDE;
-		virtual void Examine() _CPP_11_OVERRIDE;
-		virtual Object* Clone() _CPP_11_OVERRIDE;
+		//virtual operator ObjectType () override;
+		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) override;
+		virtual int GetCompoundType() override;
+		virtual void Examine() override;
+		virtual Object* Clone() override;
 
 		void MayBeFoundIn(RoomName);
 		RoomName MayBeFoundIn();
@@ -35,7 +35,7 @@ namespace GOAP
 
 	protected:
 
-		virtual void InitAttribMap() _CPP_11_OVERRIDE;
+		virtual void InitAttribMap() override;
 		Object* m_bearer;
 		int	m_bearerID;
 		RoomName m_canBeFoundIn;

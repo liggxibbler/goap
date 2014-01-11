@@ -31,7 +31,7 @@ void Bludgeon::InitArgs()
 {
 	Murder::InitArgs();
 
-	ConditionParameter inst;
+	Argument inst;
 	
 	//INSTRUMENT
 	inst.semantic = SEMANTIC_ROLE_INSTRUMENT;

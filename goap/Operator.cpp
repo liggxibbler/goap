@@ -20,7 +20,7 @@ bool Operator::Evaluate(Condition& ac)
 	
 	if( ac.GetNumParams() != 0)
 	{
-		m_params = (ConditionParameter*) ac.GetParams();
+		m_params = (Argument*) ac.GetParams();
 	}
 	
 	m_negate = ac.GetNegate();

@@ -7,10 +7,10 @@ using namespace GOAP;
 
 ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 {
-	ConditionParameter sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	ConditionParameter obj(*GetArg(SEMANTIC_ROLE_PATIENT));
-	ConditionParameter ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
-	ConditionParameter loc(*GetArg(SEMANTIC_ROLE_LOCATIVE));
+	Argument sub(*GetArg(SEMANTIC_ROLE_AGENT));
+	Argument obj(*GetArg(SEMANTIC_ROLE_PATIENT));
+	Argument ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
+	Argument loc(*GetArg(SEMANTIC_ROLE_LOCATIVE));
 
 	if(true)//loc.instance->GetAttrib(ATTRIBUTE_NUM_AGENTS) <= 3)
 	{
@@ -41,7 +41,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 void Murder::InitArgs()
 {
-	ConditionParameter agent, patient, room;
+	Argument agent, patient, room;
 
 	// AGENT
 	agent.semantic = SEMANTIC_ROLE_AGENT;
@@ -68,7 +68,7 @@ void Murder::InitArgs()
 void Murder::InitEffects()
 {
 	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-	ConditionParameter obj = *GetArg(SEMANTIC_ROLE_PATIENT);
+	Argument obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	objIsDead[0] = obj;
 	objIsDead[0].attrib	= ATTRIBUTE_ALIVE;
@@ -227,7 +227,6 @@ void Murder::Dispatch(int turn)
 		// THIS IS NOT A GOOD SCENARIO
 		break;
 	};
-
 }
 
 Goal* Murder::FollowupGoal()

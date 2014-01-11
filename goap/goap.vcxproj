@@ -82,7 +82,7 @@
     <ClCompile Include="Action.cpp" />
     <ClCompile Include="ActionManager.cpp" />
     <ClCompile Include="Agent.cpp" />
-    <ClCompile Include="ConditionParameter.cpp" />
+    <ClCompile Include="Argument.cpp" />
     <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Drop.cpp" />
     <ClCompile Include="Equal.cpp" />
@@ -125,7 +125,7 @@
     <ClInclude Include="ActionManager.h" />
     <ClInclude Include="Agent.h" />
     <ClInclude Include="Common.h" />
-    <ClInclude Include="ConditionParameter.h" />
+    <ClInclude Include="Argument.h" />
     <ClInclude Include="Counter.h" />
     <ClInclude Include="Drop.h" />
     <ClInclude Include="Equal.h" />

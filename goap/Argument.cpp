@@ -1,9 +1,9 @@
-#include "ConditionParameter.h"
+#include "Argument.h"
 #include "Object.h"
 
 using namespace GOAP;
 
-ConditionParameter::ConditionParameter() :
+Argument::Argument() :
 	type(OBJ_TYPE_NONE),
 	semantic(SEMANTIC_ROLE_NONE),
 	instance(NULL),
@@ -12,7 +12,7 @@ ConditionParameter::ConditionParameter() :
 	strict(false)
 {}
 
-ConditionParameter::ConditionParameter(const ConditionParameter& other)
+Argument::Argument(const Argument& other)
 {
 	attrib = other.attrib;
 	instance = other.instance;
@@ -22,7 +22,7 @@ ConditionParameter::ConditionParameter(const ConditionParameter& other)
 	strict = other.strict;
 }
 
-ConditionParameter& ConditionParameter::operator = (ConditionParameter& other)
+Argument& Argument::operator = (Argument& other)
 {
 	attrib = other.attrib;
 	instance = other.instance;
@@ -33,7 +33,7 @@ ConditionParameter& ConditionParameter::operator = (ConditionParameter& other)
 	return *this;
 }
 
-bool ConditionParameter::MatchesTypeOf(const ConditionParameter& other)
+bool Argument::MatchesTypeOf(const Argument& other)
 {
 	bool result = true;
 	if(strict)
@@ -56,7 +56,7 @@ bool ConditionParameter::MatchesTypeOf(const ConditionParameter& other)
 	return result;
 }
 
-bool ConditionParameter::MatchesTypeOf(Object* other)
+bool Argument::MatchesTypeOf(Object* other)
 {
 	bool result = true;
 	int iType = type;

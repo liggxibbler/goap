@@ -9,8 +9,8 @@ namespace GOAP
 	class Murder : public Action
 	{
 	public:
-		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE	;
-		virtual ExecutionStatus ExecuteWorkhorse(int turn) _CPP_11_OVERRIDE;
+		virtual int Cost(RoomManager* rm) override	;
+		virtual ExecutionStatus ExecuteWorkhorse(int turn) override;
 
 		void SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative);
 		virtual void Dispatch(int turn);
@@ -18,9 +18,9 @@ namespace GOAP
 		virtual Goal* FollowupGoal();
 
 	protected:
-		virtual void InitArgs() _CPP_11_OVERRIDE;
+		virtual void InitArgs() override;
 		virtual void InitPreconditions();
-		virtual void InitEffects() _CPP_11_OVERRIDE;
+		virtual void InitEffects() override;
 	};
 }
 #endif

@@ -2,7 +2,7 @@
 #define _GOAP_CONDITION_H_
 
 #include "Common.h"
-#include "ConditionParameter.h"
+#include "Argument.h"
 #include "Object.h"
 
 namespace GOAP
@@ -29,10 +29,10 @@ namespace GOAP
 		OperatorLayoutType GetOperatorLayoutType();
 		OperatorType GetOperatorType();
 		
-		ConditionParameter& operator [] (int index);
-		ConditionParameter& GetParamByIndex(int index);
+		Argument& operator [] (int index);
+		Argument& GetParamByIndex(int index);
 
-		const ConditionParameter* GetParams();
+		const Argument* GetParams();
 		int GetNumParams();
 
 		void SetNegate(bool value);
@@ -40,9 +40,9 @@ namespace GOAP
 
 		bool Evaluate(Op::OperatorManager* om);
 
-		ConditionParameter* GetParamBySemantic(SemanticRole st);
-		ConditionParameter* GetParamByType(ObjectType ot);
-		ConditionParameter* GetParamByInstance(Object* obj);
+		Argument* GetParamBySemantic(SemanticRole st);
+		Argument* GetParamByType(ObjectType ot);
+		Argument* GetParamByInstance(Object* obj);
 
 		void CopySemantics(Condition& other);
 
@@ -53,7 +53,7 @@ namespace GOAP
 		OperatorLayoutType m_layout;
 		OperatorType m_operatorType;
 		
-		ConditionParameter* m_params;
+		Argument* m_params;
 		bool m_negate;
 
 		int m_numParams;

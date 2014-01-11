@@ -14,9 +14,9 @@
 
 #include "FactManager.h"
 
-#define MAX_TURNS 20
+#define MAX_TURNS 1000
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		4
+#define NUMBER_OF_ACTORS		3
 
 #include <iostream>
 using namespace std;
@@ -141,7 +141,7 @@ void Game::Roam()
 	}
 	cout << "-----------------------\n";
 	int iMap = item;
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 	cout << "\nOr:\n";
 	cout << item << ") SEE THE MAP" << endl;
 #endif
@@ -179,7 +179,7 @@ void Game::Roam()
 		}
 		else
 		{
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 			m_currentAgent = aWitness;
 			m_roam = false;
 #else
@@ -189,7 +189,7 @@ void Game::Roam()
 #endif
 		}
 	}
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 	else if(answer == iMap)
 	{
 		DisplayRoomMap();
@@ -381,7 +381,7 @@ bool Game::GeneratePlot()
 		DUMP("Turn " << m_turn << " is over.")
 		DUMP("******************************")
 
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 		GETKEY;
 #endif
 		// Record time of death
@@ -413,6 +413,8 @@ void Game::MainLoop()
 	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
 	std::cout << "Seed used : " << m_seed << endl;
 	std::cout << "******************************\n\n";
+	std::cout << "--Press any key to continue";
+	_getch();
 
 	system("cls");
 
@@ -535,7 +537,14 @@ void Game::AssignRoles(/*int numWitness*/)
 	////m_victim->AddGoal(goal);
 	m_agents[role_array[2]]->PickCurrentGoal();
 
-	m_accuser->Initialize(m_actors[0], m_actors[2], m_actors[3]);
+	if(NUMBER_OF_ACTORS == 4)
+	{
+		m_accuser->Initialize(m_actors[0], m_actors[2], m_actors[3]);
+	}
+	else
+	{
+		m_accuser->Initialize(m_actors[0], m_actors[2], 0);
+	}
 }
 
 void Game::PopulateRooms()
@@ -734,9 +743,11 @@ bool Game::ReturnToConstable()
 		case 2:
 			return true;
 		default:
+			return true;
 			break;
 		}
 	}
+	return true;
 }
 
 bool Game::Accuse()

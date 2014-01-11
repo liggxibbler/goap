@@ -32,7 +32,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) _CPP_11_OVERRIDE;
+		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
 		ExecutionStatus GetStatus();
 		virtual operator ActionType() = 0;
 
@@ -42,17 +42,17 @@ namespace GOAP
 		CondIter GetFirstEffect();
 		CondIter GetLastEffect();
 
-		CondParamIter GetFirstArg();
-		CondParamIter GetLastArg();
+		ArgIter GetFirstArg();
+		ArgIter GetLastArg();
 
 		virtual bool MightSatisfy(Condition& cond); // XXX
 		bool CopyArgsFromCondition(Condition& cond);
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
-		CondParamIter GetArg(SemanticRole st);
-		CondParamIter GetArg(ObjectType ot);
-		CondParamIter GetArg(Object* obj);
+		ArgIter GetArg(SemanticRole st);
+		ArgIter GetArg(ObjectType ot);
+		ArgIter GetArg(Object* obj);
 
 		void Initialize();
 		virtual void UpdateConditionInstances();
@@ -107,7 +107,7 @@ namespace GOAP
 
 		virtual Action* GetInstanceFromTuple(std::vector<Object*>& tuple);
 
-		std::list<ConditionParameter> m_args;
+		std::list<Argument> m_args;
 		//std::list<Condition> m_preconds;
 
 		Goal* m_preconds;

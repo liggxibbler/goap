@@ -60,7 +60,7 @@ WaitFor* WaitFor::Clone()
 
 void WaitFor::InitArgs()
 {
-	ConditionParameter sub, obj1, loc;
+	Argument sub, obj1, loc;
 	
 	// SUBJECT
 	sub.semantic = SEMANTIC_ROLE_AGENT;
@@ -90,8 +90,8 @@ void WaitFor::InitEffects()
 {
 	Condition goalAtLocation(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	
-	ConditionParameter goal(*GetArg(SEMANTIC_ROLE_GOAL));
-	ConditionParameter locative(*GetArg(SEMANTIC_ROLE_LOCATIVE));
+	Argument goal(*GetArg(SEMANTIC_ROLE_GOAL));
+	Argument locative(*GetArg(SEMANTIC_ROLE_LOCATIVE));
 	
 	goalAtLocation[0] = goal;
 	goalAtLocation[0].attrib = ATTRIBUTE_ROOM;
@@ -196,7 +196,7 @@ Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	CondParamIter cpIter;
+	ArgIter cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();

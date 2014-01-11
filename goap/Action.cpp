@@ -39,7 +39,7 @@ bool Action::MightSatisfy(Condition& cond)
 bool Action::CopyArgsFromCondition(Condition& cond)
 {
 	bool result = true;
-	CondParamIter paramIter;
+	ArgIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		SemanticRole st = cond[i].semantic;
@@ -63,9 +63,9 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 	return result;
 }
 
-CondParamIter Action::GetArg(SemanticRole st)
+ArgIter Action::GetArg(SemanticRole st)
 {
-	CondParamIter paramIter;
+	ArgIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).semantic == st)
@@ -76,9 +76,9 @@ CondParamIter Action::GetArg(SemanticRole st)
 	return paramIter;
 }
 
-CondParamIter Action::GetArg(ObjectType ot)
+ArgIter Action::GetArg(ObjectType ot)
 {
-	CondParamIter paramIter;
+	ArgIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).type == ot)
@@ -89,9 +89,9 @@ CondParamIter Action::GetArg(ObjectType ot)
 	return paramIter;
 }
 
-CondParamIter Action::GetArg(Object* obj)
+ArgIter Action::GetArg(Object* obj)
 {
-	CondParamIter paramIter;
+	ArgIter paramIter;
 	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
 	{
 		if((*paramIter).instance == obj)
@@ -102,20 +102,20 @@ CondParamIter Action::GetArg(Object* obj)
 	return paramIter;
 }
 
-CondParamIter Action::GetFirstArg()
+ArgIter Action::GetFirstArg()
 {
 	return m_args.begin();
 }
 
-CondParamIter Action::GetLastArg()
+ArgIter Action::GetLastArg()
 {
 	return m_args.end();
 }
 
 int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 {
-	CondParamIter semanticIter;
-	ConditionParameter cp;
+	ArgIter semanticIter;
+	Argument cp;
 	std::vector<Object*> unifyList;
 	std::vector<std::vector<Object*> > comboList;
 
@@ -192,7 +192,7 @@ Action* Action::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	CondParamIter cpIter;
+	ArgIter cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();
@@ -221,7 +221,7 @@ void Action::Initialize()
 
 void Action::CloneArgs(Action* prototype)
 {
-	CondParamIter argIter;
+	ArgIter argIter;
 	for(argIter = prototype->GetFirstArg(); argIter != prototype->GetLastArg(); ++argIter)
 	{
 		m_args.push_back(*argIter);
@@ -324,7 +324,7 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 		}
 		else
 		{
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 			std::string _str = (std::string)(*this);
 			DUMP(GetArg(SEMANTIC_ROLE_AGENT)->instance->GetName() << " can't " << _str << ".")
 			GETKEY;

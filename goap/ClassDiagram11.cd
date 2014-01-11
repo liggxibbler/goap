@@ -273,11 +273,11 @@
       <FileName>Common.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="GOAP::ConditionParameter" Collapsed="true">
+  <Struct Name="GOAP::Argument" Collapsed="true">
     <Position X="23.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAJAAAAAAAAAAAAAgAAAAAJBACAAAAAgAAAAAAI=</HashCode>
-      <FileName>ConditionParameter.h</FileName>
+      <FileName>Argument.h</FileName>
     </TypeIdentifier>
   </Struct>
   <Struct Name="GOAP::ActionRecord" Collapsed="true">
@@ -301,7 +301,7 @@
       <FileName>Goal.h</FileName>
     </TypeIdentifier>
   </Typedef>
-  <Typedef Name="GOAP::CondParamIter" Collapsed="true">
+  <Typedef Name="GOAP::ArgIter" Collapsed="true">
     <Position X="23.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

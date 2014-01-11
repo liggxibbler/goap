@@ -25,7 +25,7 @@ namespace GOAP
 			virtual bool EvaluateOOB () = 0;
 
 		protected:
-			ConditionParameter* m_params;
+			Argument* m_params;
 			bool m_negate;
 		};
 	}

@@ -25,7 +25,7 @@ Condition::Condition(const Condition& other)
 	m_params = NULL;
 	if(m_numParams != 0)
 	{
-		m_params = new ConditionParameter[m_numParams];
+		m_params = new Argument[m_numParams];
 		for(int i = 0; i < m_numParams; i++)
 		{
 			m_params[i] = other.m_params[i];
@@ -84,7 +84,7 @@ bool Condition::CreateArrays()
 		}
 	};
 
-	m_params = new ConditionParameter[m_numParams];
+	m_params = new Argument[m_numParams];
 
 	return true;
 }
@@ -150,17 +150,17 @@ bool Condition::Evaluate(Op::OperatorManager* om)
 	return oper->Evaluate(*this);
 }
 
-const ConditionParameter* Condition::GetParams()
+const Argument* Condition::GetParams()
 {
 	return m_params;
 }
 
-ConditionParameter& Condition::operator[](int index)
+Argument& Condition::operator[](int index)
 {
 	return m_params[index];
 }
 
-ConditionParameter& Condition::GetParamByIndex(int index)
+Argument& Condition::GetParamByIndex(int index)
 {
 	return m_params[index];
 }
@@ -170,7 +170,7 @@ int Condition::GetNumParams()
 	return m_numParams;
 }
 
-ConditionParameter* Condition::GetParamBySemantic(SemanticRole st)
+Argument* Condition::GetParamBySemantic(SemanticRole st)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
@@ -181,7 +181,7 @@ ConditionParameter* Condition::GetParamBySemantic(SemanticRole st)
 	}
 	return NULL;
 }
-ConditionParameter* Condition::GetParamByType(ObjectType ot)
+Argument* Condition::GetParamByType(ObjectType ot)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{
@@ -192,7 +192,7 @@ ConditionParameter* Condition::GetParamByType(ObjectType ot)
 	}
 	return NULL;
 }
-ConditionParameter* Condition::GetParamByInstance(Object* obj)
+Argument* Condition::GetParamByInstance(Object* obj)
 {
 	for(int i = 0; i < m_numParams; ++i)
 	{

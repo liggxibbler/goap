@@ -3,21 +3,7 @@
 
 #include <iostream>
 
-#ifdef _WIN32
-
 #ifdef _DEBUG
-#define _GOAP_DEBUG
-#endif
-
-#else
-
-#ifndef NDEBUG
-#define _GOAP_DEBUG
-#endif
-
-#endif
-
-#ifdef _GOAP_DEBUG
 #define DUMP(X) //std::cout << std::endl << X << std::endl;
 #define DUMP_NL(X) //std::cout << X;
 #define GETKEY //std::cin.get();
@@ -25,12 +11,6 @@
 #define DUMP(X)
 #define DUMP_NL(X)
 #define GETKEY 
-#endif
-
-#ifdef _MSC_VER
-#define _CPP_11_OVERRIDE override
-#else
-#define _CPP_11_OVERRIDE
 #endif
 
 #define NUMBER_OF_ROOMS 5

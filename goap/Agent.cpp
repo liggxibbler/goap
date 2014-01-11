@@ -265,7 +265,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		}
 		m_updated = true;
 	}
-#ifdef _GOAP_DEBUG
+#ifdef _DEBUG
 	else
 	{
 		std::cout << "\n" << m_name << " can't update, ";

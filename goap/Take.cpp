@@ -49,7 +49,7 @@ Take* Take::Clone()
 
 void Take::InitArgs()
 {
-	ConditionParameter sub, obj;
+	Argument sub, obj;
 
 	sub.semantic = SEMANTIC_ROLE_AGENT;
 	sub.instance = NULL;
@@ -67,7 +67,7 @@ void Take::InitArgs()
 void Take::InitPreconditions()
 {
 	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
+	Argument sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	subNearObj[0] = sub;
@@ -90,7 +90,7 @@ void Take::InitPreconditions()
 void Take::InitEffects()
 {
 	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	ConditionParameter sub = *GetArg(SEMANTIC_ROLE_AGENT),
+	Argument sub = *GetArg(SEMANTIC_ROLE_AGENT),
 		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
 
 	subHasObj[0] = sub;
@@ -177,4 +177,53 @@ int Take::Cost(RoomManager* rm)
 void Take::UpdateConditionInstances()
 {
 	Action::UpdateConditionInstances();
+}
+
+void Take::Dispatch(int turn)
+{
+	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	this->SetLogged();
+	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Room* room = agent->GetRoom();
+	
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	{
+		if((*agent)->IsVictim() == false)
+		{
+			m_numWitness++;
+		}
+		if( ! (*agent)->IsMurderer() ) // Treat murdere differently
+		{
+			(*agent)->Log(turn, this);
+		}
+	}
+	
+	switch(m_numWitness)
+	{
+	case 1:
+		// YOU WHERE ALONE
+		// LIE ABOUT WHERE YOU WERE
+		
+		break;
+	case 2:
+		{
+			// SOMEONE SAW YOU
+			// PIN IT ON THEM
+			Take* take = (Take*)this->Clone();
+			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+			{
+				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
+				{
+					take->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
+				}
+			}
+			Agent* falseAgent = (Agent*)cp->instance;
+			falseAgent->Log(turn, take);
+			break;
+		}
+	default:
+		// MORE THAN ONE PERSON SAW YOU
+		// THIS IS NOT A GOOD SCENARIO
+		break;
+	};
 }

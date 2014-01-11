@@ -61,8 +61,8 @@ namespace GOAP
 		void See(Room* room, bool deep = true);
 
 		virtual int GetCompoundType();
-		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) _CPP_11_OVERRIDE;
-		virtual void Examine() _CPP_11_OVERRIDE;
+		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) override;
+		virtual void Examine() override;
 
 		virtual bool CanBeMurderWeapon(); // XXX
 
@@ -104,7 +104,7 @@ namespace GOAP
 	protected:
 
 		void Interview();
-		virtual void InitAttribMap() _CPP_11_OVERRIDE;
+		virtual void InitAttribMap() override;
 		void SortGoals();
 
 	protected:

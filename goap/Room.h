@@ -52,10 +52,10 @@ namespace GOAP
 		bool UpdateAgentPositions(Agent* agent, Agent* victim);
 
 		virtual Object* Clone();
-		virtual void Examine() _CPP_11_OVERRIDE;
+		virtual void Examine() override;
 		//virtual operator ObjectType ();
 
-		virtual int GetCompoundType() _CPP_11_OVERRIDE;
+		virtual int GetCompoundType() override;
 		bool GetMurder();
 
 		void RemoveObject(Prop* obj);

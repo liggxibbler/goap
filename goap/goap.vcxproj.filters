@@ -117,9 +117,6 @@
     <ClCompile Include="Plan.cpp">
       <Filter>Source Files\Planning</Filter>
     </ClCompile>
-    <ClCompile Include="ConditionParameter.cpp">
-      <Filter>Source Files\Conditions</Filter>
-    </ClCompile>
     <ClCompile Include="Room.cpp">
       <Filter>Source Files\World</Filter>
     </ClCompile>
@@ -186,6 +183,9 @@
     <ClCompile Include="Game_InitializeObjects.cpp">
       <Filter>Application</Filter>
     </ClCompile>
+    <ClCompile Include="Argument.cpp">
+      <Filter>Source Files\Conditions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h">
@@ -244,9 +244,6 @@
     </ClInclude>
     <ClInclude Include="Planner.h">
       <Filter>Header Files\Planning</Filter>
-    </ClInclude>
-    <ClInclude Include="ConditionParameter.h">
-      <Filter>Header Files\Conditions</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
       <Filter>Header Files\World</Filter>
@@ -322,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="Accuser.h">
       <Filter>Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Argument.h">
+      <Filter>Header Files\Conditions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

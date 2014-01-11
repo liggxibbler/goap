@@ -15,16 +15,18 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual Drop* Clone();
 
-		virtual std::string Express(Agent* agent, Room* room) _CPP_11_OVERRIDE;
-		virtual operator std::string() _CPP_11_OVERRIDE;
+		virtual std::string Express(Agent* agent, Room* room) override;
+		virtual operator std::string() override;
 
-		virtual int Cost(RoomManager* rm) _CPP_11_OVERRIDE;
+		virtual int Cost(RoomManager* rm) override;
 
-		virtual void UpdateConditionInstances() _CPP_11_OVERRIDE;
+		virtual void UpdateConditionInstances() override;
 
 		virtual bool MightSatisfy(Condition& cond); // XXX
 
-		virtual void Debug() _CPP_11_OVERRIDE;
+		virtual void Debug() override;
+
+		virtual void Dispatch(int turn) override;
 
 	private:
 		virtual ExecutionStatus ExecuteWorkhorse(int turn);

@@ -26,6 +26,8 @@ private:
 
 	GOAP::Agent* m_allegedMurderer;
 	GOAP::Agent* m_allegedThief;
+
+	int m_numWitnesses;
 };
 
 #endif

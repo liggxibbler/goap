@@ -46,7 +46,7 @@ Drop* Drop::Clone()
 
 void Drop::InitArgs()
 {
-	ConditionParameter agent, patient, locative;
+	Argument agent, patient, locative;
 
 	agent.semantic = SEMANTIC_ROLE_AGENT;
 	agent.instance = NULL;
@@ -69,7 +69,7 @@ void Drop::InitArgs()
 
 void Drop::InitPreconditions()
 {
-	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
+	Argument agent = *GetArg(SEMANTIC_ROLE_AGENT),
 		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
 		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
 
@@ -101,7 +101,7 @@ void Drop::InitPreconditions()
 
 void Drop::InitEffects()
 {
-	ConditionParameter agent = *GetArg(SEMANTIC_ROLE_AGENT),
+	Argument agent = *GetArg(SEMANTIC_ROLE_AGENT),
 		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
 		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
 
@@ -217,4 +217,53 @@ bool Drop::MightSatisfy(Condition& cond)
 
 void Drop::Debug()
 {
+}
+
+void Drop::Dispatch(int turn)
+{
+	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	this->SetLogged();
+	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Room* room = agent->GetRoom();
+	
+	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	{
+		if((*agent)->IsVictim() == false)
+		{
+			m_numWitness++;
+		}
+		if( ! (*agent)->IsMurderer() ) // Treat murdere differently
+		{
+			(*agent)->Log(turn, this);
+		}
+	}
+	
+	switch(m_numWitness)
+	{
+	case 1:
+		// YOU WHERE ALONE
+		// LIE ABOUT WHERE YOU WERE
+		
+		break;
+	case 2:
+		{
+			// SOMEONE SAW YOU
+			// PIN IT ON THEM
+			Drop* drop = (Drop*)this->Clone();
+			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+			{
+				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
+				{
+					drop->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
+				}
+			}
+			Agent* falseAgent = (Agent*)cp->instance;
+			falseAgent->Log(turn, drop);
+			break;
+		}
+	default:
+		// MORE THAN ONE PERSON SAW YOU
+		// THIS IS NOT A GOOD SCENARIO
+		break;
+	};
 }
