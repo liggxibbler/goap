@@ -16,7 +16,7 @@
 
 #define MAX_TURNS 1000
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		3
+#define NUMBER_OF_ACTORS		4
 
 #include <iostream>
 using namespace std;
