@@ -186,6 +186,11 @@ int Drop::Cost(RoomManager* rm)
 	{
 		cost = 60;
 	}
+	//else if(((Agent*)_locative->instance->GetOwner())->IsVictim())
+	//// If the room has no owner, i.e. public room
+	//{
+	//	cost = 80;
+	//}
 	else if( _locative->instance->GetOwner() == _agent->instance )
 	// if the room is the dropper's room
 	{
@@ -194,7 +199,7 @@ int Drop::Cost(RoomManager* rm)
 	else if( _locative->instance->GetOwner() != _agent->instance )
 	// if the room has an owner that isn't the dropper
 	{
-		cost = 20;
+		cost = 20 + rand() % 10;
 	}
 	else if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
 	// if the room belongs to the owner of the object
@@ -252,7 +257,7 @@ void Drop::Dispatch(int turn)
 			Drop* drop = (Drop*)this->Clone();
 			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 			{
-				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
+				if(!(*agent)->IsVictim() && (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance)
 				{
 					drop->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
 				}

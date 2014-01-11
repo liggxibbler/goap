@@ -212,7 +212,7 @@ void Take::Dispatch(int turn)
 			Take* take = (Take*)this->Clone();
 			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 			{
-				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
+				if(!(*agent)->IsVictim() && (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance )
 				{
 					take->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
 				}
