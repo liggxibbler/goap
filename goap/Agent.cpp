@@ -10,11 +10,13 @@
 
 using namespace GOAP;
 
+Planner* Agent::m_planner = new Planner;
+
 Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
-	m_planner = new Planner();
+	//m_planner = new Planner();
 	m_plan = new Plan();
 	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
 	See(this); // Know thyself

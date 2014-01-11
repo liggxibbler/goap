@@ -192,7 +192,7 @@ void Take::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( ! (*agent)->IsMurderer() ) // Treat murdere differently
+		if( (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance ) // Treat murdere differently
 		{
 			(*agent)->Log(turn, this);
 		}

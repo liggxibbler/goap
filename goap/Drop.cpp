@@ -232,7 +232,7 @@ void Drop::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( ! (*agent)->IsMurderer() ) // Treat murdere differently
+		if( (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance ) // Treat dropper differently
 		{
 			(*agent)->Log(turn, this);
 		}

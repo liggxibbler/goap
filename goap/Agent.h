@@ -125,7 +125,7 @@ namespace GOAP
 		int m_inventory;
 		std::map<int, Object*> m_objects;
 
-		Planner* m_planner;
+		static Planner* m_planner;
 		Plan* m_plan;
 
 		int m_height;
