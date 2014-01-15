@@ -70,6 +70,8 @@ private:
 	int m_timeOfDeath;
 	Accuser* m_accuser;
 
+	int m_numberOfActors;
+
 	GOAP::Prop* m_murderWeapon;
 	std::string m_murderWeaponType;
 	std::string m_weaponExample1;

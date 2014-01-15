@@ -16,7 +16,6 @@
 
 #define MAX_TURNS 1000
 #define NUMBER_OF_CHARACTERS	10
-#define NUMBER_OF_ACTORS		4
 
 #include <iostream>
 using namespace std;
@@ -25,27 +24,22 @@ using namespace GOAP;
 
 Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_accuser(0)
 {
+	system("cls");
+	//unsigned int answer;
+	std::cout << "Enter number of actors (3-4):\n>>> ";
+	std::cin >> m_numberOfActors;
+	if(m_numberOfActors > 4) m_numberOfActors = 4;
+	if(m_numberOfActors < 3) m_numberOfActors = 3;
+	std::cout << "\nEnter seed (0 for random seed):\n>>> ";
+	std::cin >> m_seed;
+	if(m_seed == 0) m_seed = (unsigned int)time(NULL);
 	m_roomManager = 0;
-	m_seed = (unsigned int)time(NULL);
-	//1389116877;// confusing. good.
-	//1389116123;// tug of war!
-	//1388872701;// perfect: take, wait, fail, replan, take other, kill, drop elsewhere
-	//////////////////////////////////////////////////////////
-	//1388591446;// Nothing special
-	//1387930815;// Absolutely perfect
-	//1387929138;// AWESOME
-	//1387926598;// PERFECT
-	//////////////////////////////////////////////////////////
-	//1387912431;// Interesting: veloute saw taking of knife, but not killing
-	//1387381488;// PERFECT
-	//1387321436;// PERFECT
-	//////////////////////////////////////////////////////////
-	//1387369232;// perfect crime in 10 turns
-	//1387319010;// perfect crime in less than 10 turns
-	//1387307608;// perfect crime
-	//1387226864;// with this one, tartar drops the rope and leaves the room
-	//1387221411;// this one fails to stab
-	//1387226550;// this one succeeds and plans a drop if no one wanders
+	//m_seed = 1389618615;//(unsigned int)time(NULL);
+	//1389604504
+	// HANDPICKED
+	// 1389604504 - 4ACTORS
+	// 1389618615 - 3ACTORS1
+	// 1389608152 - 3ACTORS2
 	srand(m_seed);
 }
 
@@ -164,7 +158,8 @@ void Game::Roam()
 	else if(answer >= iItem && answer < witness )// examine
 	{
 		Prop* prop = m_vecObject[answer - iItem];
-		std::cout << "\n" << prop->GetName() << " : " << prop->GetDescription() << std::endl;
+		std::cout << "\n" << prop->GetName() << " : " << prop->GetDescription() << " Usually found in " <<
+			m_roomManager->GetRoom(prop->MayBeFoundIn())->GetName() << "." << std::endl;
 		std::cout << "\n--Press any key to continue\n";
 		_getch();
 		//examine(answer-1);
@@ -183,7 +178,7 @@ void Game::Roam()
 			m_currentAgent = aWitness;
 			m_roam = false;
 #else
-			std::cout << "\n" << aWitness->GetName() << " was killed at " << TURN2TIME(m_timeOfDeath) << " with a " << m_murderWeaponType << "." << std::endl;
+			std::cout << "\n" << aWitness->GetName() << " was killed " << TURN2INTERVAL(m_timeOfDeath) << " with a " << m_murderWeaponType << "." << std::endl;
 			std::cout << "\n--Press any key to continue\n";
 			_getch();
 #endif
@@ -192,7 +187,7 @@ void Game::Roam()
 #ifdef _DEBUG
 	else if(answer == iMap)
 	{
-		DisplayRoomMap();
+		//DisplayRoomMap();
 	}
 #endif
 	else
@@ -319,7 +314,7 @@ bool Game::Run(/*database class thing*/)
 			return false;
 		}
 
-		FactManager::Instance()->Initialize(m_actors);
+		//FactManager::Instance()->Initialize(m_actors);
 
 		MainLoop();
 		// prompt for another go
@@ -448,13 +443,13 @@ void Game::AssignRoles(/*int numWitness*/)
 	// set as witness(es)
 
 	int character_array[NUMBER_OF_CHARACTERS];
-	int role_array[NUMBER_OF_ACTORS];
+	int* role_array = new int[m_numberOfActors];
 
 	for(int index = 0; index < NUMBER_OF_CHARACTERS; ++index)
 	{
 		character_array[index] = -1;
 	}
-	for(int role = 0; role < NUMBER_OF_ACTORS; ++role)
+	for(int role = 0; role < m_numberOfActors; ++role)
 	{
 		// Pick random agent for each role
 		// Make sure collisions are handled
@@ -508,7 +503,7 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
-	for(int otherRoles = 2; otherRoles < NUMBER_OF_ACTORS; ++otherRoles)
+	for(int otherRoles = 2; otherRoles < m_numberOfActors; ++otherRoles)
 	{
 		m_actors.push_back(m_agents[role_array[otherRoles]]);
 	}
@@ -537,7 +532,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	////m_victim->AddGoal(goal);
 	m_agents[role_array[2]]->PickCurrentGoal();
 
-	if(NUMBER_OF_ACTORS == 4)
+	if(m_numberOfActors == 4)
 	{
 		m_accuser->Initialize(m_actors[0], m_actors[2], m_actors[3]);
 	}
@@ -545,6 +540,8 @@ void Game::AssignRoles(/*int numWitness*/)
 	{
 		m_accuser->Initialize(m_actors[0], m_actors[2], 0);
 	}
+
+	delete[] role_array;
 }
 
 void Game::PopulateRooms()
@@ -564,7 +561,7 @@ void Game::PopulateRooms()
 	}
 
 	//m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
-	for(int i=0; i<NUMBER_OF_ACTORS; ++i)
+	for(int i=0; i<m_numberOfActors; ++i)
 	{
 		m_roomManager->GetRoom(ROOM_BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
 	}
@@ -681,7 +678,7 @@ void Game::DisplayIntroduction()
 Thank you for helping Scotland Yard with this case.\n\n\t\
 We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\t\
 dead in " << m_actors[1]->GetRoom()->GetName()<< ".\n\n\t\
-The coroner times the death at " << TURN2TIME(m_timeOfDeath) << ".\n\n\t\
+The coroner times the death at " << TURN2INTERVAL(m_timeOfDeath) << ".\n\n\t\
 He believes that the victim was killed by " << m_murderWeaponType << "\n\n\
 (like " << m_weaponExample1 << " or " << m_weaponExample2 << ").\n\n\t\
 I've gathered all other residents in the living room to be interviewed.\n\n\t\
@@ -696,7 +693,7 @@ Or if you are just bored and want to go home.\n\n" << std::endl;
 void Game::MoveActorsToLivingRoom()
 {
 	Room* livingRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
-	for(int actor = 0; actor < NUMBER_OF_ACTORS; ++actor)
+	for(int actor = 0; actor < m_numberOfActors; ++actor)
 	{
 		if(actor != 1)
 		{
