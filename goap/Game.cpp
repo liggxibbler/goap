@@ -600,15 +600,15 @@ void Game::InitializeAgents()
 	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
 	, locationProbability3, true, true, true, true, 6, 9);
 
-	//3. Mademoiselle Velouté
+	//3. Mademoiselle Veloute
 	int locationProbability4[] = {0, 30, 30, 10, 30};
-	m_agents[3]->InitializeCharacter("Mademoiselle Velouté", FEMALE
+	m_agents[3]->InitializeCharacter("Mademoiselle Veloute", FEMALE
 	, "A French super model on holidays."
 	, locationProbability4, true, true, true, false, 6, 4);
 
-	//4. Madame Béchamel
+	//4. Madame Bechamel
 	int locationProbability5[] = {0, 15, 20, 5, 60};
-	m_agents[4]->InitializeCharacter("Madame Béchamel", FEMALE
+	m_agents[4]->InitializeCharacter("Madame Bchamel", FEMALE
 	, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
 	, locationProbability5, true, true, false, false, 5, 6);
 
@@ -620,7 +620,7 @@ void Game::InitializeAgents()
 
 	//6. Mr.Hollandaise
 	int locationProbability7[] = {30, 5, 50, 5, 10};
-	m_agents[6]->InitializeCharacter("Mr.Hollandaise", MALE
+	m_agents[6]->InitializeCharacter("Mr. Hollandaise", MALE
 	, "The butler. A Dutch and French descendant butler and maid husband and wife"
 	, locationProbability7, true, true, false, true, 7, 6);
 
@@ -632,7 +632,7 @@ void Game::InitializeAgents()
 
 	//8. prof.Custard
 	int locationProbability9[] = {0, 35, 50, 5, 10};
-	m_agents[8]->InitializeCharacter("Prof.Custard", MALE
+	m_agents[8]->InitializeCharacter("Prof. Custard", MALE
 	, "British renowned "
 	, locationProbability9, true, true, true, true, 8, 7);
 
