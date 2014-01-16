@@ -31,7 +31,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_acc
 	if(m_numberOfActors > 4) m_numberOfActors = 4;
 	if(m_numberOfActors < 3) m_numberOfActors = 3;
 	std::cout << "\nEnter seed (0 for random seed):\n>>> ";
-	std::cin >> m_seed;
+	std::cin >> std::hex >> m_seed;
 	if(m_seed == 0) m_seed = (unsigned int)time(NULL);
 	m_roomManager = 0;
 	//m_seed = 1389618615;//(unsigned int)time(NULL);

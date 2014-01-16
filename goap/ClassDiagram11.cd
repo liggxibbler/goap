@@ -2,23 +2,23 @@
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="GOAP::Agent" Collapsed="true">
     <Position X="0.75" Y="10.75" Width="1.5" />
+    <NestedTypes>
+      <Class Name="GOAP::Agent::GoalCpr" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Agent.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AjIBAAAAEAgQNYAVIAEQAQBJCKiAoAUyQAAAAmU0IBA=</HashCode>
+      <HashCode>Aj4BAAAAcAgQNYAVIAEQAQAJCKiAoAUyQQAQCmY0IBI=</HashCode>
       <FileName>Agent.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Room" Collapsed="true">
     <Position X="12" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAYAICAAAAAAAIAAiBgIADAABAwAAmUgAAAIAHAAABI=</HashCode>
+      <HashCode>AAYAICAAAAAAAIAAiBgIADAABAwAAmUgAAAYAHAEABI=</HashCode>
       <FileName>Room.h</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="GOAP::FactManager" Collapsed="true">
-    <Position X="26.75" Y="0.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAIAAAABAAAAAQAAAAgAAAAAAAAAAAAAQAAgQAAAACA=</HashCode>
-      <FileName>FactManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Condition" Collapsed="true">
@@ -38,33 +38,40 @@
   <Class Name="GOAP::Action" Collapsed="true">
     <Position X="9" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ABgkAgCAAoAAAYAIgAI8YhAUIGAIiAgEIAAAMJIAIrU=</HashCode>
+      <HashCode>ABgkAgCQAoAAAYQIgAI8YhAUIGIIiEgEIAAIMJIAIrU=</HashCode>
       <FileName>Action.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Goal" Collapsed="true">
-    <Position X="23.25" Y="1.5" Width="1.5" />
+    <Position X="21.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gQAIoAEAAABQUAAEAAAAAgAQAAiAqwIAAMABAAQQABA=</HashCode>
+      <HashCode>gQAIoAEAAABQUQAEAAAAAgAYAAiAqwIAAMABBAQQCBA=</HashCode>
       <FileName>Goal.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Blade" Collapsed="true">
     <Position X="7.5" Y="12.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAgAQAAAAAAAEAAA=</HashCode>
+      <HashCode>CAAAAAIAIAAAAAAEAAAAAAAAAAABEgAQAAAAAAAEAAA=</HashCode>
       <FileName>Blade.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Blunt" Collapsed="true">
     <Position X="9.75" Y="12.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAQAAAAAAAEAAA=</HashCode>
+      <HashCode>KAAAAAAAIAAAAAAEQAAAAAAAAAABEAAQAAAAAAAEAAA=</HashCode>
       <FileName>Blunt.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Planner" Collapsed="true">
-    <Position X="25" Y="2.5" Width="1.5" />
+    <Position X="21.5" Y="2.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="GOAP::Planner::CompareGoals" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Planner.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
     <TypeIdentifier>
       <HashCode>gIACAAAQAAAACAAAAAAAUCADEAAAAAAAAQFEAAAAAAA=</HashCode>
       <FileName>Planner.h</FileName>
@@ -78,14 +85,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::RoomManager" Collapsed="true">
-    <Position X="26.75" Y="2.5" Width="1.5" />
+    <Position X="23.25" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQACAABIAIAAQAAAAAABAgAAAEQACEAQAAEAAoAA4A=</HashCode>
+      <HashCode>AAQACAABIAIAAQACAAAABAgAAAEQACEAQAAEAAoAA4A=</HashCode>
       <FileName>RoomManager.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::ObjectManager" Collapsed="true">
-    <Position X="26.75" Y="1.5" Width="1.5" />
+    <Position X="23.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAgAAAAAAAAAAA=</HashCode>
       <FileName>ObjectManager.h</FileName>
@@ -94,91 +101,91 @@
   <Class Name="GOAP::Projectile" Collapsed="true">
     <Position X="3" Y="12.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAQAAAAAAAEIAA=</HashCode>
+      <HashCode>CAAAAAAAIAAAAAAEAgAAAAAAAAABEAAQAAAAAAAEIAA=</HashCode>
       <FileName>Projectile.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Squeezer" Collapsed="true">
     <Position X="5.25" Y="12.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAEAAAAAQAAAAAAAEAAA=</HashCode>
+      <HashCode>CAAAACAAIAAAAAAEAAAAAAAAAEABEAAQAAAAAAAEAAA=</HashCode>
       <FileName>Squeezer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Prop" Collapsed="true">
     <Position X="6.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAMAABAIAQTAAAAAABAAAA=</HashCode>
+      <HashCode>CAQAAAAAIAAAAAAEIAACAAAMAABBMAQTAAAQAABEABI=</HashCode>
       <FileName>Prop.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::IExecutable" Collapsed="true">
     <Position X="10" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IExecutable.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Bludgeon" Collapsed="true">
     <Position X="12.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAEBA=</HashCode>
+      <HashCode>gAAAAgAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAABAAEBA=</HashCode>
       <FileName>Bludgeon.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Drop" Collapsed="true">
     <Position X="1" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAQAAAAgAAIQBAAAAAAAAAAAAAAEBACABA=</HashCode>
+      <HashCode>AAggAgAAAAAQAIAAgAAoQBAAAAAAAAAAAAAAEBACABA=</HashCode>
       <FileName>Drop.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::GoTo" Collapsed="true">
     <Position X="3.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAQAAAAAAgAAIQFAEAAAAAAAAAAAAEBAAAJA=</HashCode>
+      <HashCode>AAgAAgAAAYAAAAAAgAAoQFAEAAAAAAAAAAAAEBAAAJA=</HashCode>
       <FileName>GoTo.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Murder" Collapsed="true">
     <Position X="9" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAgAIAAAAAAAAAAAgAAAQBAAAAIAAAAAAAAAEBAAAAA=</HashCode>
       <FileName>Murder.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Shoot" Collapsed="true">
     <Position X="5.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAAAAAAAAAABAAAAAAIAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+      <HashCode>AIAAAgAAAAAABAAAAAAoAAAAAAAAAAAAAAAAABAAABA=</HashCode>
       <FileName>Shoot.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Stab" Collapsed="true">
     <Position X="7.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>BAAAAAAAAAAAAAAAAAAIAAAAAAAAAIAAAAAAAAAAABA=</HashCode>
+      <HashCode>BAAAAgAAAAAAAAAAAAAoAAAAAAAAAIAAAAAAABAAABA=</HashCode>
       <FileName>Stab.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Strangle" Collapsed="true">
     <Position X="10" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAAAgAABA=</HashCode>
+      <HashCode>AAAAAgAAAAAAAAAAAAAoAAAAAAAAAAAAAAAAABgAABA=</HashCode>
       <FileName>Strangle.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Take" Collapsed="true">
     <Position X="14.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgAAAAAAAAAAAAgAAIQAAAAAAAAAAAAAEAEBAQABA=</HashCode>
+      <HashCode>AAggAgAAAAAAAAAAgAAoQBAAAAAAAAAAAAEAEBAQABA=</HashCode>
       <FileName>Take.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::WaitFor" Collapsed="true">
     <Position X="16.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAMAAAAAAiAAIQEAEQAAAAAAAAAAAEBAAABA=</HashCode>
+      <HashCode>AAgAAgAAAMAAAAAAiAAoQFAEQAAAAAAAAAAAEBAAABA=</HashCode>
       <FileName>WaitFor.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -190,7 +197,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::OrderedPair&lt;T&gt;" Collapsed="true">
-    <Position X="23.25" Y="2.5" Width="1.5" />
+    <Position X="26.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAgAQAQAAAACAIABAAgQABAAAAAAABAAAA=</HashCode>
       <FileName>OrderedPair.h</FileName>
@@ -199,7 +206,7 @@
   <Class Name="GOAP::Plan" Collapsed="true">
     <Position X="19" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAgCAAQAQAgAAAAAMQAAAAAABgAAAAAAAAAA=</HashCode>
+      <HashCode>AAAgAAAABgCAAQQQAgAAAABMQAIAAAABgAABAAgAAAA=</HashCode>
       <FileName>Plan.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -232,7 +239,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GOAP::Op::OperatorManager" Collapsed="true">
-    <Position X="21.5" Y="2.5" Width="1.5" />
+    <Position X="25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAIAAAAAAAAAAIAAAAAABAAAAAAAQAAAAAAAgAA=</HashCode>
       <FileName>OperatorManager.h</FileName>
@@ -252,31 +259,17 @@
       <FileName>True.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="MessageDispatcher" Collapsed="true">
-    <Position X="25" Y="1.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MessageDispatcher.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Game" Collapsed="true">
-    <Position X="21.5" Y="1.5" Width="1.5" />
+    <Position X="26.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AQIACTAUQQBAE4AIABQQgABAAAiAAAIgAAACAUAAAAI=</HashCode>
+      <HashCode>AQIACTAUQQBAE4AIEBQQkABAAQiAQQIgACADCUBAAAI=</HashCode>
       <FileName>Game.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="GOAP::Position" Collapsed="true">
-    <Position X="25" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
-      <FileName>Common.h</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Struct Name="GOAP::Argument" Collapsed="true">
     <Position X="23.25" Y="3.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAJAAAAAAAAAAAAAgAAAAAJBACAAAAAgAAAAAAI=</HashCode>
+      <HashCode>AAAAAAJAAAAAAAAAAAAAgAAAAAJBACAAIAAgAAAAAAA=</HashCode>
       <FileName>Argument.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -287,22 +280,15 @@
       <FileName>ActionRecord.h</FileName>
     </TypeIdentifier>
   </Struct>
-  <Struct Name="Telegram" Collapsed="true">
-    <Position X="26.75" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAEBAAAAAAAAAAIAAA=</HashCode>
-      <FileName>Telegram.h</FileName>
-    </TypeIdentifier>
-  </Struct>
   <Typedef Name="GOAP::CondIter" Collapsed="true">
-    <Position X="21.5" Y="7.5" Width="1.5" />
+    <Position X="23.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Goal.h</FileName>
     </TypeIdentifier>
   </Typedef>
   <Typedef Name="GOAP::ArgIter" Collapsed="true">
-    <Position X="23.25" Y="7.5" Width="1.5" />
+    <Position X="21.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Goal.h</FileName>
@@ -332,7 +318,7 @@
   <Enum Name="GOAP::SemanticRole" Collapsed="true">
     <Position X="25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>oAEAAAAEAIABAAAAAAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>oAEAAAAEAIAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Common.h</FileName>
     </TypeIdentifier>
   </Enum>
@@ -353,7 +339,7 @@
   <Enum Name="GOAP::ExecutionStatus" Collapsed="true">
     <Position X="25" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AUAAAAAAAAAAAABAAEABBAAAAAAAAACAAACAAAABAAA=</HashCode>
+      <HashCode>AUAAAAAAAAAAAABAAEABBAAAAAIAAACAAACAAAABAAA=</HashCode>
       <FileName>Common.h</FileName>
     </TypeIdentifier>
   </Enum>
