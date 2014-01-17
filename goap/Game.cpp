@@ -41,6 +41,7 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_acc
 	// 1389618615 - 3ACTORS1
 	// 1389608152 - 3ACTORS2
 	srand(m_seed);
+	std::cin >> std::dec;
 }
 
 Game::Game(const Game& other)
