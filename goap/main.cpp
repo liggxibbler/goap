@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Action.h"
 #include "Game.h"
-#include <Windows.h>
+//#include <Windows.h>
 #include <ctime>
 
 using namespace std;
@@ -37,5 +37,5 @@ void MaximizeWindow()
 	rc.Right = (short)(min(info.dwMaximumWindowSize.X, info.dwSize.X) - 1);
 	rc.Bottom = (short)(min(info.dwMaximumWindowSize.Y, info.dwSize.Y) - 1);
 	SetConsoleWindowInfo(GetStdHandle(STD_OUTPUT_HANDLE), true, &rc);*/
-	ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
+	//ShowWindow(GetConsoleWindow(), SW_MAXIMIZE);
 }

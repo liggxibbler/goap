@@ -9,7 +9,8 @@
 #include "Projectile.h"
 #include "OperatorManager.h"
 #include "Action.h"
-#include <conio.h>
+//#include <conio.h>
+#include <ncurses.h>
 #include <time.h>
 
 #include "FactManager.h"
@@ -18,6 +19,9 @@
 #define NUMBER_OF_CHARACTERS	10
 
 #include <iostream>
+
+#define _getch getch
+
 using namespace std;
 
 using namespace GOAP;

@@ -1,3 +1,16 @@
-Welcome to my first SSH repo
-----------------------------------------------------------------
-This repo is not a new repo, it's just accessed through SSH rather than HTTPS
+GOAP
+========================================
+
+	GOAP is actually an AI technique used in the F.E.A.R. series of games
+in order to enable its agents to hunt down and kill the player character!
+This project, however, tries to use it to make stories, i.e. sequences of
+interesting events. The code was developed as part of my MSc dissertation at
+Abertay University.
+
+What's the plan?
+========================================
+
+	It never felt quite complete to me, and I've been meaning to get some
+more work done; e.g. sort out a few bugs, refactor some really badly implemented
+features, and perhaps add a few new features!
+	

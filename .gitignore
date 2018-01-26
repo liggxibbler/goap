@@ -1,12 +1,9 @@
-Debug/
-goap/Debug/
-Release/
-goap/Release
+goap/obsolete
 *.sdf
 ipch/
 *.opensdf
 *.suo
-goap.zip
+*.sln
 Test/
 Frame/
 goap/action_dump.txt
