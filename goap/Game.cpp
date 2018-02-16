@@ -1,12 +1,12 @@
 #include "Game.h"
 
+#include <jsoncpp/json/json.h>
+#include <fstream>
+#include <iostream>
+
 #include "Prop.h"
 #include "Agent.h"
 #include "Room.h"
-#include "Blade.h"
-#include "Blunt.h"
-#include "Squeezer.h"
-#include "Projectile.h"
 #include "OperatorManager.h"
 #include "Action.h"
 //#include <conio.h>
@@ -18,12 +18,9 @@
 #define MAX_TURNS 1000
 #define NUMBER_OF_CHARACTERS	10
 
-#include <iostream>
-
 #define _getch getch
 
 using namespace std;
-
 using namespace GOAP;
 
 Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_accuser(0)
@@ -63,6 +60,7 @@ void Game::Initialize()
 
 	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
 	InitializeAgents();
+	PopulateDictionaries();
 	InitializeObjects();
 
 	m_currentRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
@@ -79,7 +77,7 @@ void Game::Roam()
 	int item = 1;
 
 	int iRoom = item;
-	
+
 	cout << "-----------------------\n";
 	cout << "\n* You can go to:\n\n";
 	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
@@ -99,7 +97,7 @@ void Game::Roam()
 		cout << "[NOTHING]\n";
 	}
 	else
-	{	
+	{
 		for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 		{
 			if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
@@ -301,9 +299,9 @@ void Game::Interview()
 
 	//m_currentAgent->Answer(qObject, question, answer);
 	m_currentAgent->Answer(0, Q_ACTION, 0);
-	
+
 	// ACCUSE
-	
+
 	m_roam = true;
 	m_currentAgent = 0;
 	return;
@@ -323,11 +321,11 @@ bool Game::Run(/*database class thing*/)
 
 		MainLoop();
 		// prompt for another go
-		// if yes :  
-		// clear agents, 
+		// if yes :
+		// clear agents,
 		// clear rooms,
 		// delete actions
-		// 
+		//
 		// initialize agents,
 		// m_running = true;
 	}
@@ -518,7 +516,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	}
 
 	m_murderer->PickCurrentGoal();
-	
+
 	/*GOAP::Condition cond2(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
 	cond2[0].instance = m_objects[7];
 	cond2[0].type = m_objects[7]->GetCompoundType();
@@ -773,7 +771,7 @@ bool Game::Accuse()
 	else
 	{
 		return true;
-	}	
+	}
 }
 
 void Game::GetMurderWeapon()
@@ -821,7 +819,7 @@ void Game::SetGoalOfThief()
 		// find goal whose action is the murder
 	{
 		murderGoal = murderGoal->GetParent();
-	}			
+	}
 
 	// extract the murder instrument
 	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
@@ -849,5 +847,40 @@ void Game::SetGoalOfThief()
 			m_actors[2]->AddGoal(goal);
 			m_actors[2]->PickCurrentGoal();
 		}
+	}
+}
+
+void Game::PopulateDictionaries()
+{
+	m_roomEnumMap["LIVING_ROOM"] = ROOM_LIVING_ROOM;
+	m_roomEnumMap["DINING_ROOM"] = ROOM_DINING_ROOM;
+	m_roomEnumMap["KITCHEN"] = ROOM_KITCHEN;
+	m_roomEnumMap["BATHROOM"] = ROOM_BATHROOM;
+
+	m_propTypeMap["Prop"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
+	m_propTypeMap["Blunt"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_BLUNT;
+	m_propTypeMap["Blade"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_BLADE;
+	m_propTypeMap["Squeezer"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_SQUEEZER;
+	m_propTypeMap["Projectile"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_PROJECTILE;
+}
+
+void Game::InitializeObjects()
+{
+	m_objects.clear();
+
+	std::ifstream ifs("props.json");
+	Json::Reader reader;
+	Json::Value obj;
+	reader.parse(ifs, obj);
+
+	const Json::Value& props = obj["props"];
+
+	for (int i = 0; i < props.size(); ++i)
+	{
+		Prop* prop = new Prop(props[i]["name"].asString());
+		prop->SetCompoundType(m_propTypeMap[props[i]["class"].asString()]);
+		prop->MayBeFoundIn(m_roomEnumMap[props[i]["room"].asString()]);
+		prop->SetDescription(props[i]["desc"].asString());
+		m_objects.push_back(prop);
 	}
 }

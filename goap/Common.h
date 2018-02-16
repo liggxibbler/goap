@@ -10,7 +10,7 @@
 #else
 #define DUMP(X)
 #define DUMP_NL(X)
-#define GETKEY 
+#define GETKEY
 #endif
 
 #define NUMBER_OF_ROOMS 5
@@ -36,7 +36,7 @@ namespace GOAP
 		OBJ_TYPE_PROP		= 0x0080,
 		OBJ_TYPE_AGENT		= 0x0100, // or living things
 		OBJ_TYPE_PERSON		= 0x0200,
-		
+
 		OBJ_TYPE_LAST		= 0xf000
 	};
 
@@ -153,6 +153,7 @@ namespace GOAP
 
 	enum RoomName
 	{
+		ROOM_NONE           = 0x00,
 		ROOM_KITCHEN		= 0x01,
 		ROOM_LIVING_ROOM	= 0x02,
 		ROOM_DINING_ROOM	= 0x04,

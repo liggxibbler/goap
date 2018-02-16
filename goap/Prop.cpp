@@ -67,14 +67,14 @@ bool Prop::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	if(m_bearer != 0)
 	{
 		SetRoom(m_bearer->GetRoom());
-	}		
-	
+	}
+
 	return true;
 }
 
 int Prop::GetCompoundType()
 {
-	return OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
+	return m_type;
 }
 
 //Prop::operator GOAP::ObjectType()
@@ -120,4 +120,9 @@ void Prop::SetDescription(std::string desc)
 RoomName Prop::MayBeFoundIn()
 {
 	return m_canBeFoundIn;
+}
+
+void Prop::SetCompoundType(int type)
+{
+    m_type = type;
 }

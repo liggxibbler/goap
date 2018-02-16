@@ -1,0 +1,95 @@
+{
+	"props" :
+	[
+		{
+			"class" : "Blunt",
+			"name" : "Fireplace poker",
+			"room" : "LIVING_ROOM",
+			"desc" : "Poking the coal or wood fuel in the fireplace helps the fire breathe, poking someone in the heart has the exact opposite effect."
+		},
+
+		{
+			"class" : "Prop",
+			"name" : "Umbrella Stand",
+			"room" : "LIVING_ROOM",
+			"desc" : "A cylindrical object holding umbrellas and walking sticks. Umbrella stands don't kill people; swords, clubs, and cane gun in the umbrella stands do."
+		},
+
+		{
+			"class" : "Squeezer",
+			"name" : "Curtain Rope",
+			"room" : "LIVING_ROOM",
+			"desc" : "Used for holding the curtain on one side in the morning and strangling people on the other side in the afternoon."
+		},
+
+		{
+			"class" : "Blunt",
+			"name" : "Globe",
+			"room" : "LIVING_ROOM",
+			"desc" : "A raised-relief globe in gold. i.e. a golden globe."
+		},
+
+		{
+			"class" : "Blunt",
+			"name" : "Bust",
+			"room" : "LIVING_ROOM",
+			"desc" : "A bronze bust of Dysh the Great (one of the most unknown writers of the 18th century)."
+		},
+
+		{
+			"class" : "Prop",
+			"name" : "Servant's Dining Table",
+			"room" : "KITCHEN",
+			"desc" : "Servant's dining table because they are too poor to use normal dining tables."
+		},
+
+		{
+			"class" : "Blade",
+			"name" : "Chef's knife",
+			"room" : "KITCHEN",
+			"desc" : "A heavy duty knife used for cutting, chopping, and slicing bones and meat and people."
+		},
+
+		{
+			"class" : "Blunt",
+			"name" : "Bottle of Wine",
+			"room" : "KITCHEN",
+			"desc" : "A vintage red wine bottle. It's so vintage and potent that even a shot glass of it can knock you out. The whole bottle will kill you... if bashed against your head."
+		},
+
+		{
+			"class" : "Blade",
+			"name" : "Cutlery Set",
+			"room" : "DINING_ROOM",
+			"desc" : "A set of silver cutlery. As your mom probably have mentioned, never run with a knife or a fork or both unless you want to accidentally stab someone in the heart."
+		},
+
+		{
+			"class" : "Prop",
+			"name" : "Flower Pot",
+			"room" : "DINING_ROOM",
+			"desc" : "A big flower pot standing in the corner of the room looking pretty."
+		},
+
+		{
+			"class" : "Squeezer",
+			"name" : "Curtain Rope",
+			"room" : "DINING_ROOM",
+			"desc" : "Used for holding the curtain on one side in the morning and strangling people in the afternoon."
+		},
+
+		{
+			"class" : "Prop",
+			"name" : "Scented Candle",
+			"room" : "BATHROOM",
+			"desc" : "A candle that emits scents. One might think it's useless but half of the earth's population may disagree."
+		},
+
+		{
+			"class" : "Blade",
+			"name" : "Razor",
+			"room" : "BATHROOM",
+			"desc" : "An old straight razor (a.k.a cut-throat razor) used mainly for shaving and occasionally for cutting throats."
+		}
+	]
+}

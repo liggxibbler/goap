@@ -1,9 +1,13 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <vector>
+#include <map>
+#include <string>
+
 #include "RoomManager.h"
 #include "Accuser.h"
-#include <vector>
+#include "Common.h"
 
 namespace GOAP
 {
@@ -19,13 +23,13 @@ public:
 	~Game();
 
 	void Initialize();
-	
+
 	void Roam();
 	void Interview();
 	bool Accuse();
 
 	bool Run(/*database class thing*/);
-	
+
 	void AssignRoles();
 	void PopulateRooms();
 	bool GeneratePlot();
@@ -44,20 +48,24 @@ private:
 	std::vector<GOAP::Agent*> m_vecAgent;
 	std::vector<GOAP::Room*> m_vecRoom;
 
+	std::map<std::string, GOAP::RoomName> m_roomEnumMap;
+	std::map<std::string, int> m_propTypeMap;
+
 	/*databaseClassThing* m_database;*/
 
 	void InitializeAgents();
 	void InitializeObjects();
+	void PopulateDictionaries();
 
 	//GOAP::World* m_world;
 	bool m_roam;
 	GOAP::Room* m_currentRoom;
 	GOAP::Agent* m_currentAgent;
-	GOAP::RoomManager* m_roomManager;	
-	
+	GOAP::RoomManager* m_roomManager;
+
 	GOAP::Agent* m_murderer;
 	GOAP::Agent* m_victim;
-	
+
 	bool m_running;
 	bool m_murder;
 
