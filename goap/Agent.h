@@ -39,8 +39,7 @@ namespace GOAP
 
 		void InitializeCharacter(std::string name, Gender gender,
 								 std::string backStory, int locationProbability[],
-								 bool canStab, bool canStrangle, bool canShoot,
-								 bool canBludgeon, int height, int weight);
+								 int room_count, std::string actions[], int action_count);
 
 		std::list<ActionType>::iterator FirstAction();
 		std::list<ActionType>::iterator LastAction();
@@ -132,7 +131,7 @@ namespace GOAP
 		int m_weight;
 		Gender m_gender;
 		std::string m_backStory;
-		int m_locationProbability[NUMBER_OF_ROOMS];
+		int m_roomProbabilities[NUMBER_OF_ROOMS];
 
 		int m_isAlive;
 		bool m_bDoneMurder;

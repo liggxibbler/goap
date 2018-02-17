@@ -48,38 +48,45 @@ Agent::Agent(const Agent& other) : Object(other)
 }
 
 void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory,
-								int locationProbability[], bool canStab, bool canStrangle,
-								bool canShoot, bool canBludgeon, int height, int weight)
+								int roomProbabilities[], int room_count, std::string actions[], int action_count)
 {
 	this->AddAction(ACTION_GOTO);
 
 	m_name = name;
-	m_height = height;
-	m_weight = weight;
+	m_height = 0;
+	m_weight = 0;
 	m_backStory = backStory;
 	m_gender = gender;
 
+	// TODO NUMBER_OF_ROOMS can be infered from game config file
 	for(int i = 0; i<NUMBER_OF_ROOMS; ++i)
 	{
-		m_locationProbability[i] = locationProbability[i];	
+		m_roomProbabilities[i] = roomProbabilities[i];
 	}
 
-	//give actions based on the "can" booleans:
-	if (canStab)
+	// TODO actions need to be generic data as well
+	for (int i = 0; i < action_count; ++i)
 	{
-		this->AddAction(ACTION_STAB);
-	}
-	if (canBludgeon)
-	{
-		this->AddAction(ACTION_BLUDGEON);
-	}
-	if (canShoot)
-	{
-		this->AddAction(ACTION_SHOOT);
-	}
-	if (canStrangle)
-	{
-		this->AddAction(ACTION_STRANGLE);
+		if (actions[i].compare("stab") == 0)
+		{
+			this->AddAction(ACTION_STAB);
+			std::cout << "Stab added" << std::endl;
+		}
+		else if (actions[i].compare("bludgeon") == 0)
+		{
+			this->AddAction(ACTION_BLUDGEON);
+			std::cout << "Blud added" << std::endl;
+		}
+		else if (actions[i].compare("shoot") == 0)
+		{
+			this->AddAction(ACTION_SHOOT);
+			std::cout << "Shoot added" << std::endl;
+		}
+		else if (actions[i].compare("strangle") == 0)
+		{
+			this->AddAction(ACTION_STRANGLE);
+			std::cout << "Stran added" << std::endl;
+		}
 	}
 }
 
@@ -217,7 +224,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				//m_currentGoal = m_currentGoal->GetParent();
 				m_goals.remove(m_currentGoal);
-				
+
 				if(false)//m_nextExecution->FollowupGoal() != 0)
 				{
 					//this->AddGoal(m_nextExecution->FollowupGoal());
@@ -235,7 +242,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				m_currentGoal->GetPlan()->SetStatus(PLAN_STAT_FAIL);
 				m_nextExecution = 0;
 			}
-		}	
+		}
 		else if(m_currentGoal != 0)
 		{
 			if(m_currentGoal->GetPlan()->GetStatus() == PLAN_STAT_SUCCESS)
@@ -356,9 +363,9 @@ void Agent::GiveStatement()
 {
 	// Need to take victim and FactManager as arguments
 	// Need FactManager
-	// 
+	//
 	int answer = -1;
-	
+
 	while(answer != 0)
 	{
 		system("cls");
@@ -414,7 +421,7 @@ void Agent::GiveStatement()
 		}
 
 		std::cout << "\nEnter statement number for details, 0 to go back\n";
-		std::cout << ">>> ";	
+		std::cout << ">>> ";
 		std::cin >> answer;
 		unsigned int j = answer - 1;
 		if( j>=0 && j < m_actionLog.size() )
@@ -453,7 +460,7 @@ RoomName Agent::GetNextRoom()
 	int roullette = 0;
 	for (i=0; i<NUMBER_OF_ROOMS;++i)
 	{
-		roullette += m_locationProbability[i];
+		roullette += m_roomProbabilities[i];
 		if (random < roullette)
 		{
 			return rooms[i];
@@ -519,7 +526,7 @@ bool Agent::IsVictim()
 
 int* Agent::GetProbabilities()
 {
-	return m_locationProbability;
+	return m_roomProbabilities;
 }
 
 void Agent::AddGoal(Goal* goal)

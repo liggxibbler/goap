@@ -577,73 +577,50 @@ void Game::PopulateRooms()
 //hard-coding the characters by passing the variables to agent's initializer method
 void Game::InitializeAgents()
 {
+	// TODO merge this with InitializeObjects
+
 	int MURDERER_ID = 0;
 
 	m_agents.clear();
 
-	for (unsigned int i = 0 ; i < NUMBER_OF_CHARACTERS; ++i)
-		m_agents.push_back(new GOAP::Agent());
+	std::ifstream ifs("entities.json");
+	Json::Reader reader;
+	Json::Value obj;
+	reader.parse(ifs, obj);
+	ifs.close();
 
+	const Json::Value& agents = obj["agents"];
 
-	//0. Comrade Tartar
-	int locationProbability1[] = {0, 5, 50, 5, 40};
-	m_agents[0]->InitializeCharacter("Comrade Tartar", MALE
-	, "A Russia circus acrobat defected to England. A muscled and strong man that claims he has captured all the circus's bears barehanded"
-	, locationProbability1, true, true, false, true, 9, 10);
+	for (int i = 0; i < agents.size(); ++i)
+	{
+		GOAP::Agent* agent = new GOAP::Agent();
+		int room_count = agents[i]["rooms"].size();
+		int* rooms = new int[room_count];
+		for (int j = 0; j < room_count; ++j)
+		{
+			rooms[j] = agents[i]["rooms"][j].asInt();
+		}
 
-	//1. Colonel Worcestershire
-	int locationProbability2[] = {0, 60, 5, 5, 30};
-	m_agents[1]->InitializeCharacter("Colonel Worcestershire", MALE
-	, "An old British military man. Though respected and feared by his men, old age has left visible marks on his body."
-	, locationProbability2, true, false, true, false, 8, 8);
+		int action_count = agents[i]["actions"].size();
+		std::string* actions = new string[action_count];
+		for (int k = 0; k < action_count; ++ k)
+		{
+			actions[k] = agents[i]["actions"][k].asString();
+		}
 
-	//2. Don Gravy
-	int locationProbability3[] = {0, 30, 30, 5, 35};
-	m_agents[2]->InitializeCharacter("Don Gravy", MALE
-	, "An American mobster on a business trip in England. Famous for never missing a shot or a meal."
-	, locationProbability3, true, true, true, true, 6, 9);
+		Gender gender = agents[i]["gender"].asString().compare("male") == 0 ? Gender::MALE : Gender::FEMALE;
 
-	//3. Mademoiselle Veloute
-	int locationProbability4[] = {0, 30, 30, 10, 30};
-	m_agents[3]->InitializeCharacter("Mademoiselle Veloute", FEMALE
-	, "A French super model on holidays."
-	, locationProbability4, true, true, true, false, 6, 4);
+		agent->InitializeCharacter(
+		agents[i]["name"].asString(),
+		gender,
+		agents[i]["desc"].asString(),
+		rooms,
+		room_count,
+		actions,
+		action_count);
 
-	//4. Madame Bechamel
-	int locationProbability5[] = {0, 15, 20, 5, 60};
-	m_agents[4]->InitializeCharacter("Madame Bchamel", FEMALE
-	, "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding."
-	, locationProbability5, true, true, false, false, 5, 6);
-
-	//5. Mrs.Hollandaise
-	int locationProbability6[] = {30, 5, 30, 5, 30};
-	m_agents[5]->InitializeCharacter("Mrs. Hollandaise", FEMALE
-	, "The maid."
-	, locationProbability6, true, true, false, true, 5, 5);
-
-	//6. Mr.Hollandaise
-	int locationProbability7[] = {30, 5, 50, 5, 10};
-	m_agents[6]->InitializeCharacter("Mr. Hollandaise", MALE
-	, "The butler. A Dutch and French descendant butler and maid husband and wife"
-	, locationProbability7, true, true, false, true, 7, 6);
-
-	//7. Herr Duckefett
-	int locationProbability8[] = {0, 5, 50, 5, 40};
-	m_agents[7]->InitializeCharacter("Herr Duckefett", MALE
-	, "A German explorer. HAs a strange taste when it comes to women"
-	, locationProbability8, true, true, true, true, 8, 7);
-
-	//8. prof.Custard
-	int locationProbability9[] = {0, 35, 50, 5, 10};
-	m_agents[8]->InitializeCharacter("Prof. Custard", MALE
-	, "British renowned "
-	, locationProbability9, true, true, true, true, 8, 7);
-
-	//9. Signor Bolognese
-	int locationProbability10[] = {0, 50, 5, 5, 40};
-	m_agents[9]->InitializeCharacter("Signor Bolognese", MALE
-	, "Italian, sleezy, barber, slim, fast, cheap"
-	, locationProbability10, true, true, true, true, 8, 7);
+		m_agents.push_back(agent);
+	}
 }
 
 void Game::DisplayRoomMap()
@@ -868,10 +845,11 @@ void Game::InitializeObjects()
 {
 	m_objects.clear();
 
-	std::ifstream ifs("props.json");
+	std::ifstream ifs("entities.json");
 	Json::Reader reader;
 	Json::Value obj;
 	reader.parse(ifs, obj);
+	ifs.close();
 
 	const Json::Value& props = obj["props"];
 

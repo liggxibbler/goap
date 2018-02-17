@@ -91,5 +91,87 @@
 			"room" : "BATHROOM",
 			"desc" : "An old straight razor (a.k.a cut-throat razor) used mainly for shaving and occasionally for cutting throats."
 		}
+	], "agents":
+	[
+		{
+			"name" : "Comrade Tartar",
+			"gender" : "m",
+			"actions" : ["stab", "strangle"],
+			"desc" : "A Russia circus acrobat defected to England. A muscled and strong man that claims he has captured all the circus's bears barehanded",
+			"rooms" : [0, 5, 50, 5, 40]
+		},
+
+		{
+			"name" : "Colonel Worcestershire",
+			"gender" : "m",
+			"actions" : ["stab", "shoot"],
+			"desc" : "An old British military man. Though respected and feared by his men, old age has left visible marks on his body.",
+			"rooms" : [0, 60, 5, 5, 30]
+		},
+
+		{
+			"name" : "Don Gravy",
+			"gender" : "m",
+			"actions" : ["stab", "strangle", "shoot", "bludgeon"],
+			"desc" : "An American mobster on a business trip in England. Famous for never missing a shot or a meal.",
+			"rooms" : [0, 30, 30, 5, 35]
+		},
+		
+		{
+			"name" : "Mademoiselle Veloute",
+			"gender" : "f",
+			"actions" : ["stab", "strangle"],
+			"desc" : "A French super model on holidays.",
+			"rooms" : [0, 30, 30, 10, 30]
+		},
+
+		{
+			"name" : "Madame Bechamel",
+			"gender" : "f",
+			"actions" : ["stab", "strangle"],
+			"desc" : "A middle-aged French woman. Poor soul was widowed five times and every time only a week after her wedding.",
+			"rooms" : [0, 30, 30, 10, 30]
+		},
+
+		{
+			"name" : "Mrs. Hollandaise",
+			"gender" : "f",
+			"actions" : ["stab", "strangle"],
+			"desc" : "The maid.",
+			"rooms" : [30, 5, 30, 5, 30]
+		},
+
+		{
+			"name" : "Mr. Hollandaise",
+			"gender" : "m",
+			"actions" : ["stab", "strangle", "bludgeon"],
+			"desc" : "The butler. A Dutch and French descendant butler and maid husband and wife",
+			"rooms" : [30, 5, 50, 5, 10]
+		},
+
+		{
+			"name" : "Herr Duckefett",
+			"gender" : "m",
+			"actions" : ["stab", "strangle", "shoot", "bludgeon"],
+			"desc" : "A German explorer. HAs a strange taste when it comes to women",
+			"rooms" : [0, 5, 50, 5, 40]
+		},
+
+		{
+			"name" : "Prof. Custard",
+			"gender" : "m",
+			"actions" : ["stab", "strangle", "shoot", "bludgeon"],
+			"desc" : "British renowned ???",
+			"rooms" : [0, 35, 50, 5, 10]
+		},
+
+		{
+			"name" : "Signor Bolognese",
+			"gender" : "m",
+			"actions" : ["stab", "strangle", "shoot", "bludgeon"],
+			"desc" : "Italian, sleezy, barber, slim, fast, cheap",
+			"rooms" : [0, 50, 5, 5, 40]
+		}
 	]
+	
 }
