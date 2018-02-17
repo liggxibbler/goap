@@ -70,22 +70,18 @@ void Agent::InitializeCharacter(std::string name, Gender gender, std::string bac
 		if (actions[i].compare("stab") == 0)
 		{
 			this->AddAction(ACTION_STAB);
-			std::cout << "Stab added" << std::endl;
 		}
 		else if (actions[i].compare("bludgeon") == 0)
 		{
 			this->AddAction(ACTION_BLUDGEON);
-			std::cout << "Blud added" << std::endl;
 		}
 		else if (actions[i].compare("shoot") == 0)
 		{
 			this->AddAction(ACTION_SHOOT);
-			std::cout << "Shoot added" << std::endl;
 		}
 		else if (actions[i].compare("strangle") == 0)
 		{
 			this->AddAction(ACTION_STRANGLE);
-			std::cout << "Stran added" << std::endl;
 		}
 	}
 }
