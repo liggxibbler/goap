@@ -7,3 +7,8 @@ ipch/
 Test/
 Frame/
 goap/action_dump.txt
+goap/bin/
+goap/obj/
+goap/goap.cbp
+goap/goap.depend
+goap/goap.layout
