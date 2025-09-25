@@ -122,7 +122,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	for(semanticIter = m_args.begin(); semanticIter != m_args.end(); ++semanticIter)
 	{
 		cp = *semanticIter; 
-		if(cp.instance == NULL)
+		if(cp.instance == nullptr)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
@@ -170,7 +170,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 
 	std::vector<std::vector<Object*> >::iterator finalObjIter;
 
-	Action* action = NULL;
+	Action* action = nullptr;
 	for(finalObjIter = tuples.begin(); finalObjIter != tuples.end(); ++finalObjIter)
 	{
 		action = GetInstanceFromTuple(*finalObjIter);

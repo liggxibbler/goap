@@ -45,21 +45,21 @@ void Murder::InitArgs()
 
 	// AGENT
 	agent.semantic = SEMANTIC_ROLE_AGENT;
-	agent.instance = NULL;
+	agent.instance = nullptr;
 	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	agent.strict = true;
 	m_args.push_back(agent);
 
 	// PATIENT
 	patient.semantic = SEMANTIC_ROLE_PATIENT;
-	patient.instance = NULL;
+	patient.instance = nullptr;
 	patient.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	patient.strict = true;
 	m_args.push_back(patient);
 
 	// LOCATIVE
 	room.semantic = SEMANTIC_ROLE_LOCATIVE;
-	room.instance = NULL;
+	room.instance = nullptr;
 	room.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	room.strict = true;
 	m_args.push_back(room);

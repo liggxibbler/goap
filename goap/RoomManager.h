@@ -24,7 +24,7 @@ namespace GOAP
 			
 			Room* GetRoom(int id);
 			Room* GetRoom(std::string name);
-			Room* GetRoom(RoomName rn, Agent* agent = NULL);
+			Room* GetRoom(RoomName rn, Agent* agent = nullptr);
 
 			Room* GetRandomRoom(Agent* agent);
 

@@ -49,19 +49,19 @@ void Drop::InitArgs()
 	Argument agent, patient, locative;
 
 	agent.semantic = SEMANTIC_ROLE_AGENT;
-	agent.instance = NULL;
+	agent.instance = nullptr;
 	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	agent.strict = true;
 	m_args.push_back(agent);
 
 	patient.semantic = SEMANTIC_ROLE_PATIENT;
-	patient.instance = NULL;
+	patient.instance = nullptr;
 	patient.type = OBJ_TYPE_PROP;
 	patient.strict = false;
 	m_args.push_back(patient);
 
 	locative.semantic = SEMANTIC_ROLE_LOCATIVE;
-	locative.instance = NULL;
+	locative.instance = nullptr;
 	locative.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	locative.strict = true;
 	m_args.push_back(locative);

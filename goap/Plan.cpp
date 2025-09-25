@@ -5,8 +5,8 @@ using namespace GOAP;
 
 Plan::Plan()
 {
-	m_plan = NULL;
-	m_lastPlan = NULL;
+	m_plan = nullptr;
+	m_lastPlan = nullptr;
 }
 
 Plan::Plan(Goal* goal) : m_plan(goal)
@@ -27,7 +27,7 @@ ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 {
 	Action* action = m_plan->GetAction();
 	
-	if(action != NULL)
+	if(action != nullptr)
 	{
 		ExecutionStatus stat = action->Execute(om, turn);
 		m_execStat = stat;

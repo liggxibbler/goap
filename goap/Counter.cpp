@@ -1,4 +1,3 @@
-#define NULL 0
 #include "Counter.h"
 
 using namespace GOAP;
@@ -15,7 +14,7 @@ bool Counter::Increase()
 	++m_pointer %= m_size;
 	if (m_pointer == 0)
 	{
-		if(m_higher == NULL)
+		if(m_higher == nullptr)
 		{
 			m_overflow = true;
 			return false;

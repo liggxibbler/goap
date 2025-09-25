@@ -21,7 +21,7 @@ namespace GOAP
 	public:
 		Room();
 		Room(const Room& other);
-		Room(std::string name, RoomName rn, Object* owner = NULL);
+		Room(std::string name, RoomName rn, Object* owner = nullptr);
 		~Room();
 
 		void SetLeft(Room* left);

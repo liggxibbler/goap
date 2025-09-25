@@ -11,7 +11,7 @@ void MaximizeWindow();
 
 int main()
 {
-	//seed = (unsigned int)time(NULL);
+	//seed = (unsigned int)time(nullptr);
 	//srand(1386261647);
 
 	MaximizeWindow();

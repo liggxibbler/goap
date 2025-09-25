@@ -12,7 +12,7 @@ namespace GOAP
 	public:
 		OrderedPair()
 		{
-			m_Counters = NULL;
+			m_Counters = nullptr;
 		}
 
 		~OrderedPair()
@@ -44,7 +44,7 @@ namespace GOAP
 			numLists = _numLists;
 
 			m_Counters = new Counter*[numLists];
-			Counter* higher = NULL;
+			Counter* higher = nullptr;
 			for(int i=0; i<numLists; i++)
 			{
 				m_Counters[i] = new Counter( m_lists[i].size(), higher); // XIBB test for failed new

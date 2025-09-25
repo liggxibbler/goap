@@ -19,7 +19,7 @@ namespace GOAP
 	{
 	public:
 		Object();
-		Object(std::string name, Object* owner = NULL);
+		Object(std::string name, Object* owner = nullptr);
 		Object(const Object& other);
 		~Object();
 

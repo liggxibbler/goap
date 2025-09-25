@@ -6,8 +6,8 @@ using namespace GOAP;
 
 Goal::Goal()
 {
-	m_action = NULL;
-	m_parent = NULL;
+	m_action = nullptr;
+	m_parent = nullptr;
 	m_depth = 0;
 	m_cost = 0;
 	m_plan = new Plan();
@@ -124,7 +124,7 @@ int Goal::GetDepth()
 
 Goal* Goal::Combine(Goal* other)
 {
-	return NULL;
+	return nullptr;
 }
 
 Goal* Goal::Clone()

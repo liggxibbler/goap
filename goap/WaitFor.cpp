@@ -78,7 +78,7 @@ void WaitFor::InitArgs()
 
 	// LOCATIVE
 	loc.semantic = SEMANTIC_ROLE_LOCATIVE;
-	loc.instance = NULL;
+	loc.instance = nullptr;
 	loc.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
 	loc.strict = true;
 	m_args.push_back(loc);

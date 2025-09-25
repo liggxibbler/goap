@@ -8,7 +8,7 @@ namespace GOAP
 	{
 	public:
 		Prop();
-		Prop(std::string name, Object* owner = NULL);
+		Prop(std::string name, Object* owner = nullptr);
 		Prop(const Prop& other);
 		~Prop();
 

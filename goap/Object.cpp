@@ -11,7 +11,7 @@ Object::Object() : m_roomInstance(0)
 {
 	InitAttribMap();
 
-	m_owner = NULL;
+	m_owner = nullptr;
 	m_name = "ANONYMOUS";
 	m_id = s_numObjects++;
 }

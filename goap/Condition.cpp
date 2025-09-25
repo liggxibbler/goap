@@ -7,7 +7,7 @@ using namespace Op;
 
 Condition::Condition()
 {
-	m_params = NULL;
+	m_params = nullptr;
 	m_numParams = 0;
 	m_layout = OP_LAYOUT_TYPE_UNDEFINED;
 	m_operatorType = OPERATOR_UNDEFINED;
@@ -22,7 +22,7 @@ Condition::Condition(const Condition& other)
 	m_numParams = other.m_numParams;
 	m_operatorType = other.m_operatorType;
 
-	m_params = NULL;
+	m_params = nullptr;
 	if(m_numParams != 0)
 	{
 		m_params = new Argument[m_numParams];
@@ -179,7 +179,7 @@ Argument* Condition::GetParamBySemantic(SemanticRole st)
 			return &m_params[i];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 Argument* Condition::GetParamByType(ObjectType ot)
 {
@@ -190,7 +190,7 @@ Argument* Condition::GetParamByType(ObjectType ot)
 			return &m_params[i];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 Argument* Condition::GetParamByInstance(Object* obj)
 {
@@ -202,7 +202,7 @@ Argument* Condition::GetParamByInstance(Object* obj)
 		}
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 void Condition::CopySemantics(Condition& other)

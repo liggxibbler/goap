@@ -31,7 +31,7 @@ namespace GOAP
 		public:
 			bool operator ()(Goal* g1, Goal* g2)
 			{
-				// keep the NULL pointer at the beginning
+				// keep the nullptr pointer at the beginning
 				if(g1 == 0)
 				{
 					return true;

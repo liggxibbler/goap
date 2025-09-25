@@ -52,13 +52,13 @@ void Take::InitArgs()
 	Argument sub, obj;
 
 	sub.semantic = SEMANTIC_ROLE_AGENT;
-	sub.instance = NULL;
+	sub.instance = nullptr;
 	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
 	sub.strict = true;
 	m_args.push_back(sub);
 
 	obj.semantic = SEMANTIC_ROLE_PATIENT;
-	obj.instance = NULL;
+	obj.instance = nullptr;
 	obj.type = OBJ_TYPE_PROP;
 	obj.strict = false;
 	m_args.push_back(obj);

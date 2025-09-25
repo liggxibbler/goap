@@ -6,7 +6,7 @@ using namespace GOAP;
 Argument::Argument() :
 	type(OBJ_TYPE_NONE),
 	semantic(SEMANTIC_ROLE_NONE),
-	instance(NULL),
+	instance(nullptr),
 	attrib(ATTRIBUTE_NONE),
 	value(0),
 	strict(false)

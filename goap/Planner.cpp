@@ -4,22 +4,22 @@ using namespace GOAP;
 
 Planner::Planner()
 {
-	m_currentGoal = NULL;
+	m_currentGoal = nullptr;
 }
 
 PlanStatus Planner::Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
 {
 	ClearPlanTree();
-	m_frontier.push_back(NULL);
+	m_frontier.push_back(nullptr);
 	m_frontier.push_back(agent->GetGoal());
 	return DeviseWorkHorse(agent, am, om, plan);
 }
 
 PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
 {
-	for(m_currentGoal = PickNextGoal(); m_currentGoal != NULL; m_currentGoal = PickNextGoal() )
+	for(m_currentGoal = PickNextGoal(); m_currentGoal != nullptr; m_currentGoal = PickNextGoal() )
 	{
-		if(m_currentGoal == NULL)
+		if(m_currentGoal == nullptr)
 		// Searched entire action space up to max depth
 		{
 			break;
@@ -79,7 +79,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 	CondIter condsIter;
 	std::list<ActionType>::iterator actIter;
 
-	Action* action = NULL;
+	Action* action = nullptr;
 	
 	for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
 	{

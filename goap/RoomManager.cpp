@@ -25,7 +25,7 @@ RoomManager* RoomManager::Instance()
 
 void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last*/)
 {
-	Agent* agent = NULL;
+	Agent* agent = nullptr;
 	
 	Room* kitchen = new Room("The Kitchen", ROOM_KITCHEN, 0);
 	m_mapRoom[ROOM_KITCHEN] = kitchen;
@@ -44,7 +44,7 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 	m_rooms.push_back(bath);
 
 	// get list of agents, make new room for each
-	/*Room* room = NULL;
+	/*Room* room = nullptr;
 	for(auto iter = first; iter != last; ++iter)
 	{
 		agent = *iter;
@@ -64,9 +64,9 @@ Room* RoomManager::GetRoom(RoomName rn, Agent* agent)
 {
 	if(rn == ROOM_BEDROOM)
 	{
-		if (agent == NULL)
+		if (agent == nullptr)
 		{
-			return NULL;
+			return nullptr;
 		}
 
 		return m_mapBedroom[agent];
@@ -129,7 +129,7 @@ void RoomManager::ShowBedrooms(Agent* murderer)
 void RoomManager::AddAgentProbabilities(Agent* agent)
 {
 	int* prob = agent->GetProbabilities();
-	Room* room = NULL;
+	Room* room = nullptr;
 	std::string roomName(agent->GetName() + std::string("'s bedroom"));
 	room = new Room(roomName, ROOM_BEDROOM, agent);
 	m_mapBedroom[agent] = room;
