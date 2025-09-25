@@ -12,3 +12,8 @@ goap/obj/
 goap/goap.cbp
 goap/goap.depend
 goap/goap.layout
+
+/.vs/
+/x64/
+/goap/x64/
+/goap/goap.vcxproj.user
