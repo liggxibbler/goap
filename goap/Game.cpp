@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include <jsoncpp/json/json.h>
+#include <json/json.h>
 #include <fstream>
 #include <iostream>
 
@@ -9,16 +9,13 @@
 #include "Room.h"
 #include "OperatorManager.h"
 #include "Action.h"
-//#include <conio.h>
-#include <ncurses.h>
+#include <conio.h>
 #include <time.h>
 
 #include "FactManager.h"
 
 #define MAX_TURNS 1000
 #define NUMBER_OF_CHARACTERS	10
-
-#define _getch getch
 
 using namespace std;
 using namespace GOAP;

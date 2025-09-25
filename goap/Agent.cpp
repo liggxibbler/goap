@@ -5,11 +5,8 @@
 #include "RoomManager.h"
 //#include "Wander.h"
 #include "ActionRecord.h"
-//#include <conio.h>
-#include <curses.h>
+#include <conio.h>
 #include <algorithm>
-
-#define _getch getch
 
 using namespace GOAP;
 
