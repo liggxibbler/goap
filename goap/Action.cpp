@@ -174,7 +174,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	for(finalObjIter = tuples.begin(); finalObjIter != tuples.end(); ++finalObjIter)
 	{
 		action = GetInstanceFromTuple(*finalObjIter);
-		if(action != 0)
+		if(action != nullptr)
 		{
 			result.push_back(action);
 		}

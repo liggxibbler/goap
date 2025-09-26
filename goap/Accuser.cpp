@@ -17,7 +17,7 @@ void Accuser::Initialize(GOAP::Agent* murderer, GOAP::Agent* thief, GOAP::Agent*
 	m_murderer = murderer;
 	m_thief = thief;
 	m_witness = witness;
-	if( m_witness == 0 )
+	if( m_witness == nullptr )
 	{
 		m_numWitnesses = 2;
 	}
@@ -52,7 +52,7 @@ bool Accuser::Prompt()
 			std::cout << "Who do you think was the murderer?\n\n";
 			std::cout << "1. " << m_thief->GetName() << "\n\n";
 			std::cout << "2. " << m_murderer->GetName() << "\n\n";
-			if(m_witness != 0)
+			if(m_witness != nullptr)
 			{
 				std::cout << "3. " << m_witness->GetName() << "\n\n";
 			}
