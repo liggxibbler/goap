@@ -6,11 +6,11 @@ using namespace GOAP::Op;
 
 OperatorManager::OperatorManager()
 {
-	m_mapOperator[OPERATOR_EQUAL]			= new Equal();
-	m_mapOperator[OPERATOR_GREATER_THAN]	= new GreaterThan();
-	m_mapOperator[OPERATOR_TRUE]			= new True();
-	m_mapOperator[OPERATOR_OWNS]			= new Owns();
-	m_mapOperator[OPERATOR_HAS]				= new Has();
+	m_mapOperator[OperatorType::EQUAL]			= new Equal();
+	m_mapOperator[OperatorType::GREATER_THAN]	= new GreaterThan();
+	m_mapOperator[OperatorType::TRUE]			= new True();
+	m_mapOperator[OperatorType::OWNS]			= new Owns();
+	m_mapOperator[OperatorType::HAS]			= new Has();
 }
 
 OperatorManager::OperatorManager(const OperatorManager& other)

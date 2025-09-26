@@ -55,7 +55,7 @@ namespace GOAP
 		virtual void Examine() override;
 		//virtual operator ObjectType ();
 
-		virtual int GetCompoundType() override;
+		virtual ObjectType GetCompoundType() override;
 		bool GetMurder();
 
 		void RemoveObject(Prop* obj);

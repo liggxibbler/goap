@@ -15,7 +15,7 @@ namespace GOAP
 		bool MatchesTypeOf(const Argument& other);
 		bool MatchesTypeOf(Object* other);
 
-		int					type;
+		ObjectType			type;
 		SemanticRole		semantic;
 		Object*				instance;
 		AttributeType		attrib;

@@ -16,8 +16,8 @@ namespace GOAP
 		//virtual operator ObjectType () override;
 		virtual bool Update(Op::OperatorManager* om, RoomManager* rm, int turn) override;
 
-		virtual int GetCompoundType() override;
-		void SetCompoundType(int compundType);
+		virtual ObjectType GetCompoundType() override;
+		void SetCompoundType(ObjectType compundType);
 
 		virtual void Examine() override;
 		virtual Object* Clone() override;
@@ -43,7 +43,7 @@ namespace GOAP
 		int	m_bearerID;
 		RoomName m_canBeFoundIn;
 		std::string m_description;
-		int m_type;
+		ObjectType m_type;
 
 	private:
 		static int s_value;

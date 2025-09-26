@@ -20,23 +20,23 @@ Take::~Take()
 
 Take::operator ActionType()
 {
-	return ACTION_TAKE;
+	return ActionType::TAKE;
 }
 
 ExecutionStatus Take::ExecuteWorkhorse(int turn)
 {
-	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
+	auto _agent(GetArg(SemanticRole::AGENT));
+	auto _patient(GetArg(SemanticRole::PATIENT));
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(_agent->instance);
 	patient->GetRoom()->RemoveObject(patient);
 	patient->SetRoom(_agent->instance->GetRoom());
 	//_patient->instance->SetRoom(_agent->instance->GetRoom());
-	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, true);
+	_agent->instance->SetAttribute(AttributeType::INVENTORY, true);
 
 	DUMP("       ** " << Express(0, 0))
-	return EXEC_STAT_SUCCESS;
+	return ExecutionStatus::SUCCESS;
 }
 
 Take* Take::Clone()
@@ -51,37 +51,37 @@ void Take::InitArgs()
 {
 	Argument sub, obj;
 
-	sub.semantic = SEMANTIC_ROLE_AGENT;
+	sub.semantic = SemanticRole::AGENT;
 	sub.instance = nullptr;
-	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.type = ObjectType::AGENT | ObjectType::OBJECT;
 	sub.strict = true;
 	m_args.push_back(sub);
 
-	obj.semantic = SEMANTIC_ROLE_PATIENT;
+	obj.semantic = SemanticRole::PATIENT;
 	obj.instance = nullptr;
-	obj.type = OBJ_TYPE_PROP;
+	obj.type = ObjectType::PROP;
 	obj.strict = false;
 	m_args.push_back(obj);
 }
 
 void Take::InitPreconditions()
 {
-	Condition subNearObj(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
-	Argument sub = *GetArg(SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
+	Condition subNearObj(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
+	Argument sub = *GetArg(SemanticRole::AGENT),
+		obj = *GetArg(SemanticRole::PATIENT);
 
 	subNearObj[0] = sub;
-	subNearObj[0].attrib = ATTRIBUTE_ROOM;
+	subNearObj[0].attrib = AttributeType::ROOM;
 
 	subNearObj[1] = obj;
-	subNearObj[1].attrib = ATTRIBUTE_ROOM;
+	subNearObj[1].attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(subNearObj);
 
-	/*Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryEmpty(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 
 	agentInventoryEmpty[0] = sub;
-	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryEmpty[0].attrib = AttributeType::INVENTORY;
 	agentInventoryEmpty[0].value = false;
 
 	m_preconds->AddCondition(agentInventoryEmpty);*/
@@ -89,9 +89,9 @@ void Take::InitPreconditions()
 
 void Take::InitEffects()
 {
-	Condition subHasObj(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
-	Argument sub = *GetArg(SEMANTIC_ROLE_AGENT),
-		obj = *GetArg(SEMANTIC_ROLE_PATIENT);
+	Condition subHasObj(OperatorLayoutType::OOB, OperatorType::HAS);
+	Argument sub = *GetArg(SemanticRole::AGENT),
+		obj = *GetArg(SemanticRole::PATIENT);
 
 	subHasObj[0] = sub;
 	subHasObj[1] = obj;
@@ -99,10 +99,10 @@ void Take::InitEffects()
 	m_effects.push_back(subHasObj);
 
 
-	/*Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryFull(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 
 	agentInventoryFull[0] = sub;
-	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryFull[0].attrib = AttributeType::INVENTORY;
 	agentInventoryFull[0].value = true;
 
 	m_effects.push_back(agentInventoryFull);*/
@@ -111,8 +111,8 @@ void Take::InitEffects()
 
 std::string Take::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::PATIENT);
 
 	std::string _agent;
 	std::string _patient;
@@ -154,8 +154,8 @@ int Take::Cost(RoomManager* rm)
 
 	int cost;
 
-	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
+	auto _agent = GetArg(SemanticRole::AGENT);
+	auto _patient = GetArg(SemanticRole::PATIENT);
 	
 	if(_patient->instance->GetOwner() == 0)
 	{
@@ -181,7 +181,7 @@ void Take::UpdateConditionInstances()
 
 void Take::Dispatch(int turn)
 {
-	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
@@ -192,7 +192,7 @@ void Take::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance ) // Treat murdere differently
+		if( (*agent) != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
 		{
 			(*agent)->Log(turn, this);
 		}
@@ -212,9 +212,9 @@ void Take::Dispatch(int turn)
 			Take* take = (Take*)this->Clone();
 			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 			{
-				if(!(*agent)->IsVictim() && (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance )
+				if(!(*agent)->IsVictim() && (*agent) != GetArg(SemanticRole::AGENT)->instance )
 				{
-					take->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
+					take->GetArg(SemanticRole::AGENT)->instance = *agent;
 				}
 			}
 			Agent* falseAgent = (Agent*)cp->instance;

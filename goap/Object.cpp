@@ -53,7 +53,7 @@ void Object::SetAttribute(AttributeType at, int val)
 
 //Object::operator GOAP::ObjectType() /// XXX = 0
 //{
-//	return OBJ_TYPE_OBJECT;
+//	return ObjectType::OBJECT;
 //}
 
 int& Object::operator[] (AttributeType at)
@@ -76,9 +76,9 @@ std::string Object::GetName()
 	return m_name;
 }
 
-int Object::GetCompoundType() // XXX = 0
+ObjectType Object::GetCompoundType() // XXX = 0
 {
-	return OBJ_TYPE_OBJECT;
+	return ObjectType::OBJECT;
 }
 
 void Object::SetRoom(Room* room)
@@ -106,8 +106,8 @@ void Object::SetOwner(Object* owner)
 
 void Object::InitAttribMap()
 {
-	m_attribs[ATTRIBUTE_POSX]	= &m_posx;
-	m_attribs[ATTRIBUTE_POSY]	= &m_posy;
-	m_attribs[ATTRIBUTE_ROOM]	= &m_room;
-	m_attribs[ATTRIBUTE_ID]		= &m_id;
+	m_attribs[AttributeType::POSX]	= &m_posx;
+	m_attribs[AttributeType::POSY]	= &m_posy;
+	m_attribs[AttributeType::ROOM]	= &m_room;
+	m_attribs[AttributeType::ID]		= &m_id;
 }

@@ -11,7 +11,7 @@ Goal::Goal()
 	m_depth = 0;
 	m_cost = 0;
 	m_plan = new Plan();
-	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
+	m_plan->SetStatus(PlanStatus::UNKNOWN);
 	m_negate = false;
 }
 
@@ -21,7 +21,7 @@ m_parent(parent), m_action(action), m_negate(negate)
 	m_depth = 0;
 	m_cost = 0;
 	m_plan = new Plan();
-	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
+	m_plan->SetStatus(PlanStatus::UNKNOWN);
 }
 
 //Goal::Goal(const Goal& other)

@@ -60,7 +60,7 @@ void Game::Initialize()
 	PopulateDictionaries();
 	InitializeObjects();
 
-	m_currentRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
+	m_currentRoom = m_roomManager->GetRoom(RoomName::LIVING_ROOM);
 }
 
 void Game::Roam()
@@ -97,7 +97,7 @@ void Game::Roam()
 	{
 		for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
 		{
-			if ((*iter)->GetAttrib(ATTRIBUTE_BEARER) != 0)
+			if ((*iter)->GetAttrib(AttributeType::BEARER) != 0)
 			{
 				//item++;
 			}
@@ -125,7 +125,7 @@ void Game::Roam()
 			std::cout.fill(' ');
 			std::cout.width(2);
 			cout << item++ << ". " << (*iter)->GetName();
-			if((*iter)->GetAttrib(ATTRIBUTE_ALIVE) == false)
+			if((*iter)->GetAttrib(AttributeType::ALIVE) == false)
 			{
 				cout << " [DEAD]";
 			}
@@ -167,7 +167,7 @@ void Game::Roam()
 	else if(answer>=witness && answer <iMap)//agent
 	{
 		Agent* aWitness = m_vecAgent[answer - witness];
-		if(aWitness->GetAttrib(ATTRIBUTE_ALIVE) == true)
+		if(aWitness->GetAttrib(AttributeType::ALIVE) == true)
 		{
 			m_currentAgent = aWitness;
 			m_roam = false;
@@ -253,7 +253,7 @@ void Game::Interview()
 	//{
 	//	wasChar = "it was";
 	//	choiceTwo = "Who had it";
-	//	qt2 = Q_POSSESSION;
+	//	qt2 = QuestionType::POSSESSION;
 	//	qObject = m_vecAgent[answer - 1];
 	//}
 	//else
@@ -261,7 +261,7 @@ void Game::Interview()
 	//{
 	//	wasChar = "they were";
 	//	choiceTwo = "What they were doing";
-	//	qt2 = Q_ACTION;
+	//	qt2 = QuestionType::ACTION;
 	//	qObject = m_vecAgent[answer - iAgent];
 	//}
 
@@ -276,7 +276,7 @@ void Game::Interview()
 
 	//if(answer == 1)
 	//{
-	//	question = Q_POSITION;
+	//	question = QuestionType::POSITION;
 	//}
 	//else
 	//{
@@ -295,7 +295,7 @@ void Game::Interview()
 	}*/
 
 	//m_currentAgent->Answer(qObject, question, answer);
-	m_currentAgent->Answer(0, Q_ACTION, 0);
+	m_currentAgent->Answer(0, QuestionType::ACTION, 0);
 
 	// ACCUSE
 
@@ -344,9 +344,9 @@ bool Game::GeneratePlot()
 
 		if(!thiefHasGoal)
 		{
-			if(m_murderer->GetGoal()->GetFirstCondition()->GetOperatorLayoutType() == OP_LAYOUT_TYPE_OAVB)
+			if(m_murderer->GetGoal()->GetFirstCondition()->GetOperatorLayoutType() == OperatorLayoutType::OAVB)
 			{
-				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PLAN_STAT_SUCCESS)
+				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 				{
 					SetGoalOfThief();
 					thiefHasGoal = true;
@@ -380,7 +380,7 @@ bool Game::GeneratePlot()
 		GETKEY;
 #endif
 		// Record time of death
-		if(m_actors[1]->GetAttrib(ATTRIBUTE_ALIVE) == false && m_timeOfDeath == 0)
+		if(m_actors[1]->GetAttrib(AttributeType::ALIVE) == false && m_timeOfDeath == 0)
 		{
 			GetMurderWeapon();
 			m_timeOfDeath = m_turn;
@@ -477,14 +477,14 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_victim = m_agents[role_array[1]];
 	m_victim->SetAsVictim();
 
-	GOAP::Condition vicIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-	vicIsDead[0].attrib = ATTRIBUTE_ALIVE;
+	GOAP::Condition vicIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
+	vicIsDead[0].attrib = AttributeType::ALIVE;
 	vicIsDead[0].instance = m_victim;
-	vicIsDead[0].type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	vicIsDead[0].type = ObjectType::AGENT | ObjectType::OBJECT;
 	vicIsDead[0].value = false;
 
 	///*m_objects[2]->SetBearer(m_murderer);
-	//m_murderer->SetAttribute(ATTRIBUTE_INVENTORY, true);*/
+	//m_murderer->SetAttribute(AttributeType::INVENTORY, true);*/
 
 	//m_murderer->See(m_objects[7]);
 
@@ -495,9 +495,9 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_murderer->AddGoal(goal);
 
 	m_murderer->See(m_victim);
-	m_murderer->AddAction(ACTION_WAITFOR);
-    m_murderer->AddAction(ACTION_TAKE);
-    m_murderer->AddAction(ACTION_DROP);
+	m_murderer->AddAction(ActionType::WAITFOR);
+    m_murderer->AddAction(ActionType::TAKE);
+    m_murderer->AddAction(ActionType::DROP);
 
 	m_roomManager->ShowBedrooms(m_murderer);
 
@@ -514,21 +514,21 @@ void Game::AssignRoles(/*int numWitness*/)
 
 	m_murderer->PickCurrentGoal();
 
-	/*GOAP::Condition cond2(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	/*GOAP::Condition cond2(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	cond2[0].instance = m_objects[7];
 	cond2[0].type = m_objects[7]->GetCompoundType();
-	cond2[0].attrib = ATTRIBUTE_ROOM;
-	cond2[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_agents[role_array[2]]);
-	cond2[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-	cond2[1].attrib = ATTRIBUTE_ROOM;
+	cond2[0].attrib = AttributeType::ROOM;
+	cond2[1].instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_agents[role_array[2]]);
+	cond2[1].type = ObjectType::ROOM | ObjectType::OBJECT;
+	cond2[1].attrib = AttributeType::ROOM;
 
 	goal = new Goal;
 	goal->SetDepth(0);
 	goal->AddCondition(cond2);
 	goal->SetPriority(20);*/
 
-	m_agents[role_array[2]]->AddAction(ACTION_TAKE);
-	m_agents[role_array[2]]->AddAction(ACTION_DROP);
+	m_agents[role_array[2]]->AddAction(ActionType::TAKE);
+	m_agents[role_array[2]]->AddAction(ActionType::DROP);
 	////m_victim->AddGoal(goal);
 	m_agents[role_array[2]]->PickCurrentGoal();
 
@@ -560,10 +560,10 @@ void Game::PopulateRooms()
 		room->AddObject(*object);
 	}
 
-	//m_roomManager->GetRoom(ROOM_KITCHEN)->AddAgent(m_agents[0]);
+	//m_roomManager->GetRoom(RoomName::KITCHEN)->AddAgent(m_agents[0]);
 	for(int i=0; i<m_numberOfActors; ++i)
 	{
-		m_roomManager->GetRoom(ROOM_BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
+		m_roomManager->GetRoom(RoomName::BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
 	}
 
 	// Show everything to murderer and thief
@@ -605,7 +605,7 @@ void Game::InitializeAgents()
 			actions[k] = agents[i]["actions"][k].asString();
 		}
 
-		Gender gender = agents[i]["gender"].asString().compare("male") == 0 ? Gender::MALE : Gender::FEMALE;
+		Gender gender = agents[i]["gender"].asString().compare("m") == 0 ? Gender::MALE : Gender::FEMALE;
 
 		agent->InitializeCharacter(
 		agents[i]["name"].asString(),
@@ -669,7 +669,7 @@ Or if you are just bored and want to go home.\n\n" << std::endl;
 
 void Game::MoveActorsToLivingRoom()
 {
-	Room* livingRoom = m_roomManager->GetRoom(ROOM_LIVING_ROOM);
+	Room* livingRoom = m_roomManager->GetRoom(RoomName::LIVING_ROOM);
 	for(int actor = 0; actor < m_numberOfActors; ++actor)
 	{
 		if(actor != 1)
@@ -754,26 +754,26 @@ void Game::GetMurderWeapon()
 		++record)
 	{
 		ActionType at = *(record->action);
-		if (at == ACTION_STAB || at == ACTION_BLUDGEON || at == ACTION_STRANGLE || at == ACTION_SHOOT)
+		if (at == ActionType::STAB || at == ActionType::BLUDGEON || at == ActionType::STRANGLE || at == ActionType::SHOOT)
 		{
 			switch(at)
 			{
-			case ACTION_STAB:
+			case ActionType::STAB:
 				m_murderWeaponType = "a blade (stabbed)";
 				m_weaponExample1 = "a knife";
 				m_weaponExample2 = "a sword";
 				break;
-			case ACTION_BLUDGEON:
+			case ActionType::BLUDGEON:
 				m_murderWeaponType = "a blunt object (bludgeoned)";
 				m_weaponExample1 = "a coconut";
 				m_weaponExample2 = "a trophy";
 				break;
-			case ACTION_STRANGLE:
+			case ActionType::STRANGLE:
 				m_murderWeaponType = "a string (strangled)";
 				m_weaponExample1 = "a rope";
 				m_weaponExample2 = "a cord";
 				break;
-			case ACTION_SHOOT:
+			case ActionType::SHOOT:
 				m_murderWeaponType = "a projectile (shot)";
 				m_weaponExample1 = "a gun";
 				m_weaponExample2 = "a pistol";
@@ -796,7 +796,7 @@ void Game::SetGoalOfThief()
 	}
 
 	// extract the murder instrument
-	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance;
+	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SemanticRole::INSTRUMENT)->instance;
 	instrument->IncreaseValue();
 	Goal* goal = 0;
 	// make thief want all props of the same type as the instrument
@@ -804,14 +804,14 @@ void Game::SetGoalOfThief()
 	{
 		if(item->second->GetCompoundType() == instrument->GetCompoundType())
 		{
-			Condition wantItem(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+			Condition wantItem(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
 			wantItem[0].instance = (*item).second;
 			wantItem[0].type = (*item).second->GetCompoundType();
-			wantItem[0].attrib = ATTRIBUTE_ROOM;
-			wantItem[1].instance = RoomManager::Instance()->GetRoom(ROOM_BEDROOM, m_actors[2]);
-			wantItem[1].type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
-			wantItem[1].attrib = ATTRIBUTE_ROOM;
+			wantItem[0].attrib = AttributeType::ROOM;
+			wantItem[1].instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_actors[2]);
+			wantItem[1].type = ObjectType::ROOM | ObjectType::OBJECT;
+			wantItem[1].attrib = AttributeType::ROOM;
 
 			goal = new Goal;
 			goal->SetDepth(0);
@@ -826,16 +826,16 @@ void Game::SetGoalOfThief()
 
 void Game::PopulateDictionaries()
 {
-	m_roomEnumMap["LIVING_ROOM"] = ROOM_LIVING_ROOM;
-	m_roomEnumMap["DINING_ROOM"] = ROOM_DINING_ROOM;
-	m_roomEnumMap["KITCHEN"] = ROOM_KITCHEN;
-	m_roomEnumMap["BATHROOM"] = ROOM_BATHROOM;
+	m_roomEnumMap["LIVING_ROOM"] = RoomName::LIVING_ROOM;
+	m_roomEnumMap["DINING_ROOM"] = RoomName::DINING_ROOM;
+	m_roomEnumMap["KITCHEN"] = RoomName::KITCHEN;
+	m_roomEnumMap["BATHROOM"] = RoomName::BATHROOM;
 
-	m_propTypeMap["Prop"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
-	m_propTypeMap["Blunt"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_BLUNT;
-	m_propTypeMap["Blade"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_BLADE;
-	m_propTypeMap["Squeezer"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_SQUEEZER;
-	m_propTypeMap["Projectile"] = OBJ_TYPE_OBJECT | OBJ_TYPE_PROP | OBJ_TYPE_PROJECTILE;
+	m_propTypeMap["Prop"] = ObjectType::OBJECT | ObjectType::PROP;
+	m_propTypeMap["Blunt"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLUNT;
+	m_propTypeMap["Blade"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLADE;
+	m_propTypeMap["Squeezer"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::SQUEEZER;
+	m_propTypeMap["Projectile"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::PROJECTILE;
 }
 
 void Game::InitializeObjects()

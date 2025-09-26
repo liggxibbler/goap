@@ -18,7 +18,7 @@ Strangle::~Strangle()
 
 Strangle::operator ActionType()
 {
-	return ACTION_STRANGLE;
+	return ActionType::STRANGLE;
 }
 
 Strangle* Strangle::Clone()
@@ -35,18 +35,18 @@ void Strangle::InitArgs()
 	Argument inst;
 	
 	//INSTRUMENT
-	inst.semantic = SEMANTIC_ROLE_INSTRUMENT;
+	inst.semantic = SemanticRole::INSTRUMENT;
 	inst.instance = nullptr;
-	inst.type = OBJ_TYPE_SQUEEZER | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
+	inst.type = ObjectType::SQUEEZER | ObjectType::OBJECT | ObjectType::PROP;
 	inst.strict = true;
 	m_args.push_back(inst);
 }
 
 std::string Strangle::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
-	auto ins = GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::PATIENT);
+	auto ins = GetArg(SemanticRole::INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;

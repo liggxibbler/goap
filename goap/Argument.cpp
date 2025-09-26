@@ -1,13 +1,15 @@
 #include "Argument.h"
 #include "Object.h"
 
+#include <iostream>
+
 using namespace GOAP;
 
 Argument::Argument() :
-	type(OBJ_TYPE_NONE),
-	semantic(SEMANTIC_ROLE_NONE),
+	type(ObjectType::NONE),
+	semantic(SemanticRole::NONE),
 	instance(nullptr),
-	attrib(ATTRIBUTE_NONE),
+	attrib(AttributeType::NONE),
 	value(0),
 	strict(false)
 {}
@@ -45,9 +47,9 @@ bool Argument::MatchesTypeOf(const Argument& other)
 	}
 	else
 	{
-		if((type & OBJ_TYPE_OBJECT) == 0)
+		if((type & ObjectType::OBJECT) == ObjectType::NONE)
 		{
-			if( (type & other.type) == 0 )
+			if( (type & other.type) == ObjectType::NONE )
 			{
 				result = false;
 			}
@@ -59,20 +61,22 @@ bool Argument::MatchesTypeOf(const Argument& other)
 bool Argument::MatchesTypeOf(Object* other)
 {
 	bool result = true;
-	int iType = type;
+	ObjectType iType = type;
 	if(strict)
 	{
 		if( iType != other->GetCompoundType() )
 		{
+			std::cout << "strict " << (int)iType << std::endl;
 			result = false;
 		}
 	}
 	else
 	{
-		if((type & OBJ_TYPE_OBJECT) == 0)
+		if((type & ObjectType::OBJECT) == ObjectType::NONE)
 		{
-			if( (iType & other->GetCompoundType()) == 0 )
+			if( (iType & other->GetCompoundType()) == ObjectType::NONE)
 			{
+				std::cout << (int)type << " " << (int)iType << " " << (int)other->GetCompoundType() << std::endl;
 				result = false;
 			}
 		}

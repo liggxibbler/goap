@@ -2,6 +2,7 @@
 #define _GOAP_COMMONS_H_
 
 #include <iostream>
+#include <type_traits>
 
 #ifdef _DEBUG
 #define DUMP(X) //std::cout << std::endl << X << std::endl;
@@ -23,40 +24,52 @@ namespace GOAP
 		int y;
 	};
 
-	enum ObjectType
+	enum class ObjectType
 	{
-		OBJ_TYPE_NONE		= 0x0000,
-		OBJ_TYPE_OBJECT		= 0x0001, // always and object
-		OBJ_TYPE_BLADE		= 0x0002, // either inanimate objects
-		OBJ_TYPE_BLUNT		= 0x0004,
-		OBJ_TYPE_PROJECTILE = 0x0008,
-		OBJ_TYPE_SQUEEZER	= 0x0010,
-		OBJ_TYPE_CONTAINER	= 0x0020,
-		OBJ_TYPE_ROOM		= 0x0040,
-		OBJ_TYPE_PROP		= 0x0080,
-		OBJ_TYPE_AGENT		= 0x0100, // or living things
-		OBJ_TYPE_PERSON		= 0x0200,
+		NONE		= 0x0000,
+		OBJECT		= 0x0001, // always and object
+		BLADE		= 0x0002, // either inanimate objects
+		BLUNT		= 0x0004,
+		PROJECTILE = 0x0008,
+		SQUEEZER	= 0x0010,
+		CONTAINER	= 0x0020,
+		ROOM		= 0x0040,
+		PROP		= 0x0080,
+		AGENT		= 0x0100, // or living things
+		PERSON		= 0x0200,
 
-		OBJ_TYPE_LAST		= 0xf000
+		LAST		= 0xf000
 	};
 
-	enum AttributeType
+	inline ObjectType operator | (const ObjectType& lhs, const ObjectType& rhs)
 	{
-		ATTRIBUTE_HEIGHT = 0x0000,
-		ATTRIBUTE_WEIGHT,
-		ATTRIBUTE_ROOM,
-		ATTRIBUTE_POSX,
-		ATTRIBUTE_POSY,
-		ATTRIBUTE_ALIVE,
-		ATTRIBUTE_NONE,
-		ATTRIBUTE_NUM_AGENTS,
-		ATTRIBUTE_ID,
-		ATTRIBUTE_INVENTORY,
-		ATTRIBUTE_BEARER,
-		ATTRIBUTE_LAST = 0xffff
+		return static_cast<ObjectType>(std::underlying_type<ObjectType>::type(lhs) |
+			std::underlying_type<ObjectType>::type(rhs));
+	}
+
+	inline ObjectType operator & (const ObjectType& lhs, const ObjectType& rhs)
+	{
+		return static_cast<ObjectType>(std::underlying_type<ObjectType>::type(lhs) &
+			std::underlying_type<ObjectType>::type(rhs));
+	}
+
+	enum class AttributeType
+	{
+		NONE,
+		HEIGHT,
+		WEIGHT,
+		ROOM,
+		POSX,
+		POSY,
+		ALIVE,
+		NUM_AGENTS,
+		ID,
+		INVENTORY,
+		BEARER,
+		LAST = 0xffff
 	};
 
-	enum OperatorLayoutType
+	enum class OperatorLayoutType
 	{
 		/*
 		O for Object
@@ -64,104 +77,104 @@ namespace GOAP
 		V for Value
 		B indicates the boolean that can negate the result
 		*/
-		OP_LAYOUT_TYPE_OAVB,	// O has attrib A compared to V e.g. Dysh.height == 160
-		OP_LAYOUT_TYPE_OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
-		OP_LAYOUT_TYPE_OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
-		OP_LAYOUT_TYPE_TRUE,	// for actions with no preconditions
-		OP_LAYOUT_TYPE_UNDEFINED = 0xffff
+		OAVB,	// O has attrib A compared to V e.g. Dysh.height == 160
+		OAOAB,	// O1 has attrib A1, O2 has attrib A2, compared e.g. Al.strength > Dysh.weight
+		OOB,		// O1 and O2 have object level relationship e.g. Al owns Knife
+		TRUE,	// for actions with no preconditions
+		UNDEFINED = 0xffff
 	};
 
-	enum SemanticRole
+	enum class SemanticRole
 	{
-		SEMANTIC_ROLE_INSTRUMENT = 0x0000,
+		INSTRUMENT = 0x0000,
 
-		SEMANTIC_ROLE_PATIENT,
-		SEMANTIC_ROLE_PATIENT1,
+		PATIENT,
+		PATIENT1,
 
-		SEMANTIC_ROLE_GOAL,
-		SEMANTIC_ROLE_LOCATIVE,
+		GOAL,
+		LOCATIVE,
 
-		SEMANTIC_ROLE_AGENT,
+		AGENT,
 
-		SEMANTIC_ROLE_NONE,
-		SEMANTIC_ROLE_UNDEFINED = 0xffff
+		NONE,
+		UNDEFINED = 0xffff
 	};
 
-	enum OperatorType
+	enum class OperatorType
 	{
-		OPERATOR_GREATER_THAN = 0x0000,
+		GREATER_THAN = 0x0000,
 
-		OPERATOR_EQUAL,
+		EQUAL,
 
-		OPERATOR_PROXIMITY,
+		PROXIMITY,
 
-		OPERATOR_OWNS,
-        OPERATOR_HAS,
+		OWNS,
+        HAS,
 
-		OPERATOR_TRUE,
+		TRUE,
 
-		OPERATOR_UNDEFINED = 0xffff
+		UNDEFINED = 0xffff
 	};
 
-	enum ActionType
+	enum class ActionType
 	{
-		ACTION_GOTO		= 0x00,
-		ACTION_WAITFOR	= 0x01,
-		ACTION_WANDER	= 0x02,
-		ACTION_TAKE		= 0x03,
-		ACTION_DROP		= 0x04,
+		GOTO		= 0x00,
+		WAITFOR	= 0x01,
+		WANDER	= 0x02,
+		TAKE		= 0x03,
+		DROP		= 0x04,
 
-		ACTION_MURDER	= 0x10,	// murder
-		ACTION_STAB		= 0x11,
-		ACTION_BLUDGEON	= 0x12,
-		ACTION_STRANGLE	= 0x13,
-		ACTION_SHOOT	= 0x14,
+		MURDER	= 0x10,	// murder
+		STAB		= 0x11,
+		BLUDGEON	= 0x12,
+		STRANGLE	= 0x13,
+		SHOOT	= 0x14,
 
-		ACTION_TEST		= 0x20,
-		ACTION_ACTION	= 0x40
+		TEST		= 0x20,
+		ACTION	= 0x40
 	};
 
-	enum ExecutionStatus
+	enum class ExecutionStatus
 	{
-		EXEC_STAT_INIT,
-		EXEC_STAT_RUNNING,
-		EXEC_STAT_FAIL,
-		EXEC_STAT_SUCCESS,
-		EXEC_STAT_SKIP,
-		EXEC_STAT_PAUSED,
-		EXEC_STAT_UNKNOWN,
+		INIT,
+		RUNNING,
+		FAIL,
+		SUCCESS,
+		SKIP,
+		PAUSED,
+		UNKNOWN,
 
-		EXEC_STAT_MURDER,
-		EXEC_STAT_NONE,
+		MURDER,
+		NONE,
 
-		EXEC_STAT_DONE		// mark the successful execution of a plan?
+		DONE		// mark the successful execution of a plan?
 	};
 
-	enum PlanStatus
+	enum class PlanStatus
 	{
-		PLAN_STAT_FAIL,
-		PLAN_STAT_SUCCESS,
-		PLAN_STAT_UNKNOWN
+		FAIL,
+		SUCCESS,
+		UNKNOWN
 	};
 
-	enum QuestionType
+	enum class QuestionType
 	{
-		Q_POSITION,
-		Q_POSSESSION,
-		Q_ACTION
+		POSITION,
+		POSSESSION,
+		ACTION
 	};
 
-	enum RoomName
+	enum class RoomName
 	{
-		ROOM_NONE           = 0x00,
-		ROOM_KITCHEN		= 0x01,
-		ROOM_LIVING_ROOM	= 0x02,
-		ROOM_DINING_ROOM	= 0x04,
-		ROOM_BATHROOM		= 0x08,
-		ROOM_BEDROOM		= 0x10
+		NONE           = 0x00,
+		KITCHEN		= 0x01,
+		LIVING_ROOM	= 0x02,
+		DINING_ROOM	= 0x04,
+		BATHROOM		= 0x08,
+		BEDROOM		= 0x10
 	};
 
-	enum Gender
+	enum class Gender
 	{
 		MALE,
 		FEMALE

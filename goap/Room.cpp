@@ -30,7 +30,7 @@ Object(name, owner), m_type(rn), m_numAgents(0), m_murder(false)
 {
 	m_room = m_id;
 	m_roomInstance = this;
-	m_attribs[ATTRIBUTE_NUM_AGENTS] = &m_numAgents;
+	m_attribs[AttributeType::NUM_AGENTS] = &m_numAgents;
 }
 
 Room::~Room()
@@ -166,7 +166,7 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
-		if((*(*addIter))[ATTRIBUTE_ALIVE] != false)
+		if((*(*addIter))[AttributeType::ALIVE] != false)
 		{
 			AddAgent(*(addIter++));
 			m_numAgents++;
@@ -184,7 +184,7 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 		if (m_markedForDeletion.find(*delIter) != m_markedForDeletion.end())
 		{
 			// post-increment operator returns a copy, then increment
-			if((*(*delIter))[ATTRIBUTE_ALIVE] != false)
+			if((*(*delIter))[AttributeType::ALIVE] != false)
 			{
 				m_agents.erase(delIter++);
 				m_numAgents--;
@@ -226,9 +226,9 @@ Object* Room::Clone()
 	return new Room(*this);
 }
 
-int Room::GetCompoundType()
+ObjectType Room::GetCompoundType()
 {
-	return OBJ_TYPE_OBJECT | OBJ_TYPE_ROOM;
+	return ObjectType::OBJECT | ObjectType::ROOM;
 }
 
 bool Room::GetMurder()
@@ -263,7 +263,7 @@ void Room::ResetAgentUpdateFlags()
 
 //Room::operator ObjectType ()
 //{
-//	return OBJ_TYPE_ROOM;
+//	return ObjectType::ROOM;
 //}
 
 void Room::Examine()

@@ -45,8 +45,8 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			if(plan->Validate())
 			{
 				DUMP("VALID PLAN FOUND")
-				plan->SetStatus(PLAN_STAT_SUCCESS);
-				return PLAN_STAT_SUCCESS;
+				plan->SetStatus(PlanStatus::SUCCESS);
+				return PlanStatus::SUCCESS;
 			}
 			else
 			{
@@ -62,8 +62,8 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 	
 	// this means that the short list is empty
 	// which means that the planner has failed to find a plan
-	plan->SetStatus(PLAN_STAT_FAIL);
-	return PLAN_STAT_FAIL;
+	plan->SetStatus(PlanStatus::FAIL);
+	return PlanStatus::FAIL;
 }
 
 void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
@@ -103,7 +103,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				}
 				else
 				{
-					std::cout << "Something's not right" << (std::string)(*action) << std::endl;
+					std::cout << "Something's not right " << (std::string)(*action) << std::endl;
 					std::cin.get();
 				}				
 			}

@@ -72,19 +72,19 @@ bool Prop::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	return true;
 }
 
-int Prop::GetCompoundType()
+ObjectType Prop::GetCompoundType()
 {
 	return m_type;
 }
 
 //Prop::operator GOAP::ObjectType()
 //{
-//	return OBJ_TYPE_PROP;
+//	return ObjectType::PROP;
 //}
 
 void Prop::InitAttribMap()
 {
-	m_attribs[ATTRIBUTE_BEARER] = &m_bearerID;
+	m_attribs[AttributeType::BEARER] = &m_bearerID;
 }
 
 void Prop::Examine()
@@ -122,7 +122,7 @@ RoomName Prop::MayBeFoundIn()
 	return m_canBeFoundIn;
 }
 
-void Prop::SetCompoundType(int type)
+void Prop::SetCompoundType(ObjectType type)
 {
     m_type = type;
 }

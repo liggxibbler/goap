@@ -19,21 +19,21 @@ Drop::~Drop()
 
 Drop::operator ActionType()
 {
-	return ACTION_DROP;
+	return ActionType::DROP;
 }
 
 ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 {
-	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
+	auto _agent(GetArg(SemanticRole::AGENT));
+	auto _patient(GetArg(SemanticRole::PATIENT));
 
 	Prop* patient = (Prop*)_patient->instance;
 	patient->SetBearer(0);
 	_agent->instance->GetRoom()->AddObject(patient);
-	_agent->instance->SetAttribute(ATTRIBUTE_INVENTORY, false);
+	_agent->instance->SetAttribute(AttributeType::INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
-	return EXEC_STAT_SUCCESS;
+	return ExecutionStatus::SUCCESS;
 }
 
 Drop* Drop::Clone()
@@ -48,51 +48,51 @@ void Drop::InitArgs()
 {
 	Argument agent, patient, locative;
 
-	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.semantic = SemanticRole::AGENT;
 	agent.instance = nullptr;
-	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.type = ObjectType::AGENT | ObjectType::OBJECT;
 	agent.strict = true;
 	m_args.push_back(agent);
 
-	patient.semantic = SEMANTIC_ROLE_PATIENT;
+	patient.semantic = SemanticRole::PATIENT;
 	patient.instance = nullptr;
-	patient.type = OBJ_TYPE_PROP;
+	patient.type = ObjectType::PROP;
 	patient.strict = false;
 	m_args.push_back(patient);
 
-	locative.semantic = SEMANTIC_ROLE_LOCATIVE;
+	locative.semantic = SemanticRole::LOCATIVE;
 	locative.instance = nullptr;
-	locative.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	locative.type = ObjectType::ROOM | ObjectType::OBJECT;
 	locative.strict = true;
 	m_args.push_back(locative);
 }
 
 void Drop::InitPreconditions()
 {
-	Argument agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
-		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
+	Argument agent = *GetArg(SemanticRole::AGENT),
+		patient = *GetArg(SemanticRole::PATIENT),
+		locative = *GetArg(SemanticRole::LOCATIVE);
 
-	Condition agentHasPatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	Condition agentHasPatient(OperatorLayoutType::OOB, OperatorType::HAS);
 
 	agentHasPatient[0] = agent;
 	agentHasPatient[1] = patient;
 
 	m_preconds->AddCondition(agentHasPatient);
 
-	Condition agentAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
 	agentAtLocative[0] = agent;
-	agentAtLocative[0].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[0].attrib = AttributeType::ROOM;
 	agentAtLocative[1] = locative;
-	agentAtLocative[1].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[1].attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLocative);
 
-	/*Condition agentInventoryFull(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryFull(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 
 	agentInventoryFull[0] = agent;
-	agentInventoryFull[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryFull[0].attrib = AttributeType::INVENTORY;
 	agentInventoryFull[0].value = true;
 
 	m_preconds->AddCondition(agentInventoryFull);*/
@@ -101,11 +101,11 @@ void Drop::InitPreconditions()
 
 void Drop::InitEffects()
 {
-	Argument agent = *GetArg(SEMANTIC_ROLE_AGENT),
-		patient = *GetArg(SEMANTIC_ROLE_PATIENT),
-		locative = *GetArg(SEMANTIC_ROLE_LOCATIVE);
+	Argument agent = *GetArg(SemanticRole::AGENT),
+		patient = *GetArg(SemanticRole::PATIENT),
+		locative = *GetArg(SemanticRole::LOCATIVE);
 
-	Condition agentDoesNotHavePatient(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	Condition agentDoesNotHavePatient(OperatorLayoutType::OOB, OperatorType::HAS);
 	agentDoesNotHavePatient.SetNegate(true);
 
 	agentDoesNotHavePatient[0] = agent;
@@ -113,19 +113,19 @@ void Drop::InitEffects()
 
 	m_effects.push_back(agentDoesNotHavePatient);
 
-	Condition patientAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition patientAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
 	patientAtLocative[0] = patient;
-	patientAtLocative[0].attrib = ATTRIBUTE_ROOM;
+	patientAtLocative[0].attrib = AttributeType::ROOM;
 	patientAtLocative[1] = locative;
-	patientAtLocative[1].attrib = ATTRIBUTE_ROOM;
+	patientAtLocative[1].attrib = AttributeType::ROOM;
 
 	m_effects.push_back(patientAtLocative);
 
-	/*Condition agentInventoryEmpty(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentInventoryEmpty(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 
 	agentInventoryEmpty[0] = agent;
-	agentInventoryEmpty[0].attrib = ATTRIBUTE_INVENTORY;
+	agentInventoryEmpty[0].attrib = AttributeType::INVENTORY;
 	agentInventoryEmpty[0].value = false;
 
 	m_effects.push_back(agentInventoryEmpty);*/
@@ -133,8 +133,8 @@ void Drop::InitEffects()
 
 std::string Drop::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::PATIENT);
 
 	std::string _agent;
 	std::string _patient;
@@ -176,9 +176,9 @@ int Drop::Cost(RoomManager* rm)
 
 	int cost = 0;
 
-	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
-	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	auto _agent = GetArg(SemanticRole::AGENT);
+	auto _patient = GetArg(SemanticRole::PATIENT);
+	auto _locative = GetArg(SemanticRole::LOCATIVE);
 
 
 	if(_locative->instance->GetOwner() == 0)
@@ -226,7 +226,7 @@ void Drop::Debug()
 
 void Drop::Dispatch(int turn)
 {
-	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
@@ -237,7 +237,7 @@ void Drop::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance ) // Treat dropper differently
+		if( (*agent) != GetArg(SemanticRole::AGENT)->instance ) // Treat dropper differently
 		{
 			(*agent)->Log(turn, this);
 		}
@@ -257,9 +257,9 @@ void Drop::Dispatch(int turn)
 			Drop* drop = (Drop*)this->Clone();
 			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 			{
-				if(!(*agent)->IsVictim() && (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance)
+				if(!(*agent)->IsVictim() && (*agent) != GetArg(SemanticRole::AGENT)->instance)
 				{
-					drop->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
+					drop->GetArg(SemanticRole::AGENT)->instance = *agent;
 				}
 			}
 			Agent* falseAgent = (Agent*)cp->instance;

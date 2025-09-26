@@ -8,7 +8,7 @@ using namespace GOAP;
 
 std::ofstream Action::s_outFile;
 
-Action::Action() : m_status(EXEC_STAT_INIT), m_logged(false), m_numWitness(0)
+Action::Action() : m_status(ExecutionStatus::INIT), m_logged(false), m_numWitness(0)
 {
 }
 
@@ -18,7 +18,7 @@ Action::~Action()
 
 Action::operator GOAP::ActionType()
 {
-	return ACTION_ACTION;
+	return ActionType::ACTION;
 }
 
 bool Action::MightSatisfy(Condition& cond)
@@ -43,7 +43,7 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		SemanticRole st = cond[i].semantic;
-		if(st != SEMANTIC_ROLE_NONE)
+		if(st != SemanticRole::NONE)
 		{
 			auto arg = GetArg(st);
 			
@@ -57,7 +57,7 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 				result = false;
 			}
 
-			cond[i].semantic = SEMANTIC_ROLE_NONE; // reset for later checks
+			cond[i].semantic = SemanticRole::NONE; // reset for later checks
 		}
 	}
 	return result;
@@ -126,12 +126,12 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
-			if(cp.semantic == SEMANTIC_ROLE_AGENT)
+			if(cp.semantic == SemanticRole::AGENT)
 			{
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
 			}
-			//else if(cp.semantic == SEMANTIC_ROLE_LOCATIVE)
+			//else if(cp.semantic == SemanticRole::LOCATIVE)
 			//{
 			//	// push all rooms on unifyList
 			//	DUMP("")
@@ -146,7 +146,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		}
 		else
 		{
-			if(cp.semantic == SEMANTIC_ROLE_AGENT && cp.instance != agent)
+			if(cp.semantic == SemanticRole::AGENT && cp.instance != agent)
 			{
 				// can't plan for others to do things
 				return 0;
@@ -309,7 +309,7 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 	// send message to all agents in room
 	if( EvaluateEffects(om) )
 	{
-		return EXEC_STAT_SKIP;
+		return ExecutionStatus::SKIP;
 	}
 	else
 	{
@@ -326,10 +326,10 @@ ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
 		{
 #ifdef _DEBUG
 			std::string _str = (std::string)(*this);
-			DUMP(GetArg(SEMANTIC_ROLE_AGENT)->instance->GetName() << " can't " << _str << ".")
+			DUMP(GetArg(SemanticRole::AGENT)->instance->GetName() << " can't " << _str << ".")
 			GETKEY;
 #endif
-			return EXEC_STAT_FAIL;
+			return ExecutionStatus::FAIL;
 		}
 	}
 }
@@ -341,7 +341,7 @@ ExecutionStatus Action::GetStatus()
 
 void Action::Dispatch(int turn)
 {
-	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();

@@ -4,23 +4,23 @@ using namespace GOAP;
 
 ActionManager::ActionManager()
 {
-	m_mapAction[ACTION_STAB]		= new Stab();
-	m_mapAction[ACTION_GOTO]		= new GoTo();
-	m_mapAction[ACTION_TAKE]		= new Take();
-	m_mapAction[ACTION_BLUDGEON]	= new Bludgeon();
-	m_mapAction[ACTION_STRANGLE]	= new Strangle();
-	m_mapAction[ACTION_SHOOT]		= new Shoot();
-	m_mapAction[ACTION_WAITFOR]		= new WaitFor();
-    m_mapAction[ACTION_DROP]        = new Drop();
+	m_mapAction[ActionType::STAB]		= new Stab();
+	m_mapAction[ActionType::GOTO]		= new GoTo();
+	m_mapAction[ActionType::TAKE]		= new Take();
+	m_mapAction[ActionType::BLUDGEON]	= new Bludgeon();
+	m_mapAction[ActionType::STRANGLE]	= new Strangle();
+	m_mapAction[ActionType::SHOOT]		= new Shoot();
+	m_mapAction[ActionType::WAITFOR]		= new WaitFor();
+    m_mapAction[ActionType::DROP]        = new Drop();
 
-	m_mapSuspect[ACTION_STAB]		= 1;
-	m_mapSuspect[ACTION_GOTO]		= 0;
-	m_mapSuspect[ACTION_TAKE]		= 1;
-	m_mapSuspect[ACTION_BLUDGEON]	= 1;
-	m_mapSuspect[ACTION_STRANGLE]	= 1;
-	m_mapSuspect[ACTION_SHOOT]		= 1;
-	m_mapSuspect[ACTION_WAITFOR]	= 0;
-    m_mapSuspect[ACTION_DROP]       = 1;
+	m_mapSuspect[ActionType::STAB]		= 1;
+	m_mapSuspect[ActionType::GOTO]		= 0;
+	m_mapSuspect[ActionType::TAKE]		= 1;
+	m_mapSuspect[ActionType::BLUDGEON]	= 1;
+	m_mapSuspect[ActionType::STRANGLE]	= 1;
+	m_mapSuspect[ActionType::SHOOT]		= 1;
+	m_mapSuspect[ActionType::WAITFOR]	= 0;
+    m_mapSuspect[ActionType::DROP]       = 1;
 
 	InitializePrototypes();
 }

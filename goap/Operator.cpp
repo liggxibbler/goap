@@ -27,27 +27,27 @@ bool Operator::Evaluate(Condition& ac)
 
 	switch(ac.GetOperatorLayoutType())
 	{
-	case OP_LAYOUT_TYPE_OAOAB:
+	case OperatorLayoutType::OAOAB:
 		{
 			result = EvaluateOAOAB();
 			break;
 		}
-	case OP_LAYOUT_TYPE_OAVB:
+	case OperatorLayoutType::OAVB:
 		{
 			result = EvaluateOAVB();
 			break;
 		}
-	case OP_LAYOUT_TYPE_OOB:
+	case OperatorLayoutType::OOB:
 		{
 			result = EvaluateOOB();
 			break;
 		}
-	case OP_LAYOUT_TYPE_TRUE:
+	case OperatorLayoutType::TRUE:
 		{
 			result = true;
 			break;
 		}
-	case OP_LAYOUT_TYPE_UNDEFINED:
+	case OperatorLayoutType::UNDEFINED:
 		{
 			//throw exception
 			result = false;

@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -135,6 +136,7 @@
     <ClCompile Include="Agent.cpp" />
     <ClCompile Include="Argument.cpp" />
     <ClCompile Include="Bludgeon.cpp" />
+    <ClCompile Include="Common.cpp" />
     <ClCompile Include="Condition.cpp" />
     <ClCompile Include="Counter.cpp" />
     <ClCompile Include="Drop.cpp" />

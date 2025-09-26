@@ -27,20 +27,20 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 {
 	Agent* agent = nullptr;
 	
-	Room* kitchen = new Room("The Kitchen", ROOM_KITCHEN, 0);
-	m_mapRoom[ROOM_KITCHEN] = kitchen;
+	Room* kitchen = new Room("The Kitchen", RoomName::KITCHEN, 0);
+	m_mapRoom[RoomName::KITCHEN] = kitchen;
 	m_rooms.push_back(kitchen);
 
-	Room* dining = new Room("The Dining Room", ROOM_DINING_ROOM, 0);
-	m_mapRoom[ROOM_DINING_ROOM] = dining;
+	Room* dining = new Room("The Dining Room", RoomName::DINING_ROOM, 0);
+	m_mapRoom[RoomName::DINING_ROOM] = dining;
 	m_rooms.push_back(dining);
 
-	Room* living = new Room("The Living Room", ROOM_LIVING_ROOM, 0);
-	m_mapRoom[ROOM_LIVING_ROOM] = living;
+	Room* living = new Room("The Living Room", RoomName::LIVING_ROOM, 0);
+	m_mapRoom[RoomName::LIVING_ROOM] = living;
 	m_rooms.push_back(living);
 
-	Room* bath = new Room("The Bathroom", ROOM_BATHROOM, 0);
-	m_mapRoom[ROOM_BATHROOM] = bath;
+	Room* bath = new Room("The Bathroom", RoomName::BATHROOM, 0);
+	m_mapRoom[RoomName::BATHROOM] = bath;
 	m_rooms.push_back(bath);
 
 	// get list of agents, make new room for each
@@ -49,7 +49,7 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 	{
 		agent = *iter;
 		std::string roomName(agent->GetName() + std::string("'s bedroom"));
-		room = new Room(roomName, ROOM_BEDROOM, agent);
+		room = new Room(roomName, RoomName::BEDROOM, agent);
 		m_mapBedroom[agent] = room;
 		m_rooms.push_back(room);
 		agent->See(room, false);
@@ -62,7 +62,7 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 
 Room* RoomManager::GetRoom(RoomName rn, Agent* agent)
 {
-	if(rn == ROOM_BEDROOM)
+	if(rn == RoomName::BEDROOM)
 	{
 		if (agent == nullptr)
 		{
@@ -131,20 +131,20 @@ void RoomManager::AddAgentProbabilities(Agent* agent)
 	int* prob = agent->GetProbabilities();
 	Room* room = nullptr;
 	std::string roomName(agent->GetName() + std::string("'s bedroom"));
-	room = new Room(roomName, ROOM_BEDROOM, agent);
+	room = new Room(roomName, RoomName::BEDROOM, agent);
 	m_mapBedroom[agent] = room;
 	m_rooms.push_back(room);
 	
 	agent->See(room, false);
-	agent->See(m_mapRoom[ROOM_KITCHEN], false);
-	agent->See(m_mapRoom[ROOM_LIVING_ROOM], false);
-	agent->See(m_mapRoom[ROOM_DINING_ROOM], false);
-	agent->See(m_mapRoom[ROOM_BATHROOM], false);
+	agent->See(m_mapRoom[RoomName::KITCHEN], false);
+	agent->See(m_mapRoom[RoomName::LIVING_ROOM], false);
+	agent->See(m_mapRoom[RoomName::DINING_ROOM], false);
+	agent->See(m_mapRoom[RoomName::BATHROOM], false);
 
-	m_probabilities[agent][m_mapRoom[ROOM_KITCHEN]] = prob[0];
-	m_probabilities[agent][m_mapRoom[ROOM_LIVING_ROOM]] = prob[1];
-	m_probabilities[agent][m_mapRoom[ROOM_DINING_ROOM]] = prob[2];
-	m_probabilities[agent][m_mapRoom[ROOM_BATHROOM]] = prob[3];
+	m_probabilities[agent][m_mapRoom[RoomName::KITCHEN]] = prob[0];
+	m_probabilities[agent][m_mapRoom[RoomName::LIVING_ROOM]] = prob[1];
+	m_probabilities[agent][m_mapRoom[RoomName::DINING_ROOM]] = prob[2];
+	m_probabilities[agent][m_mapRoom[RoomName::BATHROOM]] = prob[3];
 	m_probabilities[agent][room] = prob[4];
 }
 

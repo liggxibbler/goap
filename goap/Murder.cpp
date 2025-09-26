@@ -7,35 +7,35 @@ using namespace GOAP;
 
 ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 {
-	Argument sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	Argument obj(*GetArg(SEMANTIC_ROLE_PATIENT));
-	Argument ins(*GetArg(SEMANTIC_ROLE_INSTRUMENT));
-	Argument loc(*GetArg(SEMANTIC_ROLE_LOCATIVE));
+	Argument sub(*GetArg(SemanticRole::AGENT));
+	Argument obj(*GetArg(SemanticRole::PATIENT));
+	Argument ins(*GetArg(SemanticRole::INSTRUMENT));
+	Argument loc(*GetArg(SemanticRole::LOCATIVE));
 
-	if(true)//loc.instance->GetAttrib(ATTRIBUTE_NUM_AGENTS) <= 3)
+	if(true)//loc.instance->GetAttrib(AttributeType::NUM_AGENTS) <= 3)
 	{
 		DUMP("       ** " << Express(0, 0))
 
-			obj.instance->SetAttribute(ATTRIBUTE_ALIVE, false);
+			obj.instance->SetAttribute(AttributeType::ALIVE, false);
 		Agent* agent = (Agent*)(sub.instance);
 		agent->DoneMurder(true);
 
 		Goal* loseMurderWeapon = new Goal;
 
-		Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+		Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 		notHaveMurderWeapon.SetNegate(true);
-		notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-		notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
+		notHaveMurderWeapon[0] = *GetArg(SemanticRole::AGENT);
+		notHaveMurderWeapon[1] = *GetArg(SemanticRole::INSTRUMENT);
 		loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 		loseMurderWeapon->SetPriority(21);
 
 		agent->AddGoal(loseMurderWeapon);
 
-		return EXEC_STAT_MURDER;
+		return ExecutionStatus::MURDER;
 	}
 	else
 	{
-		return EXEC_STAT_RUNNING;
+		return ExecutionStatus::RUNNING;
 	}
 }
 
@@ -44,34 +44,34 @@ void Murder::InitArgs()
 	Argument agent, patient, room;
 
 	// AGENT
-	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.semantic = SemanticRole::AGENT;
 	agent.instance = nullptr;
-	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.type = ObjectType::AGENT | ObjectType::OBJECT;
 	agent.strict = true;
 	m_args.push_back(agent);
 
 	// PATIENT
-	patient.semantic = SEMANTIC_ROLE_PATIENT;
+	patient.semantic = SemanticRole::PATIENT;
 	patient.instance = nullptr;
-	patient.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	patient.type = ObjectType::AGENT | ObjectType::OBJECT;
 	patient.strict = true;
 	m_args.push_back(patient);
 
 	// LOCATIVE
-	room.semantic = SEMANTIC_ROLE_LOCATIVE;
+	room.semantic = SemanticRole::LOCATIVE;
 	room.instance = nullptr;
-	room.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	room.type = ObjectType::ROOM | ObjectType::OBJECT;
 	room.strict = true;
 	m_args.push_back(room);
 }
 
 void Murder::InitEffects()
 {
-	Condition objIsDead(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
-	Argument obj = *GetArg(SEMANTIC_ROLE_PATIENT);
+	Condition objIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
+	Argument obj = *GetArg(SemanticRole::PATIENT);
 
 	objIsDead[0] = obj;
-	objIsDead[0].attrib	= ATTRIBUTE_ALIVE;
+	objIsDead[0].attrib	= AttributeType::ALIVE;
 	objIsDead[0].value	= false;
 	objIsDead.SetNegate(false);
 
@@ -80,13 +80,13 @@ void Murder::InitEffects()
 
 void Murder::InitPreconditions()
 {
-	auto _agent(GetArg(SEMANTIC_ROLE_AGENT));
-	auto _patient(GetArg(SEMANTIC_ROLE_PATIENT));
-	auto _instrument(GetArg(SEMANTIC_ROLE_INSTRUMENT));
-	auto _locative(GetArg(SEMANTIC_ROLE_LOCATIVE));
+	auto _agent(GetArg(SemanticRole::AGENT));
+	auto _patient(GetArg(SemanticRole::PATIENT));
+	auto _instrument(GetArg(SemanticRole::INSTRUMENT));
+	auto _locative(GetArg(SemanticRole::LOCATIVE));
 
 	// AGENT owns INSTRUMENT
-	Condition agentHasInst(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	Condition agentHasInst(OperatorLayoutType::OOB, OperatorType::HAS);
 
 	agentHasInst[0] = *_agent;
 	agentHasInst[1] = *_instrument;
@@ -95,34 +95,34 @@ void Murder::InitPreconditions()
 
 	// AGENT AT LOCATIVE
 
-	Condition agentAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
 	agentAtLoc[0] = *_agent;
-	agentAtLoc[0].attrib = ATTRIBUTE_ROOM;
+	agentAtLoc[0].attrib = AttributeType::ROOM;
 
 	agentAtLoc[1] = *_locative;
-	agentAtLoc[1].attrib = ATTRIBUTE_ROOM;
+	agentAtLoc[1].attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLoc);
 
 	// PATIENT AT LOCATIVE
 
-	Condition patientAtLoc(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition patientAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
 	patientAtLoc[0] = *_patient;
-	patientAtLoc[0].attrib = ATTRIBUTE_ROOM;
+	patientAtLoc[0].attrib = AttributeType::ROOM;
 
 	patientAtLoc[1] = *_locative;
-	patientAtLoc[1].attrib = ATTRIBUTE_ROOM;
+	patientAtLoc[1].attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(patientAtLoc);
 
 	// AGENT ALONE WITH PATIENT
 
-	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentAloneWithPatient(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 
 	agentAloneWithPatient[0] = *_locative;
-	agentAloneWithPatient[0].attrib = ATTRIBUTE_NUM_AGENTS;
+	agentAloneWithPatient[0].attrib = AttributeType::NUM_AGENTS;
 	agentAloneWithPatient[0].value = 2;
 
 	m_preconds->AddCondition(agentAloneWithPatient);*/
@@ -139,9 +139,9 @@ int Murder::Cost(RoomManager* rm)
 
 	int cost = 0;
 
-	auto _patient = GetArg(SEMANTIC_ROLE_PATIENT);
-	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
-	auto _instrument = GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	auto _patient = GetArg(SemanticRole::PATIENT);
+	auto _locative = GetArg(SemanticRole::LOCATIVE);
+	auto _instrument = GetArg(SemanticRole::INSTRUMENT);
 
 	Object* roomOwner = _locative->instance->GetOwner();
 	
@@ -174,15 +174,15 @@ int Murder::Cost(RoomManager* rm)
 
 void Murder::SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative)
 {
-	GetArg(SEMANTIC_ROLE_AGENT)->instance = agent;
-	GetArg(SEMANTIC_ROLE_PATIENT)->instance = patient;
-	GetArg(SEMANTIC_ROLE_INSTRUMENT)->instance = instrument;
-	GetArg(SEMANTIC_ROLE_LOCATIVE)->instance = locative;
+	GetArg(SemanticRole::AGENT)->instance = agent;
+	GetArg(SemanticRole::PATIENT)->instance = patient;
+	GetArg(SemanticRole::INSTRUMENT)->instance = instrument;
+	GetArg(SemanticRole::LOCATIVE)->instance = locative;
 }
 
 void Murder::Dispatch(int turn)
 {
-	auto cp = GetArg(SEMANTIC_ROLE_AGENT);
+	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
@@ -193,7 +193,7 @@ void Murder::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( (*agent) != GetArg(SEMANTIC_ROLE_AGENT)->instance ) // Treat murdere differently
+		if( (*agent) != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
 		{
 			(*agent)->Log(turn, this);
 		}
@@ -215,7 +215,7 @@ void Murder::Dispatch(int turn)
 			{
 				if(!(*agent)->IsVictim() && !(*agent)->IsMurderer())
 				{
-					murder->GetArg(SEMANTIC_ROLE_AGENT)->instance = *agent;
+					murder->GetArg(SemanticRole::AGENT)->instance = *agent;
 				}
 			}
 			Agent* falseAgent = (Agent*)cp->instance;
@@ -234,10 +234,10 @@ Goal* Murder::FollowupGoal()
 		// Make murderer drop murder weapon
 	Goal* loseMurderWeapon = new Goal;
 	
-	Condition notHaveMurderWeapon(OP_LAYOUT_TYPE_OOB, OPERATOR_HAS);
+	Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 	notHaveMurderWeapon.SetNegate(true);
-	notHaveMurderWeapon[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-	notHaveMurderWeapon[1] = *GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	notHaveMurderWeapon[0] = *GetArg(SemanticRole::AGENT);
+	notHaveMurderWeapon[1] = *GetArg(SemanticRole::INSTRUMENT);
 	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 	loseMurderWeapon->SetPriority(19);
 

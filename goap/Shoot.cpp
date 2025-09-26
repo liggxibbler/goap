@@ -17,7 +17,7 @@ Shoot::~Shoot()
 
 Shoot::operator ActionType()
 {
-	return ACTION_SHOOT;
+	return ActionType::SHOOT;
 }
 
 Shoot* Shoot::Clone()
@@ -34,18 +34,18 @@ void Shoot::InitArgs()
 	Argument inst;
 
 	//INSTRUMENT
-	inst.semantic = SEMANTIC_ROLE_INSTRUMENT;
+	inst.semantic = SemanticRole::INSTRUMENT;
 	inst.instance = nullptr;
-	inst.type = OBJ_TYPE_PROJECTILE | OBJ_TYPE_OBJECT | OBJ_TYPE_PROP;
+	inst.type = ObjectType::PROJECTILE | ObjectType::OBJECT | ObjectType::PROP;
 	inst.strict = true;
 	m_args.push_back(inst);
 }
 
 std::string Shoot::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_PATIENT);
-	auto ins = GetArg(SEMANTIC_ROLE_INSTRUMENT);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::PATIENT);
+	auto ins = GetArg(SemanticRole::INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;

@@ -33,31 +33,31 @@ ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 		m_execStat = stat;
 		switch(stat)
 		{
-		case EXEC_STAT_SUCCESS:
-		case EXEC_STAT_MURDER:
+		case ExecutionStatus::SUCCESS:
+		case ExecutionStatus::MURDER:
 			// delete this one
 			m_lastPlan = m_plan;
 			m_plan = m_plan->GetParent();
 			// and no replanning is needed
-			m_execStat = EXEC_STAT_RUNNING;
+			m_execStat = ExecutionStatus::RUNNING;
 			break;
-		case EXEC_STAT_SKIP:
+		case ExecutionStatus::SKIP:
 			m_plan = m_plan->GetParent();
 			m_execStat = this->Execute(om, turn);
 			break;
-		case EXEC_STAT_RUNNING:
+		case ExecutionStatus::RUNNING:
 			//
 			//m_plan = m_plan;
 			// and no replanning is needed
 			break;
-		case EXEC_STAT_FAIL:
+		case ExecutionStatus::FAIL:
 			// delete this one
 			//m_plan = m_plan->GetParent();
 			// but replanning is needed
 			break;
 		default:
 			// throw exception
-			m_execStat = EXEC_STAT_UNKNOWN;
+			m_execStat = ExecutionStatus::UNKNOWN;
 			break;
 		};
 		return m_execStat;
@@ -66,7 +66,7 @@ ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
 	{
 		// this is the ultimate goal
 		//
-		m_execStat = EXEC_STAT_DONE;
+		m_execStat = ExecutionStatus::DONE;
 		return m_execStat;
 	}
 }
@@ -142,7 +142,7 @@ Goal* Plan::Validate()
 		int numTrue = 0;
 		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
 		{
-		//	if ( condition->GetOperatorType() == OPERATOR_TRUE )
+		//	if ( condition->GetOperatorType() == OperatorType::TRUE )
 		//	{
 		//		numTrue++;
 		//	}
@@ -181,7 +181,7 @@ Goal* Plan::FollowupGoal()
 void Plan::Pause()
 {
 	m_ExecStatStored = m_execStat;
-	m_execStat = EXEC_STAT_PAUSED;
+	m_execStat = ExecutionStatus::PAUSED;
 }
 
 void Plan::Resume()

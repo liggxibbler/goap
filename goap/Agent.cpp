@@ -18,7 +18,7 @@ Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_u
 	InitAttribMap();
 	//s_planner = new Planner();
 	m_plan = new Plan();
-	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
+	m_plan->SetStatus(PlanStatus::UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -29,7 +29,7 @@ Agent::Agent(std::string name) : m_currentGoal(0), m_nextExecution(0), m_bDoneMu
 	InitAttribMap();
 	s_planner = new Planner();
 	m_plan = new Plan();
-	m_plan->SetStatus(PLAN_STAT_UNKNOWN);
+	m_plan->SetStatus(PlanStatus::UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -47,7 +47,7 @@ Agent::Agent(const Agent& other) : Object(other)
 void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory,
 								int roomProbabilities[], int room_count, std::string actions[], int action_count)
 {
-	this->AddAction(ACTION_GOTO);
+	this->AddAction(ActionType::GOTO);
 
 	m_name = name;
 	m_height = 0;
@@ -66,19 +66,19 @@ void Agent::InitializeCharacter(std::string name, Gender gender, std::string bac
 	{
 		if (actions[i].compare("stab") == 0)
 		{
-			this->AddAction(ACTION_STAB);
+			this->AddAction(ActionType::STAB);
 		}
 		else if (actions[i].compare("bludgeon") == 0)
 		{
-			this->AddAction(ACTION_BLUDGEON);
+			this->AddAction(ActionType::BLUDGEON);
 		}
 		else if (actions[i].compare("shoot") == 0)
 		{
-			this->AddAction(ACTION_SHOOT);
+			this->AddAction(ActionType::SHOOT);
 		}
 		else if (actions[i].compare("strangle") == 0)
 		{
-			this->AddAction(ACTION_STRANGLE);
+			this->AddAction(ActionType::STRANGLE);
 		}
 	}
 }
@@ -89,7 +89,7 @@ Agent::~Agent()
 
 //Agent::operator GOAP::ObjectType()
 //{
-//	return OBJ_TYPE_AGENT;
+//	return ObjectType::AGENT;
 //}
 
 Goal* Agent::GetGoal()
@@ -117,7 +117,7 @@ std::map<int, Object*>::iterator Agent::LastObject()
 	return m_objects.end();
 }
 
-bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
+bool Agent::Unify(ObjectType ot, std::vector<Object*>& result, bool strict)
 {
 	std::map<int, Object*>::iterator objIter;
 	//iterate through list of objects
@@ -135,7 +135,7 @@ bool Agent::Unify(int ot, std::vector<Object*>& result, bool strict)
 		}
 		else
 		{
-			if((obj->GetCompoundType() & ot) != 0)
+			if((obj->GetCompoundType() & ot) != ObjectType::NONE)
 			{
 				result.push_back(obj);
 			}
@@ -163,7 +163,7 @@ void Agent::SetGoal(Goal* goal)
 Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
 {
 	//Plan* plan = new Plan();
-	if( s_planner->Devise(this, am, om, m_currentGoal->GetPlan()) == PLAN_STAT_SUCCESS)
+	if( s_planner->Devise(this, am, om, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}
@@ -175,9 +175,9 @@ void Agent::See(Object* obj)
 	m_objects[obj->GetID()] = obj;
 }
 
-int Agent::GetCompoundType()
+ObjectType Agent::GetCompoundType()
 {
-	return OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT;
+	return ObjectType::OBJECT | ObjectType::AGENT;
 }
 
 bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
@@ -188,7 +188,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 	{
 		if( m_currentGoal != 0)
 		{
-			if( PeekGoal() && ( m_currentGoal->GetPlan()->GetExecutionStatus() == EXEC_STAT_PAUSED ) )
+			if( PeekGoal() && ( m_currentGoal->GetPlan()->GetExecutionStatus() == ExecutionStatus::PAUSED ) )
 			{
 				m_currentGoal->GetPlan()->Resume();
 				m_nextExecution = m_currentGoal->GetPlan();
@@ -204,16 +204,16 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		if(m_nextExecution != 0)
 		{
 			ExecutionStatus as = m_nextExecution->Execute(om, turn);
-			if (as == EXEC_STAT_SUCCESS)
+			if (as == ExecutionStatus::SUCCESS)
 			{
 				m_nextExecution = 0;
 			}
-			else if (as == EXEC_STAT_SKIP)
+			else if (as == ExecutionStatus::SKIP)
 			{
 				m_nextExecution = 0;
 				/*Update(om, rm, turn);*/
 			}
-			else if(as == EXEC_STAT_DONE)
+			else if(as == ExecutionStatus::DONE)
 			{
 				//m_currentGoal = m_currentGoal->GetParent();
 				m_goals.remove(m_currentGoal);
@@ -230,15 +230,15 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 				m_nextExecution = 0;
 				this->Update(om, rm, turn); // need replanning! must waist know thyme
 			}
-			else if(as == EXEC_STAT_FAIL) // XIBB - this is very bad replanning!!!
+			else if(as == ExecutionStatus::FAIL) // XIBB - this is very bad replanning!!!
 			{
-				m_currentGoal->GetPlan()->SetStatus(PLAN_STAT_FAIL);
+				m_currentGoal->GetPlan()->SetStatus(PlanStatus::FAIL);
 				m_nextExecution = 0;
 			}
 		}
 		else if(m_currentGoal != 0)
 		{
-			if(m_currentGoal->GetPlan()->GetStatus() == PLAN_STAT_SUCCESS)
+			if(m_currentGoal->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 			{
 				m_nextExecution = m_currentGoal->GetPlan();
 			}
@@ -246,7 +246,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			{
 				GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
 				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
-				if(ps == PLAN_STAT_FAIL)
+				if(ps == PlanStatus::FAIL)
 				{
 					Room* room = rm->GetRandomRoom(this);
 					GoTo* gt = new GoTo(room, this);
@@ -276,14 +276,14 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 		std::cout << "\n" << m_name << " can't update, ";
 		switch(m_gender)
 		{
-		case MALE:
+		case Gender::MALE:
 			std::cout << "he";
 			break;
-		case FEMALE:
+		case Gender::FEMALE:
 			std::cout << "she";
 			break;
 		}
-		std::cout << "'s either dead or up to date!\n";
+		std::cout << "'s either dead (" << m_isAlive << ") or up to date (" << m_updated << ") \n";
 	}
 #endif
 	return m_bDoneMurder;
@@ -383,7 +383,7 @@ void Agent::GiveStatement()
 				//actionIsSuspect = (numSuspect > 0); // XIBB
 
 				if ( actionIsSuspect && (numWitness > numSuspect) &&
-					(ar.action->GetArg(SEMANTIC_ROLE_AGENT)->instance == this))
+					(ar.action->GetArg(SemanticRole::AGENT)->instance == this))
 				{
 					//agentIsSuspect = true;// XIBB
 				}
@@ -445,7 +445,7 @@ void Agent::GiveStatement()
 
 RoomName Agent::GetNextRoom()
 {
-	static RoomName rooms[] = {ROOM_KITCHEN, ROOM_LIVING_ROOM, ROOM_DINING_ROOM, ROOM_BATHROOM, ROOM_BEDROOM};
+	static RoomName rooms[] = {RoomName::KITCHEN, RoomName::LIVING_ROOM, RoomName::DINING_ROOM, RoomName::BATHROOM, RoomName::BEDROOM};
 
 	int random = rand() % 100;
 
@@ -475,10 +475,10 @@ Gender Agent::GetGender()
 void Agent::InitAttribMap()
 {
 	Object::InitAttribMap();
-	m_attribs[ATTRIBUTE_HEIGHT] = &m_height;
-	m_attribs[ATTRIBUTE_WEIGHT] = &m_weight;
-	m_attribs[ATTRIBUTE_ALIVE] = &m_isAlive;
-	m_attribs[ATTRIBUTE_INVENTORY] = &m_inventory;
+	m_attribs[AttributeType::HEIGHT] = &m_height;
+	m_attribs[AttributeType::WEIGHT] = &m_weight;
+	m_attribs[AttributeType::ALIVE] = &m_isAlive;
+	m_attribs[AttributeType::INVENTORY] = &m_inventory;
 }
 
 void Agent::ResetUpdateFlag()

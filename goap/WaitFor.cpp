@@ -28,27 +28,27 @@ ExecutionStatus WaitFor::ExecuteWorkhorse(int turn)
 	//	goTo random room;
 	//	goTo back here;
 	//	wait for victim;*/
-	//	(Agent*)(*GetArg(SEMANTIC_ROLE_AGENT));
+	//	(Agent*)(*GetArg(SemanticRole::AGENT));
 	//}
 
-	auto _goal = GetArg(SEMANTIC_ROLE_GOAL);
-	auto _locative = GetArg(SEMANTIC_ROLE_LOCATIVE);
+	auto _goal = GetArg(SemanticRole::GOAL);
+	auto _locative = GetArg(SemanticRole::LOCATIVE);
 
 	if(_goal->instance->GetRoom() == _locative->instance->GetRoom())
 	{
-		return EXEC_STAT_SUCCESS;
+		return ExecutionStatus::SUCCESS;
 	}
 	else
 	{
 		DUMP("       ** " << Express(0, 0))
 		/*m_turns--;*/
-		return EXEC_STAT_RUNNING;
+		return ExecutionStatus::RUNNING;
 	}
 }
 
 WaitFor::operator ActionType()
 {
-	return ACTION_WAITFOR;
+	return ActionType::WAITFOR;
 }
 
 WaitFor* WaitFor::Clone()
@@ -63,23 +63,23 @@ void WaitFor::InitArgs()
 	Argument sub, obj1, loc;
 	
 	// SUBJECT
-	sub.semantic = SEMANTIC_ROLE_AGENT;
+	sub.semantic = SemanticRole::AGENT;
 	sub.instance = m_agent;
-	sub.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	sub.type = ObjectType::AGENT | ObjectType::OBJECT;
 	sub.strict = true;
 	m_args.push_back(sub);
 
 	// OBJECT
-	obj1.semantic = SEMANTIC_ROLE_GOAL;
+	obj1.semantic = SemanticRole::GOAL;
 	obj1.instance = m_dest;
-	obj1.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	obj1.type = ObjectType::AGENT | ObjectType::OBJECT;
 	sub.strict = true;
 	m_args.push_back(obj1);
 
 	// LOCATIVE
-	loc.semantic = SEMANTIC_ROLE_LOCATIVE;
+	loc.semantic = SemanticRole::LOCATIVE;
 	loc.instance = nullptr;
-	loc.type = OBJ_TYPE_ROOM | OBJ_TYPE_OBJECT;
+	loc.type = ObjectType::ROOM | ObjectType::OBJECT;
 	loc.strict = true;
 	m_args.push_back(loc);
 
@@ -88,24 +88,24 @@ void WaitFor::InitArgs()
 
 void WaitFor::InitEffects()
 {
-	Condition goalAtLocation(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition goalAtLocation(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	Argument goal(*GetArg(SEMANTIC_ROLE_GOAL));
-	Argument locative(*GetArg(SEMANTIC_ROLE_LOCATIVE));
+	Argument goal(*GetArg(SemanticRole::GOAL));
+	Argument locative(*GetArg(SemanticRole::LOCATIVE));
 	
 	goalAtLocation[0] = goal;
-	goalAtLocation[0].attrib = ATTRIBUTE_ROOM;
+	goalAtLocation[0].attrib = AttributeType::ROOM;
 	
 	goalAtLocation[1] = locative;
-	goalAtLocation[1].attrib = ATTRIBUTE_ROOM;
+	goalAtLocation[1].attrib = AttributeType::ROOM;
 	
 	m_effects.push_back(goalAtLocation);
 
 
-	/*Condition agentAloneWithPatient(OP_LAYOUT_TYPE_OAVB, OPERATOR_EQUAL);
+	/*Condition agentAloneWithPatient(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 		
 	agentAloneWithPatient[0] = locative;
-	agentAloneWithPatient[0].attrib = ATTRIBUTE_NUM_AGENTS;
+	agentAloneWithPatient[0].attrib = AttributeType::NUM_AGENTS;
 	agentAloneWithPatient[0].value = 2;
 
 	m_effects.push_back(agentAloneWithPatient);*/
@@ -114,21 +114,21 @@ void WaitFor::InitEffects()
 
 void WaitFor::InitPreconditions()
 {
-	Condition agentAtLocative(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	agentAtLocative[0] = *GetArg(SEMANTIC_ROLE_AGENT);
-	agentAtLocative[0].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[0] = *GetArg(SemanticRole::AGENT);
+	agentAtLocative[0].attrib = AttributeType::ROOM;
 
-	agentAtLocative[1] = *GetArg(SEMANTIC_ROLE_LOCATIVE);
-	agentAtLocative[1].attrib = ATTRIBUTE_ROOM;
+	agentAtLocative[1] = *GetArg(SemanticRole::LOCATIVE);
+	agentAtLocative[1].attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLocative);
 }
 
 std::string WaitFor::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_GOAL);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::GOAL);
 	
 	std::string _agent;
 	std::string _goal;
@@ -170,8 +170,8 @@ int WaitFor::Cost(RoomManager* rm)
 
 	int cost = 5;
 
-	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
+	auto _agent = GetArg(SemanticRole::AGENT);
+	auto _room = GetArg(SemanticRole::GOAL);
 
 	if(_room->instance == 0)
 	{
@@ -207,10 +207,10 @@ Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
 		++cpIter;
 	}
 
-	auto _agent = act->GetArg(SEMANTIC_ROLE_AGENT);
-	auto _goal = act->GetArg(SEMANTIC_ROLE_GOAL);
+	auto _agent = act->GetArg(SemanticRole::AGENT);
+	auto _goal = act->GetArg(SemanticRole::GOAL);
 
-	if(_goal->instance->GetCompoundType() != (OBJ_TYPE_OBJECT | OBJ_TYPE_AGENT))
+	if(_goal->instance->GetCompoundType() != (ObjectType::OBJECT | ObjectType::AGENT))
 	{
 		return 0;
 	}

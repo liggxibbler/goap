@@ -49,7 +49,7 @@ private:
 	std::vector<GOAP::Room*> m_vecRoom;
 
 	std::map<std::string, GOAP::RoomName> m_roomEnumMap;
-	std::map<std::string, int> m_propTypeMap;
+	std::map<std::string, GOAP::ObjectType> m_propTypeMap;
 
 	/*databaseClassThing* m_database;*/
 

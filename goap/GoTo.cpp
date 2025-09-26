@@ -22,24 +22,24 @@ GoTo::~GoTo()
 
 ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 {
-	Argument sub(*GetArg(SEMANTIC_ROLE_AGENT));
-	Argument obj(*GetArg(SEMANTIC_ROLE_GOAL));
+	Argument sub(*GetArg(SemanticRole::AGENT));
+	Argument obj(*GetArg(SemanticRole::GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
-	//sub.instance->SetAttribute(ATTRIBUTE_ROOM, (*(obj.instance))[ATTRIBUTE_ROOM]);
+	//sub.instance->SetAttribute(AttributeType::ROOM, (*(obj.instance))[AttributeType::ROOM]);
 	Room* nextRoom = obj.instance->GetRoom();
 	//sub.instance->SetRoom(room);
 
 	if( nextRoom == 0 )
 	{
-		if(obj.instance->GetAttrib(ATTRIBUTE_BEARER) == sub.instance->GetID())
+		if(obj.instance->GetAttrib(AttributeType::BEARER) == sub.instance->GetID())
 		{
-			return EXEC_STAT_SUCCESS;
+			return ExecutionStatus::SUCCESS;
 		}
 		else
 		{
 			// AND THROW AN EXCEPTION
-			return EXEC_STAT_FAIL;
+			return ExecutionStatus::FAIL;
 		}
 	}
 
@@ -53,12 +53,12 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 
 	DUMP("       ** " << Express(0, 0))
 
-	return EXEC_STAT_SUCCESS;
+	return ExecutionStatus::SUCCESS;
 }
 
 GoTo::operator ActionType()
 {
-	return ACTION_GOTO;
+	return ActionType::GOTO;
 }
 
 GoTo* GoTo::Clone()
@@ -73,32 +73,32 @@ void GoTo::InitArgs()
 	Argument agent, goal;
 
 	// SUBJECT
-	agent.semantic = SEMANTIC_ROLE_AGENT;
+	agent.semantic = SemanticRole::AGENT;
 	agent.instance = m_agent;
-	agent.type = OBJ_TYPE_AGENT | OBJ_TYPE_OBJECT;
+	agent.type = ObjectType::AGENT | ObjectType::OBJECT;
 	agent.strict = true;
 	m_args.push_back(agent);
 
 	// OBJECT
-	goal.semantic = SEMANTIC_ROLE_GOAL;
+	goal.semantic = SemanticRole::GOAL;
 	goal.instance = m_dest;
-	goal.type = OBJ_TYPE_OBJECT;
+	goal.type = ObjectType::OBJECT;
 	m_args.push_back(goal);
 
 }
 
 void GoTo::InitEffects()
 {
-	Condition agentNearGoal(OP_LAYOUT_TYPE_OAOAB, OPERATOR_EQUAL);
+	Condition agentNearGoal(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	Argument agent(*GetArg(SEMANTIC_ROLE_AGENT));
-	Argument goal(*GetArg(SEMANTIC_ROLE_GOAL));
+	Argument agent(*GetArg(SemanticRole::AGENT));
+	Argument goal(*GetArg(SemanticRole::GOAL));
 
 	agentNearGoal[0] = agent;
-	agentNearGoal[0].attrib = ATTRIBUTE_ROOM;
+	agentNearGoal[0].attrib = AttributeType::ROOM;
 
 	agentNearGoal[1] = goal;
-	agentNearGoal[1].attrib = ATTRIBUTE_ROOM;
+	agentNearGoal[1].attrib = AttributeType::ROOM;
 
 	m_effects.push_back(agentNearGoal);
 }
@@ -109,8 +109,8 @@ void GoTo::InitPreconditions()
 
 std::string GoTo::Express(Agent* agent, Room* room)
 {
-	auto sub = GetArg(SEMANTIC_ROLE_AGENT);
-	auto obj = GetArg(SEMANTIC_ROLE_GOAL);
+	auto sub = GetArg(SemanticRole::AGENT);
+	auto obj = GetArg(SemanticRole::GOAL);
 
 	std::string _agent;
 	std::string _goal;
@@ -147,10 +147,10 @@ std::string GoTo::Express(Agent* agent, Room* room)
 		Agent* a = (Agent*)sub->instance;
 		switch(a->GetGender())
 		{
-		case MALE:
+		case Gender::MALE:
 			_goal = "his bedroom";
 			break;
-		case FEMALE:
+		case Gender::FEMALE:
 			_goal = "her bedroom";
 			break;
 		default:
@@ -176,8 +176,8 @@ int GoTo::Cost(RoomManager* rm)
 {
 	int cost = 30;
 
-	auto _agent = GetArg(SEMANTIC_ROLE_AGENT);
-	auto _room = GetArg(SEMANTIC_ROLE_GOAL);
+	auto _agent = GetArg(SemanticRole::AGENT);
+	auto _room = GetArg(SemanticRole::GOAL);
 	
 	if (_room->instance->GetRoom() != 0)
 	{
@@ -207,8 +207,8 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 		++cpIter;
 	}
 
-	auto _agent = act->GetArg(SEMANTIC_ROLE_AGENT);
-	auto _goal = act->GetArg(SEMANTIC_ROLE_GOAL);
+	auto _agent = act->GetArg(SemanticRole::AGENT);
+	auto _goal = act->GetArg(SemanticRole::GOAL);
 
 	if(_agent->instance == _goal->instance)
 	{
@@ -223,10 +223,10 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 void GoTo::Dispatch(int turn)
 {
 	// Make sure the GoTo action's GOAL is a room, not an object
-	GetArg(SEMANTIC_ROLE_GOAL)->instance = GetArg(SEMANTIC_ROLE_GOAL)->instance->GetRoom();
+	GetArg(SemanticRole::GOAL)->instance = GetArg(SemanticRole::GOAL)->instance->GetRoom();
 	Action::Dispatch(turn);
 
-	auto cp = GetArg(SEMANTIC_ROLE_GOAL);
+	auto cp = GetArg(SemanticRole::GOAL);
 	Room* room = cp->instance->GetRoom();
 	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
 	{

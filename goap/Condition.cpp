@@ -9,8 +9,8 @@ Condition::Condition()
 {
 	m_params = nullptr;
 	m_numParams = 0;
-	m_layout = OP_LAYOUT_TYPE_UNDEFINED;
-	m_operatorType = OPERATOR_UNDEFINED;
+	m_layout = OperatorLayoutType::UNDEFINED;
+	m_operatorType = OperatorType::UNDEFINED;
 	m_negate = false;
 	CreateArrays();
 }
@@ -51,28 +51,28 @@ bool Condition::CreateArrays()
 
 	switch(m_layout)
 	{
-	case OP_LAYOUT_TYPE_OAOAB:
+	case OperatorLayoutType::OAOAB:
 		{
 			m_numParams = 2;
 			break;
 		}
-	case OP_LAYOUT_TYPE_OAVB:
+	case OperatorLayoutType::OAVB:
 		{
 			m_numParams = 1;
 			break;
 		}
-	case OP_LAYOUT_TYPE_OOB:
+	case OperatorLayoutType::OOB:
 		{
 			m_numParams = 2;
 			break;
 		}
-	case OP_LAYOUT_TYPE_UNDEFINED:
+	case OperatorLayoutType::UNDEFINED:
 		{
 			m_numParams = 0;
 			break;
 			//throw an exception
 		}
-	case OP_LAYOUT_TYPE_TRUE:
+	case OperatorLayoutType::TRUE:
 		{
 			m_numParams = 0;
 			break;
