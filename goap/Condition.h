@@ -23,17 +23,17 @@ namespace GOAP
 
 		// == evaluates operand and attrib type equivalence,
 		// does not take semantics or instances into account
-		bool operator == (Condition& other);
-		bool EqualInstance(Condition& other);
+		bool operator == (const Condition& other) const;
+		bool EqualInstance(const Condition& other);
 
 		OperatorLayoutType GetOperatorLayoutType();
 		OperatorType GetOperatorType();
 		
-		Argument& operator [] (int index);
+		const Argument& operator [] (int index) const;
 		Argument& GetParamByIndex(int index);
 
 		const Argument* GetParams();
-		int GetNumParams();
+		int GetNumParams() const;
 
 		void SetNegate(bool value);
 		bool GetNegate();
@@ -44,7 +44,7 @@ namespace GOAP
 		Argument* GetParamByType(ObjectType ot);
 		Argument* GetParamByInstance(Object* obj);
 
-		void CopySemantics(Condition& other);
+		void CopySemantics(const Condition& other) const;
 
 	private:
 		bool CreateArrays();

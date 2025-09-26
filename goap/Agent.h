@@ -41,8 +41,7 @@ namespace GOAP
 								 std::string backStory, int locationProbability[],
 								 int room_count, std::string actions[], int action_count);
 
-		std::list<ActionType>::iterator FirstAction();
-		std::list<ActionType>::iterator LastAction();
+		const std::list<ActionType>& GetActions() const;
 
 		std::map<int, Object*>::iterator FirstObject();
 		std::map<int, Object*>::iterator LastObject();

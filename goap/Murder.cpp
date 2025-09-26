@@ -24,8 +24,8 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 		Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 		notHaveMurderWeapon.SetNegate(true);
-		notHaveMurderWeapon[0] = *GetArg(SemanticRole::AGENT);
-		notHaveMurderWeapon[1] = *GetArg(SemanticRole::INSTRUMENT);
+		notHaveMurderWeapon.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
+		notHaveMurderWeapon.GetParamByIndex(1) = *GetArg(SemanticRole::INSTRUMENT);
 		loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 		loseMurderWeapon->SetPriority(21);
 
@@ -70,9 +70,9 @@ void Murder::InitEffects()
 	Condition objIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 	Argument obj = *GetArg(SemanticRole::PATIENT);
 
-	objIsDead[0] = obj;
-	objIsDead[0].attrib	= AttributeType::ALIVE;
-	objIsDead[0].value	= false;
+	objIsDead.GetParamByIndex(0) = obj;
+	objIsDead.GetParamByIndex(0).attrib	= AttributeType::ALIVE;
+	objIsDead.GetParamByIndex(0).value	= false;
 	objIsDead.SetNegate(false);
 
 	m_effects.push_back(objIsDead);
@@ -88,8 +88,8 @@ void Murder::InitPreconditions()
 	// AGENT owns INSTRUMENT
 	Condition agentHasInst(OperatorLayoutType::OOB, OperatorType::HAS);
 
-	agentHasInst[0] = *_agent;
-	agentHasInst[1] = *_instrument;
+	agentHasInst.GetParamByIndex(0) = *_agent;
+	agentHasInst.GetParamByIndex(1) = *_instrument;
 
 	m_preconds->AddCondition(agentHasInst);
 
@@ -97,11 +97,11 @@ void Murder::InitPreconditions()
 
 	Condition agentAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	agentAtLoc[0] = *_agent;
-	agentAtLoc[0].attrib = AttributeType::ROOM;
+	agentAtLoc.GetParamByIndex(0) = *_agent;
+	agentAtLoc.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	agentAtLoc[1] = *_locative;
-	agentAtLoc[1].attrib = AttributeType::ROOM;
+	agentAtLoc.GetParamByIndex(1) = *_locative;
+	agentAtLoc.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLoc);
 
@@ -109,11 +109,11 @@ void Murder::InitPreconditions()
 
 	Condition patientAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	patientAtLoc[0] = *_patient;
-	patientAtLoc[0].attrib = AttributeType::ROOM;
+	patientAtLoc.GetParamByIndex(0) = *_patient;
+	patientAtLoc.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	patientAtLoc[1] = *_locative;
-	patientAtLoc[1].attrib = AttributeType::ROOM;
+	patientAtLoc.GetParamByIndex(1) = *_locative;
+	patientAtLoc.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(patientAtLoc);
 
@@ -236,8 +236,8 @@ Goal* Murder::FollowupGoal()
 	
 	Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 	notHaveMurderWeapon.SetNegate(true);
-	notHaveMurderWeapon[0] = *GetArg(SemanticRole::AGENT);
-	notHaveMurderWeapon[1] = *GetArg(SemanticRole::INSTRUMENT);
+	notHaveMurderWeapon.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
+	notHaveMurderWeapon.GetParamByIndex(1) = *GetArg(SemanticRole::INSTRUMENT);
 	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 	loseMurderWeapon->SetPriority(19);
 

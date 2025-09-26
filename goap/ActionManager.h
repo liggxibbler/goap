@@ -20,7 +20,7 @@ namespace GOAP
 		
 		static ActionManager* Instance();
 
-		Action* GetAction(ActionType at);
+		Action* GetActionPrototype(ActionType at);
 		bool GetSuspicion(ActionType);
 
 		Action* GetNewAction(ActionType at);

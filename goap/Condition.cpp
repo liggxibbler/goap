@@ -89,7 +89,7 @@ bool Condition::CreateArrays()
 	return true;
 }
 
-bool Condition::operator == (Condition& other)
+bool Condition::operator == (const Condition& other) const
 {
 	// this is logically correct and consistent,
 	// but maybe I should use a memory trick for quicker operation
@@ -155,7 +155,7 @@ const Argument* Condition::GetParams()
 	return m_params;
 }
 
-Argument& Condition::operator[](int index)
+const Argument& Condition::operator[](int index) const
 {
 	return m_params[index];
 }
@@ -165,7 +165,7 @@ Argument& Condition::GetParamByIndex(int index)
 	return m_params[index];
 }
 
-int Condition::GetNumParams()
+int Condition::GetNumParams() const
 {
 	return m_numParams;
 }
@@ -205,7 +205,7 @@ Argument* Condition::GetParamByInstance(Object* obj)
 	return nullptr;
 }
 
-void Condition::CopySemantics(Condition& other)
+void Condition::CopySemantics(const Condition& other) const
 {
 	// This method is only called by the MightSatisfy method of Action
 	// after it's verified that a Goal Condition and and effect are type
@@ -216,7 +216,7 @@ void Condition::CopySemantics(Condition& other)
 	}
 }
 
-bool Condition::EqualInstance(Condition& other)
+bool Condition::EqualInstance(const Condition& other)
 {
 	// this is logically correct and consistent,
 	// but maybe I should use a memory trick for quicker operation

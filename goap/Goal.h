@@ -30,10 +30,12 @@ namespace GOAP
 		std::list<Goal*>::iterator GetFirstChild();
 
 		void AddCondition(Condition& cond);
-		void RemoveCondition(Condition& cond);		
+		void RemoveCondition(const Condition& cond);
+		void CleanSemanticInstances();
 
 		CondIter GetFirstCondition();
 		CondIter GetLastCondition();
+		const std::list<GOAP::Condition>& GetConditions() const;
 
 		//bool operator < (Goal& other);
 

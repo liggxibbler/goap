@@ -76,38 +76,35 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				add action to long list
 	*/
 
-	CondIter condsIter;
-	std::list<ActionType>::iterator actIter;
-
-	Action* action = nullptr;
-	
-	for(actIter = agent->FirstAction(); actIter != agent->LastAction(); ++actIter)
+	for(const ActionType actionType : agent->GetActions())
 	{
-		for(condsIter = goal->GetFirstCondition(); condsIter != goal->GetLastCondition(); ++condsIter)
+		for (const Condition& condition : goal->GetConditions())
 		{
 			// XIBB this is risky, if duplicates are possible, they will happen
 			// XIBB it would be better if the action long list contains keys mapped to
 			// XIBB the condition long list as a list of conditions
 
 
-			action = am->GetAction(*actIter); // get action prototype
-			if( action->MightSatisfy(*condsIter) )
+			const Action* actionPrototype = am->GetActionPrototype(actionType); // get action prototype
+			if(actionPrototype->MightSatisfy(condition) )
 			{
-				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << (std::string)(*action))
-				action = am->GetNewAction(*actIter); // to keep the prototype untouched
-				if (action->CopyArgsFromCondition(*condsIter) == true)
+				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << static_cast<std::string>(actionPrototype))
+				Action* action = am->GetNewAction(actionType); // to keep the prototype untouched
+				if (action->CopyArgsFromCondition(condition) == true)
 				{
 					action->UpdateConditionInstances();
 					m_actionLongList.push_back(action);
-					m_condLongList.push_back(*condsIter);	// remember which condition the action might satisfy
+					m_condLongList.push_back(condition);	// remember which condition the action might satisfy
 				}
 				else
 				{
 					std::cout << "Something's not right " << (std::string)(*action) << std::endl;
 					std::cin.get();
-				}				
+				}
 			}
 		}
+
+		goal->CleanSemanticInstances();
 	}
 }
 

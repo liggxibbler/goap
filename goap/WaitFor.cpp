@@ -93,11 +93,11 @@ void WaitFor::InitEffects()
 	Argument goal(*GetArg(SemanticRole::GOAL));
 	Argument locative(*GetArg(SemanticRole::LOCATIVE));
 	
-	goalAtLocation[0] = goal;
-	goalAtLocation[0].attrib = AttributeType::ROOM;
+	goalAtLocation.GetParamByIndex(0) = goal;
+	goalAtLocation.GetParamByIndex(0).attrib = AttributeType::ROOM;
 	
-	goalAtLocation[1] = locative;
-	goalAtLocation[1].attrib = AttributeType::ROOM;
+	goalAtLocation.GetParamByIndex(1) = locative;
+	goalAtLocation.GetParamByIndex(1).attrib = AttributeType::ROOM;
 	
 	m_effects.push_back(goalAtLocation);
 
@@ -116,11 +116,11 @@ void WaitFor::InitPreconditions()
 {
 	Condition agentAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	agentAtLocative[0] = *GetArg(SemanticRole::AGENT);
-	agentAtLocative[0].attrib = AttributeType::ROOM;
+	agentAtLocative.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
+	agentAtLocative.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	agentAtLocative[1] = *GetArg(SemanticRole::LOCATIVE);
-	agentAtLocative[1].attrib = AttributeType::ROOM;
+	agentAtLocative.GetParamByIndex(1) = *GetArg(SemanticRole::LOCATIVE);
+	agentAtLocative.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLocative);
 }

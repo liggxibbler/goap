@@ -70,11 +70,11 @@ void Take::InitPreconditions()
 	Argument sub = *GetArg(SemanticRole::AGENT),
 		obj = *GetArg(SemanticRole::PATIENT);
 
-	subNearObj[0] = sub;
-	subNearObj[0].attrib = AttributeType::ROOM;
+	subNearObj.GetParamByIndex(0) = sub;
+	subNearObj.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	subNearObj[1] = obj;
-	subNearObj[1].attrib = AttributeType::ROOM;
+	subNearObj.GetParamByIndex(1) = obj;
+	subNearObj.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(subNearObj);
 
@@ -93,8 +93,8 @@ void Take::InitEffects()
 	Argument sub = *GetArg(SemanticRole::AGENT),
 		obj = *GetArg(SemanticRole::PATIENT);
 
-	subHasObj[0] = sub;
-	subHasObj[1] = obj;
+	subHasObj.GetParamByIndex(0) = sub;
+	subHasObj.GetParamByIndex(1) = obj;
 
 	m_effects.push_back(subHasObj);
 

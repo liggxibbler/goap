@@ -113,10 +113,9 @@ Goal* Plan::Validate()
 				temp->AddCondition(*cond);
 			}
 
-			for(auto effect(temp->GetAction()->GetFirstEffect());
-				effect != temp->GetAction()->GetLastEffect() ; ++effect)
+			for(const Condition& effect : temp->GetAction()->GetEffects())
 			{
-				temp->RemoveCondition(*effect);
+				temp->RemoveCondition(effect);
 			}
 
 			temp->SetAction( temp->GetParent()->GetAction() );
@@ -128,10 +127,9 @@ Goal* Plan::Validate()
 
 		while(temp->GetParent() != 0)
 		{
-			for(auto effect(temp->GetAction()->GetFirstEffect());
-				effect != temp->GetAction()->GetLastEffect() ; ++effect)
+			for (const Condition& effect : temp->GetAction()->GetEffects())
 			{
-				temp->RemoveCondition(*effect);
+				temp->RemoveCondition(effect);
 			}
 
 			temp->SetAction( temp->GetParent()->GetAction() );

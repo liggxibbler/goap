@@ -117,6 +117,11 @@ CondIter Goal::GetLastCondition()
 	return m_conditions.end();
 }
 
+const std::list<GOAP::Condition>& Goal::GetConditions() const
+{
+	return m_conditions;
+}
+
 int Goal::GetDepth()
 {
 	return m_depth;
@@ -144,7 +149,7 @@ Goal* Goal::Clone()
 	return clone;
 }
 
-void Goal::RemoveCondition(Condition& cond)
+void Goal::RemoveCondition(const Condition& cond)
 {
 	// From stackoverflow.com
 	// http://stackoverflow.com/users/46821/michael-kristofik
@@ -160,6 +165,21 @@ void Goal::RemoveCondition(Condition& cond)
 		else
 		{
 			++rem;
+		}
+	}
+}
+
+void GOAP::Goal::CleanSemanticInstances()
+{
+	for (auto cond : m_conditions)
+	{
+		for (int i = 0; i < cond.GetNumParams(); ++i)
+		{
+			SemanticRole st = cond[i].semantic;
+			if (st != SemanticRole::NONE)
+			{
+				cond.GetParamByIndex(i).semantic = SemanticRole::NONE; // reset for later checks
+			}
 		}
 	}
 }

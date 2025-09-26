@@ -75,17 +75,17 @@ void Drop::InitPreconditions()
 
 	Condition agentHasPatient(OperatorLayoutType::OOB, OperatorType::HAS);
 
-	agentHasPatient[0] = agent;
-	agentHasPatient[1] = patient;
+	agentHasPatient.GetParamByIndex(0) = agent;
+	agentHasPatient.GetParamByIndex(1) = patient;
 
 	m_preconds->AddCondition(agentHasPatient);
 
 	Condition agentAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	agentAtLocative[0] = agent;
-	agentAtLocative[0].attrib = AttributeType::ROOM;
-	agentAtLocative[1] = locative;
-	agentAtLocative[1].attrib = AttributeType::ROOM;
+	agentAtLocative.GetParamByIndex(0) = agent;
+	agentAtLocative.GetParamByIndex(0).attrib = AttributeType::ROOM;
+	agentAtLocative.GetParamByIndex(1) = locative;
+	agentAtLocative.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLocative);
 
@@ -108,17 +108,17 @@ void Drop::InitEffects()
 	Condition agentDoesNotHavePatient(OperatorLayoutType::OOB, OperatorType::HAS);
 	agentDoesNotHavePatient.SetNegate(true);
 
-	agentDoesNotHavePatient[0] = agent;
-	agentDoesNotHavePatient[1] = patient;
+	agentDoesNotHavePatient.GetParamByIndex(0) = agent;
+	agentDoesNotHavePatient.GetParamByIndex(1) = patient;
 
 	m_effects.push_back(agentDoesNotHavePatient);
 
 	Condition patientAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	patientAtLocative[0] = patient;
-	patientAtLocative[0].attrib = AttributeType::ROOM;
-	patientAtLocative[1] = locative;
-	patientAtLocative[1].attrib = AttributeType::ROOM;
+	patientAtLocative.GetParamByIndex(0) = patient;
+	patientAtLocative.GetParamByIndex(0).attrib = AttributeType::ROOM;
+	patientAtLocative.GetParamByIndex(1) = locative;
+	patientAtLocative.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_effects.push_back(patientAtLocative);
 

@@ -21,14 +21,13 @@ Action::operator GOAP::ActionType()
 	return ActionType::ACTION;
 }
 
-bool Action::MightSatisfy(Condition& cond)
+bool Action::MightSatisfy(const Condition& cond) const
 {
-	CondIter effectIter;
-	for(effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
+	for (const GOAP::Condition& effect : m_effects)//effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
 	{
-		if(*effectIter == cond)
+		if(effect == cond)
 		{
-			cond.CopySemantics(*effectIter);	// Tags the semantics of the Condition as the semantics of the Action
+			cond.CopySemantics(effect);	// Tags the semantics of the Condition as the semantics of the Action
 												// This helps later for instantiating the Action clone
 			return true;
 		}
@@ -36,7 +35,7 @@ bool Action::MightSatisfy(Condition& cond)
 	return false;
 }
 
-bool Action::CopyArgsFromCondition(Condition& cond)
+bool Action::CopyArgsFromCondition(const Condition& cond)
 {
 	bool result = true;
 	ArgIter paramIter;
@@ -56,8 +55,6 @@ bool Action::CopyArgsFromCondition(Condition& cond)
 			{
 				result = false;
 			}
-
-			cond[i].semantic = SemanticRole::NONE; // reset for later checks
 		}
 	}
 	return result;
@@ -239,12 +236,11 @@ void Action::ClonePreconds(Action* prototype)
 	}
 }
 
-void Action::CloneEffects(Action* prototype)
+void Action::CloneEffects(const Action* prototype)
 {
-	CondIter condIter;
-	for(condIter = prototype->GetFirstEffect(); condIter != prototype->GetLastEffect(); ++condIter)
+	for (const GOAP::Condition& effect : prototype->m_effects)
 	{
-		m_effects.push_back(*condIter);
+		m_effects.push_back(effect);
 	}
 }
 
@@ -259,16 +255,6 @@ void Action::CloneData(Action* prototype)
 	CloneArgs(prototype);
 	CloneEffects(prototype);
 	ClonePreconds(prototype);
-}
-
-CondIter Action::GetFirstEffect()
-{
-	return m_effects.begin();
-}
-
-CondIter Action::GetLastEffect()
-{
-	return m_effects.end();
 }
 
 void Action::UpdateConditionInstances()
@@ -404,6 +390,11 @@ void Action::OpenFile()
 void Action::CloseFile()
 {
 	s_outFile.close();
+}
+
+const std::list<Condition>& GOAP::Action::GetEffects() const
+{
+	return m_effects;
 }
 
 void Action::DumpToFile(int turn)

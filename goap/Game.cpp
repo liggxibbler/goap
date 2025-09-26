@@ -478,10 +478,10 @@ void Game::AssignRoles(/*int numWitness*/)
 	m_victim->SetAsVictim();
 
 	GOAP::Condition vicIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
-	vicIsDead[0].attrib = AttributeType::ALIVE;
-	vicIsDead[0].instance = m_victim;
-	vicIsDead[0].type = ObjectType::AGENT | ObjectType::OBJECT;
-	vicIsDead[0].value = false;
+	vicIsDead.GetParamByIndex(0).attrib = AttributeType::ALIVE;
+	vicIsDead.GetParamByIndex(0).instance = m_victim;
+	vicIsDead.GetParamByIndex(0).type = ObjectType::AGENT | ObjectType::OBJECT;
+	vicIsDead.GetParamByIndex(0).value = false;
 
 	///*m_objects[2]->SetBearer(m_murderer);
 	//m_murderer->SetAttribute(AttributeType::INVENTORY, true);*/
@@ -806,12 +806,13 @@ void Game::SetGoalOfThief()
 		{
 			Condition wantItem(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-			wantItem[0].instance = (*item).second;
-			wantItem[0].type = (*item).second->GetCompoundType();
-			wantItem[0].attrib = AttributeType::ROOM;
-			wantItem[1].instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_actors[2]);
-			wantItem[1].type = ObjectType::ROOM | ObjectType::OBJECT;
-			wantItem[1].attrib = AttributeType::ROOM;
+			wantItem.GetParamByIndex(0).instance = (*item).second;
+			wantItem.GetParamByIndex(0).type = (*item).second->GetCompoundType();
+			wantItem.GetParamByIndex(0).attrib = AttributeType::ROOM;
+			
+			wantItem.GetParamByIndex(1).instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_actors[2]);
+			wantItem.GetParamByIndex(1).type = ObjectType::ROOM | ObjectType::OBJECT;
+			wantItem.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 			goal = new Goal;
 			goal->SetDepth(0);

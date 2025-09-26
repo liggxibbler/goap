@@ -15,12 +15,12 @@ namespace GOAP
 		bool MatchesTypeOf(const Argument& other);
 		bool MatchesTypeOf(Object* other);
 
-		ObjectType			type;
-		SemanticRole		semantic;
-		Object*				instance;
-		AttributeType		attrib;
-		int					value;
-		bool				strict;
+		ObjectType			type = ObjectType::NONE;
+		SemanticRole		semantic = SemanticRole::NONE;
+		Object*				instance = nullptr;
+		AttributeType		attrib = AttributeType::NONE;
+		int					value = -1;
+		bool				strict = false;
 	};
 }
 

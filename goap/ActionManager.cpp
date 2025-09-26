@@ -33,7 +33,7 @@ ActionManager::~ActionManager()
 {
 }
 
-Action* ActionManager::GetAction(ActionType at)
+Action* ActionManager::GetActionPrototype(ActionType at)
 {
 	return m_mapAction[at];
 }

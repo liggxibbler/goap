@@ -94,11 +94,11 @@ void GoTo::InitEffects()
 	Argument agent(*GetArg(SemanticRole::AGENT));
 	Argument goal(*GetArg(SemanticRole::GOAL));
 
-	agentNearGoal[0] = agent;
-	agentNearGoal[0].attrib = AttributeType::ROOM;
+	agentNearGoal.GetParamByIndex(0) = agent;
+	agentNearGoal.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	agentNearGoal[1] = goal;
-	agentNearGoal[1].attrib = AttributeType::ROOM;
+	agentNearGoal.GetParamByIndex(1) = goal;
+	agentNearGoal.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_effects.push_back(agentNearGoal);
 }

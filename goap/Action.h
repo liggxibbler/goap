@@ -39,14 +39,11 @@ namespace GOAP
 		Goal* GetPreconds();
 		Goal* GetGoal();
 
-		CondIter GetFirstEffect();
-		CondIter GetLastEffect();
-
 		ArgIter GetFirstArg();
 		ArgIter GetLastArg();
 
-		virtual bool MightSatisfy(Condition& cond); // XXX
-		bool CopyArgsFromCondition(Condition& cond);
+		virtual bool MightSatisfy(const Condition& cond) const; // XXX
+		bool CopyArgsFromCondition(const Condition& cond);
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
@@ -85,6 +82,8 @@ namespace GOAP
 
 		virtual Goal* FollowupGoal();
 
+		const std::list<Condition>& GetEffects() const;
+
 	protected:
 
 		virtual void InitArgs() = 0;
@@ -98,7 +97,7 @@ namespace GOAP
 		void CloneData(Action* prototype);
 		void CloneArgs(Action* prototype);
 		void ClonePreconds(Action* prototype);
-		void CloneEffects(Action* prototype);
+		void CloneEffects(const Action* prototype);
 
 		void UpdateEffectInstances();
 		void UpdatePrecondInstances();

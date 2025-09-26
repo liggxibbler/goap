@@ -97,15 +97,11 @@ Goal* Agent::GetGoal()
 	return m_currentGoal;
 }
 
-std::list<ActionType>::iterator Agent::FirstAction()
+const std::list<ActionType>& Agent::GetActions() const
 {
-	return m_actions.begin();
+	return m_actions;
 }
 
-std::list<ActionType>::iterator Agent::LastAction()
-{
-	return m_actions.end();
-}
 
 std::map<int, Object*>::iterator Agent::FirstObject()
 {
