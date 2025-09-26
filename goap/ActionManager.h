@@ -21,7 +21,7 @@ namespace GOAP
 		static ActionManager* Instance();
 
 		Action* GetAction(ActionType at);
-		int GetSuspicion(ActionType);
+		bool GetSuspicion(ActionType);
 
 		Action* GetNewAction(ActionType at);
 		void InitializePrototypes();
@@ -29,7 +29,7 @@ namespace GOAP
 
 	private:
 		std::map<ActionType, Action*> m_mapAction;
-		std::map<ActionType, int> m_mapSuspect;
+		std::map<ActionType, bool> m_mapSuspect;
 	};
 }
 

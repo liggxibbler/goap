@@ -10,17 +10,17 @@ ActionManager::ActionManager()
 	m_mapAction[ActionType::BLUDGEON]	= new Bludgeon();
 	m_mapAction[ActionType::STRANGLE]	= new Strangle();
 	m_mapAction[ActionType::SHOOT]		= new Shoot();
-	m_mapAction[ActionType::WAITFOR]		= new WaitFor();
-    m_mapAction[ActionType::DROP]        = new Drop();
+	m_mapAction[ActionType::WAITFOR]	= new WaitFor();
+    m_mapAction[ActionType::DROP]		= new Drop();
 
-	m_mapSuspect[ActionType::STAB]		= 1;
-	m_mapSuspect[ActionType::GOTO]		= 0;
-	m_mapSuspect[ActionType::TAKE]		= 1;
-	m_mapSuspect[ActionType::BLUDGEON]	= 1;
-	m_mapSuspect[ActionType::STRANGLE]	= 1;
-	m_mapSuspect[ActionType::SHOOT]		= 1;
-	m_mapSuspect[ActionType::WAITFOR]	= 0;
-    m_mapSuspect[ActionType::DROP]       = 1;
+	m_mapSuspect[ActionType::STAB]		= true;
+	m_mapSuspect[ActionType::GOTO]		= false;
+	m_mapSuspect[ActionType::TAKE]		= true;
+	m_mapSuspect[ActionType::BLUDGEON]	= true;
+	m_mapSuspect[ActionType::STRANGLE]	= true;
+	m_mapSuspect[ActionType::SHOOT]		= true;
+	m_mapSuspect[ActionType::WAITFOR]	= false;
+    m_mapSuspect[ActionType::DROP]		= true;
 
 	InitializePrototypes();
 }
@@ -60,7 +60,7 @@ ActionManager* ActionManager::Instance()
 	return &am;
 }
 
-int ActionManager::GetSuspicion(ActionType at)
+bool ActionManager::GetSuspicion(ActionType at)
 {
 	return m_mapSuspect[at];
 }
