@@ -45,12 +45,9 @@ Action* ActionManager::GetNewAction(ActionType at)
 
 void ActionManager::InitializePrototypes()
 {
-	std::map<ActionType, Action*>::iterator prototypes;
-	Action* action;
-	for(prototypes = m_mapAction.begin(); prototypes != m_mapAction.end(); ++prototypes)
+	for (auto& pair : m_mapAction)
 	{
-		action = prototypes->second;
-		action->Initialize();
+		pair.second->Initialize();
 	}
 }
 

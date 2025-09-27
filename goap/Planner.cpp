@@ -118,8 +118,6 @@ void Planner::ExpandFrontier(Agent* agent)
 				add all preconditions of action to a goal node as child of current goal with action on the edge
 	*/
 	
-	std::list<Action*>::iterator iter;
-	Action* act;
 	std::vector<Action*> vecAct;
 	
 	std::list<Action*> instances;
@@ -129,9 +127,8 @@ void Planner::ExpandFrontier(Agent* agent)
 	m_actInstPreconds.clear();	// clear list of goals from last iteration
 	m_condRemoveList.clear();
 
-	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); ++iter)
+	for(Action* act : m_actionLongList)
 	{
-		act = *iter;
 		cond = *condIter;
 		int numInst = act->GetPossibleInstances(agent, instances);
 		if(numInst == 0)
@@ -152,14 +149,11 @@ void Planner::ExpandFrontier(Agent* agent)
 		++condIter;
 	}
 
-	std::list<Action*>::iterator actInstIter;
 	condIter = m_condRemoveList.begin();
-	Action* action;
 
-	for(actInstIter = instances.begin(); actInstIter != instances.end(); ++actInstIter)
+	for(Action* action : instances)
 	{
 		//		conds = which conditions of the current goal it might satisfy
-		action = *actInstIter;
 		action->UpdateConditionInstances();		
 		cond = *condIter;
 		Goal* nextGoal = m_currentGoal->Clone();
