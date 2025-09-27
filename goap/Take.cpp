@@ -186,15 +186,15 @@ void Take::Dispatch(int turn)
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
 	
-	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	for(Agent* agent : room->GetAgents())
 	{
-		if((*agent)->IsVictim() == false)
+		if(agent->IsVictim() == false)
 		{
 			m_numWitness++;
 		}
-		if( (*agent) != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
+		if( agent != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
 		{
-			(*agent)->Log(turn, this);
+			agent->Log(turn, this);
 		}
 	}
 	
@@ -210,11 +210,11 @@ void Take::Dispatch(int turn)
 			// SOMEONE SAW YOU
 			// PIN IT ON THEM
 			Take* take = (Take*)this->Clone();
-			for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+			for(Agent* agent : room->GetAgents())
 			{
-				if(!(*agent)->IsVictim() && (*agent) != GetArg(SemanticRole::AGENT)->instance )
+				if(!agent->IsVictim() && agent != GetArg(SemanticRole::AGENT)->instance )
 				{
-					take->GetArg(SemanticRole::AGENT)->instance = *agent;
+					take->GetArg(SemanticRole::AGENT)->instance = agent;
 				}
 			}
 			Agent* falseAgent = (Agent*)cp->instance;

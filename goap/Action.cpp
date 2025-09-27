@@ -331,13 +331,14 @@ void Action::Dispatch(int turn)
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp->instance);
 	Room* room = agent->GetRoom();
-	for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+	
+	for(Agent* agent : room->GetAgents())
 	{
-		if((*agent)->IsVictim() == false)
+		if(agent->IsVictim() == false)
 		{
 			m_numWitness++;
 		}
-		(*agent)->Log(turn, this);
+		agent->Log(turn, this);
 	}
 }
 

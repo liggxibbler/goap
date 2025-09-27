@@ -82,25 +82,14 @@ void Room::AddObject(Prop* obj)
 //	return m_name;
 //}
 
-std::set<Prop*>::iterator Room::GetFirstObject()
+const std::set<Prop*>& GOAP::Room::GetObjects()
 {
-	return m_objects.begin();
+	return m_objects;
 }
 
-std::set<Prop*>::iterator Room::GetLastObject()
+const std::set<Agent*>& GOAP::Room::GetAgents()
 {
-	return m_objects.end();
-}
-
-
-std::set<Agent*>::iterator Room::GetFirstAgent()
-{
-	return m_agents.begin();
-}
-
-std::set<Agent*>::iterator Room::GetLastAgent()
-{
-	return m_agents.end();
+	return m_agents;
 }
 
 Agent* Room::AddAgent(std::string name)

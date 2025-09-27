@@ -37,11 +37,8 @@ namespace GOAP
 
 		//std::string GetName();
 
-		std::set<Prop*>::iterator GetFirstObject();
-		std::set<Prop*>::iterator GetLastObject();
-
-		std::set<Agent*>::iterator GetFirstAgent();
-		std::set<Agent*>::iterator GetLastAgent();
+		const std::set<Prop*>& GetObjects();
+		const std::set<Agent*>& GetAgents();
 
 		RoomName GetType();
 

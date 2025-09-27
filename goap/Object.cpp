@@ -61,7 +61,7 @@ int& Object::operator[] (AttributeType at)
 	return *m_attribs[at];
 }
 
-int Object::GetID()
+int Object::GetID() const
 {
 	return m_id;
 }
@@ -71,7 +71,7 @@ Object* Object::GetOwner()
 	return m_owner;
 }
 
-std::string Object::GetName()
+std::string Object::GetName() const
 {
 	return m_name;
 }

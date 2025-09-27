@@ -27,10 +27,10 @@ namespace GOAP
 		void SetAttribute(AttributeType at, int val);
 		int& operator [] (AttributeType at);
 
-		int GetID();
+		int GetID() const;
 		Object* GetOwner();
 
-		std::string GetName();
+		std::string GetName() const;
 
 		Room* GetRoom();
 		void SetRoom(Room* room);

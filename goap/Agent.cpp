@@ -313,14 +313,14 @@ void Agent::See(Room* room, bool deep)
 {
 	if(deep)
 	{
-		for(auto object(room->GetFirstObject());object != room->GetLastObject();++object)
+		for(Object* object : room->GetObjects())
 		{
-			See(*object);
+			See(object);
 		}
 
-		for(auto agent(room->GetFirstAgent());agent != room->GetLastAgent();++agent)
+		for(Agent* agent : room->GetAgents())
 		{
-			See(*agent);
+			See(agent);
 		}
 	}
 	See((Object*)room);
@@ -417,19 +417,21 @@ void Agent::GiveStatement()
 		{
 			auto room = m_actionLog[j].roomSnap;
 			std::cout << "\nIn " << room->GetName() <<" at " << TURN2TIME(m_actionLog[j].turn) << " there was:\n\n";
-			for(auto prop(room->GetFirstObject()); prop != room->GetLastObject(); ++prop)
+			
+			for(Object* prop : room->GetObjects())
 			{
-				std::cout << "-> " << (*prop)->GetName() << "\n";
+				std::cout << "-> " << prop->GetName() << "\n";
 			}
-			for(auto agent(room->GetFirstAgent()); agent != room->GetLastAgent(); ++agent)
+			
+			for (Agent* agent : room->GetAgents())
 			{
-				if(*agent == this)
+				if(agent == this)
 				{
 					std::cout << "-> Myself\n";
 				}
 				else
 				{
-					std::cout << "-> " << (*agent)->GetName() << "\n";
+					std::cout << "-> " << agent->GetName() << "\n";
 				}
 			}
 			std::cout << "\nPress any key to continue the interview" << std::endl;

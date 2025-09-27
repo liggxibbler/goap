@@ -77,27 +77,27 @@ void Game::Roam()
 
 	cout << "-----------------------\n";
 	cout << "\n* You can go to:\n\n";
-	for(auto iter(m_roomManager->GetFirstRoom()); iter != m_roomManager->GetLastRoom(); ++iter)
+	for(Room* room : m_roomManager->GetRooms())
 	{
 		std::cout.fill(' ');
 		std::cout.width(2);
-		cout << item++ << ". " << (*iter)->GetName() << "\n" << endl;
-		m_vecRoom.push_back(*iter);
+		cout << item++ << ". " << room->GetName() << "\n" << endl;
+		m_vecRoom.push_back(room);
 	}
 
 	int iItem = item;
 
 	cout << "-----------------------\n";
 	cout << "\n* You can examine:\n\n";
-	if(m_currentRoom->GetFirstObject() == m_currentRoom->GetLastObject())
+	if(m_currentRoom->GetObjects().empty())
 	{
 		cout << "[NOTHING]\n";
 	}
 	else
 	{
-		for(auto iter(m_currentRoom->GetFirstObject()); iter != m_currentRoom->GetLastObject(); ++iter)
+		for(Prop* prop : m_currentRoom->GetObjects())
 		{
-			if ((*iter)->GetAttrib(AttributeType::BEARER) != 0)
+			if (prop->GetAttrib(AttributeType::BEARER) != 0)
 			{
 				//item++;
 			}
@@ -105,8 +105,8 @@ void Game::Roam()
 			{
 				std::cout.fill(' ');
 				std::cout.width(2);
-				cout << item++ << ". " << (*iter)->GetName() << "\n" << endl;
-				m_vecObject.push_back(*iter);
+				cout << item++ << ". " << prop->GetName() << "\n" << endl;
+				m_vecObject.push_back(prop);
 			}
 		}
 	}
@@ -114,23 +114,23 @@ void Game::Roam()
 	int witness = item;
 	cout << "-----------------------\n";
 	cout << "\n* You can interview/examine:\n\n";
-	if(m_currentRoom->GetFirstAgent() == m_currentRoom->GetLastAgent())
+	if(m_currentRoom->GetAgents().empty())
 	{
 		cout << "[NOBODY]\n";
 	}
 	else
 	{
-		for(auto iter(m_currentRoom->GetFirstAgent()); iter != m_currentRoom->GetLastAgent(); ++iter)
+		for (Agent* agent : m_currentRoom->GetAgents())
 		{
 			std::cout.fill(' ');
 			std::cout.width(2);
-			cout << item++ << ". " << (*iter)->GetName();
-			if((*iter)->GetAttrib(AttributeType::ALIVE) == false)
+			cout << item++ << ". " << agent->GetName();
+			if(agent->GetAttrib(AttributeType::ALIVE) == false)
 			{
 				cout << " [DEAD]";
 			}
 			cout << "\n" << endl;
-			m_vecAgent.push_back(*iter);
+			m_vecAgent.push_back(agent);
 		}
 	}
 	cout << "-----------------------\n";
@@ -354,22 +354,22 @@ bool Game::GeneratePlot()
 			}
 		}
 
-		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+		for (Room* room : m_roomManager->GetRooms())
 		{
-			(*room)->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
+			room->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
 		}
 
-		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+		for (Room* room : m_roomManager->GetRooms())
 		{
-			if((*room)->UpdateAgentPositions(m_murderer, m_victim))
+			if(room->UpdateAgentPositions(m_murderer, m_victim))
 			{
 				m_murder = true;
 			}
 		}
 
-		for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+		for (Room* room : m_roomManager->GetRooms())
 		{
-			(*room)->ResetAgentUpdateFlags();
+			room->ResetAgentUpdateFlags();
 		}
 
 		DUMP("******************************")
@@ -683,9 +683,9 @@ void Game::MoveActorsToLivingRoom()
 		}
 	}
 
-	for(auto room(m_roomManager->GetFirstRoom()); room != m_roomManager->GetLastRoom(); ++room)
+	for (Room* room : m_roomManager->GetRooms())
 	{
-		(*room)->UpdateAgentPositions(m_murderer, m_victim);
+		room->UpdateAgentPositions(m_murderer, m_victim);
 	}
 }
 

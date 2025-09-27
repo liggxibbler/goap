@@ -84,14 +84,9 @@ Room* RoomManager::GetRandomRoom(Agent* agent)
 	return GetRoom((RoomName)room, agent);
 }
 
-std::list<Room*>::iterator RoomManager::GetFirstRoom()
+const std::list<Room*>& GOAP::RoomManager::GetRooms()
 {
-	return m_rooms.begin();
-}
-
-std::list<Room*>::iterator RoomManager::GetLastRoom()
-{
-	return m_rooms.end();
+	return m_rooms;
 }
 
 Room* RoomManager::GetRoom(std::string name)

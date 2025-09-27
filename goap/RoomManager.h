@@ -28,8 +28,7 @@ namespace GOAP
 
 			Room* GetRandomRoom(Agent* agent);
 
-			std::list<Room*>::iterator GetFirstRoom();
-			std::list<Room*>::iterator GetLastRoom();
+			const std::list<Room*>& GetRooms();
 
 			void ShowBedrooms( Agent* murderer );
 
