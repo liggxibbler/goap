@@ -162,13 +162,13 @@ WaitFor::operator std::string()
 	return "WaitFor";
 }
 
-int WaitFor::Cost(RoomManager* rm)
+float WaitFor::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is for you to be here
 	// 2 - if this is someone else's room (LIKELIHOOD of being caught)
 
-	int cost = 5;
+	float cost = 5.0f;
 
 	auto _agent = GetArg(SemanticRole::AGENT);
 	auto _room = GetArg(SemanticRole::GOAL);
@@ -179,7 +179,7 @@ int WaitFor::Cost(RoomManager* rm)
 	}
 	else if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
 	{
-		cost += 100;
+		cost += 100.0f;
 	}
 
 	return cost;

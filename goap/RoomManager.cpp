@@ -123,7 +123,7 @@ void RoomManager::ShowBedrooms(Agent* murderer)
 
 void RoomManager::AddAgentProbabilities(Agent* agent)
 {
-	int* prob = agent->GetProbabilities();
+	const float* prob = agent->GetProbabilities();
 	Room* room = nullptr;
 	std::string roomName(agent->GetName() + std::string("'s bedroom"));
 	room = new Room(roomName, RoomName::BEDROOM, agent);

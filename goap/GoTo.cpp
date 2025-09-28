@@ -172,9 +172,9 @@ GoTo::operator std::string()
 	return "GoTo";
 }
 
-int GoTo::Cost(RoomManager* rm)
+float GoTo::Cost(RoomManager* rm)
 {
-	int cost = 30;
+	float cost = 30;
 
 	auto _agent = GetArg(SemanticRole::AGENT);
 	auto _room = GetArg(SemanticRole::GOAL);
@@ -183,7 +183,7 @@ int GoTo::Cost(RoomManager* rm)
 	{
 		if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
 		{
-			cost += 10;
+			cost += 10.0f;
 		}
 	}
 

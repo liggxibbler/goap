@@ -18,7 +18,7 @@ void FactManager::Initialize(std::vector<Agent*>& agents)
 	//		if latestTime < agent.lastRecord.turn
 	//			latestTime = agent.lastRecord.turn
 	{
-		unsigned int numRecords = (*agent)->m_actionLog.size();
+		unsigned int numRecords = static_cast<int>((*agent)->m_actionLog.size());
 		unsigned int iTime = (*agent)->m_actionLog[numRecords-1].turn;
 		if(iTime > latestTime)
 		{

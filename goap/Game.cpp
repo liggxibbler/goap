@@ -588,29 +588,29 @@ void Game::InitializeAgents()
 
 	const Json::Value& agents = obj["agents"];
 
-	for (int i = 0; i < agents.size(); ++i)
+	for (const Json::Value& jsonAgent : agents)
 	{
 		GOAP::Agent* agent = new GOAP::Agent();
-		int room_count = agents[i]["rooms"].size();
-		int* rooms = new int[room_count];
+		int room_count = jsonAgent["rooms"].size();
+		float* rooms = new float[room_count];
 		for (int j = 0; j < room_count; ++j)
 		{
-			rooms[j] = agents[i]["rooms"][j].asInt();
+			rooms[j] = jsonAgent["rooms"][j].asFloat();
 		}
 
-		int action_count = agents[i]["actions"].size();
+		int action_count = jsonAgent["actions"].size();
 		std::string* actions = new string[action_count];
 		for (int k = 0; k < action_count; ++ k)
 		{
-			actions[k] = agents[i]["actions"][k].asString();
+			actions[k] = jsonAgent["actions"][k].asString();
 		}
 
-		Gender gender = agents[i]["gender"].asString().compare("m") == 0 ? Gender::MALE : Gender::FEMALE;
+		Gender gender = jsonAgent["gender"].asString().compare("m") == 0 ? Gender::MALE : Gender::FEMALE;
 
 		agent->InitializeCharacter(
-		agents[i]["name"].asString(),
+		jsonAgent["name"].asString(),
 		gender,
-		agents[i]["desc"].asString(),
+		jsonAgent["desc"].asString(),
 		rooms,
 		room_count,
 		actions,
@@ -851,12 +851,12 @@ void Game::InitializeObjects()
 
 	const Json::Value& props = obj["props"];
 
-	for (int i = 0; i < props.size(); ++i)
+	for (const auto propField : props)
 	{
-		Prop* prop = new Prop(props[i]["name"].asString());
-		prop->SetCompoundType(m_propTypeMap[props[i]["class"].asString()]);
-		prop->MayBeFoundIn(m_roomEnumMap[props[i]["room"].asString()]);
-		prop->SetDescription(props[i]["desc"].asString());
+		Prop* prop = new Prop(propField["name"].asString());
+		prop->SetCompoundType(m_propTypeMap[propField["class"].asString()]);
+		prop->MayBeFoundIn(m_roomEnumMap[propField["room"].asString()]);
+		prop->SetDescription(propField["desc"].asString());
 		m_objects.push_back(prop);
 	}
 }

@@ -211,15 +211,15 @@ void Goal::ClearChildren()
 
 int Goal::GetNumConditions()
 {
-	return m_conditions.size();
+	return static_cast<int>(m_conditions.size());
 }
 
-void Goal::SetCost(int cost)
+void Goal::SetCost(float cost)
 {
 	m_cost = cost;
 }
 
-int Goal::GetCost()
+float Goal::GetCost() const
 {
 	return m_cost;
 }

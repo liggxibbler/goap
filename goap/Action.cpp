@@ -153,7 +153,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	}
 	
 	m_orderedTuples.Clear();
-	m_orderedTuples.Initialize(comboList, comboList.size());
+	m_orderedTuples.Initialize(comboList, static_cast<int>(comboList.size()));
 	std::vector<std::vector<Object*> > tuples;
 
 	for (bool stat = false; stat == false;)
@@ -180,7 +180,7 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	//	pass that vector to an OrderedPair
 	//	append returned vector from OrderedPair to result (search frontier)
 	
-	return tuples.size();
+	return static_cast<int>(tuples.size());
 }
 
 Action* Action::GetInstanceFromTuple(std::vector<Object*>& args)

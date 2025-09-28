@@ -45,7 +45,7 @@ Agent::Agent(const Agent& other) : Object(other)
 }
 
 void Agent::InitializeCharacter(std::string name, Gender gender, std::string backStory,
-								int roomProbabilities[], int room_count, std::string actions[], int action_count)
+								float roomProbabilities[], int room_count, std::string actions[], int action_count)
 {
 	this->AddAction(ActionType::GOTO);
 
@@ -448,7 +448,7 @@ RoomName Agent::GetNextRoom()
 	int random = rand() % 100;
 
 	int i;
-	int roullette = 0;
+	float roullette = 0;
 	for (i=0; i<NUMBER_OF_ROOMS;++i)
 	{
 		roullette += m_roomProbabilities[i];
@@ -515,7 +515,7 @@ bool Agent::IsVictim()
 	return m_isVictim;
 }
 
-int* Agent::GetProbabilities()
+const float* Agent::GetProbabilities() const
 {
 	return m_roomProbabilities;
 }

@@ -63,7 +63,7 @@ namespace GOAP
 
 		static bool CompareCost(Action* a1, Action* a2);
 
-		virtual int Cost(RoomManager* rm) = 0;
+		virtual float Cost(RoomManager* rm) = 0;
 
 		bool EvaluatePreconditions(Op::OperatorManager* om);
 		bool EvaluateEffects(Op::OperatorManager* om);
@@ -109,17 +109,17 @@ namespace GOAP
 		std::list<Argument> m_args;
 		//std::list<Condition> m_preconds;
 
-		Goal* m_preconds;
+		Goal* m_preconds = nullptr;
 
 		std::list<Condition> m_effects;
 
 		OrderedPair<Object*> m_orderedTuples;
-		ExecutionStatus m_status;
+		ExecutionStatus m_status = ExecutionStatus::NONE;
 
-		int m_time;
-		int m_numWitness;
+		int m_time = -1;
+		int m_numWitness = -1;
 
-		bool m_logged;
+		bool m_logged = false;
 		static std::ofstream s_outFile;
 	};
 }

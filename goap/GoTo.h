@@ -22,7 +22,7 @@ namespace GOAP
 		virtual std::string Express(Agent* agent, Room* room) override;
 		virtual operator std::string() override;
 
-		virtual int Cost(RoomManager* rm) override;
+		virtual float Cost(RoomManager* rm) override;
 		virtual void Dispatch(int turn) override;
 
 		virtual bool MightSatisfy(Condition& cond); // XXX
@@ -35,8 +35,8 @@ namespace GOAP
 		virtual void InitPreconditions();
 		virtual void InitEffects();
 
-		Agent* m_agent;
-		Object* m_dest;
+		Agent* m_agent = nullptr;
+		Object* m_dest = nullptr;
 	};
 }
 #endif

@@ -53,8 +53,8 @@ namespace GOAP
 		void ClearChildren();
 
 		int GetNumConditions();
-		int GetCost();
-		void SetCost(int cost);
+		float GetCost() const;
+		void SetCost(float cost);
 
 		Plan* GetPlan();
 		int GetPriority();
@@ -69,7 +69,7 @@ namespace GOAP
 		bool m_negate;						// Whether or not to complement after evaluation
 
 		int m_depth;						// How many goals are stacked on top?
-		int m_cost;							// Minimum cost so far from this state to ultimate goal
+		float m_cost;							// Minimum cost so far from this state to ultimate goal
 		Plan* m_plan;
 		int m_priority;						// Used to sort goal list
 	};

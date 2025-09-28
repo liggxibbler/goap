@@ -47,7 +47,7 @@ namespace GOAP
 			Counter* higher = nullptr;
 			for(int i=0; i<numLists; i++)
 			{
-				m_Counters[i] = new Counter( m_lists[i].size(), higher); // XIBB test for failed new
+				m_Counters[i] = new Counter(static_cast<int>(m_lists[i].size()), higher); // XIBB test for failed new
 				higher = m_Counters[i];
 			}
 

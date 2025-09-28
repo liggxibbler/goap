@@ -18,7 +18,7 @@ namespace GOAP
 		virtual std::string Express(Agent* agent, Room* room) override;
 		virtual operator std::string() override;
 
-		virtual int Cost(RoomManager* rm) override;
+		virtual float Cost(RoomManager* rm) override;
 
 		virtual void UpdateConditionInstances() override;
 

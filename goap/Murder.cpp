@@ -129,7 +129,7 @@ void Murder::InitPreconditions()
 
 }
 
-int Murder::Cost(RoomManager* rm)
+float Murder::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
@@ -137,7 +137,7 @@ int Murder::Cost(RoomManager* rm)
 	// 3 - number of instances of instrument class
 	// 4 - owner of instrument
 
-	int cost = 0;
+	float cost = 0;
 
 	auto _patient = GetArg(SemanticRole::PATIENT);
 	auto _locative = GetArg(SemanticRole::LOCATIVE);
@@ -148,17 +148,17 @@ int Murder::Cost(RoomManager* rm)
 	Prop* inst = (Prop*)(_instrument->instance);
 
 	// Prefer instruments with many instances
-	cost += 10 / ( 1 + inst->GetNumberOfInstances() );
+	cost += 10.0f / ( 1 + inst->GetNumberOfInstances() );
 
 	if (roomOwner != 0)
 	{
 		// penalty for suspicious activity
-		cost += 500 * rm->GetProb((Agent*)roomOwner, (Room*)_locative->instance);
+		cost += 500.0f * rm->GetProb((Agent*)roomOwner, (Room*)_locative->instance);
 	}
 	if (roomOwner == _patient->instance)
 	{
 		// penalty for suspicious activity
-		cost += 500;
+		cost += 500.0f;
 	}
 
 	// penalty for risk of not being found

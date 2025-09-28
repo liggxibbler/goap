@@ -38,7 +38,7 @@ namespace GOAP
 		~Agent();
 
 		void InitializeCharacter(std::string name, Gender gender,
-								 std::string backStory, int locationProbability[],
+								 std::string backStory, float locationProbability[],
 								 int room_count, std::string actions[], int action_count);
 
 		const std::list<ActionType>& GetActions() const;
@@ -89,7 +89,7 @@ namespace GOAP
 		void ResetVictimFlag();
 		bool IsVictim();
 
-		int* GetProbabilities();
+		const float* GetProbabilities() const;
 
 		void AddGoal(Goal* goal);
 
@@ -130,7 +130,7 @@ namespace GOAP
 		int m_weight;
 		Gender m_gender;
 		std::string m_backStory;
-		int m_roomProbabilities[NUMBER_OF_ROOMS];
+		float m_roomProbabilities[NUMBER_OF_ROOMS];
 
 		int m_isAlive;
 		bool m_bDoneMurder;

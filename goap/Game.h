@@ -58,29 +58,29 @@ private:
 	void PopulateDictionaries();
 
 	//GOAP::World* m_world;
-	bool m_roam;
-	GOAP::Room* m_currentRoom;
-	GOAP::Agent* m_currentAgent;
-	GOAP::RoomManager* m_roomManager;
+	bool m_roam = false;
+	GOAP::Room* m_currentRoom = nullptr;
+	GOAP::Agent* m_currentAgent = nullptr;
+	GOAP::RoomManager* m_roomManager = nullptr;
 
-	GOAP::Agent* m_murderer;
-	GOAP::Agent* m_victim;
+	GOAP::Agent* m_murderer = nullptr;
+	GOAP::Agent* m_victim = nullptr;
 
-	bool m_running;
-	bool m_murder;
+	bool m_running = false;
+	bool m_murder = false;
 
-	int m_turn;
+	int m_turn = -1;
 	unsigned int m_seed;
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
 	std::vector<GOAP::Prop*>	m_objects;
 
-	int m_timeOfDeath;
-	Accuser* m_accuser;
+	int m_timeOfDeath = -1;
+	Accuser* m_accuser = nullptr;
 
-	int m_numberOfActors;
+	int m_numberOfActors = -1;
 
-	GOAP::Prop* m_murderWeapon;
+	GOAP::Prop* m_murderWeapon = nullptr;
 	std::string m_murderWeaponType;
 	std::string m_weaponExample1;
 	std::string m_weaponExample2;

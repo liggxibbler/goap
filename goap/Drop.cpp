@@ -168,13 +168,13 @@ Drop::operator std::string()
 	return "Drop";
 }
 
-int Drop::Cost(RoomManager* rm)
+float Drop::Cost(RoomManager* rm)
 {
 	// return a measure of
 	// 1 - if that thing doesn't BELONG to you
 	// 2 - bonus points if it BELONGS to someone else, and not a room
 
-	int cost = 0;
+	float cost = 0;
 
 	auto _agent = GetArg(SemanticRole::AGENT);
 	auto _patient = GetArg(SemanticRole::PATIENT);
@@ -184,7 +184,7 @@ int Drop::Cost(RoomManager* rm)
 	if(_locative->instance->GetOwner() == 0)
 	// If the room has no owner, i.e. public room
 	{
-		cost = 60;
+		cost = 60.0f;
 	}
 	//else if(((Agent*)_locative->instance->GetOwner())->IsVictim())
 	//// If the room has no owner, i.e. public room
@@ -194,17 +194,17 @@ int Drop::Cost(RoomManager* rm)
 	else if( _locative->instance->GetOwner() == _agent->instance )
 	// if the room is the dropper's room
 	{
-		cost = 40;
+		cost = 40.0f;
 	}
 	else if( _locative->instance->GetOwner() != _agent->instance )
 	// if the room has an owner that isn't the dropper
 	{
-		cost = 20 + rand() % 10;
+		cost = 20.0f + static_cast<float>(rand() % 10);
 	}
 	else if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
 	// if the room belongs to the owner of the object
 	{
-		cost = 5;
+		cost = 5.0f;
 	}
 
 	return cost;

@@ -9,7 +9,7 @@ namespace GOAP
 	class Murder : public Action
 	{
 	public:
-		virtual int Cost(RoomManager* rm) override	;
+		virtual float Cost(RoomManager* rm) override;
 		virtual ExecutionStatus ExecuteWorkhorse(int turn) override;
 
 		void SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative);
