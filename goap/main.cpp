@@ -18,9 +18,11 @@ int main()
 
 	Action::OpenFile();
 
-	Game* game = new Game();
-	game->Initialize();
-	game->Run();
+	Game game;
+	Op::OperatorManager operatorManager;
+
+	game.Initialize();
+	game.Run(operatorManager);
 
 	Action::CloseFile();
 

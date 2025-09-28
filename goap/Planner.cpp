@@ -7,7 +7,7 @@ Planner::Planner()
 	m_currentGoal = nullptr;
 }
 
-PlanStatus Planner::Devise(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
+PlanStatus Planner::Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* plan)
 {
 	ClearPlanTree();
 	m_frontier.push_back(nullptr);
@@ -15,7 +15,7 @@ PlanStatus Planner::Devise(Agent* agent, ActionManager* am, Op::OperatorManager*
 	return DeviseWorkHorse(agent, am, om, plan);
 }
 
-PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::OperatorManager* om, Plan* plan)
+PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* plan)
 {
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != nullptr; m_currentGoal = PickNextGoal() )
 	{
@@ -42,7 +42,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
 			plan->SetPlan(m_currentGoal);
-			if(plan->Validate())
+			if(plan->Validate(om))
 			{
 				DUMP("VALID PLAN FOUND")
 				plan->SetStatus(PlanStatus::SUCCESS);
@@ -50,7 +50,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, Op::Operato
 			}
 			else
 			{
-				plan->SetPlan(0);
+				plan->SetPlan(nullptr);
 				DUMP("PLAN NOT VALID")
 			}
 		}

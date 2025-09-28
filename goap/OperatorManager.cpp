@@ -36,9 +36,3 @@ bool GOAP::Op::OperatorManager::Evaluate(const Condition& condition) const
 	Operator* oper = GetOperator(condition.GetOperatorType());
 	return oper->Evaluate(condition);
 }
-
-OperatorManager* OperatorManager::Instance()
-{
-	static OperatorManager om;
-	return &om;
-}

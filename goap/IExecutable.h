@@ -13,7 +13,7 @@ namespace GOAP
 	class IExecutable
 	{
 	public:
-		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) = 0;
+		virtual ExecutionStatus Execute(const Op::OperatorManager& om, int turn) = 0;
 		virtual Goal* FollowupGoal() = 0;
 		//virtual void Pause() = 0;
 		//virtual void Resume() = 0;

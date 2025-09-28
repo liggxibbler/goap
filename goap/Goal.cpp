@@ -55,11 +55,11 @@ Goal::~Goal()
 	}
 }
 
-bool Goal::Evaluate(Op::OperatorManager* om)
+bool Goal::Evaluate(const Op::OperatorManager& om) const
 {
 	bool result = true;
 
-	for(Condition& cond : m_conditions)
+	for(const Condition& cond : m_conditions)
 	{
 		if ( !cond.Evaluate(om) )
 		{

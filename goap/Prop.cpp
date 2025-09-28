@@ -62,7 +62,7 @@ void Prop::MayBeFoundIn(RoomName rooms)
 	m_canBeFoundIn = rooms;
 }
 
-bool Prop::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
+bool Prop::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 {
 	if(m_bearer != 0)
 	{

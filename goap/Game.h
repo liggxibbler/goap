@@ -28,11 +28,11 @@ public:
 	void Interview();
 	bool Accuse();
 
-	bool Run(/*database class thing*/);
+	bool Run(const GOAP::Op::OperatorManager& operatorManager);
 
 	void AssignRoles();
 	void PopulateRooms();
-	bool GeneratePlot();
+	bool GeneratePlot(const GOAP::Op::OperatorManager& operatorManager);
 	void MainLoop();
 
 	void DisplayRoomMap();
@@ -61,7 +61,7 @@ private:
 	bool m_roam = false;
 	GOAP::Room* m_currentRoom = nullptr;
 	GOAP::Agent* m_currentAgent = nullptr;
-	GOAP::RoomManager* m_roomManager = nullptr;
+	GOAP::RoomManager* m_roomManager = nullptr;	
 
 	GOAP::Agent* m_murderer = nullptr;
 	GOAP::Agent* m_victim = nullptr;

@@ -54,12 +54,12 @@ namespace GOAP
 
 		bool Unify(ObjectType ot, std::vector<Object*>& result, bool strict);
 
-		Plan* GetPlan(ActionManager* am, Op::OperatorManager* om);
+		Plan* GetPlan(ActionManager* am, const Op::OperatorManager& om);
 		void See(Object* obj);
 		void See(Room* room, bool deep = true);
 
 		virtual ObjectType GetCompoundType() override;
-		virtual bool Update(Op::OperatorManager* om, RoomManager* room, int turn) override;
+		virtual bool Update(const Op::OperatorManager& om, RoomManager* room, int turn) override;
 		virtual void Examine() override;
 
 		virtual bool CanBeMurderWeapon(); // XXX

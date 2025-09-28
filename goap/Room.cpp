@@ -115,7 +115,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
+bool Room::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 {
 	//m_murder = false;
 

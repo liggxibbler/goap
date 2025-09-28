@@ -54,7 +54,7 @@ void Game::Initialize()
 {
 	m_accuser = new Accuser;
 	m_roomManager = RoomManager::Instance();
-
+	
 	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
 	InitializeAgents();
 	PopulateDictionaries();
@@ -304,12 +304,12 @@ void Game::Interview()
 	return;
 }
 
-bool Game::Run(/*database class thing*/)
+bool Game::Run(const Op::OperatorManager& operatorManager)
 {
 	bool result = false;
 	while(m_running)
 	{
-		if (!GeneratePlot())
+		if (!GeneratePlot(operatorManager))
 		{
 			return false;
 		}
@@ -329,7 +329,7 @@ bool Game::Run(/*database class thing*/)
 	return true;
 }
 
-bool Game::GeneratePlot()
+bool Game::GeneratePlot(const Op::OperatorManager& operatorManager)
 {
 	AssignRoles();
 	PopulateRooms();
@@ -340,7 +340,7 @@ bool Game::GeneratePlot()
 	while(!m_murder)
 	{
 		// update murderer first to avoid artefacts
-		m_murderer->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
+		m_murderer->Update(operatorManager, m_roomManager, m_turn);
 
 		if(!thiefHasGoal)
 		{
@@ -356,7 +356,7 @@ bool Game::GeneratePlot()
 
 		for (Room* room : m_roomManager->GetRooms())
 		{
-			room->Update(Op::OperatorManager::Instance(), m_roomManager, m_turn);
+			room->Update(operatorManager, m_roomManager, m_turn);
 		}
 
 		for (Room* room : m_roomManager->GetRooms())

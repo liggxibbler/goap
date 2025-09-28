@@ -11,14 +11,12 @@ namespace GOAP
 	{
 		class OperatorManager
 		{
-			OperatorManager();
-			OperatorManager(const OperatorManager& other);
-			~OperatorManager();
-		
 		public:
 			
-			static OperatorManager* Instance();
-
+			OperatorManager();
+			OperatorManager(const OperatorManager& other);
+			~OperatorManager();		
+			
 			Operator* GetOperator(OperatorType ot) const;
 
 			bool Evaluate(const Condition& condition) const;

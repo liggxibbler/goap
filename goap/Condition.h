@@ -38,7 +38,7 @@ namespace GOAP
 		void SetNegate(bool value);
 		bool GetNegate() const;
 
-		bool Evaluate(Op::OperatorManager* om) const;
+		bool Evaluate(const Op::OperatorManager& om) const;
 
 		Argument* GetParamBySemantic(SemanticRole st);
 		Argument* GetParamByType(ObjectType ot);

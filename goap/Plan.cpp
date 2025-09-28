@@ -23,7 +23,7 @@ Plan::~Plan()
 	delete m_plan;
 }
 
-ExecutionStatus Plan::Execute(Op::OperatorManager* om, int turn)
+ExecutionStatus Plan::Execute(const Op::OperatorManager& om, int turn)
 {
 	Action* action = m_plan->GetAction();
 	
@@ -96,7 +96,7 @@ ExecutionStatus Plan::GetExecutionStatus()
 	return m_execStat;
 }
 
-Goal* Plan::Validate()
+Goal* Plan::Validate(const Op::OperatorManager& om)
 {
 	// Make sure this plan will satisfy every precondition of every action when executed
 	if(m_plan != 0)
@@ -145,7 +145,7 @@ Goal* Plan::Validate()
 		//		numTrue++;
 		//	}
 
-			if( condition->Evaluate(Op::OperatorManager::Instance()) )
+			if( condition->Evaluate(om) )
 			{
 				numTrue++;
 			}

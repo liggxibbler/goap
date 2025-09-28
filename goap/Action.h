@@ -32,7 +32,7 @@ namespace GOAP
 		~Action();
 
 		virtual Action* Clone() = 0;
-		virtual ExecutionStatus Execute(Op::OperatorManager* om, int turn) override;
+		virtual ExecutionStatus Execute(const Op::OperatorManager& om, int turn) override;
 		ExecutionStatus GetStatus();
 		virtual operator ActionType() = 0;
 
@@ -65,8 +65,8 @@ namespace GOAP
 
 		virtual float Cost(RoomManager* rm) = 0;
 
-		bool EvaluatePreconditions(Op::OperatorManager* om);
-		bool EvaluateEffects(Op::OperatorManager* om);
+		bool EvaluatePreconditions(const Op::OperatorManager& om);
+		bool EvaluateEffects(const Op::OperatorManager& om);
 
 		bool IsLogged();
 		void SetLogged();

@@ -289,7 +289,7 @@ void Action::UpdatePrecondInstances()
 	}
 }
 
-ExecutionStatus Action::Execute(Op::OperatorManager* om, int turn)
+ExecutionStatus Action::Execute(const Op::OperatorManager& om, int turn)
 {
 	// log action to local database
 	// send message to all agents in room
@@ -348,12 +348,12 @@ bool Action::CompareCost(Action* a1, Action* a2)
 	return ( a1->Cost(rm) < a2->Cost(rm) );
 }
 
-bool Action::EvaluatePreconditions(Op::OperatorManager* om)
+bool Action::EvaluatePreconditions(const Op::OperatorManager& om)
 {
 	return m_preconds->Evaluate(om);
 }
 
-bool Action::EvaluateEffects(Op::OperatorManager* om)
+bool Action::EvaluateEffects(const Op::OperatorManager& om)
 {
 	for(auto effect(m_effects.begin()); effect!= m_effects.end(); ++effect)
 	{

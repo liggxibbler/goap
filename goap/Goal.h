@@ -22,7 +22,7 @@ namespace GOAP
 		//Goal(const Goal& other);
 		~Goal();
 
-		bool Evaluate(Op::OperatorManager* om);
+		bool Evaluate(const Op::OperatorManager& om) const;
 		bool IsConsistent(Op::OperatorManager* om);/*?*/
 
 		void AddChild(Goal* child);

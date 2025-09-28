@@ -156,7 +156,7 @@ void Agent::SetGoal(Goal* goal)
 	m_currentGoal = goal;
 }
 
-Plan* Agent::GetPlan(ActionManager* am, Op::OperatorManager* om)
+Plan* Agent::GetPlan(ActionManager* am, const Op::OperatorManager& om)
 {
 	//Plan* plan = new Plan();
 	if( s_planner->Devise(this, am, om, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
@@ -176,7 +176,7 @@ ObjectType Agent::GetCompoundType()
 	return ObjectType::OBJECT | ObjectType::AGENT;
 }
 
-bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
+bool Agent::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 {
 	//m_bDoneMurder = false;
 
@@ -240,7 +240,7 @@ bool Agent::Update(Op::OperatorManager* om, RoomManager* rm, int turn)
 			}
 			else
 			{
-				GetPlan(ActionManager::Instance(), Op::OperatorManager::Instance());
+				GetPlan(ActionManager::Instance(), om);
 				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
 				if(ps == PlanStatus::FAIL)
 				{

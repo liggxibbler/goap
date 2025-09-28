@@ -144,9 +144,9 @@ void Condition::SetNegate(bool value)
 	m_negate = value;
 }
 
-bool Condition::Evaluate(Op::OperatorManager* om) const
+bool Condition::Evaluate(const Op::OperatorManager& om) const
 {
-	return om->Evaluate(*this);
+	return om.Evaluate(*this);
 }
 
 const Argument* Condition::GetParams() const
