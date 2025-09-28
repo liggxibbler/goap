@@ -18,15 +18,13 @@ namespace GOAP
 
 			// might make non-pure virtual, for exception handling...
 
-			virtual bool Evaluate(Condition& cc);
+			virtual bool Evaluate(const Condition& cc) const;
 
-			virtual bool EvaluateOAVB () = 0;
-			virtual bool EvaluateOAOAB () = 0;
-			virtual bool EvaluateOOB () = 0;
+			virtual bool EvaluateOAVB (const Argument* params, bool negate) const = 0;
+			virtual bool EvaluateOAOAB (const Argument* params, bool negate) const = 0;
+			virtual bool EvaluateOOB (const Argument* params, bool negate) const = 0;
 
-		protected:
-			Argument* m_params;
-			bool m_negate;
+		protected:			
 		};
 	}
 }

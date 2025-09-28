@@ -19,7 +19,9 @@ namespace GOAP
 			
 			static OperatorManager* Instance();
 
-			Operator* GetOperator(OperatorType ot);
+			Operator* GetOperator(OperatorType ot) const;
+
+			bool Evaluate(const Condition& condition) const;
 
 		private:
 			std::map<OperatorType, Operator*> m_mapOperator;

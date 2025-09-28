@@ -26,19 +26,19 @@ namespace GOAP
 		bool operator == (const Condition& other) const;
 		bool EqualInstance(const Condition& other);
 
-		OperatorLayoutType GetOperatorLayoutType();
-		OperatorType GetOperatorType();
+		OperatorLayoutType GetOperatorLayoutType() const;
+		OperatorType GetOperatorType() const;
 		
 		const Argument& operator [] (int index) const;
 		Argument& GetParamByIndex(int index);
 
-		const Argument* GetParams();
+		const Argument* GetParams() const;
 		int GetNumParams() const;
 
 		void SetNegate(bool value);
-		bool GetNegate();
+		bool GetNegate() const;
 
-		bool Evaluate(Op::OperatorManager* om);
+		bool Evaluate(Op::OperatorManager* om) const;
 
 		Argument* GetParamBySemantic(SemanticRole st);
 		Argument* GetParamByType(ObjectType ot);

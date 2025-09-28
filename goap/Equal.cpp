@@ -3,16 +3,16 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool Equal::EvaluateOAVB ()
+bool Equal::EvaluateOAVB (const Argument* params, bool negate) const
 {
 	bool result;
-	if(m_params[0].instance == 0)
+	if(params[0].instance == 0)
 	{
 		// THROW EXCEPTION, ASSERTION FAILURE, SOMETHING!
 		return false;
 	}
 
-	else if ( (*(m_params[0].instance))[m_params[0].attrib] == m_params[0].value )
+	else if ( (*(params[0].instance))[params[0].attrib] == params[0].value )
 	{
 		DUMP("attrib is " << m_params[0].instance->GetAttrib(m_params[0].attrib))
 		DUMP("value is " << m_params[0].value)
@@ -27,10 +27,10 @@ bool Equal::EvaluateOAVB ()
 
 	return result;
 }
-bool Equal::EvaluateOAOAB ()
+bool Equal::EvaluateOAOAB (const Argument* params, bool negate) const
 {
 	bool result;
-	if ( (*(m_params[0].instance))[m_params[0].attrib] == (*(m_params[1].instance))[m_params[1].attrib] )
+	if ( (*(params[0].instance))[params[0].attrib] == (*(params[1].instance))[params[1].attrib] )
 	{
 		result = true;
 	}
@@ -40,10 +40,10 @@ bool Equal::EvaluateOAOAB ()
 	}
 	return result;
 }
-bool Equal::EvaluateOOB ()
+bool Equal::EvaluateOOB (const Argument* params, bool negate) const
 {
 	bool result;
-	if ( (m_params[0].instance) == (m_params[1].instance) )
+	if ( (params[0].instance) == (params[1].instance) )
 	{
 		result = true;
 	}

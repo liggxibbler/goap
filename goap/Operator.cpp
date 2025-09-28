@@ -14,32 +14,28 @@ Operator::~Operator()
 
 // might make non-pure virtual, for exception handling...
 
-bool Operator::Evaluate(Condition& ac)
+bool Operator::Evaluate(const Condition& ac) const
 {
 	bool result;
 	
-	if( ac.GetNumParams() != 0)
-	{
-		m_params = (Argument*) ac.GetParams();
-	}
-	
-	m_negate = ac.GetNegate();
+	const Argument* params = ac.GetNumParams() != 0 ? ac.GetParams() : nullptr;
+	bool negate = ac.GetNegate();
 
 	switch(ac.GetOperatorLayoutType())
 	{
 	case OperatorLayoutType::OAOAB:
 		{
-			result = EvaluateOAOAB();
+			result = EvaluateOAOAB(params, negate);
 			break;
 		}
 	case OperatorLayoutType::OAVB:
 		{
-			result = EvaluateOAVB();
+			result = EvaluateOAVB(params, negate);
 			break;
 		}
 	case OperatorLayoutType::OOB:
 		{
-			result = EvaluateOOB();
+			result = EvaluateOOB(params, negate);
 			break;
 		}
 	case OperatorLayoutType::TRUE:
@@ -61,7 +57,7 @@ bool Operator::Evaluate(Condition& ac)
 		}
 	};
 	
-	if(m_negate)
+	if(negate)
 		result = !result;
 
 	return result;

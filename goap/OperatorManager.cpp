@@ -26,9 +26,15 @@ OperatorManager::~OperatorManager()
 	}
 }
 
-Operator* OperatorManager::GetOperator(OperatorType ot)
+Operator* OperatorManager::GetOperator(OperatorType ot) const
 {
-	return m_mapOperator[ot];
+	return m_mapOperator.at(ot);
+}
+
+bool GOAP::Op::OperatorManager::Evaluate(const Condition& condition) const
+{
+	Operator* oper = GetOperator(condition.GetOperatorType());
+	return oper->Evaluate(condition);
 }
 
 OperatorManager* OperatorManager::Instance()

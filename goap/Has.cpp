@@ -3,9 +3,9 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool Has::EvaluateOOB ()
+bool Has::EvaluateOOB (const Argument* params, bool negate) const
 {
-	if ( m_params[1].instance->GetAttrib(AttributeType::BEARER) == m_params[0].instance->GetID() )
+	if ( params[1].instance->GetAttrib(AttributeType::BEARER) == params[0].instance->GetID() )
 	{
 		return true;
 	}
@@ -15,12 +15,12 @@ bool Has::EvaluateOOB ()
 	}
 }
 
-bool Has::EvaluateOAVB ()
+bool Has::EvaluateOAVB (const Argument* params, bool negate) const
 {
 	return false;
 }
 
-bool Has::EvaluateOAOAB ()
+bool Has::EvaluateOAOAB (const Argument* params, bool negate) const
 {
 	return false;
 }

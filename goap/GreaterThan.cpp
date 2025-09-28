@@ -3,13 +3,13 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool GreaterThan::EvaluateOAVB ()
+bool GreaterThan::EvaluateOAVB (const Argument* params, bool negate) const
 {
 	bool result;
-	if ( (*(m_params[0].instance))[m_params[0].attrib] > m_params[0].value )
+	if ( (*(params[0].instance))[params[0].attrib] > params[0].value )
 	{
-		DUMP("attrib is " << m_params[0].instance->GetAttrib(m_params[0].attrib))
-		DUMP("value is " << m_params[0].value)
+		DUMP("attrib is " << params[0].instance->GetAttrib(params[0].attrib))
+		DUMP("value is " << params[0].value)
 		result = true;
 	}
 	else
@@ -22,10 +22,10 @@ bool GreaterThan::EvaluateOAVB ()
 	return result;
 }
 
-bool GreaterThan::EvaluateOAOAB ()
+bool GreaterThan::EvaluateOAOAB (const Argument* params, bool negate) const
 {
 	bool result;
-	if ( (*(m_params[0].instance))[m_params[0].attrib] > (*(m_params[1].instance))[m_params[1].attrib] )
+	if ( (*(params[0].instance))[params[0].attrib] > (*(params[1].instance))[params[1].attrib] )
 	{
 		result = true;
 	}
@@ -36,7 +36,7 @@ bool GreaterThan::EvaluateOAOAB ()
 	
 	return result;
 }
-bool GreaterThan::EvaluateOOB ()
+bool GreaterThan::EvaluateOOB (const Argument* params, bool negate) const
 {
 	// throw exception?
 	return false;

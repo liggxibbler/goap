@@ -507,9 +507,9 @@ void Game::AssignRoles(/*int numWitness*/)
 	{
 		m_actors.push_back(m_agents[role_array[otherRoles]]);
 	}
-	for(auto actor(m_actors.begin()); actor != m_actors.end() ; ++actor )
+	for(Agent* actor : m_actors)
 	{
-		m_roomManager->AddAgentProbabilities(*actor);
+		m_roomManager->AddAgentProbabilities(actor);
 	}
 
 	m_murderer->PickCurrentGoal();
@@ -554,10 +554,10 @@ void Game::PopulateRooms()
 	*/
 	// kitchen, living, dining
 
-	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
+	for(Prop* object : m_objects)
 	{
-		Room* room = m_roomManager->GetRoom((*object)->MayBeFoundIn());
-		room->AddObject(*object);
+		Room* room = m_roomManager->GetRoom(object->MayBeFoundIn());
+		room->AddObject(object);
 	}
 
 	//m_roomManager->GetRoom(RoomName::KITCHEN)->AddAgent(m_agents[0]);
@@ -634,12 +634,12 @@ void Game::DisplayRoomMap()
 	for(int turn=1; turn<m_turn; ++turn)
 	{
 		cout << turn << ".	";
-		for(auto agent(m_actors.begin()); agent != m_actors.end(); ++agent)
+		for(Agent* agent : m_actors)
 		{
 			int id = 0;
-			if(fm->GetRoom(*agent, turn) != 0)
+			if(fm->GetRoom(agent, turn) != 0)
 			{
-				id = fm->GetRoom(*agent, turn)->GetID();
+				id = fm->GetRoom(agent, turn)->GetID();
 			}
 			cout << id << "	";
 		}

@@ -124,17 +124,17 @@ bool Condition::operator == (const Condition& other) const
 	return true;
 }
 
-OperatorLayoutType Condition::GetOperatorLayoutType()
+OperatorLayoutType Condition::GetOperatorLayoutType() const
 {
 	return m_layout;
 }
 
-OperatorType Condition::GetOperatorType()
+OperatorType Condition::GetOperatorType() const
 {
 	return m_operatorType;
 }
 
-bool Condition::GetNegate()
+bool Condition::GetNegate() const
 {
 	return m_negate;
 }
@@ -144,13 +144,12 @@ void Condition::SetNegate(bool value)
 	m_negate = value;
 }
 
-bool Condition::Evaluate(Op::OperatorManager* om)
+bool Condition::Evaluate(Op::OperatorManager* om) const
 {
-	Operator* oper = om->GetOperator(m_operatorType);
-	return oper->Evaluate(*this);
+	return om->Evaluate(*this);
 }
 
-const Argument* Condition::GetParams()
+const Argument* Condition::GetParams() const
 {
 	return m_params;
 }

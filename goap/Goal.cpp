@@ -49,9 +49,9 @@ Goal::~Goal()
 	//		m_action = 0;
 	//	}
 	//}
-	for(auto child(m_children.begin()); child != m_children.end(); ++child)
+	for(Goal* child : m_children)
 	{
-		delete (*child);
+		delete child;
 	}
 }
 
@@ -59,11 +59,8 @@ bool Goal::Evaluate(Op::OperatorManager* om)
 {
 	bool result = true;
 
-	CondIter condIter;
-
-	for(condIter = m_conditions.begin(); condIter != m_conditions.end(); ++condIter)
+	for(Condition& cond : m_conditions)
 	{
-		Condition cond = *condIter;
 		if ( !cond.Evaluate(om) )
 		{
 			result = false;

@@ -3,13 +3,13 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool Owns::EvaluateOOB ()
+bool Owns::EvaluateOOB (const Argument* params, bool negate) const
 {
-	if (m_params[1].instance == 0)
+	if (params[1].instance == 0)
 	{
 		return false;
 	}
-	else if ( m_params[1].instance->GetOwner() == m_params[0].instance )
+	else if ( params[1].instance->GetOwner() == params[0].instance )
 	{
 		return true;
 	}
@@ -19,12 +19,12 @@ bool Owns::EvaluateOOB ()
 	}
 }
 
-bool Owns::EvaluateOAVB ()
+bool Owns::EvaluateOAVB (const Argument* params, bool negate) const
 {
 	return false;
 }
 
-bool Owns::EvaluateOAOAB ()
+bool Owns::EvaluateOAOAB (const Argument* params, bool negate) const
 {
 	return false;
 }

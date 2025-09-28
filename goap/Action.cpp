@@ -23,7 +23,7 @@ Action::operator GOAP::ActionType()
 
 bool Action::MightSatisfy(const Condition& cond) const
 {
-	for (const GOAP::Condition& effect : m_effects)//effectIter = m_effects.begin(); effectIter != m_effects.end(); ++effectIter)
+	for (const GOAP::Condition& effect : m_effects)
 	{
 		if(effect == cond)
 		{
