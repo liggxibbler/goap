@@ -31,7 +31,6 @@ Game::Game() : m_roam(true), m_running(true), m_turn(0), m_timeOfDeath(0), m_acc
 	std::cout << "\nEnter seed (0 for random seed):\n>>> ";
 	std::cin >> std::hex >> m_seed;
 	if(m_seed == 0) m_seed = (unsigned int)time(nullptr);
-	m_roomManager = 0;
 	//m_seed = 1389618615;//(unsigned int)time(nullptr);
 	//1389604504
 	// HANDPICKED
@@ -50,20 +49,18 @@ Game::~Game()
 {
 }
 
-void Game::Initialize()
+void Game::Initialize(const GOAP::RoomManager& roomManager)
 {
 	m_accuser = new Accuser;
-	m_roomManager = RoomManager::Instance();
 	
-	m_roomManager->Initialize(/*m_agents.begin(), m_agents.end()*/);
 	InitializeAgents();
 	PopulateDictionaries();
 	InitializeObjects();
 
-	m_currentRoom = m_roomManager->GetRoom(RoomName::LIVING_ROOM);
+	m_currentRoom = roomManager.GetRoom(RoomName::LIVING_ROOM);
 }
 
-void Game::Roam()
+void Game::Roam(const RoomManager& rm)
 {
 	m_vecAgent.clear();
 	m_vecObject.clear();
@@ -77,7 +74,7 @@ void Game::Roam()
 
 	cout << "-----------------------\n";
 	cout << "\n* You can go to:\n\n";
-	for(Room* room : m_roomManager->GetRooms())
+	for(Room* room : rm.GetRooms())
 	{
 		std::cout.fill(' ');
 		std::cout.width(2);
@@ -159,7 +156,7 @@ void Game::Roam()
 	{
 		Prop* prop = m_vecObject[answer - iItem];
 		std::cout << "\n" << prop->GetName() << " : " << prop->GetDescription() << " Usually found in " <<
-			m_roomManager->GetRoom(prop->MayBeFoundIn())->GetName() << "." << std::endl;
+			rm.GetRoom(prop->MayBeFoundIn())->GetName() << "." << std::endl;
 		std::cout << "\n--Press any key to continue\n";
 		_getch();
 		//examine(answer-1);
@@ -304,19 +301,19 @@ void Game::Interview()
 	return;
 }
 
-bool Game::Run(const Op::OperatorManager& operatorManager)
+bool Game::Run(const Op::OperatorManager& operatorManager, RoomManager& roomManager)
 {
 	bool result = false;
 	while(m_running)
 	{
-		if (!GeneratePlot(operatorManager))
+		if (!GeneratePlot(operatorManager, roomManager))
 		{
 			return false;
 		}
 
 		//FactManager::Instance()->Initialize(m_actors);
 
-		MainLoop();
+		MainLoop(roomManager);
 		// prompt for another go
 		// if yes :
 		// clear agents,
@@ -329,10 +326,10 @@ bool Game::Run(const Op::OperatorManager& operatorManager)
 	return true;
 }
 
-bool Game::GeneratePlot(const Op::OperatorManager& operatorManager)
+bool Game::GeneratePlot(const Op::OperatorManager& operatorManager, RoomManager& roomManager)
 {
-	AssignRoles();
-	PopulateRooms();
+	AssignRoles(roomManager);
+	PopulateRooms(roomManager);
 
 	m_murder = false;
 	bool thiefHasGoal = false;
@@ -340,7 +337,7 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager)
 	while(!m_murder)
 	{
 		// update murderer first to avoid artefacts
-		m_murderer->Update(operatorManager, m_roomManager, m_turn);
+		m_murderer->Update(operatorManager, roomManager, m_turn);
 
 		if(!thiefHasGoal)
 		{
@@ -348,26 +345,27 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager)
 			{
 				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 				{
-					SetGoalOfThief();
+					SetGoalOfThief(roomManager.GetRoom(RoomName::BEDROOM, m_actors[2]));
 					thiefHasGoal = true;
 				}
 			}
 		}
 
-		for (Room* room : m_roomManager->GetRooms())
+		for (Room* room : roomManager.GetRooms())
 		{
-			room->Update(operatorManager, m_roomManager, m_turn);
+			room->Update(operatorManager, roomManager, m_turn);
 		}
 
-		for (Room* room : m_roomManager->GetRooms())
+		for (Room* room : roomManager.GetRooms())
 		{
-			if(room->UpdateAgentPositions(m_murderer, m_victim))
+			room->UpdateAgentPositions();
+			if (room->ContainsMurderWitness(std::list<Agent*>{m_murderer, m_victim}))
 			{
 				m_murder = true;
 			}
 		}
 
-		for (Room* room : m_roomManager->GetRooms())
+		for (Room* room : roomManager.GetRooms())
 		{
 			room->ResetAgentUpdateFlags();
 		}
@@ -402,7 +400,7 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager)
 	return true;
 }
 
-void Game::MainLoop()
+void Game::MainLoop(const GOAP::RoomManager& roomManager)
 {
 	std::cout << "******************************\n";
 	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
@@ -414,14 +412,15 @@ void Game::MainLoop()
 	system("cls");
 
 	DisplayIntroduction();
-	MoveActorsToLivingRoom();
+	MoveActorsToLivingRoom(roomManager.GetRoom(RoomName::LIVING_ROOM));
+	roomManager.UpdateAllRooms();
 
 	while(m_running)
 	{
 		if(m_roam)
 		{
 			system("cls");
-			Roam();
+			Roam(roomManager);
 		}
 		else
 		{
@@ -431,7 +430,7 @@ void Game::MainLoop()
 	}
 }
 
-void Game::AssignRoles(/*int numWitness*/)
+void Game::AssignRoles(GOAP::RoomManager& roomManager)
 {
 	// from agent bank
 	// pick a random agent
@@ -499,7 +498,7 @@ void Game::AssignRoles(/*int numWitness*/)
     m_murderer->AddAction(ActionType::TAKE);
     m_murderer->AddAction(ActionType::DROP);
 
-	m_roomManager->ShowBedrooms(m_murderer);
+	roomManager.ShowBedrooms(m_murderer);
 
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
@@ -509,7 +508,10 @@ void Game::AssignRoles(/*int numWitness*/)
 	}
 	for(Agent* actor : m_actors)
 	{
-		m_roomManager->AddAgentProbabilities(actor);
+		roomManager.CreateRoomFor(actor);
+		roomManager.AddAgentProbabilities(actor);
+		roomManager.ShowCommonRooms(actor);
+		roomManager.ShowOwnBedroom(actor);
 	}
 
 	m_murderer->PickCurrentGoal();
@@ -527,10 +529,11 @@ void Game::AssignRoles(/*int numWitness*/)
 	goal->AddCondition(cond2);
 	goal->SetPriority(20);*/
 
-	m_agents[role_array[2]]->AddAction(ActionType::TAKE);
-	m_agents[role_array[2]]->AddAction(ActionType::DROP);
+	m_thief = m_agents[role_array[2]];
+	m_thief->AddAction(ActionType::TAKE);
+	m_thief->AddAction(ActionType::DROP);
 	////m_victim->AddGoal(goal);
-	m_agents[role_array[2]]->PickCurrentGoal();
+	m_thief->PickCurrentGoal();
 
 	if(m_numberOfActors == 4)
 	{
@@ -544,7 +547,7 @@ void Game::AssignRoles(/*int numWitness*/)
 	delete[] role_array;
 }
 
-void Game::PopulateRooms()
+void Game::PopulateRooms(const GOAP::RoomManager& roomManager)
 {
 	/* for each room in world
 		from object bank[room]
@@ -556,19 +559,19 @@ void Game::PopulateRooms()
 
 	for(Prop* object : m_objects)
 	{
-		Room* room = m_roomManager->GetRoom(object->MayBeFoundIn());
+		Room* room = roomManager.GetRoom(object->MayBeFoundIn());
 		room->AddObject(object);
 	}
 
 	//m_roomManager->GetRoom(RoomName::KITCHEN)->AddAgent(m_agents[0]);
 	for(int i=0; i<m_numberOfActors; ++i)
 	{
-		m_roomManager->GetRoom(RoomName::BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
+		roomManager.GetRoom(RoomName::BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
 	}
 
 	// Show everything to murderer and thief
-	RoomManager::Instance()->ShowEverything( m_actors[0] );
-	RoomManager::Instance()->ShowEverything( m_actors[2] );
+	roomManager.ShowEverything( m_actors[0] );
+	roomManager.ShowEverything( m_actors[2] );
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
@@ -667,9 +670,8 @@ Or if you are just bored and want to go home.\n\n" << std::endl;
 	_getch();
 }
 
-void Game::MoveActorsToLivingRoom()
+void Game::MoveActorsToLivingRoom(GOAP::Room* livingRoom)
 {
-	Room* livingRoom = m_roomManager->GetRoom(RoomName::LIVING_ROOM);
 	for(int actor = 0; actor < m_numberOfActors; ++actor)
 	{
 		if(actor != 1)
@@ -681,11 +683,6 @@ void Game::MoveActorsToLivingRoom()
 				livingRoom->AddAgent(m_actors[actor]);
 			}
 		}
-	}
-
-	for (Room* room : m_roomManager->GetRooms())
-	{
-		room->UpdateAgentPositions(m_murderer, m_victim);
 	}
 }
 
@@ -786,7 +783,7 @@ void Game::GetMurderWeapon()
 	}
 }
 
-void Game::SetGoalOfThief()
+void Game::SetGoalOfThief(Room* thiefsBedroom)
 {
 	Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
 	while(murderGoal->GetParent()->GetParent() != 0)
@@ -810,7 +807,7 @@ void Game::SetGoalOfThief()
 			wantItem.GetParamByIndex(0).type = (*item).second->GetCompoundType();
 			wantItem.GetParamByIndex(0).attrib = AttributeType::ROOM;
 			
-			wantItem.GetParamByIndex(1).instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_actors[2]);
+			wantItem.GetParamByIndex(1).instance = thiefsBedroom;
 			wantItem.GetParamByIndex(1).type = ObjectType::ROOM | ObjectType::OBJECT;
 			wantItem.GetParamByIndex(1).attrib = AttributeType::ROOM;
 

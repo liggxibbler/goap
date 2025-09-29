@@ -4,7 +4,7 @@
 
 using namespace GOAP;
 
-Room::Room() : Object(), m_numAgents(0), m_murder(false)
+Room::Room() : Object(), m_numAgents(0), m_isMurderRoom(false)
 {
 	m_room = m_id;
 	m_roomInstance = this;
@@ -25,8 +25,8 @@ Room::Room(const Room& other)
 	}
 }
 
-Room::Room(std::string name , RoomName rn, Object* owner) :
-Object(name, owner), m_type(rn), m_numAgents(0), m_murder(false)
+Room::Room(std::string&& name , RoomName rn, Object* owner) :
+Object(name, owner), m_type(rn), m_numAgents(0), m_isMurderRoom(false)
 {
 	m_room = m_id;
 	m_roomInstance = this;
@@ -115,7 +115,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
+bool Room::Update(const Op::OperatorManager& om, const RoomManager& rm, int turn)
 {
 	//m_murder = false;
 
@@ -131,12 +131,12 @@ bool Room::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
 		if( (*agent)->Update(om, rm, turn) )
 		{
-			m_murder = true;
+			m_isMurderRoom = true;
 			//(*agent)->DoneMurder(false);
 		}
 	}
 
-	return m_murder;
+	return m_isMurderRoom;
 }
 
 void Room::MarkForDeletion(Agent* agent)
@@ -149,9 +149,8 @@ void Room::MarkForAddition(Agent* agent)
 	m_markedForAddition.insert(agent);
 }
 
-bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
+void Room::UpdateAgentPositions()
 {
-	bool result = false;
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
@@ -192,22 +191,29 @@ bool Room::UpdateAgentPositions(Agent* murderer, Agent* victim)
 
 	m_markedForAddition.clear();
 	m_markedForDeletion.clear();
+}
 
-	if(m_murder)
-		// if this is the room where the murder has taken place
+bool GOAP::Room::ContainsAnyExcept(const std::list<Agent*>& toExclude)
+{	
+	for (Agent* agent : m_agents)
 	{
-		for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+		for (Agent* excludee : toExclude)
 		{
-			if(((*agent) != murderer) && ((*agent) != victim))
-				// and someone other than the murderer or the victim is in it
+			if (agent != excludee)
 			{
-				// then the plot is ready
-					result = true;
+				return true;
 			}
 		}
 	}
+	return false;
+}
 
-	return result;
+bool GOAP::Room::ContainsMurderWitness(const std::list<Agent*>& toExclude)
+{
+	if (!m_isMurderRoom)
+		return false;
+
+	return ContainsAnyExcept(toExclude);
 }
 
 Object* Room::Clone()
@@ -222,7 +228,7 @@ ObjectType Room::GetCompoundType()
 
 bool Room::GetMurder()
 {
-	return m_murder;
+	return m_isMurderRoom;
 }
 
 void Room::RemoveObject(Prop* obj)

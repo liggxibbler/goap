@@ -342,12 +342,6 @@ void Action::Dispatch(int turn)
 	}
 }
 
-bool Action::CompareCost(Action* a1, Action* a2)
-{
-	RoomManager* rm = RoomManager::Instance();
-	return ( a1->Cost(rm) < a2->Cost(rm) );
-}
-
 bool Action::EvaluatePreconditions(const Op::OperatorManager& om)
 {
 	return m_preconds->Evaluate(om);

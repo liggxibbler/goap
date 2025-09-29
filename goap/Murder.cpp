@@ -129,7 +129,7 @@ void Murder::InitPreconditions()
 
 }
 
-float Murder::Cost(RoomManager* rm)
+float Murder::Cost(const RoomManager& rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is to find the victim alone in the room
@@ -153,7 +153,7 @@ float Murder::Cost(RoomManager* rm)
 	if (roomOwner != 0)
 	{
 		// penalty for suspicious activity
-		cost += 500.0f * rm->GetProb((Agent*)roomOwner, (Room*)_locative->instance);
+		cost += 500.0f * rm.GetProb((Agent*)roomOwner, (Room*)_locative->instance);
 	}
 	if (roomOwner == _patient->instance)
 	{
@@ -162,10 +162,10 @@ float Murder::Cost(RoomManager* rm)
 	}
 
 	// penalty for risk of not being found
-	cost += 1000.0f * (1.0f - rm->GetProbWillBeFound((Agent*)_patient->instance, (Room*)_locative->instance));
+	cost += 1000.0f * (1.0f - rm.GetProbWillBeFound((Agent*)_patient->instance, (Room*)_locative->instance));
 
 	// penalty for risk of not finding victim alone
-	cost += 1000.f * (1.0f - rm->GetProbAlone((Agent*)_patient->instance, (Room*)_locative->instance));
+	cost += 1000.f * (1.0f - rm.GetProbAlone((Agent*)_patient->instance, (Room*)_locative->instance));
 
 	return cost;
 

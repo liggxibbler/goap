@@ -172,7 +172,7 @@ GoTo::operator std::string()
 	return "GoTo";
 }
 
-float GoTo::Cost(RoomManager* rm)
+float GoTo::Cost(const RoomManager& rm)
 {
 	float cost = 30;
 

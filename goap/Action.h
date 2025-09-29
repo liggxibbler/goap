@@ -61,9 +61,7 @@ namespace GOAP
 		/*virtual int GetCost() = 0;
 		virtual int GetRisk() = 0;*/
 
-		static bool CompareCost(Action* a1, Action* a2);
-
-		virtual float Cost(RoomManager* rm) = 0;
+		virtual float Cost(const RoomManager& rm) = 0;
 
 		bool EvaluatePreconditions(const Op::OperatorManager& om);
 		bool EvaluateEffects(const Op::OperatorManager& om);

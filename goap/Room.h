@@ -21,7 +21,7 @@ namespace GOAP
 	public:
 		Room();
 		Room(const Room& other);
-		Room(std::string name, RoomName rn, Object* owner = nullptr);
+		Room(std::string&& name, RoomName rn, Object* owner = nullptr);
 		~Room();
 
 		void SetLeft(Room* left);
@@ -42,11 +42,13 @@ namespace GOAP
 
 		RoomName GetType();
 
-		virtual bool Update(const Op::OperatorManager& om, RoomManager* rm, int turn) override;
+		virtual bool Update(const Op::OperatorManager& om, const RoomManager& rm, int turn) override;
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);
-		bool UpdateAgentPositions(Agent* agent, Agent* victim);
+		void UpdateAgentPositions();
+		bool ContainsAnyExcept(const std::list<Agent*>& toExclude);
+		bool ContainsMurderWitness(const std::list<Agent*>& toExclude);
 
 		virtual Object* Clone();
 		virtual void Examine() override;
@@ -71,7 +73,7 @@ namespace GOAP
 		std::set<Agent*> m_markedForAddition;
 
 		int m_numAgents;
-		bool m_murder;
+		bool m_isMurderRoom;
 
 		Room* m_left;
 		Room* m_right;

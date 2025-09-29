@@ -146,7 +146,7 @@ Take::operator std::string()
 	return "Take";
 }
 
-float Take::Cost(RoomManager* rm)
+float Take::Cost(const RoomManager& rm)
 {
 	// return a measure of
 	// 1 - if that thing doesn't BELONG to you

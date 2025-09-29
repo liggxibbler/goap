@@ -162,7 +162,7 @@ WaitFor::operator std::string()
 	return "WaitFor";
 }
 
-float WaitFor::Cost(RoomManager* rm)
+float WaitFor::Cost(const RoomManager& rm)
 {
 	// return a measure of
 	// 1 - how UNLIKELY it is for you to be here

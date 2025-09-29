@@ -24,7 +24,7 @@ namespace GOAP
 		Planner(const Planner& other);
 		~Planner();
 
-		PlanStatus Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* plan);
+		PlanStatus Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan);
 
 		class CompareGoals
 		{
@@ -55,10 +55,10 @@ namespace GOAP
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, ActionManager* am);
 		void ClearLongLists();
-		void ExpandFrontier(Agent* agent);
+		void ExpandFrontier(const RoomManager& roomManager, Agent* agent);
 
 	private:
-		PlanStatus DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* goal); // planner workhorse
+		PlanStatus DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* goal); // planner workhorse
 
 		Goal* m_currentGoal;
 		std::list<Goal*> m_frontier;				// The portion of the search space that is currently being analyzed

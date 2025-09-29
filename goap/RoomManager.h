@@ -13,35 +13,39 @@ namespace GOAP
 
 	class RoomManager
 		{
+		public:
 			RoomManager();
 			RoomManager(const RoomManager& other);
 			~RoomManager();
 		
-		public:
 			
-			static RoomManager* Instance();
 			void Initialize(/*std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last*/); // get list of agents, make new room for each
 			
-			Room* GetRoom(int id);
-			Room* GetRoom(std::string name);
-			Room* GetRoom(RoomName rn, Agent* agent = nullptr);
+			Room* GetRoom(int id) const;
+			Room* GetRoom(std::string name) const;
+			Room* GetRoom(RoomName rn, Agent* agent = nullptr) const;
 
-			Room* GetRandomRoom(Agent* agent);
+			Room* GetRandomRoom(Agent* agent) const;
 
-			const std::list<Room*>& GetRooms();
+			const std::list<Room*>& GetRooms() const;
 
-			void ShowBedrooms( Agent* murderer );
+			void CreateRoomFor(Agent* agent);
+
+			void ShowBedrooms( Agent* murderer ) const;
+			void ShowCommonRooms(Agent* agent) const;
+			void ShowOwnBedroom(Agent* agent) const;
 
 			void AddAgentProbabilities(Agent* agent);
 
-			float GetProb(Agent* agent, Room* room);
-			float GetProbOthers(Agent* agent, Room* room);
-			float GetProbAlone(Agent* agent, Room* room);
-			float GetProbWillBeFound(Agent* agent, Room* room);
+			float GetProb(Agent* agent, Room* room) const;
+			float GetProbOthers(Agent* agent, Room* room) const;
+			float GetProbAlone(Agent* agent, Room* room) const;
+			float GetProbWillBeFound(Agent* agent, Room* room) const;
 
 			void ClearRooms();
+			void UpdateAllRooms() const;
 
-			void ShowEverything(Agent* seer);
+			void ShowEverything(Agent* seer) const;
 
 		private:
 			std::map<RoomName, Room*> m_mapRoom;

@@ -7,15 +7,15 @@ Planner::Planner()
 	m_currentGoal = nullptr;
 }
 
-PlanStatus Planner::Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* plan)
+PlanStatus Planner::Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
 	ClearPlanTree();
 	m_frontier.push_back(nullptr);
 	m_frontier.push_back(agent->GetGoal());
-	return DeviseWorkHorse(agent, am, om, plan);
+	return DeviseWorkHorse(agent, am, om, roomManager, plan);
 }
 
-PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, Plan* plan)
+PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != nullptr; m_currentGoal = PickNextGoal() )
 	{
@@ -56,7 +56,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::O
 		}
 		DUMP( "===Expanding frontier")
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
-		ExpandFrontier(agent);					// finalize possible actions
+		ExpandFrontier(roomManager, agent);					// finalize possible actions
 		ClearLongLists();						// clear candidate list
 	}
 	
@@ -108,7 +108,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 	}
 }
 
-void Planner::ExpandFrontier(Agent* agent)
+void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 {
 	/* METHOD : ExpandFrontier(Agent)
 	for all actions in long list:
@@ -169,7 +169,7 @@ void Planner::ExpandFrontier(Agent* agent)
 
 		nextGoal->SetAction(action);
 		nextGoal->SetParent(m_currentGoal);
-		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(RoomManager::Instance()));
+		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(roomManager));
 		nextGoal->SetDepth(m_currentGoal->GetDepth() + 1);
 		m_currentGoal->AddChild(nextGoal);
 

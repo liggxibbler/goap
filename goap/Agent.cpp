@@ -156,10 +156,10 @@ void Agent::SetGoal(Goal* goal)
 	m_currentGoal = goal;
 }
 
-Plan* Agent::GetPlan(ActionManager* am, const Op::OperatorManager& om)
+Plan* Agent::GetPlan(ActionManager* am, const Op::OperatorManager& om, const GOAP::RoomManager& roomManager)
 {
 	//Plan* plan = new Plan();
-	if( s_planner->Devise(this, am, om, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
+	if( s_planner->Devise(this, am, om, roomManager, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
 	{
 		DUMP("FOUND PLAN")
 	}
@@ -176,7 +176,7 @@ ObjectType Agent::GetCompoundType()
 	return ObjectType::OBJECT | ObjectType::AGENT;
 }
 
-bool Agent::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
+bool Agent::Update(const Op::OperatorManager& om, const RoomManager& roomManager, int turn)
 {
 	//m_bDoneMurder = false;
 
@@ -224,7 +224,7 @@ bool Agent::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 				}
 
 				m_nextExecution = 0;
-				this->Update(om, rm, turn); // need replanning! must waist know thyme
+				this->Update(om, roomManager, turn); // need replanning! must waist know thyme
 			}
 			else if(as == ExecutionStatus::FAIL) // XIBB - this is very bad replanning!!!
 			{
@@ -240,17 +240,17 @@ bool Agent::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 			}
 			else
 			{
-				GetPlan(ActionManager::Instance(), om);
+				GetPlan(ActionManager::Instance(), om, roomManager);
 				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
 				if(ps == PlanStatus::FAIL)
 				{
-					Room* room = rm->GetRandomRoom(this);
+					Room* room = roomManager.GetRandomRoom(this);
 					GoTo* gt = new GoTo(room, this);
 					gt->Initialize();
 					m_nextExecution = gt;
 				}
 			}
-			this->Update(om, rm, turn); // XIBB?
+			this->Update(om, roomManager, turn); // XIBB?
 		}
 		else
 		{
@@ -258,7 +258,7 @@ bool Agent::Update(const Op::OperatorManager& om, RoomManager* rm, int turn)
 			if(wander < 90)
 			{
 				DUMP("       **" << m_name << " be wanderin' " << turn)
-				Room* room = rm->GetRandomRoom(this);
+				Room* room = roomManager.GetRandomRoom(this);
 				GoTo* gt = new GoTo(room, this);
 				gt->Initialize();
 				m_nextExecution = gt;

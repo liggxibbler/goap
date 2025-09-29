@@ -168,7 +168,7 @@ Drop::operator std::string()
 	return "Drop";
 }
 
-float Drop::Cost(RoomManager* rm)
+float Drop::Cost(const RoomManager& rm)
 {
 	// return a measure of
 	// 1 - if that thing doesn't BELONG to you

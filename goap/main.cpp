@@ -19,10 +19,14 @@ int main()
 	Action::OpenFile();
 
 	Game game;
+	
 	Op::OperatorManager operatorManager;
+	
+	RoomManager roomManager;
+	roomManager.Initialize();
 
-	game.Initialize();
-	game.Run(operatorManager);
+	game.Initialize(roomManager);
+	game.Run(operatorManager, roomManager);
 
 	Action::CloseFile();
 

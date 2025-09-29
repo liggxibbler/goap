@@ -17,12 +17,6 @@ RoomManager::~RoomManager()
 {
 }
 
-RoomManager* RoomManager::Instance()
-{
-	static RoomManager rm;
-	return &rm;
-}
-
 void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<Agent*>::iterator last*/)
 {
 	Agent* agent = nullptr;
@@ -60,7 +54,7 @@ void RoomManager::Initialize(/*std::vector<Agent*>::iterator first, std::vector<
 	}*/
 }
 
-Room* RoomManager::GetRoom(RoomName rn, Agent* agent)
+Room* RoomManager::GetRoom(RoomName rn, Agent* agent) const
 {
 	if(rn == RoomName::BEDROOM)
 	{
@@ -69,27 +63,34 @@ Room* RoomManager::GetRoom(RoomName rn, Agent* agent)
 			return nullptr;
 		}
 
-		return m_mapBedroom[agent];
+		return m_mapBedroom.at(agent);
 	}
 	else
 	{
-		return m_mapRoom[rn];
+		return m_mapRoom.at(rn);
 	}
 }
 
-Room* RoomManager::GetRandomRoom(Agent* agent)
+Room* RoomManager::GetRandomRoom(Agent* agent) const
 {
 	int rnd = rand() % 5;
 	int room = 1 << rnd; // left bit shift, to the rnd'th power of two
 	return GetRoom((RoomName)room, agent);
 }
 
-const std::list<Room*>& GOAP::RoomManager::GetRooms()
+const std::list<Room*>& GOAP::RoomManager::GetRooms() const
 {
 	return m_rooms;
 }
 
-Room* RoomManager::GetRoom(std::string name)
+void GOAP::RoomManager::CreateRoomFor(Agent* agent)
+{
+	Room* room = new Room(agent->GetName() + std::string("'s bedroom"), RoomName::BEDROOM, agent);
+	m_mapBedroom[agent] = room;
+	m_rooms.push_back(room);
+}
+
+Room* RoomManager::GetRoom(std::string name) const
 {
 	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
 	{
@@ -101,7 +102,7 @@ Room* RoomManager::GetRoom(std::string name)
 	return 0;
 }
 
-Room* RoomManager::GetRoom(int id)
+Room* RoomManager::GetRoom(int id) const
 {
 	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
 	{
@@ -113,7 +114,7 @@ Room* RoomManager::GetRoom(int id)
 	return 0;
 }
 
-void RoomManager::ShowBedrooms(Agent* murderer)
+void RoomManager::ShowBedrooms(Agent* murderer) const
 {
 	for(auto room(m_mapBedroom.begin()); room != m_mapBedroom.end(); ++room)
 	{
@@ -121,41 +122,43 @@ void RoomManager::ShowBedrooms(Agent* murderer)
 	}
 }
 
+void GOAP::RoomManager::ShowCommonRooms(Agent* agent) const
+{
+	agent->See(m_mapRoom.at(RoomName::KITCHEN), false);
+	agent->See(m_mapRoom.at(RoomName::LIVING_ROOM), false);
+	agent->See(m_mapRoom.at(RoomName::DINING_ROOM), false);
+	agent->See(m_mapRoom.at(RoomName::BATHROOM), false);
+}
+
+void GOAP::RoomManager::ShowOwnBedroom(Agent* agent) const
+{
+	agent->See(m_mapBedroom.at(agent), false);
+}
+
 void RoomManager::AddAgentProbabilities(Agent* agent)
 {
 	const float* prob = agent->GetProbabilities();
-	Room* room = nullptr;
-	std::string roomName(agent->GetName() + std::string("'s bedroom"));
-	room = new Room(roomName, RoomName::BEDROOM, agent);
-	m_mapBedroom[agent] = room;
-	m_rooms.push_back(room);
-	
-	agent->See(room, false);
-	agent->See(m_mapRoom[RoomName::KITCHEN], false);
-	agent->See(m_mapRoom[RoomName::LIVING_ROOM], false);
-	agent->See(m_mapRoom[RoomName::DINING_ROOM], false);
-	agent->See(m_mapRoom[RoomName::BATHROOM], false);
 
-	m_probabilities[agent][m_mapRoom[RoomName::KITCHEN]] = prob[0];
-	m_probabilities[agent][m_mapRoom[RoomName::LIVING_ROOM]] = prob[1];
-	m_probabilities[agent][m_mapRoom[RoomName::DINING_ROOM]] = prob[2];
-	m_probabilities[agent][m_mapRoom[RoomName::BATHROOM]] = prob[3];
-	m_probabilities[agent][room] = prob[4];
+	m_probabilities[agent][m_mapRoom.at(RoomName::KITCHEN)] = prob[0];
+	m_probabilities[agent][m_mapRoom.at(RoomName::LIVING_ROOM)] = prob[1];
+	m_probabilities[agent][m_mapRoom.at(RoomName::DINING_ROOM)] = prob[2];
+	m_probabilities[agent][m_mapRoom.at(RoomName::BATHROOM)] = prob[3];
+	m_probabilities[agent][m_mapBedroom.at(agent)] = prob[4];
 }
 
-float RoomManager::GetProb(Agent* agent, Room* room)
+float RoomManager::GetProb(Agent* agent, Room* room) const
 {
-	if( m_probabilities[agent].find(room) == m_probabilities[agent].end() )
+	if( m_probabilities.at(agent).find(room) == m_probabilities.at(agent).end() )
 	{
-		m_probabilities[agent][room] = 0;
+		return 0.0f;
 	}
 	
 	//DUMP("% P of " << agent->GetName() << " at " << room->GetName() << " is " << m_probabilities[agent][room] / 100.0f << " %")
 
-	return m_probabilities[agent][room] / 100.0f;
+	return m_probabilities.at(agent).at(room) / 100.0f;
 }
 
-float RoomManager::GetProbOthers(Agent* agent, Room* room)
+float RoomManager::GetProbOthers(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
 	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
@@ -167,7 +170,7 @@ float RoomManager::GetProbOthers(Agent* agent, Room* room)
 	}
 	return prob;
 }
-float RoomManager::GetProbAlone(Agent* agent, Room* room)
+float RoomManager::GetProbAlone(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
 	prob *= GetProb(agent, room);
@@ -180,7 +183,7 @@ float RoomManager::GetProbAlone(Agent* agent, Room* room)
 	}
 	return prob;
 }
-float RoomManager::GetProbWillBeFound(Agent* agent, Room* room)
+float RoomManager::GetProbWillBeFound(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
 	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
@@ -213,10 +216,18 @@ void RoomManager::ClearRooms()
 	}*/
 }
 
-void RoomManager::ShowEverything(Agent* seer)
+void GOAP::RoomManager::UpdateAllRooms() const
 {
-	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	for (Room* room : m_rooms)
 	{
-		seer->See(*room, true);
+		room->UpdateAgentPositions();
+	}
+}
+
+void RoomManager::ShowEverything(Agent* seer) const
+{
+	for(Room* room : m_rooms)
+	{
+		seer->See(room, true);
 	}
 }

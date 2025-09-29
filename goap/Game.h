@@ -22,26 +22,30 @@ public:
 	Game(const Game& other);
 	~Game();
 
-	void Initialize();
+	void Initialize(const GOAP::RoomManager& roomManager);
 
-	void Roam();
+	void Roam(const GOAP::RoomManager& rm);
 	void Interview();
 	bool Accuse();
 
-	bool Run(const GOAP::Op::OperatorManager& operatorManager);
+	bool Run(const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
 
-	void AssignRoles();
-	void PopulateRooms();
-	bool GeneratePlot(const GOAP::Op::OperatorManager& operatorManager);
-	void MainLoop();
+	void AssignRoles(GOAP::RoomManager& roomManager);
+	void PopulateRooms(const GOAP::RoomManager& roomManager);
+	bool GeneratePlot(const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
+	void MainLoop(const GOAP::RoomManager& roomManager);
 
 	void DisplayRoomMap();
 	void DisplayIntroduction();
-	void MoveActorsToLivingRoom();
+	void MoveActorsToLivingRoom(GOAP::Room* livingRoom);
 	bool ReturnToConstable();
 
 	void GetMurderWeapon();
-	void SetGoalOfThief();
+	void SetGoalOfThief(GOAP::Room* thiefsBedroom);
+
+	GOAP::Agent* GetMurderer() const { return m_murderer; };
+	GOAP::Agent* GetVictim() const { return m_victim; };
+	GOAP::Agent* GetThief() const { return m_thief; };
 
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
@@ -60,11 +64,11 @@ private:
 	//GOAP::World* m_world;
 	bool m_roam = false;
 	GOAP::Room* m_currentRoom = nullptr;
-	GOAP::Agent* m_currentAgent = nullptr;
-	GOAP::RoomManager* m_roomManager = nullptr;	
+	GOAP::Agent* m_currentAgent = nullptr;	
 
 	GOAP::Agent* m_murderer = nullptr;
 	GOAP::Agent* m_victim = nullptr;
+	GOAP::Agent* m_thief = nullptr;
 
 	bool m_running = false;
 	bool m_murder = false;
