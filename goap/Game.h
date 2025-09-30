@@ -25,15 +25,15 @@ public:
 	void Initialize(const GOAP::RoomManager& roomManager);
 
 	void Roam(const GOAP::RoomManager& rm);
-	void Interview();
+	void Interview(const GOAP::ActionManager& actionManager);
 	bool Accuse();
 
-	bool Run(const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
+	bool Run(const GOAP::ActionManager& actionManager, const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
 
 	void AssignRoles(GOAP::RoomManager& roomManager);
 	void PopulateRooms(const GOAP::RoomManager& roomManager);
-	bool GeneratePlot(const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
-	void MainLoop(const GOAP::RoomManager& roomManager);
+	bool GeneratePlot(const GOAP::ActionManager& actionManager, const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
+	void MainLoop(const GOAP::ActionManager&, const GOAP::RoomManager& roomManager);
 
 	void DisplayRoomMap();
 	void DisplayIntroduction();

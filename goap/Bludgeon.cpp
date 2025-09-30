@@ -43,30 +43,30 @@ void Bludgeon::InitArgs()
 
 std::string Bludgeon::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::PATIENT);
-	auto ins = GetArg(SemanticRole::INSTRUMENT);
+	const Argument& sub = GetArg(SemanticRole::AGENT);
+	const Argument& obj = GetArg(SemanticRole::PATIENT);
+	const Argument& ins = GetArg(SemanticRole::INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;
-	std::string _instrument(ins->instance->GetName());
+	std::string _instrument(ins.instance->GetName());
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj.instance == agent)
 	{
 		_patient = "me";
 	}
 	else
 	{
-		_patient = obj->instance->GetName();
+		_patient = obj.instance->GetName();
 	}
 
 	std::stringstream str;
@@ -74,7 +74,7 @@ std::string Bludgeon::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-Bludgeon::operator std::string()
+std::string Bludgeon::GetName() const
 {
 	return "Bludgeon";
 }

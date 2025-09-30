@@ -194,7 +194,7 @@ void Game::Roam(const RoomManager& rm)
 
 }
 
-void Game::Interview()
+void Game::Interview(const ActionManager& actionManager)
 {
 	//m_vecObject.clear();
 	//m_vecAgent.clear();
@@ -292,7 +292,7 @@ void Game::Interview()
 	}*/
 
 	//m_currentAgent->Answer(qObject, question, answer);
-	m_currentAgent->Answer(0, QuestionType::ACTION, 0);
+	m_currentAgent->Answer(actionManager, nullptr, QuestionType::ACTION, 0);
 
 	// ACCUSE
 
@@ -301,19 +301,19 @@ void Game::Interview()
 	return;
 }
 
-bool Game::Run(const Op::OperatorManager& operatorManager, RoomManager& roomManager)
+bool Game::Run(const ActionManager& actionManager, const Op::OperatorManager& operatorManager, RoomManager& roomManager)
 {
 	bool result = false;
 	while(m_running)
 	{
-		if (!GeneratePlot(operatorManager, roomManager))
+		if (!GeneratePlot(actionManager, operatorManager, roomManager))
 		{
 			return false;
 		}
 
 		//FactManager::Instance()->Initialize(m_actors);
 
-		MainLoop(roomManager);
+		MainLoop(actionManager, roomManager);
 		// prompt for another go
 		// if yes :
 		// clear agents,
@@ -326,7 +326,7 @@ bool Game::Run(const Op::OperatorManager& operatorManager, RoomManager& roomMana
 	return true;
 }
 
-bool Game::GeneratePlot(const Op::OperatorManager& operatorManager, RoomManager& roomManager)
+bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorManager& operatorManager, RoomManager& roomManager)
 {
 	AssignRoles(roomManager);
 	PopulateRooms(roomManager);
@@ -337,7 +337,7 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager, RoomManager&
 	while(!m_murder)
 	{
 		// update murderer first to avoid artefacts
-		m_murderer->Update(operatorManager, roomManager, m_turn);
+		m_murderer->Update(actionManager, operatorManager, roomManager, m_turn);
 
 		if(!thiefHasGoal)
 		{
@@ -353,7 +353,7 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager, RoomManager&
 
 		for (Room* room : roomManager.GetRooms())
 		{
-			room->Update(operatorManager, roomManager, m_turn);
+			room->Update(actionManager, operatorManager, roomManager, m_turn);
 		}
 
 		for (Room* room : roomManager.GetRooms())
@@ -400,7 +400,7 @@ bool Game::GeneratePlot(const Op::OperatorManager& operatorManager, RoomManager&
 	return true;
 }
 
-void Game::MainLoop(const GOAP::RoomManager& roomManager)
+void Game::MainLoop(const GOAP::ActionManager& actionManager, const GOAP::RoomManager& roomManager)
 {
 	std::cout << "******************************\n";
 	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
@@ -425,7 +425,7 @@ void Game::MainLoop(const GOAP::RoomManager& roomManager)
 		else
 		{
 			system("cls");
-			Interview();
+			Interview(actionManager);
 		}
 	}
 }
@@ -793,7 +793,7 @@ void Game::SetGoalOfThief(Room* thiefsBedroom)
 	}
 
 	// extract the murder instrument
-	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SemanticRole::INSTRUMENT)->instance;
+	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SemanticRole::INSTRUMENT).instance;
 	instrument->IncreaseValue();
 	Goal* goal = 0;
 	// make thief want all props of the same type as the instrument

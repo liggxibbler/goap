@@ -17,7 +17,7 @@ namespace GOAP
 		virtual Shoot* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;
-		virtual operator std::string() override;
+		virtual std::string GetName() const override;
 
 	private:
 		virtual void InitArgs() override;

@@ -28,12 +28,12 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 	auto _agent(GetArg(SemanticRole::AGENT));
 	auto _patient(GetArg(SemanticRole::PATIENT));
 
-	Prop* patient = (Prop*)_patient->instance;
-	patient->SetBearer(_agent->instance);
+	Prop* patient = (Prop*)_patient.instance;
+	patient->SetBearer(_agent.instance);
 	patient->GetRoom()->RemoveObject(patient);
-	patient->SetRoom(_agent->instance->GetRoom());
+	patient->SetRoom(_agent.instance->GetRoom());
 	//_patient->instance->SetRoom(_agent->instance->GetRoom());
-	_agent->instance->SetAttribute(AttributeType::INVENTORY, true);
+	_agent.instance->SetAttribute(AttributeType::INVENTORY, true);
 
 	DUMP("       ** " << Express(0, 0))
 	return ExecutionStatus::SUCCESS;
@@ -67,8 +67,8 @@ void Take::InitArgs()
 void Take::InitPreconditions()
 {
 	Condition subNearObj(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
-	Argument sub = *GetArg(SemanticRole::AGENT),
-		obj = *GetArg(SemanticRole::PATIENT);
+	Argument sub = GetArg(SemanticRole::AGENT);
+	Argument obj = GetArg(SemanticRole::PATIENT);
 
 	subNearObj.GetParamByIndex(0) = sub;
 	subNearObj.GetParamByIndex(0).attrib = AttributeType::ROOM;
@@ -90,8 +90,8 @@ void Take::InitPreconditions()
 void Take::InitEffects()
 {
 	Condition subHasObj(OperatorLayoutType::OOB, OperatorType::HAS);
-	Argument sub = *GetArg(SemanticRole::AGENT),
-		obj = *GetArg(SemanticRole::PATIENT);
+	Argument sub = GetArg(SemanticRole::AGENT);
+	Argument obj = GetArg(SemanticRole::PATIENT);
 
 	subHasObj.GetParamByIndex(0) = sub;
 	subHasObj.GetParamByIndex(1) = obj;
@@ -111,28 +111,28 @@ void Take::InitEffects()
 
 std::string Take::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::PATIENT);
+	const Argument& sub = GetArg(SemanticRole::AGENT);
+	const Argument& obj = GetArg(SemanticRole::PATIENT);
 
 	std::string _agent;
 	std::string _patient;
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj.instance == agent)
 	{
 		_patient = "me";
 	}
 	else
 	{
-		_patient = obj->instance->GetName();
+		_patient = obj.instance->GetName();
 	}
 
 	std::stringstream str;
@@ -141,7 +141,7 @@ std::string Take::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-Take::operator std::string()
+std::string Take::GetName() const
 {
 	return "Take";
 }
@@ -152,20 +152,20 @@ float Take::Cost(const RoomManager& rm)
 	// 1 - if that thing doesn't BELONG to you
 	// 2 - bonus points if it BELONGS to someone else, and not a room
 
-	float cost;
+	float cost = 0.0f;
 
-	auto _agent = GetArg(SemanticRole::AGENT);
-	auto _patient = GetArg(SemanticRole::PATIENT);
+	const Argument& _agent = GetArg(SemanticRole::AGENT);
+	const Argument& _patient = GetArg(SemanticRole::PATIENT);
 	
-	if(_patient->instance->GetOwner() == 0)
+	if(_patient.instance->GetOwner() == 0)
 	{
 		cost = 10.0f;
 	}
-	else if(_patient->instance->GetOwner() != _agent->instance)
+	else if(_patient.instance->GetOwner() != _agent.instance)
 	{
 		cost = 50.0f;
 	}
-	else if(_patient->instance->GetOwner() == _agent->instance)
+	else if(_patient.instance->GetOwner() == _agent.instance)
 	{
 		cost = 0.0f;
 	}
@@ -183,7 +183,7 @@ void Take::Dispatch(int turn)
 {
 	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
-	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();
 	
 	for(Agent* agent : room->GetAgents())
@@ -192,7 +192,7 @@ void Take::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( agent != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
+		if( agent != GetArg(SemanticRole::AGENT).instance ) // Treat murdere differently
 		{
 			agent->Log(turn, this);
 		}
@@ -212,12 +212,12 @@ void Take::Dispatch(int turn)
 			Take* take = (Take*)this->Clone();
 			for(Agent* agent : room->GetAgents())
 			{
-				if(!agent->IsVictim() && agent != GetArg(SemanticRole::AGENT)->instance )
+				if(!agent->IsVictim() && agent != GetArg(SemanticRole::AGENT).instance )
 				{
-					take->GetArg(SemanticRole::AGENT)->instance = agent;
+					take->GetArg(SemanticRole::AGENT).instance = agent;
 				}
 			}
-			Agent* falseAgent = (Agent*)cp->instance;
+			Agent* falseAgent = (Agent*)cp.instance;
 			falseAgent->Log(turn, take);
 			break;
 		}

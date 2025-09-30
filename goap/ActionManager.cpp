@@ -33,14 +33,14 @@ ActionManager::~ActionManager()
 {
 }
 
-Action* ActionManager::GetActionPrototype(ActionType at)
+const Action* ActionManager::GetActionPrototype(ActionType at) const
 {
-	return m_mapAction[at];
+	return m_mapAction.at(at);
 }
 
-Action* ActionManager::GetNewAction(ActionType at)
+Action* ActionManager::GetNewAction(ActionType at) const
 {
-	return m_mapAction[at]->Clone();
+	return m_mapAction.at(at)->Clone();
 }
 
 void ActionManager::InitializePrototypes()
@@ -51,13 +51,7 @@ void ActionManager::InitializePrototypes()
 	}
 }
 
-ActionManager* ActionManager::Instance()
+bool ActionManager::GetSuspicion(ActionType at) const
 {
-	static ActionManager am;
-	return &am;
-}
-
-bool ActionManager::GetSuspicion(ActionType at)
-{
-	return m_mapSuspect[at];
+	return m_mapSuspect.at(at);
 }

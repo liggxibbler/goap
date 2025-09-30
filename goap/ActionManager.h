@@ -11,19 +11,15 @@ namespace GOAP
 {
 	class ActionManager
 	{
-	private:
+	public:
 		ActionManager();
 		ActionManager(const ActionManager& other);
-		~ActionManager();
-	
-	public:
+		~ActionManager();	
 		
-		static ActionManager* Instance();
+		const Action* GetActionPrototype(ActionType at) const;
+		bool GetSuspicion(ActionType) const;
 
-		Action* GetActionPrototype(ActionType at);
-		bool GetSuspicion(ActionType);
-
-		Action* GetNewAction(ActionType at);
+		Action* GetNewAction(ActionType at) const;
 		void InitializePrototypes();
 		
 

@@ -22,8 +22,8 @@ GoTo::~GoTo()
 
 ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 {
-	Argument sub(*GetArg(SemanticRole::AGENT));
-	Argument obj(*GetArg(SemanticRole::GOAL));
+	Argument sub(GetArg(SemanticRole::AGENT));
+	Argument obj(GetArg(SemanticRole::GOAL));
 
 	Room* oldRoom = sub.instance->GetRoom();
 	//sub.instance->SetAttribute(AttributeType::ROOM, (*(obj.instance))[AttributeType::ROOM]);
@@ -91,8 +91,8 @@ void GoTo::InitEffects()
 {
 	Condition agentNearGoal(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	Argument agent(*GetArg(SemanticRole::AGENT));
-	Argument goal(*GetArg(SemanticRole::GOAL));
+	Argument agent(GetArg(SemanticRole::AGENT));
+	Argument goal(GetArg(SemanticRole::GOAL));
 
 	agentNearGoal.GetParamByIndex(0) = agent;
 	agentNearGoal.GetParamByIndex(0).attrib = AttributeType::ROOM;
@@ -109,23 +109,23 @@ void GoTo::InitPreconditions()
 
 std::string GoTo::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::GOAL);
+	const Argument& sub = GetArg(SemanticRole::AGENT);
+	const Argument& obj = GetArg(SemanticRole::GOAL);
 
 	std::string _agent;
 	std::string _goal;
 	std::string _verb;
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == room)
+	if(obj.instance == room)
 	{
 		_verb = "came";
 	}
@@ -136,15 +136,15 @@ std::string GoTo::Express(const Agent* agent, const Room* room) const
 
 	if(agent == 0)
 	{
-		_goal = obj->instance->GetRoom()->GetName();
+		_goal = obj.instance->GetRoom()->GetName();
 	}
-	else if(obj->instance->GetOwner() == agent)
+	else if(obj.instance->GetOwner() == agent)
 	{
 		_goal = "my bedroom";
 	}
-	else if(obj->instance->GetOwner() == sub->instance)
+	else if(obj.instance->GetOwner() == sub.instance)
 	{
-		Agent* a = (Agent*)sub->instance;
+		Agent* a = (Agent*)sub.instance;
 		switch(a->GetGender())
 		{
 		case Gender::MALE:
@@ -159,7 +159,7 @@ std::string GoTo::Express(const Agent* agent, const Room* room) const
 	}
 	else
 	{
-		_goal = obj->instance->GetRoom()->GetName();
+		_goal = obj.instance->GetRoom()->GetName();
 	}
 
 	std::stringstream str;
@@ -167,7 +167,7 @@ std::string GoTo::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-GoTo::operator std::string()
+std::string GoTo::GetName() const
 {
 	return "GoTo";
 }
@@ -179,9 +179,9 @@ float GoTo::Cost(const RoomManager& rm)
 	auto _agent = GetArg(SemanticRole::AGENT);
 	auto _room = GetArg(SemanticRole::GOAL);
 	
-	if (_room->instance->GetRoom() != 0)
+	if (_room.instance->GetRoom() != 0)
 	{
-		if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+		if (_room.instance->GetRoom()->GetOwner() != 0 && _room.instance->GetRoom()->GetOwner() != _agent.instance)
 		{
 			cost += 10.0f;
 		}
@@ -196,7 +196,7 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	ArgIter cpIter;
+	std::list<Argument>::iterator cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();
@@ -210,7 +210,7 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 	auto _agent = act->GetArg(SemanticRole::AGENT);
 	auto _goal = act->GetArg(SemanticRole::GOAL);
 
-	if(_agent->instance == _goal->instance)
+	if(_agent.instance == _goal.instance)
 	{
 		return 0;
 	}
@@ -223,11 +223,11 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 void GoTo::Dispatch(int turn)
 {
 	// Make sure the GoTo action's GOAL is a room, not an object
-	GetArg(SemanticRole::GOAL)->instance = GetArg(SemanticRole::GOAL)->instance->GetRoom();
+	GetArg(SemanticRole::GOAL).instance = GetArg(SemanticRole::GOAL).instance->GetRoom();
 	Action::Dispatch(turn);
 
 	auto cp = GetArg(SemanticRole::GOAL);
-	Room* room = cp->instance->GetRoom();
+	Room* room = cp.instance->GetRoom();
 	for(Agent* agent : room->GetAgents())
 	{
 		if(agent->IsVictim() == false)

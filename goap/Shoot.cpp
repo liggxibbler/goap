@@ -49,24 +49,24 @@ std::string Shoot::Express(const Agent* agent, const Room* room) const
 
 	std::string _agent;
 	std::string _patient;
-	std::string _instrument(ins->instance->GetName());
+	std::string _instrument(ins.instance->GetName());
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj.instance == agent)
 	{
 		_patient = "me";
 	}
 	else
 	{
-		_patient = obj->instance->GetName();
+		_patient = obj.instance->GetName();
 	}
 
 	std::stringstream str;
@@ -74,7 +74,7 @@ std::string Shoot::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-Shoot::operator std::string()
+std::string Shoot::GetName() const
 {
 	return "Shoot";
 }

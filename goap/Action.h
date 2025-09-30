@@ -39,24 +39,25 @@ namespace GOAP
 		Goal* GetPreconds();
 		Goal* GetGoal();
 
-		ArgIter GetFirstArg();
-		ArgIter GetLastArg();
-
 		virtual bool MightSatisfy(const Condition& cond) const; // XXX
 		bool CopyArgsFromCondition(const Condition& cond);
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 
-		ArgIter GetArg(SemanticRole st);
-		ArgIter GetArg(ObjectType ot);
-		ArgIter GetArg(Object* obj);
+		Argument& GetArg(SemanticRole st);
+		Argument& GetArg(ObjectType ot);
+		Argument& GetArg(Object* obj);
+
+		const Argument& GetArg(SemanticRole st) const;
+		const Argument& GetArg(ObjectType ot) const;
+		const Argument& GetArg(Object* obj) const;
 
 		void Initialize();
 		virtual void UpdateConditionInstances();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const = 0;
 
-		virtual operator std::string() = 0;
+		virtual std::string GetName() const = 0;
 
 		/*virtual int GetCost() = 0;
 		virtual int GetRisk() = 0;*/

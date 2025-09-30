@@ -14,8 +14,8 @@ bool Equal::EvaluateOAVB (const Argument* params, bool negate) const
 
 	else if ( (*(params[0].instance))[params[0].attrib] == params[0].value )
 	{
-		DUMP("attrib is " << m_params[0].instance->GetAttrib(m_params[0].attrib))
-		DUMP("value is " << m_params[0].value)
+		DUMP("attrib is " << params[0].instance->GetAttrib(params[0].attrib))
+		DUMP("value is " << params[0].value)
 		result = true;
 	}
 	else

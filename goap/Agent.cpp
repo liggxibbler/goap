@@ -156,7 +156,7 @@ void Agent::SetGoal(Goal* goal)
 	m_currentGoal = goal;
 }
 
-Plan* Agent::GetPlan(ActionManager* am, const Op::OperatorManager& om, const GOAP::RoomManager& roomManager)
+Plan* Agent::GetPlan(const ActionManager& am, const Op::OperatorManager& om, const GOAP::RoomManager& roomManager)
 {
 	//Plan* plan = new Plan();
 	if( s_planner->Devise(this, am, om, roomManager, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
@@ -176,7 +176,7 @@ ObjectType Agent::GetCompoundType()
 	return ObjectType::OBJECT | ObjectType::AGENT;
 }
 
-bool Agent::Update(const Op::OperatorManager& om, const RoomManager& roomManager, int turn)
+bool Agent::Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& roomManager, int turn)
 {
 	//m_bDoneMurder = false;
 
@@ -224,7 +224,7 @@ bool Agent::Update(const Op::OperatorManager& om, const RoomManager& roomManager
 				}
 
 				m_nextExecution = 0;
-				this->Update(om, roomManager, turn); // need replanning! must waist know thyme
+				this->Update(actionManager, om, roomManager, turn); // need replanning! must waist know thyme
 			}
 			else if(as == ExecutionStatus::FAIL) // XIBB - this is very bad replanning!!!
 			{
@@ -240,7 +240,7 @@ bool Agent::Update(const Op::OperatorManager& om, const RoomManager& roomManager
 			}
 			else
 			{
-				GetPlan(ActionManager::Instance(), om, roomManager);
+				GetPlan(actionManager, om, roomManager);
 				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
 				if(ps == PlanStatus::FAIL)
 				{
@@ -250,7 +250,7 @@ bool Agent::Update(const Op::OperatorManager& om, const RoomManager& roomManager
 					m_nextExecution = gt;
 				}
 			}
-			this->Update(om, roomManager, turn); // XIBB?
+			this->Update(actionManager, om, roomManager, turn); // XIBB?
 		}
 		else
 		{
@@ -336,7 +336,7 @@ void Agent::DoneMurder(bool flag)
 	m_bDoneMurder = flag;
 }
 
-void Agent::Answer(Object* obj, QuestionType qt, int turn)
+void Agent::Answer(const ActionManager& actionManager, Object* obj, QuestionType qt, int turn)
 {
 	/*for(unsigned int i=0; i<m_actionLog.size();++i)
 	{
@@ -345,10 +345,10 @@ void Agent::Answer(Object* obj, QuestionType qt, int turn)
 			std::cout << m_actionLog[i].action->Express(this, m_actionLog[i].room);
 		}
 	}*/
-	GiveStatement();
+	GiveStatement(actionManager);
 }
 
-void Agent::GiveStatement()
+void Agent::GiveStatement(const ActionManager& actionManager) const
 {
 	// Need to take victim and FactManager as arguments
 	// Need FactManager
@@ -375,11 +375,11 @@ void Agent::GiveStatement()
 			{
 				ActionType at = *ar.action;
 				int numWitness = ar.action->GetNumWitness();
-				int numSuspect = ActionManager::Instance()->GetSuspicion(at);
+				int numSuspect = actionManager.GetSuspicion(at);
 				//actionIsSuspect = (numSuspect > 0); // XIBB
 
 				if ( actionIsSuspect && (numWitness > numSuspect) &&
-					(ar.action->GetArg(SemanticRole::AGENT)->instance == this))
+					(ar.action->GetArg(SemanticRole::AGENT).instance == this))
 				{
 					//agentIsSuspect = true;// XIBB
 				}

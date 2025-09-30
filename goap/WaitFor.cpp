@@ -31,10 +31,10 @@ ExecutionStatus WaitFor::ExecuteWorkhorse(int turn)
 	//	(Agent*)(*GetArg(SemanticRole::AGENT));
 	//}
 
-	auto _goal = GetArg(SemanticRole::GOAL);
-	auto _locative = GetArg(SemanticRole::LOCATIVE);
+	const Argument& _goal = GetArg(SemanticRole::GOAL);
+	const Argument& _locative = GetArg(SemanticRole::LOCATIVE);
 
-	if(_goal->instance->GetRoom() == _locative->instance->GetRoom())
+	if(_goal.instance->GetRoom() == _locative.instance->GetRoom())
 	{
 		return ExecutionStatus::SUCCESS;
 	}
@@ -90,8 +90,8 @@ void WaitFor::InitEffects()
 {
 	Condition goalAtLocation(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	Argument goal(*GetArg(SemanticRole::GOAL));
-	Argument locative(*GetArg(SemanticRole::LOCATIVE));
+	Argument goal(GetArg(SemanticRole::GOAL));
+	Argument locative(GetArg(SemanticRole::LOCATIVE));
 	
 	goalAtLocation.GetParamByIndex(0) = goal;
 	goalAtLocation.GetParamByIndex(0).attrib = AttributeType::ROOM;
@@ -116,10 +116,10 @@ void WaitFor::InitPreconditions()
 {
 	Condition agentAtLocative(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 	
-	agentAtLocative.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
+	agentAtLocative.GetParamByIndex(0) = GetArg(SemanticRole::AGENT);
 	agentAtLocative.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	agentAtLocative.GetParamByIndex(1) = *GetArg(SemanticRole::LOCATIVE);
+	agentAtLocative.GetParamByIndex(1) = GetArg(SemanticRole::LOCATIVE);
 	agentAtLocative.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLocative);
@@ -134,22 +134,22 @@ std::string WaitFor::Express(const Agent* agent, const Room* room) const
 	std::string _goal;
 	std::string _verb("waited for");
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj.instance == agent)
 	{
 		_goal = "me";
 	}
 	else
 	{
-		_goal = obj->instance->GetName();
+		_goal = obj.instance->GetName();
 	}
 	
 	std::stringstream str;
@@ -157,7 +157,7 @@ std::string WaitFor::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-WaitFor::operator std::string()
+std::string WaitFor::GetName() const
 {
 	return "WaitFor";
 }
@@ -170,14 +170,14 @@ float WaitFor::Cost(const RoomManager& rm)
 
 	float cost = 5.0f;
 
-	auto _agent = GetArg(SemanticRole::AGENT);
-	auto _room = GetArg(SemanticRole::GOAL);
+	const Argument& _agent = GetArg(SemanticRole::AGENT);
+	const Argument& _room = GetArg(SemanticRole::GOAL);
 
-	if(_room->instance == 0)
+	if(_room.instance == 0)
 	{
 		// THROW EXCEPTION
 	}
-	else if (_room->instance->GetRoom()->GetOwner() != 0 && _room->instance->GetRoom()->GetOwner() != _agent->instance)
+	else if (_room.instance->GetRoom()->GetOwner() != 0 && _room.instance->GetRoom()->GetOwner() != _agent.instance)
 	{
 		cost += 100.0f;
 	}
@@ -196,7 +196,7 @@ Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	ArgIter cpIter;
+	std::list<Argument>::iterator cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();
@@ -207,15 +207,15 @@ Action* WaitFor::GetInstanceFromTuple(std::vector<Object*>& args)
 		++cpIter;
 	}
 
-	auto _agent = act->GetArg(SemanticRole::AGENT);
-	auto _goal = act->GetArg(SemanticRole::GOAL);
+	const Argument& _agent = act->GetArg(SemanticRole::AGENT);
+	const Argument& _goal = act->GetArg(SemanticRole::GOAL);
 
-	if(_goal->instance->GetCompoundType() != (ObjectType::OBJECT | ObjectType::AGENT))
+	if(_goal.instance->GetCompoundType() != (ObjectType::OBJECT | ObjectType::AGENT))
 	{
 		return 0;
 	}
 
-	if(_agent->instance == _goal->instance)
+	if(_agent.instance == _goal.instance)
 	{
 		return 0;
 	}

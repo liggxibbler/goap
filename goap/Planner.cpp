@@ -7,7 +7,7 @@ Planner::Planner()
 	m_currentGoal = nullptr;
 }
 
-PlanStatus Planner::Devise(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
+PlanStatus Planner::Devise(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
 	ClearPlanTree();
 	m_frontier.push_back(nullptr);
@@ -15,7 +15,7 @@ PlanStatus Planner::Devise(Agent* agent, ActionManager* am, const Op::OperatorMa
 	return DeviseWorkHorse(agent, am, om, roomManager, plan);
 }
 
-PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
+PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
 	for(m_currentGoal = PickNextGoal(); m_currentGoal != nullptr; m_currentGoal = PickNextGoal() )
 	{
@@ -66,7 +66,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, ActionManager* am, const Op::O
 	return PlanStatus::FAIL;
 }
 
-void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
+void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am)
 {
 	/*
 	for all actions in agent:
@@ -85,11 +85,12 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 			// XIBB the condition long list as a list of conditions
 
 
-			const Action* actionPrototype = am->GetActionPrototype(actionType); // get action prototype
+			const Action* actionPrototype = am.GetActionPrototype(actionType); // get action prototype
 			if(actionPrototype->MightSatisfy(condition) )
 			{
-				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << static_cast<std::string>(actionPrototype))
-				Action* action = am->GetNewAction(actionType); // to keep the prototype untouched
+				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << actionPrototype->GetName())
+				GETKEY
+				Action* action = am.GetNewAction(actionType); // to keep the prototype untouched
 				if (action->CopyArgsFromCondition(condition) == true)
 				{
 					action->UpdateConditionInstances();
@@ -98,7 +99,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, ActionManager* am)
 				}
 				else
 				{
-					std::cout << "Something's not right " << (std::string)(*action) << std::endl;
+					std::cout << "Something's not right " << action->GetName() << std::endl;
 					std::cin.get();
 				}
 			}
@@ -135,7 +136,7 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 		{
 			// this action cannot be used in the plan at this point
 			// and will not affect the frontier
-			DUMP("Action " << (std::string)(*act) << " cannot be instantiated")
+			DUMP("Action " << act->GetName() << " cannot be instantiated")
 			continue;
 		}
 		else

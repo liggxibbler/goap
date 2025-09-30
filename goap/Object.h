@@ -9,6 +9,7 @@ namespace GOAP
 {
 	class Room;
 	class RoomManager;
+	class ActionManager;
 
 	namespace Op
 	{
@@ -39,7 +40,7 @@ namespace GOAP
 
 		virtual Object* Clone() = 0;
 		//virtual operator ObjectType () = 0;
-		virtual bool Update(const Op::OperatorManager& om, const RoomManager& rm, int turn) = 0;
+		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn) = 0;
 		virtual ObjectType GetCompoundType() = 0;
 		virtual void Examine() = 0;
 

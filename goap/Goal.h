@@ -8,8 +8,7 @@
 namespace GOAP
 {
 	typedef std::list<Condition>::iterator CondIter;
-	typedef std::list<Argument>::iterator ArgIter;
-
+	
 	class Action;
 	class Plan;
 

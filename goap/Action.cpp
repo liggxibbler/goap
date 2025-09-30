@@ -38,17 +38,16 @@ bool Action::MightSatisfy(const Condition& cond) const
 bool Action::CopyArgsFromCondition(const Condition& cond)
 {
 	bool result = true;
-	ArgIter paramIter;
 	for(int i=0; i < cond.GetNumParams(); ++i)
 	{
 		SemanticRole st = cond[i].semantic;
 		if(st != SemanticRole::NONE)
 		{
-			auto arg = GetArg(st);
+			Argument& arg = GetArg(st);
 			
-			if( arg->MatchesTypeOf(cond[i].instance) )
+			if( arg.MatchesTypeOf(cond[i].instance) )
 			{
-				arg->instance = cond[i].instance;
+				arg.instance = cond[i].instance;
 				//arg->type = arg->instance->GetCompoundType();
 			}
 			else
@@ -60,65 +59,92 @@ bool Action::CopyArgsFromCondition(const Condition& cond)
 	return result;
 }
 
-ArgIter Action::GetArg(SemanticRole st)
+Argument& Action::GetArg(SemanticRole st)
 {
-	ArgIter paramIter;
-	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	for (Argument& arg : m_args)
 	{
-		if((*paramIter).semantic == st)
+		if(arg.semantic == st)
 		{
-			return paramIter;
+			return arg;
 		}
 	}
-	return paramIter;
+
+	throw;
 }
 
-ArgIter Action::GetArg(ObjectType ot)
+Argument& Action::GetArg(ObjectType ot)
 {
-	ArgIter paramIter;
-	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	for(Argument& arg : m_args)
 	{
-		if((*paramIter).type == ot)
+		if(arg.type == ot)
 		{
-			return paramIter;
+			return arg;
 		}
 	}
-	return paramIter;
+
+	throw;
 }
 
-ArgIter Action::GetArg(Object* obj)
+Argument& Action::GetArg(Object* obj)
 {
-	ArgIter paramIter;
-	for(paramIter = m_args.begin(); paramIter != m_args.end(); ++paramIter)
+	for (Argument& arg : m_args)
 	{
-		if((*paramIter).instance == obj)
+		if(arg.instance == obj)
 		{
-			return paramIter;
+			return arg;
 		}
 	}
-	return paramIter;
+
+	throw;
 }
 
-ArgIter Action::GetFirstArg()
+const Argument& Action::GetArg(SemanticRole st) const
 {
-	return m_args.begin();
+	for (const Argument& arg : m_args)
+	{
+		if (arg.semantic == st)
+		{
+			return arg;
+		}
+	}
+
+	throw;
 }
 
-ArgIter Action::GetLastArg()
+const Argument& Action::GetArg(ObjectType ot) const
 {
-	return m_args.end();
+	for (const Argument& arg : m_args)
+	{
+		if (arg.type == ot)
+		{
+			return arg;
+		}
+	}
+
+	throw;
 }
+
+const Argument& Action::GetArg(Object* obj) const
+{
+	for (const Argument& arg : m_args)
+	{
+		if (arg.instance == obj)
+		{
+			return arg;
+		}
+	}
+
+	throw;
+}
+
 
 int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 {
-	ArgIter semanticIter;
-	Argument cp;
 	std::vector<Object*> unifyList;
 	std::vector<std::vector<Object*> > comboList;
 
-	for(semanticIter = m_args.begin(); semanticIter != m_args.end(); ++semanticIter)
+	for(Argument& cp : m_args)
 	{
-		cp = *semanticIter; 
 		if(cp.instance == nullptr)
 		//	for each null semantic
 		{
@@ -189,7 +215,7 @@ Action* Action::GetInstanceFromTuple(std::vector<Object*>& args)
 	//act->Initialize(); // make sure arguments are initialized
 
 	std::vector<Object*>::iterator instanceIter;
-	ArgIter cpIter;
+	std::list<Argument>::iterator cpIter;
 
 	cpIter = act->m_args.begin();
 	instanceIter = args.begin();
@@ -218,10 +244,9 @@ void Action::Initialize()
 
 void Action::CloneArgs(Action* prototype)
 {
-	ArgIter argIter;
-	for(argIter = prototype->GetFirstArg(); argIter != prototype->GetLastArg(); ++argIter)
+	for(Argument& arg : prototype->m_args)
 	{
-		m_args.push_back(*argIter);
+		m_args.push_back(arg);
 	}
 }
 
@@ -271,7 +296,7 @@ void Action::UpdateEffectInstances()
 		for(int i = 0; i < effect->GetNumParams(); ++i)
 		{
 			SemanticRole st = effect->GetParamByIndex(i).semantic;
-			effect->GetParamByIndex(i).instance	= GetArg(st)->instance;
+			effect->GetParamByIndex(i).instance	= GetArg(st).instance;
 		}
 	}
 }
@@ -284,7 +309,7 @@ void Action::UpdatePrecondInstances()
 		for(int i = 0; i < precond->GetNumParams(); ++i)
 		{
 			SemanticRole st = precond->GetParamByIndex(i).semantic;
-			precond->GetParamByIndex(i).instance = GetArg(st)->instance;
+			precond->GetParamByIndex(i).instance = GetArg(st).instance;
 		}
 	}
 }
@@ -311,8 +336,8 @@ ExecutionStatus Action::Execute(const Op::OperatorManager& om, int turn)
 		else
 		{
 #ifdef _DEBUG
-			std::string _str = (std::string)(*this);
-			DUMP(GetArg(SemanticRole::AGENT)->instance->GetName() << " can't " << _str << ".")
+			std::string _str = GetName();
+			DUMP(GetArg(SemanticRole::AGENT).instance->GetName() << " can't " << _str << ".")
 			GETKEY;
 #endif
 			return ExecutionStatus::FAIL;
@@ -329,7 +354,7 @@ void Action::Dispatch(int turn)
 {
 	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
-	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();
 	
 	for(Agent* agent : room->GetAgents())

@@ -115,7 +115,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(const Op::OperatorManager& om, const RoomManager& rm, int turn)
+bool Room::Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn)
 {
 	//m_murder = false;
 
@@ -123,13 +123,13 @@ bool Room::Update(const Op::OperatorManager& om, const RoomManager& rm, int turn
 
 	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
 	{
-		(*object)->Update(om, rm, turn);
+		(*object)->Update(actionManager, om, rm, turn);
 	}
 
 	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		if( (*agent)->Update(om, rm, turn) )
+		if( (*agent)->Update(actionManager, om, rm, turn) )
 		{
 			m_isMurderRoom = true;
 			//(*agent)->DoneMurder(false);

@@ -7,10 +7,10 @@ using namespace GOAP;
 
 ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 {
-	Argument sub(*GetArg(SemanticRole::AGENT));
-	Argument obj(*GetArg(SemanticRole::PATIENT));
-	Argument ins(*GetArg(SemanticRole::INSTRUMENT));
-	Argument loc(*GetArg(SemanticRole::LOCATIVE));
+	Argument sub(GetArg(SemanticRole::AGENT));
+	Argument obj(GetArg(SemanticRole::PATIENT));
+	Argument ins(GetArg(SemanticRole::INSTRUMENT));
+	Argument loc(GetArg(SemanticRole::LOCATIVE));
 
 	if(true)//loc.instance->GetAttrib(AttributeType::NUM_AGENTS) <= 3)
 	{
@@ -24,8 +24,8 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 		Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 		notHaveMurderWeapon.SetNegate(true);
-		notHaveMurderWeapon.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
-		notHaveMurderWeapon.GetParamByIndex(1) = *GetArg(SemanticRole::INSTRUMENT);
+		notHaveMurderWeapon.GetParamByIndex(0) = GetArg(SemanticRole::AGENT);
+		notHaveMurderWeapon.GetParamByIndex(1) = GetArg(SemanticRole::INSTRUMENT);
 		loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 		loseMurderWeapon->SetPriority(21);
 
@@ -68,7 +68,7 @@ void Murder::InitArgs()
 void Murder::InitEffects()
 {
 	Condition objIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
-	Argument obj = *GetArg(SemanticRole::PATIENT);
+	Argument obj = GetArg(SemanticRole::PATIENT);
 
 	objIsDead.GetParamByIndex(0) = obj;
 	objIsDead.GetParamByIndex(0).attrib	= AttributeType::ALIVE;
@@ -88,8 +88,8 @@ void Murder::InitPreconditions()
 	// AGENT owns INSTRUMENT
 	Condition agentHasInst(OperatorLayoutType::OOB, OperatorType::HAS);
 
-	agentHasInst.GetParamByIndex(0) = *_agent;
-	agentHasInst.GetParamByIndex(1) = *_instrument;
+	agentHasInst.GetParamByIndex(0) = _agent;
+	agentHasInst.GetParamByIndex(1) = _instrument;
 
 	m_preconds->AddCondition(agentHasInst);
 
@@ -97,10 +97,10 @@ void Murder::InitPreconditions()
 
 	Condition agentAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	agentAtLoc.GetParamByIndex(0) = *_agent;
+	agentAtLoc.GetParamByIndex(0) = _agent;
 	agentAtLoc.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	agentAtLoc.GetParamByIndex(1) = *_locative;
+	agentAtLoc.GetParamByIndex(1) = _locative;
 	agentAtLoc.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(agentAtLoc);
@@ -109,10 +109,10 @@ void Murder::InitPreconditions()
 
 	Condition patientAtLoc(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
 
-	patientAtLoc.GetParamByIndex(0) = *_patient;
+	patientAtLoc.GetParamByIndex(0) = _patient;
 	patientAtLoc.GetParamByIndex(0).attrib = AttributeType::ROOM;
 
-	patientAtLoc.GetParamByIndex(1) = *_locative;
+	patientAtLoc.GetParamByIndex(1) = _locative;
 	patientAtLoc.GetParamByIndex(1).attrib = AttributeType::ROOM;
 
 	m_preconds->AddCondition(patientAtLoc);
@@ -143,9 +143,9 @@ float Murder::Cost(const RoomManager& rm)
 	auto _locative = GetArg(SemanticRole::LOCATIVE);
 	auto _instrument = GetArg(SemanticRole::INSTRUMENT);
 
-	Object* roomOwner = _locative->instance->GetOwner();
+	Object* roomOwner = _locative.instance->GetOwner();
 	
-	Prop* inst = (Prop*)(_instrument->instance);
+	Prop* inst = (Prop*)(_instrument.instance);
 
 	// Prefer instruments with many instances
 	cost += 10.0f / ( 1 + inst->GetNumberOfInstances() );
@@ -153,19 +153,19 @@ float Murder::Cost(const RoomManager& rm)
 	if (roomOwner != 0)
 	{
 		// penalty for suspicious activity
-		cost += 500.0f * rm.GetProb((Agent*)roomOwner, (Room*)_locative->instance);
+		cost += 500.0f * rm.GetProb((Agent*)roomOwner, (Room*)_locative.instance);
 	}
-	if (roomOwner == _patient->instance)
+	if (roomOwner == _patient.instance)
 	{
 		// penalty for suspicious activity
 		cost += 500.0f;
 	}
 
 	// penalty for risk of not being found
-	cost += 1000.0f * (1.0f - rm.GetProbWillBeFound((Agent*)_patient->instance, (Room*)_locative->instance));
+	cost += 1000.0f * (1.0f - rm.GetProbWillBeFound((Agent*)_patient.instance, (Room*)_locative.instance));
 
 	// penalty for risk of not finding victim alone
-	cost += 1000.f * (1.0f - rm.GetProbAlone((Agent*)_patient->instance, (Room*)_locative->instance));
+	cost += 1000.f * (1.0f - rm.GetProbAlone((Agent*)_patient.instance, (Room*)_locative.instance));
 
 	return cost;
 
@@ -174,17 +174,17 @@ float Murder::Cost(const RoomManager& rm)
 
 void Murder::SetArguments(Agent* agent, Agent* patient, Object* instrument, Room* locative)
 {
-	GetArg(SemanticRole::AGENT)->instance = agent;
-	GetArg(SemanticRole::PATIENT)->instance = patient;
-	GetArg(SemanticRole::INSTRUMENT)->instance = instrument;
-	GetArg(SemanticRole::LOCATIVE)->instance = locative;
+	GetArg(SemanticRole::AGENT).instance = agent;
+	GetArg(SemanticRole::PATIENT).instance = patient;
+	GetArg(SemanticRole::INSTRUMENT).instance = instrument;
+	GetArg(SemanticRole::LOCATIVE).instance = locative;
 }
 
 void Murder::Dispatch(int turn)
 {
 	auto cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
-	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();
 	
 	for (Agent* agent : room->GetAgents())
@@ -193,7 +193,7 @@ void Murder::Dispatch(int turn)
 		{
 			m_numWitness++;
 		}
-		if( agent != GetArg(SemanticRole::AGENT)->instance ) // Treat murdere differently
+		if( agent != GetArg(SemanticRole::AGENT).instance ) // Treat murdere differently
 		{
 			agent->Log(turn, this);
 		}
@@ -215,10 +215,10 @@ void Murder::Dispatch(int turn)
 			{
 				if(!agent->IsVictim() && !agent->IsMurderer())
 				{
-					murder->GetArg(SemanticRole::AGENT)->instance = agent;
+					murder->GetArg(SemanticRole::AGENT).instance = agent;
 				}
 			}
-			Agent* falseAgent = (Agent*)cp->instance;
+			Agent* falseAgent = (Agent*)cp.instance;
 			falseAgent->Log(turn, murder);
 			break;
 		}
@@ -236,8 +236,8 @@ Goal* Murder::FollowupGoal()
 	
 	Condition notHaveMurderWeapon(OperatorLayoutType::OOB, OperatorType::HAS);
 	notHaveMurderWeapon.SetNegate(true);
-	notHaveMurderWeapon.GetParamByIndex(0) = *GetArg(SemanticRole::AGENT);
-	notHaveMurderWeapon.GetParamByIndex(1) = *GetArg(SemanticRole::INSTRUMENT);
+	notHaveMurderWeapon.GetParamByIndex(0) = GetArg(SemanticRole::AGENT);
+	notHaveMurderWeapon.GetParamByIndex(1) = GetArg(SemanticRole::INSTRUMENT);
 	loseMurderWeapon->AddCondition(notHaveMurderWeapon);
 	loseMurderWeapon->SetPriority(19);
 

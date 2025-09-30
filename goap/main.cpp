@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Action.h"
+#include "ActionManager.h"
 #include "Game.h"
-//#include <Windows.h>
 #include <ctime>
 
 using namespace std;
@@ -25,8 +25,10 @@ int main()
 	RoomManager roomManager;
 	roomManager.Initialize();
 
+	ActionManager actionManager;
+
 	game.Initialize(roomManager);
-	game.Run(operatorManager, roomManager);
+	game.Run(actionManager, operatorManager, roomManager);
 
 	Action::CloseFile();
 

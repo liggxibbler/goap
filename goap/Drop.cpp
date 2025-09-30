@@ -24,13 +24,13 @@ Drop::operator ActionType()
 
 ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 {
-	auto _agent(GetArg(SemanticRole::AGENT));
-	auto _patient(GetArg(SemanticRole::PATIENT));
+	const Argument& _agent(GetArg(SemanticRole::AGENT));
+	const Argument& _patient(GetArg(SemanticRole::PATIENT));
 
-	Prop* patient = (Prop*)_patient->instance;
+	Prop* patient = (Prop*)_patient.instance;
 	patient->SetBearer(0);
-	_agent->instance->GetRoom()->AddObject(patient);
-	_agent->instance->SetAttribute(AttributeType::INVENTORY, false);
+	_agent.instance->GetRoom()->AddObject(patient);
+	_agent.instance->SetAttribute(AttributeType::INVENTORY, false);
 
 	DUMP("       ** " << Express(0, 0))
 	return ExecutionStatus::SUCCESS;
@@ -69,9 +69,9 @@ void Drop::InitArgs()
 
 void Drop::InitPreconditions()
 {
-	Argument agent = *GetArg(SemanticRole::AGENT),
-		patient = *GetArg(SemanticRole::PATIENT),
-		locative = *GetArg(SemanticRole::LOCATIVE);
+	Argument agent = GetArg(SemanticRole::AGENT),
+		patient = GetArg(SemanticRole::PATIENT),
+		locative = GetArg(SemanticRole::LOCATIVE);
 
 	Condition agentHasPatient(OperatorLayoutType::OOB, OperatorType::HAS);
 
@@ -101,9 +101,9 @@ void Drop::InitPreconditions()
 
 void Drop::InitEffects()
 {
-	Argument agent = *GetArg(SemanticRole::AGENT),
-		patient = *GetArg(SemanticRole::PATIENT),
-		locative = *GetArg(SemanticRole::LOCATIVE);
+	Argument agent = GetArg(SemanticRole::AGENT),
+		patient = GetArg(SemanticRole::PATIENT),
+		locative = GetArg(SemanticRole::LOCATIVE);
 
 	Condition agentDoesNotHavePatient(OperatorLayoutType::OOB, OperatorType::HAS);
 	agentDoesNotHavePatient.SetNegate(true);
@@ -139,22 +139,22 @@ std::string Drop::Express(const Agent* agent, const Room* room) const
 	std::string _agent;
 	std::string _patient;
 
-	if(sub->instance == agent)
+	if(sub.instance == agent)
 	{
 		_agent = "I";
 	}
 	else
 	{
-		_agent = sub->instance->GetName();
+		_agent = sub.instance->GetName();
 	}
 
-	if(obj->instance == agent)
+	if(obj.instance == agent)
 	{
 		_patient = "me";
 	}
 	else
 	{
-		_patient = obj->instance->GetName();
+		_patient = obj.instance->GetName();
 	}
 
 	std::stringstream str;
@@ -163,7 +163,7 @@ std::string Drop::Express(const Agent* agent, const Room* room) const
 	return str.str();
 }
 
-Drop::operator std::string()
+std::string Drop::GetName() const
 {
 	return "Drop";
 }
@@ -176,12 +176,12 @@ float Drop::Cost(const RoomManager& rm)
 
 	float cost = 0;
 
-	auto _agent = GetArg(SemanticRole::AGENT);
-	auto _patient = GetArg(SemanticRole::PATIENT);
-	auto _locative = GetArg(SemanticRole::LOCATIVE);
+	const Argument _agent = GetArg(SemanticRole::AGENT);
+	const Argument _patient = GetArg(SemanticRole::PATIENT);
+	const Argument _locative = GetArg(SemanticRole::LOCATIVE);
 
 
-	if(_locative->instance->GetOwner() == 0)
+	if(_locative.instance->GetOwner() == 0)
 	// If the room has no owner, i.e. public room
 	{
 		cost = 60.0f;
@@ -191,17 +191,17 @@ float Drop::Cost(const RoomManager& rm)
 	//{
 	//	cost = 80;
 	//}
-	else if( _locative->instance->GetOwner() == _agent->instance )
+	else if( _locative.instance->GetOwner() == _agent.instance )
 	// if the room is the dropper's room
 	{
 		cost = 40.0f;
 	}
-	else if( _locative->instance->GetOwner() != _agent->instance )
+	else if( _locative.instance->GetOwner() != _agent.instance )
 	// if the room has an owner that isn't the dropper
 	{
 		cost = 20.0f + static_cast<float>(rand() % 10);
 	}
-	else if( _locative->instance->GetOwner() == _patient->instance->GetOwner() )
+	else if( _locative.instance->GetOwner() == _patient.instance->GetOwner() )
 	// if the room belongs to the owner of the object
 	{
 		cost = 5.0f;
@@ -226,9 +226,9 @@ void Drop::Debug()
 
 void Drop::Dispatch(int turn)
 {
-	auto cp = GetArg(SemanticRole::AGENT);
+	const Argument cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
-	Agent* agent = dynamic_cast<Agent*>(cp->instance);
+	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();
 	
 	for (Agent* agent : room->GetAgents())
@@ -238,7 +238,7 @@ void Drop::Dispatch(int turn)
 			m_numWitness++;
 		}
 		
-		if( agent != GetArg(SemanticRole::AGENT)->instance ) // Treat dropper differently
+		if( agent != GetArg(SemanticRole::AGENT).instance ) // Treat dropper differently
 		{
 			agent->Log(turn, this);
 		}
@@ -259,12 +259,12 @@ void Drop::Dispatch(int turn)
 
 			for(Agent* agent : room->GetAgents())
 			{
-				if(!agent->IsVictim() && agent != GetArg(SemanticRole::AGENT)->instance)
+				if(!agent->IsVictim() && agent != GetArg(SemanticRole::AGENT).instance)
 				{
-					drop->GetArg(SemanticRole::AGENT)->instance = agent;
+					drop->GetArg(SemanticRole::AGENT).instance = agent;
 				}
 			}
-			Agent* falseAgent = (Agent*)cp->instance;
+			Agent* falseAgent = (Agent*)cp.instance;
 			falseAgent->Log(turn, drop);
 			break;
 		}

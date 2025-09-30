@@ -54,12 +54,12 @@ namespace GOAP
 
 		bool Unify(ObjectType ot, std::vector<Object*>& result, bool strict);
 
-		Plan* GetPlan(ActionManager* am, const Op::OperatorManager& om, const GOAP::RoomManager& rm);
+		Plan* GetPlan(const ActionManager& am, const Op::OperatorManager& om, const GOAP::RoomManager& rm);
 		void See(Object* obj);
 		void See(Room* room, bool deep = true);
 
 		virtual ObjectType GetCompoundType() override;
-		virtual bool Update(const Op::OperatorManager& om, const RoomManager& room, int turn) override;
+		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& room, int turn) override;
 		virtual void Examine() override;
 
 		virtual bool CanBeMurderWeapon(); // XXX
@@ -69,8 +69,8 @@ namespace GOAP
 		bool GetMurder();
 		void DoneMurder(bool flag);
 
-		void Answer(Object* obj, QuestionType qt, int turn);
-		void GiveStatement();
+		void Answer(const ActionManager& actionManager, Object* obj, QuestionType qt, int turn);
+		void GiveStatement(const ActionManager& actionManager) const;
 		void Lie(ActionRecord& ar, unsigned int& numStatement);
 
 		RoomName GetNextRoom();

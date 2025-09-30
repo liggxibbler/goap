@@ -16,7 +16,7 @@ namespace GOAP
 		virtual Take* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;
-		virtual operator std::string() override;
+		virtual std::string GetName() const override;
 
 		virtual float Cost(const RoomManager& rm) override;
 		
