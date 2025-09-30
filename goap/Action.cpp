@@ -374,9 +374,9 @@ bool Action::EvaluatePreconditions(const Op::OperatorManager& om)
 
 bool Action::EvaluateEffects(const Op::OperatorManager& om)
 {
-	for(auto effect(m_effects.begin()); effect!= m_effects.end(); ++effect)
+	for(const Condition& effect : m_effects)
 	{
-		if( ! effect->Evaluate(om) )
+		if( ! effect.Evaluate(om) )
 		{
 			return false;
 		}

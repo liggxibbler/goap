@@ -127,8 +127,8 @@ void WaitFor::InitPreconditions()
 
 std::string WaitFor::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::GOAL);
+	const Argument& sub = GetArg(SemanticRole::AGENT);
+	const Argument& obj = GetArg(SemanticRole::GOAL);
 	
 	std::string _agent;
 	std::string _goal;

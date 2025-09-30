@@ -104,13 +104,12 @@ Goal* Plan::Validate(const Op::OperatorManager& om)
 		Goal* temp = new Goal(*m_plan);
 
 		// Pool all preconditions
-		while(temp->GetParent() != 0)
+		while(temp->GetParent() != nullptr)
 		{
 			// temp.conds += temp.parent.conds
-			for(auto cond(temp->GetParent()->GetFirstCondition());
-				cond != temp->GetParent()->GetLastCondition() ; ++cond)
+			for(Condition cond : temp->GetParent()->GetConditions())
 			{
-				temp->AddCondition(*cond);
+				temp->AddCondition(cond);
 			}
 
 			for(const Condition& effect : temp->GetAction()->GetEffects())
@@ -138,14 +137,14 @@ Goal* Plan::Validate(const Op::OperatorManager& om)
 
 		//// Only True conditions should be left
 		int numTrue = 0;
-		for(auto condition(temp->GetFirstCondition()); condition != temp->GetLastCondition() ; ++condition)
+		for(Condition condition : temp->GetConditions())
 		{
 		//	if ( condition->GetOperatorType() == OperatorType::TRUE )
 		//	{
 		//		numTrue++;
 		//	}
 
-			if( condition->Evaluate(om) )
+			if( condition.Evaluate(om) )
 			{
 				numTrue++;
 			}

@@ -181,7 +181,7 @@ void Take::UpdateConditionInstances()
 
 void Take::Dispatch(int turn)
 {
-	auto cp = GetArg(SemanticRole::AGENT);
+	const Argument& cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();

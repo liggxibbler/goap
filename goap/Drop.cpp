@@ -133,8 +133,8 @@ void Drop::InitEffects()
 
 std::string Drop::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::PATIENT);
+	const Argument sub = GetArg(SemanticRole::AGENT);
+	const Argument obj = GetArg(SemanticRole::PATIENT);
 
 	std::string _agent;
 	std::string _patient;

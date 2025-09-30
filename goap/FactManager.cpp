@@ -92,11 +92,14 @@ bool	FactManager::LastSeen(Agent* target, int turn, SeenRecord& sr)
 		}
 	}
 	
-	for(auto agent(m_agents.begin()); agent != m_agents.end() && !foundTime ; ++agent)
+	for(auto agent : m_agents)
 	{
-		if(m_roomChart[*agent][sr.when] == m_roomChart[target][sr.when])
+		if (foundTime)
+			break;
+
+		if(m_roomChart[agent][sr.when] == m_roomChart[target][sr.when])
 		{
-			sr.who.push_back(*agent);
+			sr.who.push_back(agent);
 		}
 	}
 

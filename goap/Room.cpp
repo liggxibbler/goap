@@ -121,15 +121,15 @@ bool Room::Update(const ActionManager& actionManager, const Op::OperatorManager&
 
 	DUMP("*** Updating room " << m_name << " at turn " << turn << " ***")
 
-	for(auto object(m_objects.begin()); object != m_objects.end(); ++object)
+	for(Prop* object : m_objects)
 	{
-		(*object)->Update(actionManager, om, rm, turn);
+		object->Update(actionManager, om, rm, turn);
 	}
 
-	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+	for(Agent* agent : m_agents)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		if( (*agent)->Update(actionManager, om, rm, turn) )
+		if( agent->Update(actionManager, om, rm, turn) )
 		{
 			m_isMurderRoom = true;
 			//(*agent)->DoneMurder(false);
