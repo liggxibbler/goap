@@ -176,8 +176,8 @@ float GoTo::Cost(const RoomManager& rm)
 {
 	float cost = 30;
 
-	auto _agent = GetArg(SemanticRole::AGENT);
-	auto _room = GetArg(SemanticRole::GOAL);
+	const Argument& _agent = GetArg(SemanticRole::AGENT);
+	const Argument& _room = GetArg(SemanticRole::GOAL);
 	
 	if (_room.instance->GetRoom() != 0)
 	{
@@ -207,8 +207,8 @@ Action* GoTo::GetInstanceFromTuple(std::vector<Object*>& args)
 		++cpIter;
 	}
 
-	auto _agent = act->GetArg(SemanticRole::AGENT);
-	auto _goal = act->GetArg(SemanticRole::GOAL);
+	const Argument& _agent = act->GetArg(SemanticRole::AGENT);
+	const Argument& _goal = act->GetArg(SemanticRole::GOAL);
 
 	if(_agent.instance == _goal.instance)
 	{
@@ -226,7 +226,7 @@ void GoTo::Dispatch(int turn)
 	GetArg(SemanticRole::GOAL).instance = GetArg(SemanticRole::GOAL).instance->GetRoom();
 	Action::Dispatch(turn);
 
-	auto cp = GetArg(SemanticRole::GOAL);
+	const Argument& cp = GetArg(SemanticRole::GOAL);
 	Room* room = cp.instance->GetRoom();
 	for(Agent* agent : room->GetAgents())
 	{

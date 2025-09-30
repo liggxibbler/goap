@@ -415,15 +415,15 @@ void Agent::GiveStatement(const ActionManager& actionManager) const
 		unsigned int j = answer - 1;
 		if( j>=0 && j < m_actionLog.size() )
 		{
-			auto room = m_actionLog[j].roomSnap;
+			const Room* room = m_actionLog[j].roomSnap;
 			std::cout << "\nIn " << room->GetName() <<" at " << TURN2TIME(m_actionLog[j].turn) << " there was:\n\n";
 			
-			for(Object* prop : room->GetObjects())
+			for(const Object* prop : room->GetObjects())
 			{
 				std::cout << "-> " << prop->GetName() << "\n";
 			}
 			
-			for (Agent* agent : room->GetAgents())
+			for (const Agent* agent : room->GetAgents())
 			{
 				if(agent == this)
 				{

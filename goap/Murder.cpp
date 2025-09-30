@@ -80,10 +80,10 @@ void Murder::InitEffects()
 
 void Murder::InitPreconditions()
 {
-	auto _agent(GetArg(SemanticRole::AGENT));
-	auto _patient(GetArg(SemanticRole::PATIENT));
-	auto _instrument(GetArg(SemanticRole::INSTRUMENT));
-	auto _locative(GetArg(SemanticRole::LOCATIVE));
+	Argument _agent(GetArg(SemanticRole::AGENT));
+	Argument _patient(GetArg(SemanticRole::PATIENT));
+	Argument _instrument(GetArg(SemanticRole::INSTRUMENT));
+	Argument _locative(GetArg(SemanticRole::LOCATIVE));
 
 	// AGENT owns INSTRUMENT
 	Condition agentHasInst(OperatorLayoutType::OOB, OperatorType::HAS);
@@ -139,9 +139,9 @@ float Murder::Cost(const RoomManager& rm)
 
 	float cost = 0;
 
-	auto _patient = GetArg(SemanticRole::PATIENT);
-	auto _locative = GetArg(SemanticRole::LOCATIVE);
-	auto _instrument = GetArg(SemanticRole::INSTRUMENT);
+	const Argument& _patient = GetArg(SemanticRole::PATIENT);
+	const Argument& _locative = GetArg(SemanticRole::LOCATIVE);
+	const Argument& _instrument = GetArg(SemanticRole::INSTRUMENT);
 
 	Object* roomOwner = _locative.instance->GetOwner();
 	
@@ -182,7 +182,7 @@ void Murder::SetArguments(Agent* agent, Agent* patient, Object* instrument, Room
 
 void Murder::Dispatch(int turn)
 {
-	auto cp = GetArg(SemanticRole::AGENT);
+	const Argument& cp = GetArg(SemanticRole::AGENT);
 	this->SetLogged();
 	Agent* agent = dynamic_cast<Agent*>(cp.instance);
 	Room* room = agent->GetRoom();

@@ -198,7 +198,7 @@ Action* Goal::GetAction()
 
 void Goal::ClearChildren()
 {
-	auto child(m_children.begin());
+	std::list<GOAP::Goal*>::iterator child(m_children.begin());
 	while(child != m_children.end())
 	{
 		delete (*child);

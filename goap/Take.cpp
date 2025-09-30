@@ -25,8 +25,8 @@ Take::operator ActionType()
 
 ExecutionStatus Take::ExecuteWorkhorse(int turn)
 {
-	auto _agent(GetArg(SemanticRole::AGENT));
-	auto _patient(GetArg(SemanticRole::PATIENT));
+	const Argument& _agent(GetArg(SemanticRole::AGENT));
+	const Argument& _patient(GetArg(SemanticRole::PATIENT));
 
 	Prop* patient = (Prop*)_patient.instance;
 	patient->SetBearer(_agent.instance);

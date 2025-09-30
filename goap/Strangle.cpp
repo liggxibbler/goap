@@ -44,9 +44,9 @@ void Strangle::InitArgs()
 
 std::string Strangle::Express(const Agent* agent, const Room* room) const
 {
-	auto sub = GetArg(SemanticRole::AGENT);
-	auto obj = GetArg(SemanticRole::PATIENT);
-	auto ins = GetArg(SemanticRole::INSTRUMENT);
+	const Argument& sub = GetArg(SemanticRole::AGENT);
+	const Argument& obj = GetArg(SemanticRole::PATIENT);
+	const Argument& ins = GetArg(SemanticRole::INSTRUMENT);
 
 	std::string _agent;
 	std::string _patient;

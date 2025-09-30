@@ -15,13 +15,13 @@ Room::Room(const Room& other)
 	m_room = m_id;
 	m_name = other.m_name;
 	m_roomInstance = this;
-	for(auto prop(other.m_objects.begin()); prop != other.m_objects.end(); ++prop)
+	for(Prop* prop : other.m_objects)
 	{
-		m_objects.insert(*prop);
+		m_objects.insert(prop);
 	}
-	for(auto agent(other.m_agents.begin()); agent != other.m_agents.end(); ++agent)
+	for(Agent* agent : other.m_agents)
 	{
-		m_agents.insert(*agent);
+		m_agents.insert(agent);
 	}
 }
 
@@ -82,12 +82,12 @@ void Room::AddObject(Prop* obj)
 //	return m_name;
 //}
 
-const std::set<Prop*>& GOAP::Room::GetObjects()
+const std::set<Prop*>& GOAP::Room::GetObjects() const
 {
 	return m_objects;
 }
 
-const std::set<Agent*>& GOAP::Room::GetAgents()
+const std::set<Agent*>& GOAP::Room::GetAgents() const
 {
 	return m_agents;
 }
@@ -250,9 +250,9 @@ void Room::RemoveObject(Prop* obj)
 
 void Room::ResetAgentUpdateFlags()
 {
-	for(auto agent(m_agents.begin()); agent != m_agents.end(); ++agent)
+	for(Agent* agent : m_agents)
 	{
-		(*agent)->ResetUpdateFlag();
+		agent->ResetUpdateFlag();
 	}
 }
 

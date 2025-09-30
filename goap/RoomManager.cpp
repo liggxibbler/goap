@@ -92,33 +92,33 @@ void GOAP::RoomManager::CreateRoomFor(Agent* agent)
 
 Room* RoomManager::GetRoom(std::string name) const
 {
-	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	for(Room* room : m_rooms)
 	{
-		if ((*room)->GetName() == name)
+		if (room->GetName() == name)
 		{
-			return *room;
+			return room;
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 Room* RoomManager::GetRoom(int id) const
 {
-	for(auto room(m_rooms.begin()); room != m_rooms.end(); ++room)
+	for(Room* room : m_rooms)
 	{
-		if ((*room)->GetID() == id)
+		if (room->GetID() == id)
 		{
-			return *room;
+			return room;
 		}
 	}
-	return 0;
+	return nullptr;
 }
 
 void RoomManager::ShowBedrooms(Agent* murderer) const
 {
-	for(auto room(m_mapBedroom.begin()); room != m_mapBedroom.end(); ++room)
+	for(auto& agentRoomPair : m_mapBedroom)
 	{
-		murderer->See(room->second, false);
+		murderer->See(agentRoomPair.second, false);
 	}
 }
 
@@ -161,11 +161,11 @@ float RoomManager::GetProb(Agent* agent, Room* room) const
 float RoomManager::GetProbOthers(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
-	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	for(auto& record : m_probabilities)
 	{
-		if(record->first != agent)
+		if(record.first != agent)
 		{
-			prob *= GetProb(record->first, room) / 100.0f;
+			prob *= GetProb(record.first, room) / 100.0f;
 		}
 	}
 	return prob;
@@ -174,11 +174,11 @@ float RoomManager::GetProbAlone(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
 	prob *= GetProb(agent, room);
-	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	for(auto& record : m_probabilities)
 	{
-		if(record->first != agent)
+		if(record.first != agent)
 		{
-			prob *= (1.0f - GetProb(record->first, room) / 100.0f);
+			prob *= (1.0f - GetProb(record.first, room) / 100.0f);
 		}
 	}
 	return prob;
@@ -186,11 +186,11 @@ float RoomManager::GetProbAlone(Agent* agent, Room* room) const
 float RoomManager::GetProbWillBeFound(Agent* agent, Room* room) const
 {
 	float prob = 1.0f;
-	for(auto record(m_probabilities.begin()); record != m_probabilities.end(); ++record)
+	for(auto& record : m_probabilities)
 	{
-		if(record->first != agent)
+		if(record.first != agent)
 		{
-			prob *= (1.0f - GetProb(record->first, room) / 100.0f);
+			prob *= (1.0f - GetProb(record.first, room) / 100.0f);
 		}
 	}
 	return 1.0f - prob;
