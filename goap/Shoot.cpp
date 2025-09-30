@@ -41,7 +41,7 @@ void Shoot::InitArgs()
 	m_args.push_back(inst);
 }
 
-std::string Shoot::Express(Agent* agent, Room* room)
+std::string Shoot::Express(const Agent* agent, const Room* room) const
 {
 	auto sub = GetArg(SemanticRole::AGENT);
 	auto obj = GetArg(SemanticRole::PATIENT);

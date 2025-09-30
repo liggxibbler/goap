@@ -131,7 +131,7 @@ void Drop::InitEffects()
 	m_effects.push_back(agentInventoryEmpty);*/
 }
 
-std::string Drop::Express(Agent* agent, Room* room)
+std::string Drop::Express(const Agent* agent, const Room* room) const
 {
 	auto sub = GetArg(SemanticRole::AGENT);
 	auto obj = GetArg(SemanticRole::PATIENT);

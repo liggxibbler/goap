@@ -125,7 +125,7 @@ void WaitFor::InitPreconditions()
 	m_preconds->AddCondition(agentAtLocative);
 }
 
-std::string WaitFor::Express(Agent* agent, Room* room)
+std::string WaitFor::Express(const Agent* agent, const Room* room) const
 {
 	auto sub = GetArg(SemanticRole::AGENT);
 	auto obj = GetArg(SemanticRole::GOAL);

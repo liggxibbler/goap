@@ -16,7 +16,7 @@ namespace GOAP
 		virtual operator ActionType();
 		virtual Bludgeon* Clone();
 
-		virtual std::string Express(Agent* agent, Room* room) override;
+		virtual std::string Express(const Agent* agent, const Room* room) const override;
 		virtual operator std::string() override;
 
 	private:

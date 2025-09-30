@@ -107,7 +107,7 @@ void GoTo::InitPreconditions()
 {
 }
 
-std::string GoTo::Express(Agent* agent, Room* room)
+std::string GoTo::Express(const Agent* agent, const Room* room) const
 {
 	auto sub = GetArg(SemanticRole::AGENT);
 	auto obj = GetArg(SemanticRole::GOAL);
