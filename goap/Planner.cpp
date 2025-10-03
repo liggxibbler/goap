@@ -163,9 +163,9 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 		std::list<Condition>::iterator precond;
 		Goal* preconds = action->GetPreconds();
 
-		for(precond = preconds->GetFirstCondition(); precond != preconds->GetLastCondition(); ++precond)
+		for(const Condition& precond : preconds->GetConditionsConst())
 		{
-			nextGoal->AddCondition(*precond);
+			nextGoal->AddCondition(precond);
 		}
 
 		nextGoal->SetAction(action);
@@ -195,18 +195,16 @@ Goal* Planner::PickNextGoal()
 
 void Planner::ClearLongLists()
 {
-	std::list<Action*>::iterator iter;
-//	Action* act;
-	for(iter = m_actionLongList.begin(); iter != m_actionLongList.end(); iter = m_actionLongList.begin())
+	 
+	//	Action* act;
+	for(std::list<Action*>::iterator iter = m_actionLongList.begin(); iter != m_actionLongList.end(); iter = m_actionLongList.begin())
 	{
 		// Delete every action prototype on the long list
 		m_actionLongList.remove(*iter);
 	}
 	m_actionLongList.clear();
 	
-	CondIter condIter;
-	condIter = m_condLongList.begin();
-	while(condIter != m_condLongList.end())
+	for(std::list<Condition>::iterator condIter = m_condLongList.begin(); condIter != m_condLongList.end(); )
 	{
 		// Delete every action prototype on the long list
 		m_condLongList.erase(condIter++);

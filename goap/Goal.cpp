@@ -100,21 +100,17 @@ std::list<Goal*>::iterator Goal::GetFirstChild()
 	return m_children.begin();
 }
 
-void Goal::AddCondition(Condition& cond)
+void Goal::AddCondition(const Condition& cond)
 {
 	m_conditions.push_back(cond);
 }
 
-CondIter Goal::GetFirstCondition()
+const std::list<GOAP::Condition>& Goal::GetConditionsConst() const
 {
-	return m_conditions.begin();
-}
-CondIter Goal::GetLastCondition()
-{
-	return m_conditions.end();
+	return m_conditions;
 }
 
-const std::list<GOAP::Condition>& Goal::GetConditions() const
+std::list<GOAP::Condition>& Goal::GetConditions()
 {
 	return m_conditions;
 }
@@ -151,9 +147,7 @@ void Goal::RemoveCondition(const Condition& cond)
 	// From stackoverflow.com
 	// http://stackoverflow.com/users/46821/michael-kristofik
 
-	CondIter rem = m_conditions.begin();
-	
-	while(rem != m_conditions.end())
+	for(std::list<Condition>::iterator rem = m_conditions.begin(); rem != m_conditions.end();)
 	{
 		if(rem->EqualInstance(cond))
 		{

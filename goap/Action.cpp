@@ -252,12 +252,9 @@ void Action::CloneArgs(Action* prototype)
 
 void Action::ClonePreconds(Action* prototype)
 {
-	CondIter condIter;
-	for(condIter = prototype->GetPreconds()->GetFirstCondition();
-		condIter != prototype->GetPreconds()->GetLastCondition();
-		++condIter)
+	for(const Condition& condition : prototype->GetPreconds()->GetConditions())
 	{
-		m_preconds->AddCondition(*condIter);
+		m_preconds->AddCondition(condition);
 	}
 }
 
@@ -290,26 +287,24 @@ void Action::UpdateConditionInstances()
 
 void Action::UpdateEffectInstances()
 {
-	CondIter effect;
-	for (effect = m_effects.begin(); effect != m_effects.end(); ++effect)
+	for (Condition& effect : m_effects)
 	{
-		for(int i = 0; i < effect->GetNumParams(); ++i)
+		for(int i = 0; i < effect.GetNumParams(); ++i)
 		{
-			SemanticRole st = effect->GetParamByIndex(i).semantic;
-			effect->GetParamByIndex(i).instance	= GetArg(st).instance;
+			SemanticRole st = effect.GetParamByIndex(i).semantic;
+			effect.GetParamByIndex(i).instance	= GetArg(st).instance;
 		}
 	}
 }
 
 void Action::UpdatePrecondInstances()
 {
-	CondIter precond;
-	for (precond = m_preconds->GetFirstCondition(); precond != m_preconds->GetLastCondition(); ++precond)
+	for (Condition& precond : m_preconds->GetConditions())
 	{
-		for(int i = 0; i < precond->GetNumParams(); ++i)
+		for(int i = 0; i < precond.GetNumParams(); ++i)
 		{
-			SemanticRole st = precond->GetParamByIndex(i).semantic;
-			precond->GetParamByIndex(i).instance = GetArg(st).instance;
+			SemanticRole st = precond.GetParamByIndex(i).semantic;
+			precond.GetParamByIndex(i).instance = GetArg(st).instance;
 		}
 	}
 }

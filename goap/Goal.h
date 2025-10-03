@@ -7,8 +7,6 @@
 
 namespace GOAP
 {
-	typedef std::list<Condition>::iterator CondIter;
-	
 	class Action;
 	class Plan;
 
@@ -28,13 +26,12 @@ namespace GOAP
 		Goal* GetParent();
 		std::list<Goal*>::iterator GetFirstChild();
 
-		void AddCondition(Condition& cond);
+		void AddCondition(const Condition& cond);
 		void RemoveCondition(const Condition& cond);
 		void CleanSemanticInstances();
 
-		CondIter GetFirstCondition();
-		CondIter GetLastCondition();
-		const std::list<GOAP::Condition>& GetConditions() const;
+		const std::list<GOAP::Condition>& GetConditionsConst() const;
+		std::list<GOAP::Condition>& GetConditions();
 
 		//bool operator < (Goal& other);
 

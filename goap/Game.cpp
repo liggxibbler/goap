@@ -341,7 +341,7 @@ bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorMa
 
 		if(!thiefHasGoal)
 		{
-			if(m_murderer->GetGoal()->GetFirstCondition()->GetOperatorLayoutType() == OperatorLayoutType::OAVB)
+			if(m_murderer->GetGoal()->GetConditions().begin()->GetOperatorLayoutType() == OperatorLayoutType::OAVB)
 			{
 				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 				{
