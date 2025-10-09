@@ -17,6 +17,12 @@
 
 namespace GOAP
 {
+	struct LongListEntry
+	{
+		Action* action;
+		Condition condition;
+	};
+
 	class Planner
 	{
 	public:
@@ -31,7 +37,7 @@ namespace GOAP
 	private:
 		Goal* PickNextGoal();
 		void FillLongList(Goal* goal, Agent* agent, const ActionManager& am);
-		void ClearLongLists();
+		void ClearLongList();
 		void ExpandFrontier(const RoomManager& roomManager, Agent* agent);
 
 	private:
@@ -39,7 +45,8 @@ namespace GOAP
 
 		Goal* m_currentGoal;
 		std::list<Goal*> m_frontier;				// The portion of the search space that is currently being analyzed
-		std::list<std::pair<Action*, Condition>> m_actionLongList;		// Initial candidates for previous action to have been taken
+		//std::list<std::pair<Action*, Condition>> m_actionLongList;		// Initial candidates for previous action to have been taken
+		std::list<LongListEntry> m_actionLongList;		// Initial candidates for previous action to have been taken
 		std::list< Condition > m_condRemoveList;	// The conditions that the action candidates might satisfy
 		//std::map< Action*, std::list<Condition> > m_longList;
 		std::list<Goal*> m_actInstPreconds;

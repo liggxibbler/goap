@@ -57,7 +57,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 		DUMP( "===Expanding frontier")
 		FillLongList(m_currentGoal, agent, am); // find all action candidates
 		ExpandFrontier(roomManager, agent);					// finalize possible actions
-		ClearLongLists();						// clear candidate list
+		ClearLongList();						// clear candidate list
 	}
 	
 	// this means that the short list is empty
@@ -126,9 +126,9 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 	m_actInstPreconds.clear();	// clear list of goals from last iteration
 	m_condRemoveList.clear();
 
-	for(std::pair<Action* , Condition> actCondPair : m_actionLongList)
+	for(const LongListEntry& actCondPair : m_actionLongList)
 	{
-		int numInst = actCondPair.first->GetPossibleInstances(agent, instances);
+		int numInst = actCondPair.action->GetPossibleInstances(agent, instances);
 		if(numInst == 0)
 		{
 			// this action cannot be used in the plan at this point
@@ -138,10 +138,10 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 		}
 		else
 		{
-			actCondPair.first->Debug();
+			actCondPair.action->Debug();
 			for(int i=0; i< numInst; i++)
 			{
-				m_condRemoveList.push_back(actCondPair.second);
+				m_condRemoveList.push_back(actCondPair.condition);
 			}
 		}		
 	}
@@ -201,11 +201,11 @@ Goal* Planner::PickNextGoal()
 	return next;
 }
 
-void Planner::ClearLongLists()
+void Planner::ClearLongList()
 {
-	for (std::pair<Action*, Condition> actCondPair : m_actionLongList)
+	for (LongListEntry actCondPair : m_actionLongList)
 	{
-		delete actCondPair.first;
+		delete actCondPair.action;
 	}
 	m_actionLongList.clear();
 }
