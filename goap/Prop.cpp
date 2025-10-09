@@ -72,7 +72,7 @@ bool Prop::Update(const ActionManager& actionManager, const Op::OperatorManager&
 	return true;
 }
 
-ObjectType Prop::GetCompoundType()
+ObjectType Prop::GetCompoundType() const
 {
 	return m_type;
 }

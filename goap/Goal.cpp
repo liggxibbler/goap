@@ -61,7 +61,7 @@ bool Goal::Evaluate(const Op::OperatorManager& om) const
 
 	for(const Condition& cond : m_conditions)
 	{
-		if ( !cond.Evaluate(om) )
+		if ( !om.Evaluate(cond) )
 		{
 			result = false;
 			//break;
@@ -93,11 +93,6 @@ void Goal::AddChild(Goal* child)
 Goal* Goal::GetParent()
 {
 	return m_parent;
-}
-
-std::list<Goal*>::iterator Goal::GetFirstChild()
-{
-	return m_children.begin();
 }
 
 void Goal::AddCondition(const Condition& cond)

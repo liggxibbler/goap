@@ -16,7 +16,7 @@ namespace GOAP
 		//virtual operator ObjectType () override;
 		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn) override;
 
-		virtual ObjectType GetCompoundType() override;
+		virtual ObjectType GetCompoundType() const override;
 		void SetCompoundType(ObjectType compundType);
 
 		virtual void Examine() override;

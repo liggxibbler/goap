@@ -22,8 +22,6 @@ namespace GOAP
 
 		virtual void UpdateConditionInstances() override;
 
-		virtual bool MightSatisfy(Condition& cond); // XXX
-
 		virtual void Debug() override;
 
 		virtual void Dispatch(int turn) override;

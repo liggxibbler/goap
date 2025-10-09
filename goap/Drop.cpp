@@ -215,11 +215,6 @@ void Drop::UpdateConditionInstances() // XXX
 	Action::UpdateConditionInstances();
 }
 
-bool Drop::MightSatisfy(Condition& cond)
-{
-	return Action::MightSatisfy(cond);
-}
-
 void Drop::Debug()
 {
 }

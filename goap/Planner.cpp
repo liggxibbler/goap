@@ -85,21 +85,23 @@ void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am)
 			// XIBB the condition long list as a list of conditions
 
 
-			const Action* actionPrototype = am.GetActionPrototype(actionType); // get action prototype
-			if(actionPrototype->MightSatisfy(condition) )
+			const Action* actionPrototype = am.GetActionPrototype(actionType);
+			std::optional<const Condition*> compatibleEffect = actionPrototype->GetCompatibleEffect(&condition);
+			if(compatibleEffect.has_value())
 			{
+				condition.CopySemantics(*compatibleEffect.value());
 				DUMP("Found level " << m_currentGoal->GetDepth() << " action of type " << actionPrototype->GetName())
 				GETKEY
-				Action* action = am.GetNewAction(actionType); // to keep the prototype untouched
-				if (action->CopyArgsFromCondition(condition) == true)
+				Action* actionCandidate = am.GetNewAction(actionType); // to keep the prototype untouched
+				
+				if (actionCandidate->CopyArgInstancesFromCondition(condition))
 				{
-					action->UpdateConditionInstances();
-					m_actionLongList.push_back(action);
-					m_condLongList.push_back(condition);	// remember which condition the action might satisfy
+					actionCandidate->UpdateConditionInstances();
+					m_actionLongList.push_back({ actionCandidate, condition });					
 				}
 				else
 				{
-					std::cout << "Something's not right " << action->GetName() << std::endl;
+					std::cout << "Something's not right " << actionCandidate->GetName() << std::endl;
 					std::cin.get();
 				}
 			}
@@ -119,47 +121,40 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 				add all preconditions of action to a goal node as child of current goal with action on the edge
 	*/
 	
-	std::vector<Action*> vecAct;
-	
 	std::list<Action*> instances;
-	std::list<Condition>::iterator condIter = m_condLongList.begin();
-	Condition cond;
-
+	
 	m_actInstPreconds.clear();	// clear list of goals from last iteration
 	m_condRemoveList.clear();
 
-	for(Action* act : m_actionLongList)
+	for(std::pair<Action* , Condition> actCondPair : m_actionLongList)
 	{
-		cond = *condIter;
-		int numInst = act->GetPossibleInstances(agent, instances);
+		int numInst = actCondPair.first->GetPossibleInstances(agent, instances);
 		if(numInst == 0)
 		{
 			// this action cannot be used in the plan at this point
 			// and will not affect the frontier
-			DUMP("Action " << act->GetName() << " cannot be instantiated")
+			DUMP("Action " << actCondPair.first->GetName() << " cannot be instantiated")
 			continue;
 		}
 		else
 		{
-			act->Debug();
+			actCondPair.first->Debug();
 			for(int i=0; i< numInst; i++)
 			{
-				m_condRemoveList.push_back(cond);
+				m_condRemoveList.push_back(actCondPair.second);
 			}
-		}
-		++condIter;
+		}		
 	}
 
-	condIter = m_condRemoveList.begin();
+	std::list<Condition>::iterator condIter = m_condRemoveList.begin();
 
 	for(Action* action : instances)
 	{
 		//		conds = which conditions of the current goal it might satisfy
 		action->UpdateConditionInstances();		
-		cond = *condIter;
 		Goal* nextGoal = m_currentGoal->Clone();
 
-		nextGoal->RemoveCondition(cond);
+		nextGoal->RemoveCondition(*condIter);
 		std::list<Condition>::iterator precond;
 		Goal* preconds = action->GetPreconds();
 
@@ -170,7 +165,7 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 
 		nextGoal->SetAction(action);
 		nextGoal->SetParent(m_currentGoal);
-		nextGoal->SetCost(m_currentGoal->GetCost() + nextGoal->GetAction()->Cost(roomManager));
+		nextGoal->SetCost(m_currentGoal->GetCost() + action->Cost(roomManager));
 		nextGoal->SetDepth(m_currentGoal->GetDepth() + 1);
 		m_currentGoal->AddChild(nextGoal);
 
@@ -180,8 +175,21 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 
 	if(m_frontier.size() > 1)
 	{
-		// sort frontier by cost of actions
-		m_frontier.sort(myCompare);
+		m_frontier.sort([](const Goal* g1, const Goal* g2)
+		{
+			// keep the nullptr pointer at the beginning
+			if (g1 == nullptr)
+				return true;
+
+			if (g2 == nullptr)
+				return false;
+
+			// and sort the rest in descending order,
+			// so the least costly action is always at the end
+
+			return g1->GetCost() > g2->GetCost();
+
+		});
 	}
 	
 }
@@ -195,22 +203,11 @@ Goal* Planner::PickNextGoal()
 
 void Planner::ClearLongLists()
 {
-	 
-	//	Action* act;
-	for(std::list<Action*>::iterator iter = m_actionLongList.begin(); iter != m_actionLongList.end(); iter = m_actionLongList.begin())
+	for (std::pair<Action*, Condition> actCondPair : m_actionLongList)
 	{
-		// Delete every action prototype on the long list
-		m_actionLongList.remove(*iter);
+		delete actCondPair.first;
 	}
 	m_actionLongList.clear();
-	
-	for(std::list<Condition>::iterator condIter = m_condLongList.begin(); condIter != m_condLongList.end(); )
-	{
-		// Delete every action prototype on the long list
-		m_condLongList.erase(condIter++);
-	}
-
-	//DUMP("CLEARING LONG LIST")
 }
 
 void Planner::ClearPlanTree()

@@ -237,8 +237,3 @@ void GoTo::Dispatch(int turn)
 		agent->Log(turn, this);
 	}
 }
-
-bool GoTo::MightSatisfy(Condition& cond)
-{
-	return Action::MightSatisfy(cond);
-}

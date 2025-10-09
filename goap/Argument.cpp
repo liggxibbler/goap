@@ -35,7 +35,7 @@ Argument& Argument::operator = (Argument& other)
 	return *this;
 }
 
-bool Argument::MatchesTypeOf(const Argument& other)
+bool Argument::MatchesTypeOf(const Argument& other) const
 {
 	bool result = true;
 	if(strict)
@@ -58,13 +58,14 @@ bool Argument::MatchesTypeOf(const Argument& other)
 	return result;
 }
 
-bool Argument::MatchesTypeOf(Object* other)
+bool Argument::MatchesTypeOf(const Object* other) const
 {
 	bool result = true;
 	ObjectType iType = type;
+	ObjectType otherCompoundType = other->GetCompoundType();
 	if(strict)
 	{
-		if( iType != other->GetCompoundType() )
+		if( iType != otherCompoundType)
 		{
 			std::cout << "strict " << (int)iType << std::endl;
 			result = false;
@@ -74,9 +75,9 @@ bool Argument::MatchesTypeOf(Object* other)
 	{
 		if((type & ObjectType::OBJECT) == ObjectType::NONE)
 		{
-			if( (iType & other->GetCompoundType()) == ObjectType::NONE)
+			if( (iType & otherCompoundType) == ObjectType::NONE)
 			{
-				std::cout << (int)type << " " << (int)iType << " " << (int)other->GetCompoundType() << std::endl;
+				std::cout << (int)type << " " << (int)iType << " " << (int)otherCompoundType << std::endl;
 				result = false;
 			}
 		}

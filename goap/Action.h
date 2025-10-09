@@ -7,12 +7,14 @@
 #include "Goal.h"
 #include "OrderedPair.h"
 #include "IExecutable.h"
-#include <map>
+
+#include <fstream>
 #include <list>
-#include <vector>
+#include <map>
+#include <optional>
 #include <string>
 #include <sstream>
-#include <fstream>
+#include <vector>
 
 namespace GOAP
 {
@@ -39,8 +41,8 @@ namespace GOAP
 		Goal* GetPreconds();
 		Goal* GetGoal();
 
-		virtual bool MightSatisfy(const Condition& cond) const; // XXX
-		bool CopyArgsFromCondition(const Condition& cond);
+		virtual std::optional<const Condition*> GetCompatibleEffect(const Condition* cond) const;
+		bool CopyArgInstancesFromCondition(const Condition& cond); // returns false if action's matching semantic doesn't have compatible type
 
 		int GetPossibleInstances(Agent* agent, std::list<Action*>& result);
 

@@ -171,7 +171,7 @@ void Agent::See(Object* obj)
 	m_objects[obj->GetID()] = obj;
 }
 
-ObjectType Agent::GetCompoundType()
+ObjectType Agent::GetCompoundType() const
 {
 	return ObjectType::OBJECT | ObjectType::AGENT;
 }

@@ -23,8 +23,7 @@ namespace GOAP
 		bool IsConsistent(Op::OperatorManager* om);/*?*/
 
 		void AddChild(Goal* child);
-		Goal* GetParent();
-		std::list<Goal*>::iterator GetFirstChild();
+		Goal* GetParent();		
 
 		void AddCondition(const Condition& cond);
 		void RemoveCondition(const Condition& cond);

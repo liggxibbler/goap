@@ -12,8 +12,8 @@ namespace GOAP
 		Argument(const Argument& other);
 		Argument& operator = (Argument& other);
 		
-		bool MatchesTypeOf(const Argument& other);
-		bool MatchesTypeOf(Object* other);
+		bool MatchesTypeOf(const Argument& other) const;
+		bool MatchesTypeOf(const Object* other) const;
 
 		ObjectType			type = ObjectType::NONE;
 		SemanticRole		semantic = SemanticRole::NONE;

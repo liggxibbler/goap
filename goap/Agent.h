@@ -58,7 +58,7 @@ namespace GOAP
 		void See(Object* obj);
 		void See(Room* room, bool deep = true);
 
-		virtual ObjectType GetCompoundType() override;
+		virtual ObjectType GetCompoundType() const override;
 		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& room, int turn) override;
 		virtual void Examine() override;
 

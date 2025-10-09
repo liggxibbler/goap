@@ -221,7 +221,7 @@ Object* Room::Clone()
 	return new Room(*this);
 }
 
-ObjectType Room::GetCompoundType()
+ObjectType Room::GetCompoundType() const
 {
 	return ObjectType::OBJECT | ObjectType::ROOM;
 }

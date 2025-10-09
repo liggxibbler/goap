@@ -21,40 +21,45 @@ Action::operator GOAP::ActionType()
 	return ActionType::ACTION;
 }
 
-bool Action::MightSatisfy(const Condition& cond) const
+std::optional<const Condition*> Action::GetCompatibleEffect(const Condition* cond) const
 {
 	for (const GOAP::Condition& effect : m_effects)
 	{
-		if(effect == cond)
+		if(effect == *cond)
 		{
-			cond.CopySemantics(effect);	// Tags the semantics of the Condition as the semantics of the Action
-												// This helps later for instantiating the Action clone
-			return true;
+			return &effect;
 		}
 	}
-	return false;
+	return std::optional<const Condition*>{};
 }
 
-bool Action::CopyArgsFromCondition(const Condition& cond)
+bool Action::CopyArgInstancesFromCondition(const Condition& cond)
 {
 	bool result = true;
 	for(int i=0; i < cond.GetNumParams(); ++i)
+		// for each parameter in the condition
 	{
-		SemanticRole st = cond[i].semantic;
-		if(st != SemanticRole::NONE)
-		{
-			Argument& arg = GetArg(st);
+		SemanticRole conditionParameterSemantic = cond[i].semantic;
+		
+		if (conditionParameterSemantic == SemanticRole::NONE)
+			// if the parameter has no semantic, skip it
+			continue;
+
+		// get the argument from the action with the same semantic
+		Argument& actionArgumentBySemantic = GetArg(conditionParameterSemantic);
 			
-			if( arg.MatchesTypeOf(cond[i].instance) )
-			{
-				arg.instance = cond[i].instance;
-				//arg->type = arg->instance->GetCompoundType();
-			}
-			else
-			{
-				result = false;
-			}
+		// if the action's arguments and the condition's parameter's instance have compatible types
+		if( actionArgumentBySemantic.MatchesTypeOf(cond[i].instance) )
+		{
+			// copy the parameter's instance to the action's argument
+			actionArgumentBySemantic.instance = cond[i].instance;
+			//arg->type = arg->instance->GetCompoundType();
 		}
+		else
+		{
+			// otherwise, there is a mismatch between the action and the condition
+			result = false;
+		}		
 	}
 	return result;
 }
@@ -143,23 +148,18 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 	std::vector<Object*> unifyList;
 	std::vector<std::vector<Object*> > comboList;
 
-	for(Argument& cp : m_args)
+	for(Argument& argument : m_args)
 	{
-		if(cp.instance == nullptr)
+		if(argument.instance == nullptr)
 		//	for each null semantic
 		{
 			//	put all mathcing objects in a vector
-			if(cp.semantic == SemanticRole::AGENT)
+			if(argument.semantic == SemanticRole::AGENT)
 			{
 				// The subject is always (for now) the agent itself
 				unifyList.push_back(agent);
 			}
-			//else if(cp.semantic == SemanticRole::LOCATIVE)
-			//{
-			//	// push all rooms on unifyList
-			//	DUMP("")
-			//}
-			else if(!agent->Unify(cp.type, unifyList, cp.strict))
+			else if(!agent->Unify(argument.type, unifyList, argument.strict))
 			{
 				//	if vector is empty : unification not possible
 				return 0;
@@ -169,12 +169,12 @@ int Action::GetPossibleInstances(Agent* agent, std::list<Action*>& result)
 		}
 		else
 		{
-			if(cp.semantic == SemanticRole::AGENT && cp.instance != agent)
+			if(argument.semantic == SemanticRole::AGENT && argument.instance != agent)
 			{
 				// can't plan for others to do things
 				return 0;
 			}
-			comboList.push_back(std::vector<Object*>(1, cp.instance));
+			comboList.push_back(std::vector<Object*>(1, argument.instance));
 		}
 	}
 	

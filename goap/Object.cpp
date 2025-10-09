@@ -76,7 +76,7 @@ std::string Object::GetName() const
 	return m_name;
 }
 
-ObjectType Object::GetCompoundType() // XXX = 0
+ObjectType Object::GetCompoundType() const // XXX = 0
 {
 	return ObjectType::OBJECT;
 }
