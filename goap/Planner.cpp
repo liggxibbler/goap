@@ -3,45 +3,45 @@
 using namespace GOAP;
 
 Planner::Planner()
-{
-	m_currentGoal = nullptr;
+{	
 }
 
 PlanStatus Planner::Devise(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
-	ClearPlanTree();
-	m_frontier.push_back(nullptr);
-	m_frontier.push_back(agent->GetGoal());
 	return DeviseWorkHorse(agent, am, om, roomManager, plan);
 }
 
 PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
 {
-	for(m_currentGoal = PickNextGoal(); m_currentGoal != nullptr; m_currentGoal = PickNextGoal() )
+	std::list<Goal*> frontier;
+	frontier.push_back(nullptr);
+	frontier.push_back(agent->GetGoal());
+
+	for(Goal* currentGoal = PickNextGoal(frontier); currentGoal != nullptr; currentGoal = PickNextGoal(frontier) )
 	{
-		if(m_currentGoal == nullptr)
+		if(currentGoal == nullptr)
 		// Searched entire action space up to max depth
 		{
 			break;
 		}
 
-		DUMP_NL( "Trying level " << m_currentGoal->GetDepth() << " goal at " <<
-			m_currentGoal << " with " << m_currentGoal->GetNumConditions() << " conditions...\n")
+		DUMP_NL( "Trying level " << currentGoal->GetDepth() << " goal at " <<
+			currentGoal << " with " << currentGoal->GetNumConditions() << " conditions...\n")
 		
-		if(m_currentGoal->GetDepth() > MAX_PLAN_DEPTH)
+		if(currentGoal->GetDepth() > MAX_PLAN_DEPTH)
 		{
 			// Don't process goals that need more than MAX_PLAN_DPETH actions
 			continue;
 		}
 
-		if(m_currentGoal->Evaluate(om))
+		if(currentGoal->Evaluate(om))
 		{
 			/*
 			if goal is satisfied:
 			return just the goal node, it will contain a pointer to its parent node.
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
-			plan->SetPlan(m_currentGoal);
+			plan->SetPlan(currentGoal);
 			if(plan->Validate(om))
 			{
 				DUMP("VALID PLAN FOUND")
@@ -54,10 +54,10 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 				DUMP("PLAN NOT VALID")
 			}
 		}
-		DUMP( "===Expanding frontier")
-		FillLongList(m_currentGoal, agent, am); // find all action candidates
-		ExpandFrontier(roomManager, agent);					// finalize possible actions
-		ClearLongList();						// clear candidate list
+		DUMP("===Expanding frontier")
+		std::list<LongListEntry> longList;
+		FillLongList(currentGoal, agent, am, longList); // find all action candidates
+		ExpandFrontier(roomManager, frontier, longList, currentGoal, agent);					// finalize possible actions
 	}
 	
 	// this means that the short list is empty
@@ -66,7 +66,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 	return PlanStatus::FAIL;
 }
 
-void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am)
+void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am, std::list<LongListEntry>& longList)
 {
 	/*
 	for all actions in agent:
@@ -97,7 +97,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am)
 				if (actionCandidate->CopyArgInstancesFromCondition(condition))
 				{
 					actionCandidate->UpdateConditionInstances();
-					m_actionLongList.push_back({ actionCandidate, condition });					
+					longList.push_back({ actionCandidate, condition });					
 				}
 				else
 				{
@@ -111,7 +111,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am)
 	}
 }
 
-void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
+void Planner::ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& frontier, std::list<LongListEntry>& longList, Goal* currentGoal, Agent* agent)
 {
 	/* METHOD : ExpandFrontier(Agent)
 	for all actions in long list:
@@ -123,10 +123,9 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 	
 	std::list<Action*> instances;
 	
-	m_actInstPreconds.clear();	// clear list of goals from last iteration
-	m_condRemoveList.clear();
+	std::list< Condition > condRemoveList;
 
-	for(const LongListEntry& actCondPair : m_actionLongList)
+	for(const LongListEntry& actCondPair : longList)
 	{
 		int numInst = actCondPair.action->GetPossibleInstances(agent, instances);
 		if(numInst == 0)
@@ -141,20 +140,20 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 			actCondPair.action->Debug();
 			for(int i=0; i< numInst; i++)
 			{
-				m_condRemoveList.push_back(actCondPair.condition);
+				condRemoveList.push_back(actCondPair.condition);
 			}
 		}		
 	}
 
-	std::list<Condition>::iterator condIter = m_condRemoveList.begin();
+	std::list<Condition>::iterator condRemoveIter = condRemoveList.begin();
 
 	for(Action* action : instances)
 	{
 		//		conds = which conditions of the current goal it might satisfy
 		action->UpdateConditionInstances();		
-		Goal* nextGoal = m_currentGoal->Clone();
+		Goal* nextGoal = currentGoal->Clone();
 
-		nextGoal->RemoveCondition(*condIter);
+		nextGoal->RemoveCondition(*condRemoveIter);
 		std::list<Condition>::iterator precond;
 		Goal* preconds = action->GetPreconds();
 
@@ -164,18 +163,18 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 		}
 
 		nextGoal->SetAction(action);
-		nextGoal->SetParent(m_currentGoal);
-		nextGoal->SetCost(m_currentGoal->GetCost() + action->Cost(roomManager));
-		nextGoal->SetDepth(m_currentGoal->GetDepth() + 1);
-		m_currentGoal->AddChild(nextGoal);
+		nextGoal->SetParent(currentGoal);
+		nextGoal->SetCost(currentGoal->GetCost() + action->Cost(roomManager));
+		nextGoal->SetDepth(currentGoal->GetDepth() + 1);
+		currentGoal->AddChild(nextGoal);
 
-		m_frontier.push_back(nextGoal);
-		++condIter;
+		frontier.push_back(nextGoal);
+		++condRemoveIter;
 	}
 
-	if(m_frontier.size() > 1)
+	if(frontier.size() > 1)
 	{
-		m_frontier.sort([](const Goal* g1, const Goal* g2)
+		frontier.sort([](const Goal* g1, const Goal* g2)
 		{
 			// keep the nullptr pointer at the beginning
 			if (g1 == nullptr)
@@ -194,31 +193,9 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, Agent* agent)
 	
 }
 
-Goal* Planner::PickNextGoal()
+Goal* Planner::PickNextGoal(std::list<Goal*>& frontier)
 {
-	Goal* next = m_frontier.back();
-	m_frontier.remove(next);
+	Goal* next = frontier.back();
+	frontier.remove(next);
 	return next;
-}
-
-void Planner::ClearLongList()
-{
-	for (LongListEntry actCondPair : m_actionLongList)
-	{
-		delete actCondPair.action;
-	}
-	m_actionLongList.clear();
-}
-
-void Planner::ClearPlanTree()
-{
-	auto goal(m_frontier.begin());
-	while(goal != m_frontier.end())
-	{
-		if(*goal != 0)
-		{
-			delete *goal;
-		}
-		m_frontier.erase(goal++);
-	}
 }
