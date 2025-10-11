@@ -1,15 +1,17 @@
 #ifndef _GOAP_OBJECT_H_
 #define _GOAP_OBJECT_H_
 
-#include "Common.h"
 #include <map>
 #include <string>
+
+#include "Common.h"
 
 namespace GOAP
 {
 	class Room;
 	class RoomManager;
 	class ActionManager;
+	class Planner;
 
 	namespace Op
 	{
@@ -40,7 +42,7 @@ namespace GOAP
 
 		virtual Object* Clone() = 0;
 		//virtual operator ObjectType () = 0;
-		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn) = 0;
+		virtual bool Update(Planner & planner, int turn) = 0;
 		virtual ObjectType GetCompoundType() const = 0;
 		virtual void Examine() = 0;
 

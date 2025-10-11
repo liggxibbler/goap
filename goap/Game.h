@@ -5,9 +5,10 @@
 #include <map>
 #include <string>
 
-#include "RoomManager.h"
 #include "Accuser.h"
 #include "Common.h"
+#include "Planner.h"
+#include "RoomManager.h"
 
 namespace GOAP
 {
@@ -22,18 +23,18 @@ public:
 	Game(const Game& other);
 	~Game();
 
-	void Initialize(const GOAP::RoomManager& roomManager);
+	void Initialize();
 
 	void Roam(const GOAP::RoomManager& rm);
 	void Interview(const GOAP::ActionManager& actionManager);
 	bool Accuse();
 
-	bool Run(const GOAP::ActionManager& actionManager, const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
+	bool Run();
 
-	void AssignRoles(GOAP::RoomManager& roomManager);
-	void PopulateRooms(const GOAP::RoomManager& roomManager);
-	bool GeneratePlot(const GOAP::ActionManager& actionManager, const GOAP::Op::OperatorManager& operatorManager, GOAP::RoomManager& roomManager);
-	void MainLoop(const GOAP::ActionManager&, const GOAP::RoomManager& roomManager);
+	void AssignRoles();
+	void PopulateRooms(GOAP::RoomManager& roomManager);
+	bool GeneratePlot();
+	void MainLoop();
 
 	void DisplayRoomMap();
 	void DisplayIntroduction();
@@ -60,6 +61,8 @@ private:
 	void InitializeAgents();
 	void InitializeObjects();
 	void PopulateDictionaries();
+
+	GOAP::Planner m_planner;
 
 	//GOAP::World* m_world;
 	bool m_roam = false;

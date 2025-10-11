@@ -115,7 +115,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn)
+bool Room::Update(Planner& planner, int turn)
 {
 	//m_murder = false;
 
@@ -123,13 +123,13 @@ bool Room::Update(const ActionManager& actionManager, const Op::OperatorManager&
 
 	for(Prop* object : m_objects)
 	{
-		object->Update(actionManager, om, rm, turn);
+		object->Update(planner, turn);
 	}
 
 	for(Agent* agent : m_agents)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		if( agent->Update(actionManager, om, rm, turn) )
+		if( agent->Update(planner, turn) )
 		{
 			m_isMurderRoom = true;
 			//(*agent)->DoneMurder(false);

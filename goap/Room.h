@@ -42,7 +42,7 @@ namespace GOAP
 
 		RoomName GetType();
 
-		virtual bool Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& rm, int turn) override;
+		virtual bool Update(Planner & planner, int turn) override;
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);

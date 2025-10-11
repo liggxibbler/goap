@@ -1,16 +1,16 @@
 #include "Game.h"
 
-#include <json/json.h>
+#include <conio.h>
 #include <fstream>
 #include <iostream>
-
-#include "Prop.h"
-#include "Agent.h"
-#include "Room.h"
-#include "OperatorManager.h"
-#include "Action.h"
-#include <conio.h>
+#include <json/json.h>
 #include <time.h>
+
+#include "Action.h"
+#include "Agent.h"
+#include "OperatorManager.h"
+#include "Prop.h"
+#include "Room.h"
 
 #include "FactManager.h"
 
@@ -49,15 +49,17 @@ Game::~Game()
 {
 }
 
-void Game::Initialize(const GOAP::RoomManager& roomManager)
+void Game::Initialize()
 {
+	m_planner.Initialize();
+
 	m_accuser = new Accuser;
 	
 	InitializeAgents();
 	PopulateDictionaries();
 	InitializeObjects();
 
-	m_currentRoom = roomManager.GetRoom(RoomName::LIVING_ROOM);
+	m_currentRoom = m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM);
 }
 
 void Game::Roam(const RoomManager& rm)
@@ -301,19 +303,19 @@ void Game::Interview(const ActionManager& actionManager)
 	return;
 }
 
-bool Game::Run(const ActionManager& actionManager, const Op::OperatorManager& operatorManager, RoomManager& roomManager)
+bool Game::Run()
 {
 	bool result = false;
 	while(m_running)
 	{
-		if (!GeneratePlot(actionManager, operatorManager, roomManager))
+		if (!GeneratePlot())
 		{
 			return false;
 		}
 
 		//FactManager::Instance()->Initialize(m_actors);
 
-		MainLoop(actionManager, roomManager);
+		MainLoop();
 		// prompt for another go
 		// if yes :
 		// clear agents,
@@ -326,10 +328,10 @@ bool Game::Run(const ActionManager& actionManager, const Op::OperatorManager& op
 	return true;
 }
 
-bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorManager& operatorManager, RoomManager& roomManager)
+bool Game::GeneratePlot()
 {
-	AssignRoles(roomManager);
-	PopulateRooms(roomManager);
+	AssignRoles();
+	PopulateRooms(m_planner.GetRoomManager());
 
 	m_murder = false;
 	bool thiefHasGoal = false;
@@ -337,7 +339,7 @@ bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorMa
 	while(!m_murder)
 	{
 		// update murderer first to avoid artefacts
-		m_murderer->Update(actionManager, operatorManager, roomManager, m_turn);
+		m_murderer->Update(m_planner, m_turn);
 
 		if(!thiefHasGoal)
 		{
@@ -345,18 +347,18 @@ bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorMa
 			{
 				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 				{
-					SetGoalOfThief(roomManager.GetRoom(RoomName::BEDROOM, m_actors[2]));
+					SetGoalOfThief(m_planner.GetRoomManager().GetRoom(RoomName::BEDROOM, m_actors[2]));
 					thiefHasGoal = true;
 				}
 			}
 		}
 
-		for (Room* room : roomManager.GetRooms())
+		for (Room* room : m_planner.GetRoomManager().GetRooms())
 		{
-			room->Update(actionManager, operatorManager, roomManager, m_turn);
+			room->Update(m_planner, m_turn);
 		}
 
-		for (Room* room : roomManager.GetRooms())
+		for (Room* room : m_planner.GetRoomManager().GetRooms())
 		{
 			room->UpdateAgentPositions();
 			if (room->ContainsMurderWitness(std::list<Agent*>{m_murderer, m_victim}))
@@ -365,7 +367,7 @@ bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorMa
 			}
 		}
 
-		for (Room* room : roomManager.GetRooms())
+		for (Room* room : m_planner.GetRoomManager().GetRooms())
 		{
 			room->ResetAgentUpdateFlags();
 		}
@@ -400,7 +402,7 @@ bool Game::GeneratePlot(const ActionManager& actionManager, const Op::OperatorMa
 	return true;
 }
 
-void Game::MainLoop(const GOAP::ActionManager& actionManager, const GOAP::RoomManager& roomManager)
+void Game::MainLoop()
 {
 	std::cout << "******************************\n";
 	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
@@ -412,25 +414,25 @@ void Game::MainLoop(const GOAP::ActionManager& actionManager, const GOAP::RoomMa
 	system("cls");
 
 	DisplayIntroduction();
-	MoveActorsToLivingRoom(roomManager.GetRoom(RoomName::LIVING_ROOM));
-	roomManager.UpdateAllRooms();
+	MoveActorsToLivingRoom(m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM));
+	m_planner.GetRoomManager().UpdateAllRooms();
 
 	while(m_running)
 	{
 		if(m_roam)
 		{
 			system("cls");
-			Roam(roomManager);
+			Roam(m_planner.GetRoomManager());
 		}
 		else
 		{
 			system("cls");
-			Interview(actionManager);
+			Interview(m_planner.GetActionManager());
 		}
 	}
 }
 
-void Game::AssignRoles(GOAP::RoomManager& roomManager)
+void Game::AssignRoles()
 {
 	// from agent bank
 	// pick a random agent
@@ -498,21 +500,12 @@ void Game::AssignRoles(GOAP::RoomManager& roomManager)
     m_murderer->AddAction(ActionType::TAKE);
     m_murderer->AddAction(ActionType::DROP);
 
-	roomManager.ShowBedrooms(m_murderer);
-
 	m_actors.push_back(m_murderer);
 	m_actors.push_back(m_victim);
 	for(int otherRoles = 2; otherRoles < m_numberOfActors; ++otherRoles)
 	{
 		m_actors.push_back(m_agents[role_array[otherRoles]]);
-	}
-	for(Agent* actor : m_actors)
-	{
-		roomManager.CreateRoomFor(actor);
-		roomManager.AddAgentProbabilities(actor);
-		roomManager.ShowCommonRooms(actor);
-		roomManager.ShowOwnBedroom(actor);
-	}
+	}	
 
 	m_murderer->PickCurrentGoal();
 
@@ -547,8 +540,18 @@ void Game::AssignRoles(GOAP::RoomManager& roomManager)
 	delete[] role_array;
 }
 
-void Game::PopulateRooms(const GOAP::RoomManager& roomManager)
+void Game::PopulateRooms(GOAP::RoomManager& roomManager)
 {
+	for (Agent* actor : m_actors)
+	{
+		roomManager.CreateRoomFor(actor);
+		roomManager.AddAgentProbabilities(actor);
+		roomManager.ShowCommonRooms(actor);
+		roomManager.ShowOwnBedroom(actor);
+	}
+
+	roomManager.ShowBedrooms(m_murderer);
+
 	/* for each room in world
 		from object bank[room]
 			pick an object that can be used as a murder weapon

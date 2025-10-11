@@ -10,15 +10,11 @@
 
 using namespace GOAP;
 
-Planner* Agent::s_planner = new Planner;
-
 Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
 	//s_planner = new Planner();
-	m_plan = new Plan();
-	m_plan->SetStatus(PlanStatus::UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -27,9 +23,6 @@ Agent::Agent(std::string name) : m_currentGoal(0), m_nextExecution(0), m_bDoneMu
 {
 	m_name = name;
 	InitAttribMap();
-	s_planner = new Planner();
-	m_plan = new Plan();
-	m_plan->SetStatus(PlanStatus::UNKNOWN);
 	See(this); // Know thyself
 }
 
@@ -156,16 +149,6 @@ void Agent::SetGoal(Goal* goal)
 	m_currentGoal = goal;
 }
 
-Plan* Agent::GetPlan(const ActionManager& am, const Op::OperatorManager& om, const GOAP::RoomManager& roomManager)
-{
-	//Plan* plan = new Plan();
-	if( s_planner->Devise(this, am, om, roomManager, m_currentGoal->GetPlan()) == PlanStatus::SUCCESS)
-	{
-		DUMP("FOUND PLAN")
-	}
-	return m_plan;
-}
-
 void Agent::See(Object* obj)
 {
 	m_objects[obj->GetID()] = obj;
@@ -176,13 +159,57 @@ ObjectType Agent::GetCompoundType() const
 	return ObjectType::OBJECT | ObjectType::AGENT;
 }
 
-bool Agent::Update(const ActionManager& actionManager, const Op::OperatorManager& om, const RoomManager& roomManager, int turn)
+void GOAP::Agent::ExecuteNext(Planner& planner, int turn)
+{
+	ExecutionStatus as = m_nextExecution->Execute(planner.GetOperatorManager(), turn);
+	
+	switch (as)
+	{
+	case ExecutionStatus::SUCCESS:
+		{
+			m_nextExecution = nullptr;
+			break;
+		}
+	case ExecutionStatus::SKIP:
+		{
+			m_nextExecution = nullptr;
+			/*Update(om, rm, turn);*/
+			break;
+		}
+	case ExecutionStatus::DONE:
+		{
+			//m_currentGoal = m_currentGoal->GetParent();
+			m_goals.remove(m_currentGoal);
+
+			if (false)//m_nextExecution->FollowupGoal() != 0)
+			{
+				//this->AddGoal(m_nextExecution->FollowupGoal());
+			}
+			else
+			{
+				PickCurrentGoal();
+			}
+
+			m_nextExecution = nullptr;
+			Update(planner, turn); // need replanning! must waist know thyme
+			return;
+		}
+	case ExecutionStatus::FAIL: // XIBB - this is very bad replanning!!!
+		{
+			m_currentGoal->GetPlan()->SetStatus(PlanStatus::FAIL);
+			m_nextExecution = nullptr;
+			return;
+		}
+	}
+}
+
+bool Agent::Update(Planner& planner, int turn)
 {
 	//m_bDoneMurder = false;
 
-	if( m_isAlive && ( m_updated == false ) )
+	if( m_isAlive && !m_updated)
 	{
-		if( m_currentGoal != 0)
+		if(m_currentGoal)
 		{
 			if( PeekGoal() && ( m_currentGoal->GetPlan()->GetExecutionStatus() == ExecutionStatus::PAUSED ) )
 			{
@@ -193,46 +220,15 @@ bool Agent::Update(const ActionManager& actionManager, const Op::OperatorManager
 			{
 				m_currentGoal->GetPlan()->Pause();
 				PickCurrentGoal();
-				m_nextExecution = 0;
+				m_nextExecution = nullptr;
 			}
 		}
 
-		if(m_nextExecution != 0)
+		if(m_nextExecution)
 		{
-			ExecutionStatus as = m_nextExecution->Execute(om, turn);
-			if (as == ExecutionStatus::SUCCESS)
-			{
-				m_nextExecution = 0;
-			}
-			else if (as == ExecutionStatus::SKIP)
-			{
-				m_nextExecution = 0;
-				/*Update(om, rm, turn);*/
-			}
-			else if(as == ExecutionStatus::DONE)
-			{
-				//m_currentGoal = m_currentGoal->GetParent();
-				m_goals.remove(m_currentGoal);
-
-				if(false)//m_nextExecution->FollowupGoal() != 0)
-				{
-					//this->AddGoal(m_nextExecution->FollowupGoal());
-				}
-				else
-				{
-					PickCurrentGoal();
-				}
-
-				m_nextExecution = 0;
-				this->Update(actionManager, om, roomManager, turn); // need replanning! must waist know thyme
-			}
-			else if(as == ExecutionStatus::FAIL) // XIBB - this is very bad replanning!!!
-			{
-				m_currentGoal->GetPlan()->SetStatus(PlanStatus::FAIL);
-				m_nextExecution = 0;
-			}
+			ExecuteNext(planner, turn);
 		}
-		else if(m_currentGoal != 0)
+		else if(m_currentGoal)
 		{
 			if(m_currentGoal->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 			{
@@ -240,17 +236,14 @@ bool Agent::Update(const ActionManager& actionManager, const Op::OperatorManager
 			}
 			else
 			{
-				GetPlan(actionManager, om, roomManager);
+				planner.Devise(this, m_currentGoal->GetPlan());
 				PlanStatus ps = m_currentGoal->GetPlan()->GetStatus();
 				if(ps == PlanStatus::FAIL)
 				{
-					Room* room = roomManager.GetRandomRoom(this);
-					GoTo* gt = new GoTo(room, this);
-					gt->Initialize();
-					m_nextExecution = gt;
+					m_nextExecution = planner.GetWander(this);
 				}
 			}
-			this->Update(actionManager, om, roomManager, turn); // XIBB?
+			Update(planner, turn); // XIBB?
 		}
 		else
 		{
@@ -258,10 +251,7 @@ bool Agent::Update(const ActionManager& actionManager, const Op::OperatorManager
 			if(wander < 90)
 			{
 				DUMP("       **" << m_name << " be wanderin' " << turn)
-				Room* room = roomManager.GetRandomRoom(this);
-				GoTo* gt = new GoTo(room, this);
-				gt->Initialize();
-				m_nextExecution = gt;
+				m_nextExecution = planner.GetWander(this);
 			}
 		}
 		m_updated = true;

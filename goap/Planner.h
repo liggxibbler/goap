@@ -30,15 +30,28 @@ namespace GOAP
 		Planner(const Planner& other);
 		~Planner();
 
-		PlanStatus Devise(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan);
+		void Initialize();
+
+		PlanStatus Devise(Agent* agent, Plan* plan) const;
+
+	public:
+		Action* GetWander(Agent* agent) const;
+
+		Op::OperatorManager& GetOperatorManager();
+		RoomManager& GetRoomManager();
+		ActionManager& GetActionManager();
 
 	private:
-		Goal* PickNextGoal(std::list<Goal*>& frontier);
-		void FillLongList(Goal* goal, Agent* agent, const ActionManager& am, std::list<LongListEntry>& longList);
-		void ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& frontier, std::list<LongListEntry>& longList, Goal* currentGoal, Agent* agent);
+		Goal* PickNextGoal(std::list<Goal*>& frontier) const;
+		void FillLongList(Goal* goal, Agent* agent, const ActionManager& am, std::list<LongListEntry>& longList) const;
+		void ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& frontier, std::list<LongListEntry>& longList, Goal* currentGoal, Agent* agent) const;
 
 	private:
-		PlanStatus DeviseWorkHorse(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* goal);
+		PlanStatus DeviseWorkHorse(Agent* agent, Plan* goal) const;
+
+		Op::OperatorManager m_operatorManager;
+		RoomManager m_roomManager;
+		ActionManager m_actionManager;
 	};
 }
 

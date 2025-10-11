@@ -1,8 +1,10 @@
+#include <ctime>
 #include <iostream>
+
 #include "Action.h"
 #include "ActionManager.h"
 #include "Game.h"
-#include <ctime>
+#include "Planner.h"
 
 using namespace std;
 using namespace GOAP;
@@ -18,17 +20,10 @@ int main()
 
 	Action::OpenFile();
 
-	Game game;
+	Game game;	
 	
-	Op::OperatorManager operatorManager;
-	
-	RoomManager roomManager;
-	roomManager.Initialize();
-
-	ActionManager actionManager;
-
-	game.Initialize(roomManager);
-	game.Run(actionManager, operatorManager, roomManager);
+	game.Initialize();
+	game.Run();
 
 	Action::CloseFile();
 

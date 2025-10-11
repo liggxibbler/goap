@@ -2,16 +2,48 @@
 
 using namespace GOAP;
 
-Planner::Planner()
+GOAP::Planner::Planner()
 {	
 }
 
-PlanStatus Planner::Devise(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
+GOAP::Planner::~Planner()
 {
-	return DeviseWorkHorse(agent, am, om, roomManager, plan);
 }
 
-PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const Op::OperatorManager& om, const RoomManager& roomManager, Plan* plan)
+void Planner::Initialize()
+{
+	m_roomManager.Initialize();
+}
+
+PlanStatus GOAP::Planner::Devise(Agent* agent, Plan* plan) const
+{
+	return DeviseWorkHorse(agent, plan);
+}
+
+Action* GOAP::Planner::GetWander(Agent* agent) const
+{
+	Room* room = m_roomManager.GetRandomRoom(agent);
+	GoTo* gt = new GoTo(room, agent);
+	gt->Initialize();
+	return gt;
+}
+
+Op::OperatorManager& GOAP::Planner::GetOperatorManager()
+{
+	return m_operatorManager;
+}
+
+RoomManager& GOAP::Planner::GetRoomManager()
+{
+	return m_roomManager;
+}
+
+ActionManager& GOAP::Planner::GetActionManager()
+{
+	return m_actionManager;
+}
+
+PlanStatus Planner::DeviseWorkHorse(Agent* agent, Plan* plan) const
 {
 	std::list<Goal*> frontier;
 	frontier.push_back(nullptr);
@@ -34,7 +66,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 			continue;
 		}
 
-		if(currentGoal->Evaluate(om))
+		if(currentGoal->Evaluate(m_operatorManager))
 		{
 			/*
 			if goal is satisfied:
@@ -42,7 +74,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 			since the plan stays the same unless something is really different, the tree can exist until plan becomes obsolete
 			*/
 			plan->SetPlan(currentGoal);
-			if(plan->Validate(om))
+			if(plan->Validate(m_operatorManager))
 			{
 				DUMP("VALID PLAN FOUND")
 				plan->SetStatus(PlanStatus::SUCCESS);
@@ -56,8 +88,9 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 		}
 		DUMP("===Expanding frontier")
 		std::list<LongListEntry> longList;
-		FillLongList(currentGoal, agent, am, longList); // find all action candidates
-		ExpandFrontier(roomManager, frontier, longList, currentGoal, agent);					// finalize possible actions
+		FillLongList(currentGoal, agent, m_actionManager, longList); // find all action candidates
+		ExpandFrontier(m_roomManager, frontier, longList, currentGoal, agent);					// finalize possible actions
+		// TODO: What happens to action candidate pointers on the longList when the list goes out of scope?
 	}
 	
 	// this means that the short list is empty
@@ -66,7 +99,7 @@ PlanStatus Planner::DeviseWorkHorse(Agent* agent, const ActionManager& am, const
 	return PlanStatus::FAIL;
 }
 
-void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am, std::list<LongListEntry>& longList)
+void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am, std::list<LongListEntry>& longList) const
 {
 	/*
 	for all actions in agent:
@@ -111,7 +144,7 @@ void Planner::FillLongList(Goal* goal, Agent* agent, const ActionManager& am, st
 	}
 }
 
-void Planner::ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& frontier, std::list<LongListEntry>& longList, Goal* currentGoal, Agent* agent)
+void Planner::ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& frontier, std::list<LongListEntry>& longList, Goal* currentGoal, Agent* agent) const
 {
 	/* METHOD : ExpandFrontier(Agent)
 	for all actions in long list:
@@ -193,7 +226,7 @@ void Planner::ExpandFrontier(const RoomManager& roomManager, std::list<Goal*>& f
 	
 }
 
-Goal* Planner::PickNextGoal(std::list<Goal*>& frontier)
+Goal* Planner::PickNextGoal(std::list<Goal*>& frontier) const
 {
 	Goal* next = frontier.back();
 	frontier.remove(next);
