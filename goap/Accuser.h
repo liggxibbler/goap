@@ -3,6 +3,17 @@
 
 #include "Agent.h"
 
+namespace GOAP
+{
+	struct Roles
+	{
+		Agent* murderer = nullptr;
+		Agent* victim = nullptr;
+		Agent* thief = nullptr;
+		Agent* witness = nullptr;
+	};
+}
+
 class Accuser
 {
 public:
@@ -10,23 +21,13 @@ public:
 	Accuser(const Accuser& other);
 	~Accuser();
 
-	void Initialize(GOAP::Agent* murderer, GOAP::Agent* thief, GOAP::Agent* witness);
-	void AccuseThief(int thief);
-	void AccuseMurderer(int murderer);
+	GOAP::Agent* AccuseMurderer(const GOAP::Roles& roles, int murderer) const;
 
-	bool Prompt(); 
-
-	bool Submit();
+	GOAP::Agent* Prompt(const GOAP::Roles& roles) const;
+	bool Submit(const GOAP::Roles& roles, const GOAP::Agent* allegedMurderer);
+	int GetNumWitnesses(const GOAP::Roles& roles) const;
 
 private:
-
-	GOAP::Agent* m_murderer;
-	GOAP::Agent* m_thief;
-	GOAP::Agent* m_witness;
-
-	GOAP::Agent* m_allegedMurderer;
-	GOAP::Agent* m_allegedThief;
-
 	int m_numWitnesses;
 };
 

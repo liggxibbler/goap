@@ -4,7 +4,7 @@
 
 using namespace GOAP;
 
-Room::Room() : Object(), m_numAgents(0), m_isMurderRoom(false)
+Room::Room() : Object(), m_numAgents(0)
 {
 	m_room = m_id;
 	m_roomInstance = this;
@@ -26,7 +26,7 @@ Room::Room(const Room& other)
 }
 
 Room::Room(std::string&& name , RoomName rn, Object* owner) :
-Object(name, owner), m_type(rn), m_numAgents(0), m_isMurderRoom(false)
+Object(name, owner), m_type(rn), m_numAgents(0)
 {
 	m_room = m_id;
 	m_roomInstance = this;
@@ -115,7 +115,7 @@ RoomName Room::GetType()
 	return m_type;
 }
 
-bool Room::Update(Planner& planner, int turn)
+void Room::Update(Planner& planner, int turn)
 {
 	//m_murder = false;
 
@@ -129,14 +129,8 @@ bool Room::Update(Planner& planner, int turn)
 	for(Agent* agent : m_agents)
 	{
 		DUMP("    ** Updating agent " << (*agent)->GetName() << " at turn " << turn)
-		if( agent->Update(planner, turn) )
-		{
-			m_isMurderRoom = true;
-			//(*agent)->DoneMurder(false);
-		}
+		agent->Update(planner, turn);		
 	}
-
-	return m_isMurderRoom;
 }
 
 void Room::MarkForDeletion(Agent* agent)
@@ -193,6 +187,17 @@ void Room::UpdateAgentPositions()
 	m_markedForDeletion.clear();
 }
 
+bool GOAP::Room::Contains(const Agent* agent) const
+{
+	for (const Agent* containedAgent : m_agents)
+	{
+		if (containedAgent == agent)
+			return true;
+	}
+
+	return false;
+}
+
 bool GOAP::Room::ContainsAnyExcept(const std::list<Agent*>& toExclude)
 {	
 	for (Agent* agent : m_agents)
@@ -208,14 +213,6 @@ bool GOAP::Room::ContainsAnyExcept(const std::list<Agent*>& toExclude)
 	return false;
 }
 
-bool GOAP::Room::ContainsMurderWitness(const std::list<Agent*>& toExclude)
-{
-	if (!m_isMurderRoom)
-		return false;
-
-	return ContainsAnyExcept(toExclude);
-}
-
 Object* Room::Clone()
 {
 	return new Room(*this);
@@ -224,11 +221,6 @@ Object* Room::Clone()
 ObjectType Room::GetCompoundType() const
 {
 	return ObjectType::OBJECT | ObjectType::ROOM;
-}
-
-bool Room::GetMurder()
-{
-	return m_isMurderRoom;
 }
 
 void Room::RemoveObject(Prop* obj)

@@ -10,7 +10,7 @@
 
 using namespace GOAP;
 
-Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
+Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_hasCommittedMurder(false), m_updated(false),
 				 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	InitAttribMap();
@@ -18,7 +18,7 @@ Agent::Agent() : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_u
 	See(this); // Know thyself
 }
 
-Agent::Agent(std::string name) : m_currentGoal(0), m_nextExecution(0), m_bDoneMurder(false), m_updated(false),
+Agent::Agent(std::string name) : m_currentGoal(0), m_nextExecution(0), m_hasCommittedMurder(false), m_updated(false),
 								 m_isAlive(true), m_isMurderer(false), m_isVictim(false), m_inventory(false)
 {
 	m_name = name;
@@ -203,7 +203,7 @@ void GOAP::Agent::ExecuteNext(Planner& planner, int turn)
 	}
 }
 
-bool Agent::Update(Planner& planner, int turn)
+void Agent::Update(Planner& planner, int turn)
 {
 	//m_bDoneMurder = false;
 
@@ -272,7 +272,6 @@ bool Agent::Update(Planner& planner, int turn)
 		std::cout << "'s either dead (" << m_isAlive << ") or up to date (" << m_updated << ") \n";
 	}
 #endif
-	return m_bDoneMurder;
 }
 
 void Agent::Examine()
@@ -316,14 +315,14 @@ void Agent::See(Room* room, bool deep)
 	See((Object*)room);
 }
 
-bool Agent::GetMurder()
+bool Agent::GetHasCommittedMurder()
 {
-	return m_bDoneMurder;
+	return m_hasCommittedMurder;
 }
 
-void Agent::DoneMurder(bool flag)
+void Agent::SetHasCommittedMurder(bool flag)
 {
-	m_bDoneMurder = flag;
+	m_hasCommittedMurder = flag;
 }
 
 void Agent::Answer(const ActionManager& actionManager, Object* obj, QuestionType qt, int turn)

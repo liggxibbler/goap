@@ -42,7 +42,7 @@ namespace GOAP
 
 		virtual Object* Clone() = 0;
 		//virtual operator ObjectType () = 0;
-		virtual bool Update(Planner & planner, int turn) = 0;
+		virtual void Update(Planner & planner, int turn) = 0;
 		virtual ObjectType GetCompoundType() const = 0;
 		virtual void Examine() = 0;
 

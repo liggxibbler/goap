@@ -102,7 +102,8 @@ namespace GOAP
 
 	enum class OperatorType
 	{
-		GREATER_THAN = 0x0000,
+		NONE			= 0x0000,
+		GREATER_THAN	= 0x0001,
 
 		EQUAL,
 
@@ -113,26 +114,39 @@ namespace GOAP
 
 		TRUE,
 
-		UNDEFINED = 0xffff
+		UNDEFINED		= 0xffff
 	};
 
 	enum class ActionType
 	{
-		GOTO		= 0x00,
-		WAITFOR	= 0x01,
-		WANDER	= 0x02,
-		TAKE		= 0x03,
-		DROP		= 0x04,
+		NONE		= 0x00,
+		GOTO		= 0x01,
+		WAITFOR		= 0x02,
+		WANDER		= 0x03,
+		TAKE		= 0x04,
+		DROP		= 0x05,
 
-		MURDER	= 0x10,	// murder
+		MURDER		= 0x10,	// murder
 		STAB		= 0x11,
 		BLUDGEON	= 0x12,
 		STRANGLE	= 0x13,
-		SHOOT	= 0x14,
+		SHOOT		= 0x14,
 
 		TEST		= 0x20,
-		ACTION	= 0x40
+		ACTION		= 0x40
 	};
+
+	inline ActionType operator & (const ActionType& lhs, const ActionType& rhs)
+	{
+		return static_cast<ActionType>(std::underlying_type<ActionType>::type(lhs) &
+			std::underlying_type<ActionType>::type(rhs));
+	}
+
+	inline ActionType operator | (const ActionType& lhs, const ActionType& rhs)
+	{
+		return static_cast<ActionType>(std::underlying_type<ActionType>::type(lhs) |
+			std::underlying_type<ActionType>::type(rhs));
+	}
 
 	enum class ExecutionStatus
 	{

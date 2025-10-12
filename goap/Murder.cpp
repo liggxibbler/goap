@@ -18,7 +18,7 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 
 			obj.instance->SetAttribute(AttributeType::ALIVE, false);
 		Agent* agent = (Agent*)(sub.instance);
-		agent->DoneMurder(true);
+		agent->SetHasCommittedMurder(true);
 
 		Goal* loseMurderWeapon = new Goal;
 

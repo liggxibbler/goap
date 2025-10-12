@@ -59,15 +59,15 @@ namespace GOAP
 
 		virtual ObjectType GetCompoundType() const override;
 		void ExecuteNext(Planner& planner, int turn);
-		virtual bool Update(Planner & planner, int turn) override;
+		virtual void Update(Planner & planner, int turn) override;
 		virtual void Examine() override;
 
 		virtual bool CanBeMurderWeapon(); // XXX
 
 		void Log(int turn, Action* action);
 
-		bool GetMurder();
-		void DoneMurder(bool flag);
+		bool GetHasCommittedMurder();
+		void SetHasCommittedMurder(bool flag);
 
 		void Answer(const ActionManager& actionManager, Object* obj, QuestionType qt, int turn);
 		void GiveStatement(const ActionManager& actionManager) const;
@@ -83,7 +83,7 @@ namespace GOAP
 
 		void SetAsMurderer();
 		void ResetMurdererFlag();
-		bool IsMurderer();
+		bool IsMurderer();		
 
 		void SetAsVictim();
 		void ResetVictimFlag();
@@ -130,7 +130,7 @@ namespace GOAP
 		float m_roomProbabilities[NUMBER_OF_ROOMS];
 
 		int m_isAlive;
-		bool m_bDoneMurder;
+		bool m_hasCommittedMurder;
 		bool m_isVictim;
 		bool m_isMurderer;
 

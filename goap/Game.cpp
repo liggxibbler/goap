@@ -55,14 +55,14 @@ void Game::Initialize()
 
 	m_accuser = new Accuser;
 	
-	InitializeAgents();
-	PopulateDictionaries();
+	LoadAgents();
+	PopulateMaps();
 	InitializeObjects();
 
 	m_currentRoom = m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM);
 }
 
-void Game::Roam(const RoomManager& rm)
+void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 {
 	m_vecAgent.clear();
 	m_vecObject.clear();
@@ -147,7 +147,7 @@ void Game::Roam(const RoomManager& rm)
 
 	if (answer == 0)
 	{
-		m_running = ReturnToConstable();
+		m_running = ReturnToConstable(roles);
 	}
 
 	if(answer>=iRoom && answer < iItem)//change room
@@ -177,7 +177,8 @@ void Game::Roam(const RoomManager& rm)
 			m_currentAgent = aWitness;
 			m_roam = false;
 #else
-			std::cout << "\n" << aWitness->GetName() << " was killed " << TURN2INTERVAL(m_timeOfDeath) << " with a " << m_murderWeaponType << "." << std::endl;
+			MurderWeaponInfo murderWeapon = GetMurderWeaponInfo(roles);
+			std::cout << "\n" << aWitness->GetName() << " was killed " << TURN2INTERVAL(m_timeOfDeath) << " with a " << murderWeapon.type << "." << std::endl;
 			std::cout << "\n--Press any key to continue\n";
 			_getch();
 #endif
@@ -299,7 +300,7 @@ void Game::Interview(const ActionManager& actionManager)
 	// ACCUSE
 
 	m_roam = true;
-	m_currentAgent = 0;
+	m_currentAgent = nullptr;
 	return;
 }
 
@@ -308,14 +309,16 @@ bool Game::Run()
 	bool result = false;
 	while(m_running)
 	{
-		if (!GeneratePlot())
+		Roles roles = AssignRoles();
+
+		if (!GeneratePlot(roles))
 		{
 			return false;
 		}
 
 		//FactManager::Instance()->Initialize(m_actors);
 
-		MainLoop();
+		MainLoop(roles);
 		// prompt for another go
 		// if yes :
 		// clear agents,
@@ -328,26 +331,26 @@ bool Game::Run()
 	return true;
 }
 
-bool Game::GeneratePlot()
+bool Game::GeneratePlot(GOAP::Roles& roles)
 {
-	AssignRoles();
-	PopulateRooms(m_planner.GetRoomManager());
+	PopulateRooms(m_planner.GetRoomManager(), roles);
 
-	m_murder = false;
+	bool wasMurderWitnessed = false;
 	bool thiefHasGoal = false;
+	Room* murderRoom = nullptr;
 
-	while(!m_murder)
+	while(!wasMurderWitnessed)
 	{
 		// update murderer first to avoid artefacts
-		m_murderer->Update(m_planner, m_turn);
+		roles.murderer->Update(m_planner, m_turn);
 
 		if(!thiefHasGoal)
 		{
-			if(m_murderer->GetGoal()->GetConditions().begin()->GetOperatorLayoutType() == OperatorLayoutType::OAVB)
+			if(roles.murderer->GetGoal()->GetConditions().begin()->GetOperatorLayoutType() == OperatorLayoutType::OAVB)
 			{
-				if(m_murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
+				if(roles.murderer->GetGoal()->GetPlan()->GetStatus() == PlanStatus::SUCCESS)
 				{
-					SetGoalOfThief(m_planner.GetRoomManager().GetRoom(RoomName::BEDROOM, m_actors[2]));
+					SetGoalOfThief(roles);
 					thiefHasGoal = true;
 				}
 			}
@@ -356,14 +359,23 @@ bool Game::GeneratePlot()
 		for (Room* room : m_planner.GetRoomManager().GetRooms())
 		{
 			room->Update(m_planner, m_turn);
+
+			if (!murderRoom)
+			{
+				if (room->Contains(roles.victim) && !roles.victim->GetAttrib(AttributeType::ALIVE))
+				{
+					murderRoom = room;
+				}
+			}
 		}
 
 		for (Room* room : m_planner.GetRoomManager().GetRooms())
 		{
 			room->UpdateAgentPositions();
-			if (room->ContainsMurderWitness(std::list<Agent*>{m_murderer, m_victim}))
+			
+			if ((murderRoom == room) && room->ContainsAnyExcept(std::list<Agent*>{roles.murderer, roles.victim}))
 			{
-				m_murder = true;
+				wasMurderWitnessed = true;
 			}
 		}
 
@@ -380,9 +392,8 @@ bool Game::GeneratePlot()
 		GETKEY;
 #endif
 		// Record time of death
-		if(m_actors[1]->GetAttrib(AttributeType::ALIVE) == false && m_timeOfDeath == 0)
+		if(roles.victim->GetAttrib(AttributeType::ALIVE) == false && m_timeOfDeath == 0)
 		{
-			GetMurderWeapon();
 			m_timeOfDeath = m_turn;
 		}
 
@@ -402,7 +413,7 @@ bool Game::GeneratePlot()
 	return true;
 }
 
-void Game::MainLoop()
+void Game::MainLoop(GOAP::Roles& roles)
 {
 	std::cout << "******************************\n";
 	std::cout << "Plot successfully generated in " << m_turn << " turns\n";
@@ -413,7 +424,7 @@ void Game::MainLoop()
 
 	system("cls");
 
-	DisplayIntroduction();
+	DisplayIntroduction(roles);
 	MoveActorsToLivingRoom(m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM));
 	m_planner.GetRoomManager().UpdateAllRooms();
 
@@ -422,7 +433,7 @@ void Game::MainLoop()
 		if(m_roam)
 		{
 			system("cls");
-			Roam(m_planner.GetRoomManager());
+			Roam(m_planner.GetRoomManager(), roles);
 		}
 		else
 		{
@@ -432,8 +443,10 @@ void Game::MainLoop()
 	}
 }
 
-void Game::AssignRoles()
+GOAP::Roles Game::AssignRoles()
 {
+	Roles roles;
+
 	// from agent bank
 	// pick a random agent
 	// mark as murderer
@@ -472,75 +485,50 @@ void Game::AssignRoles()
 	}
 
 
-	m_murderer = m_agents[role_array[0]];
-	m_murderer->SetAsMurderer();
+	roles.murderer = m_agents[role_array[0]];
+	roles.murderer->SetAsMurderer();
 
-	m_victim = m_agents[role_array[1]];
-	m_victim->SetAsVictim();
+	roles.victim = m_agents[role_array[1]];
+	roles.victim->SetAsVictim();
 
 	GOAP::Condition vicIsDead(OperatorLayoutType::OAVB, OperatorType::EQUAL);
 	vicIsDead.GetParamByIndex(0).attrib = AttributeType::ALIVE;
-	vicIsDead.GetParamByIndex(0).instance = m_victim;
+	vicIsDead.GetParamByIndex(0).instance = roles.victim;
 	vicIsDead.GetParamByIndex(0).type = ObjectType::AGENT | ObjectType::OBJECT;
 	vicIsDead.GetParamByIndex(0).value = false;
-
-	///*m_objects[2]->SetBearer(m_murderer);
-	//m_murderer->SetAttribute(AttributeType::INVENTORY, true);*/
-
-	//m_murderer->See(m_objects[7]);
 
 	Goal* goal = new Goal;
 	goal->SetDepth(0);
 	goal->AddCondition(vicIsDead);
 	goal->SetPriority(10);
-	m_murderer->AddGoal(goal);
+	roles.murderer->AddGoal(goal);
 
-	m_murderer->See(m_victim);
-	m_murderer->AddAction(ActionType::WAITFOR);
-    m_murderer->AddAction(ActionType::TAKE);
-    m_murderer->AddAction(ActionType::DROP);
+	roles.murderer->See(roles.victim);
+	roles.murderer->AddAction(ActionType::WAITFOR);
+    roles.murderer->AddAction(ActionType::TAKE);
+    roles.murderer->AddAction(ActionType::DROP);
 
-	m_actors.push_back(m_murderer);
-	m_actors.push_back(m_victim);
+	m_actors.push_back(roles.murderer);
+	m_actors.push_back(roles.victim);
+
 	for(int otherRoles = 2; otherRoles < m_numberOfActors; ++otherRoles)
 	{
 		m_actors.push_back(m_agents[role_array[otherRoles]]);
 	}	
 
-	m_murderer->PickCurrentGoal();
+	roles.murderer->PickCurrentGoal();
 
-	/*GOAP::Condition cond2(OperatorLayoutType::OAOAB, OperatorType::EQUAL);
-	cond2[0].instance = m_objects[7];
-	cond2[0].type = m_objects[7]->GetCompoundType();
-	cond2[0].attrib = AttributeType::ROOM;
-	cond2[1].instance = RoomManager::Instance()->GetRoom(RoomName::BEDROOM, m_agents[role_array[2]]);
-	cond2[1].type = ObjectType::ROOM | ObjectType::OBJECT;
-	cond2[1].attrib = AttributeType::ROOM;
-
-	goal = new Goal;
-	goal->SetDepth(0);
-	goal->AddCondition(cond2);
-	goal->SetPriority(20);*/
-
-	m_thief = m_agents[role_array[2]];
-	m_thief->AddAction(ActionType::TAKE);
-	m_thief->AddAction(ActionType::DROP);
-	////m_victim->AddGoal(goal);
-	m_thief->PickCurrentGoal();
-
-	if(m_numberOfActors == 4)
-	{
-		m_accuser->Initialize(m_actors[0], m_actors[2], m_actors[3]);
-	}
-	else
-	{
-		m_accuser->Initialize(m_actors[0], m_actors[2], 0);
-	}
+	roles.thief = m_agents[role_array[2]];
+	roles.thief->AddAction(ActionType::TAKE);
+	roles.thief->AddAction(ActionType::DROP);	
+	roles.thief->PickCurrentGoal();
 
 	delete[] role_array;
+
+	return roles;
 }
 
-void Game::PopulateRooms(GOAP::RoomManager& roomManager)
+void Game::PopulateRooms(GOAP::RoomManager& roomManager, GOAP::Roles& roles)
 {
 	for (Agent* actor : m_actors)
 	{
@@ -550,7 +538,7 @@ void Game::PopulateRooms(GOAP::RoomManager& roomManager)
 		roomManager.ShowOwnBedroom(actor);
 	}
 
-	roomManager.ShowBedrooms(m_murderer);
+	roomManager.ShowBedrooms(roles.murderer);
 
 	/* for each room in world
 		from object bank[room]
@@ -578,7 +566,7 @@ void Game::PopulateRooms(GOAP::RoomManager& roomManager)
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
-void Game::InitializeAgents()
+void Game::LoadAgents()
 {
 	// TODO merge this with InitializeObjects
 
@@ -654,16 +642,17 @@ void Game::DisplayRoomMap()
 	std::cout << "\n	MAP! I HAVE A MAP!\n";
 }
 
-void Game::DisplayIntroduction()
+void Game::DisplayIntroduction(const GOAP::Roles& roles)
 {
-	int m_murderWeapon = 0;
+	MurderWeaponInfo murderWeapon = GetMurderWeaponInfo(roles);
+
 	std::cout << "\n\n\tGood evening. I'm Constable Sauce. Redcurrant Sauce.\n\n\t\
 Thank you for helping Scotland Yard with this case.\n\n\t\
 We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\t\
 dead in " << m_actors[1]->GetRoom()->GetName()<< ".\n\n\t\
 The coroner times the death at " << TURN2INTERVAL(m_timeOfDeath) << ".\n\n\t\
-He believes that the victim was killed by " << m_murderWeaponType << "\n\n\
-(like " << m_weaponExample1 << " or " << m_weaponExample2 << ").\n\n\t\
+He believes that the victim was killed by " << murderWeapon.type << "\n\n\
+(like " << murderWeapon.example1 << " or " << murderWeapon.example2 << ").\n\n\t\
 I've gathered all other residents in the living room to be interviewed.\n\n\t\
 You can go around the house and examine different rooms if you like.\n\n\t\
 I know with your talent you can solve the case in no time,\n\n\t\
@@ -689,7 +678,7 @@ void Game::MoveActorsToLivingRoom(GOAP::Room* livingRoom)
 	}
 }
 
-bool Game::ReturnToConstable()
+bool Game::ReturnToConstable(GOAP::Roles& roles)
 {
 	int answer = -1;
 	bool done = false;
@@ -713,7 +702,7 @@ bool Game::ReturnToConstable()
 			// nag
 			return false;
 		case 1:
-			return Accuse();
+			return Accuse(roles);
 		case 2:
 			return true;
 		default:
@@ -724,72 +713,66 @@ bool Game::ReturnToConstable()
 	return true;
 }
 
-bool Game::Accuse()
+bool Game::Accuse(GOAP::Roles& roles)
 // returns whether the game should continue
 {
-	if(m_accuser->Prompt())
+	if(Agent* allegedMurderer = m_accuser->Prompt(roles))
 	{
-		if(m_accuser->Submit())
+		if(m_accuser->Submit(roles, allegedMurderer))
 		{
 			std::cout << "\n\nYay! You won!\n\n";
 			_getch();
-			return false;
 		}
 		else
 		{
-			std::cout << "\n\nYou were wrong! The real killer was " << m_murderer->GetName() << "!";
+			std::cout << "\n\nYou were wrong! The real killer was " << roles.murderer->GetName() << "!";
 			_getch();
-			return false;
 		}
+
+		return false;
 	}
-	else
-	{
-		return true;
-	}
+
+	return true;	
 }
 
-void Game::GetMurderWeapon()
+GOAP::MurderWeaponInfo Game::GetMurderWeaponInfo(const GOAP::Roles& roles) const
 {
-	for(auto record(m_actors[1]->GetFirstActionRecord()); record != m_actors[1]->GetLastActionRecord();
+	for(auto record(roles.murderer->GetFirstActionRecord()); record != roles.murderer->GetLastActionRecord();
 		++record)
 	{
-		ActionType at = *(record->action);
-		if (at == ActionType::STAB || at == ActionType::BLUDGEON || at == ActionType::STRANGLE || at == ActionType::SHOOT)
+		Action* action = record->action;
+		ActionType actionType = *action;
+
+		if ((actionType & ActionType::MURDER) != ActionType::NONE)// == ActionType::STAB || at == ActionType::BLUDGEON || at == ActionType::STRANGLE || at == ActionType::SHOOT)
 		{
-			switch(at)
+			Object* murderWeaponObject = action->GetArg(SemanticRole::INSTRUMENT).instance;
+			Prop* murderWeapon = dynamic_cast<Prop*>(murderWeaponObject);
+
+			switch(actionType)
 			{
 			case ActionType::STAB:
-				m_murderWeaponType = "a blade (stabbed)";
-				m_weaponExample1 = "a knife";
-				m_weaponExample2 = "a sword";
-				break;
+				return { murderWeapon, "a blade (stabbed)", "a knife", "a sword" };
 			case ActionType::BLUDGEON:
-				m_murderWeaponType = "a blunt object (bludgeoned)";
-				m_weaponExample1 = "a coconut";
-				m_weaponExample2 = "a trophy";
-				break;
+				return { murderWeapon, "a blunt object (bludgeoned)", "a coconut", "a trophy" };
 			case ActionType::STRANGLE:
-				m_murderWeaponType = "a string (strangled)";
-				m_weaponExample1 = "a rope";
-				m_weaponExample2 = "a cord";
-				break;
+				return { murderWeapon, "a string (strangled)", "a rope", "a cord" };
 			case ActionType::SHOOT:
-				m_murderWeaponType = "a projectile (shot)";
-				m_weaponExample1 = "a gun";
-				m_weaponExample2 = "a pistol";
-				break;
+				return { murderWeapon, "a projectile (shot)", "a gun", "a pistol" };
 			default:
-				// WRONG
-				break;
+				return {};
 			}
 		}
 	}
+
+	return {};
 }
 
-void Game::SetGoalOfThief(Room* thiefsBedroom)
+void Game::SetGoalOfThief(GOAP::Roles& roles)
 {
-	Goal* murderGoal = m_murderer->GetGoal()->GetPlan()->GetPlan();
-	while(murderGoal->GetParent()->GetParent() != 0)
+	Room* thiefsBedroom = m_planner.GetRoomManager().GetRoom(RoomName::BEDROOM, roles.thief);
+
+	Goal* murderGoal = roles.murderer->GetGoal()->GetPlan()->GetPlan();
+	while(murderGoal->GetParent()->GetParent() != nullptr)
 		// find goal whose action is the murder
 	{
 		murderGoal = murderGoal->GetParent();
@@ -798,9 +781,9 @@ void Game::SetGoalOfThief(Room* thiefsBedroom)
 	// extract the murder instrument
 	Prop* instrument = (Prop*)murderGoal->GetAction()->GetArg(SemanticRole::INSTRUMENT).instance;
 	instrument->IncreaseValue();
-	Goal* goal = 0;
+	Goal* goal = nullptr;
 	// make thief want all props of the same type as the instrument
-	for(auto item = m_actors[2]->FirstObject(); item != m_actors[2]->LastObject(); ++ item)
+	for(auto item = roles.thief->FirstObject(); item != roles.thief->LastObject(); ++ item)
 	{
 		if(item->second->GetCompoundType() == instrument->GetCompoundType())
 		{
@@ -819,13 +802,13 @@ void Game::SetGoalOfThief(Room* thiefsBedroom)
 			goal->AddCondition(wantItem);
 			goal->SetPriority(20);
 
-			m_actors[2]->AddGoal(goal);
-			m_actors[2]->PickCurrentGoal();
+			roles.thief->AddGoal(goal);
+			roles.thief->PickCurrentGoal();
 		}
 	}
 }
 
-void Game::PopulateDictionaries()
+void Game::PopulateMaps()
 {
 	m_roomEnumMap["LIVING_ROOM"] = RoomName::LIVING_ROOM;
 	m_roomEnumMap["DINING_ROOM"] = RoomName::DINING_ROOM;

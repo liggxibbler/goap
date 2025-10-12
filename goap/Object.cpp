@@ -84,7 +84,7 @@ ObjectType Object::GetCompoundType() const // XXX = 0
 void Object::SetRoom(Room* room)
 {
 	m_roomInstance = room;
-	if(room != 0)
+	if(room)
 	{
 	    m_room = room->GetID();
 	}

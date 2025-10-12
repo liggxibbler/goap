@@ -1,6 +1,6 @@
 #include "Accuser.h"
 
-Accuser::Accuser() : m_murderer(0), m_thief(0), m_witness(0), m_allegedMurderer(0), m_allegedThief(0)
+Accuser::Accuser()
 {
 }
 
@@ -12,113 +12,74 @@ Accuser::~Accuser()
 {
 }
 
-void Accuser::Initialize(GOAP::Agent* murderer, GOAP::Agent* thief, GOAP::Agent* witness)
+int Accuser::GetNumWitnesses(const GOAP::Roles& roles) const
 {
-	m_murderer = murderer;
-	m_thief = thief;
-	m_witness = witness;
-	if( m_witness == nullptr )
-	{
-		m_numWitnesses = 2;
-	}
-	else
-	{
-		m_numWitnesses = 3;
-	}
+	return roles.witness ? 3 : 2;
 }
 
-bool Accuser::Submit()
+bool Accuser::Submit(const GOAP::Roles& roles, const GOAP::Agent* allegedMurderer)
 {
-	if ( m_allegedMurderer == m_murderer )
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return allegedMurderer == roles.murderer;
 }
 
-bool Accuser::Prompt()
+GOAP::Agent* Accuser::Prompt(const GOAP::Roles& roles) const
 {
 	while(true)
 	{
 		system("cls");
 		
-		int murderer = -1;
-		while(murderer < 1 || murderer > m_numWitnesses)
+		int murdererIndex = -1;
+		GOAP::Agent* allegedMurderer = nullptr;
+		while(murdererIndex < 1 || murdererIndex > GetNumWitnesses(roles))
 		{
 			std::cout << "===============================================\n\n";
 			std::cout << "Who do you think was the murderer?\n\n";
-			std::cout << "1. " << m_thief->GetName() << "\n\n";
-			std::cout << "2. " << m_murderer->GetName() << "\n\n";
-			if(m_witness != nullptr)
+			std::cout << "1. " << roles.thief->GetName() << "\n\n";
+			std::cout << "2. " << roles.murderer->GetName() << "\n\n";
+			if(roles.witness != nullptr)
 			{
-				std::cout << "3. " << m_witness->GetName() << "\n\n";
+				std::cout << "3. " << roles.witness->GetName() << "\n\n";
 			}
 			std::cout << "0. Go back to Constable Sauce\n\n";
 			
 			std::cout << ">>> ";
 
-			std::cin >> murderer;
+			std::cin >> murdererIndex;
 			
-			if(murderer == 0)
+			if(murdererIndex == 0)
 			{
-				return false;
+				return nullptr;
 			}
 
-			AccuseMurderer(murderer - 1);
+			allegedMurderer = AccuseMurderer(roles, murdererIndex - 1);
 		}
 
-		std::cout << "\nSo you think that " << m_allegedMurderer->GetName() << " was the killer? (Y/N)\n\n";
+		std::cout << "\nSo you think that " << allegedMurderer->GetName() << " was the killer? (Y/N)\n\n";
 		std::cout << ">>> ";
 		char answer;
 		std::cin >> answer;
 		if ((answer == 'y') || (answer == 'Y'))
 		{
-			return true;
+			return allegedMurderer;
 		}
 		else
 		{
-			return false;
+			return nullptr;
 		}
 	}
 }
 
-void Accuser::AccuseMurderer(int murderer)
+GOAP::Agent* Accuser::AccuseMurderer(const GOAP::Roles& roles, int murderer) const
 {
 	switch(murderer)
 	{
 	case 0:
-		m_allegedMurderer = m_thief;
-		break;
+		return roles.thief;
 	case 1:
-		m_allegedMurderer= m_murderer;
-		break;
+		return roles.murderer;
 	case 2:
-		m_allegedMurderer = m_witness;
-		break;
+		return roles.witness;
 	default:
-		// WRONG
-		break;
-	}
-}
-
-void Accuser::AccuseThief(int thief)
-{
-	switch(thief)
-	{
-	case 0:
-		m_allegedThief = m_murderer;
-		break;
-	case 1:
-		m_allegedThief = m_witness;
-		break;
-	case 2:
-		m_allegedThief= m_thief;
-		break;
-	default:
-		// WRONG
-		break;
+		return nullptr;
 	}
 }

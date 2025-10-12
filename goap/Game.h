@@ -14,6 +14,14 @@ namespace GOAP
 {
 	class Agent;
 	class Prop;
+
+	struct MurderWeaponInfo
+	{
+		Prop* weapon = nullptr;
+		std::string type = "INVALID WEAPON";
+		std::string example1 = "INVALID EXAMPLE 1";
+		std::string example2 = "INVALIDE EXMAPLE 2";
+	};
 }
 
 class Game
@@ -25,28 +33,24 @@ public:
 
 	void Initialize();
 
-	void Roam(const GOAP::RoomManager& rm);
+	void Roam(const GOAP::RoomManager& rm, GOAP::Roles& roles);
 	void Interview(const GOAP::ActionManager& actionManager);
-	bool Accuse();
+	bool Accuse(GOAP::Roles& roles);
 
 	bool Run();
 
-	void AssignRoles();
-	void PopulateRooms(GOAP::RoomManager& roomManager);
-	bool GeneratePlot();
-	void MainLoop();
+	GOAP::Roles AssignRoles();
+	void PopulateRooms(GOAP::RoomManager& roomManager, GOAP::Roles& roles);
+	bool GeneratePlot(GOAP::Roles& roles);
+	void MainLoop(GOAP::Roles& roles);
 
 	void DisplayRoomMap();
-	void DisplayIntroduction();
+	void DisplayIntroduction(const GOAP::Roles& roles);
 	void MoveActorsToLivingRoom(GOAP::Room* livingRoom);
-	bool ReturnToConstable();
+	bool ReturnToConstable(GOAP::Roles& roles);
 
-	void GetMurderWeapon();
-	void SetGoalOfThief(GOAP::Room* thiefsBedroom);
-
-	GOAP::Agent* GetMurderer() const { return m_murderer; };
-	GOAP::Agent* GetVictim() const { return m_victim; };
-	GOAP::Agent* GetThief() const { return m_thief; };
+	GOAP::MurderWeaponInfo GetMurderWeaponInfo(const GOAP::Roles& roles) const;
+	void SetGoalOfThief(GOAP::Roles& roles);
 
 private:
 	std::vector<GOAP::Prop*> m_vecObject;
@@ -58,9 +62,9 @@ private:
 
 	/*databaseClassThing* m_database;*/
 
-	void InitializeAgents();
+	void LoadAgents();
 	void InitializeObjects();
-	void PopulateDictionaries();
+	void PopulateMaps();
 
 	GOAP::Planner m_planner;
 
@@ -69,13 +73,8 @@ private:
 	GOAP::Room* m_currentRoom = nullptr;
 	GOAP::Agent* m_currentAgent = nullptr;	
 
-	GOAP::Agent* m_murderer = nullptr;
-	GOAP::Agent* m_victim = nullptr;
-	GOAP::Agent* m_thief = nullptr;
-
 	bool m_running = false;
-	bool m_murder = false;
-
+	
 	int m_turn = -1;
 	unsigned int m_seed;
 	std::vector<GOAP::Agent*>	m_agents;
@@ -86,11 +85,6 @@ private:
 	Accuser* m_accuser = nullptr;
 
 	int m_numberOfActors = -1;
-
-	GOAP::Prop* m_murderWeapon = nullptr;
-	std::string m_murderWeaponType;
-	std::string m_weaponExample1;
-	std::string m_weaponExample2;
 };
 
 #endif

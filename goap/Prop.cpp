@@ -62,14 +62,12 @@ void Prop::MayBeFoundIn(RoomName rooms)
 	m_canBeFoundIn = rooms;
 }
 
-bool Prop::Update(Planner& planner, int turn)
+void Prop::Update(Planner& planner, int turn)
 {
-	if(m_bearer != 0)
+	if(m_bearer)
 	{
 		SetRoom(m_bearer->GetRoom());
 	}
-
-	return true;
 }
 
 ObjectType Prop::GetCompoundType() const

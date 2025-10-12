@@ -42,20 +42,21 @@ namespace GOAP
 
 		RoomName GetType();
 
-		virtual bool Update(Planner & planner, int turn) override;
+		virtual void Update(Planner & planner, int turn) override;
 
 		void MarkForDeletion(Agent* agent);
 		void MarkForAddition(Agent* agent);
 		void UpdateAgentPositions();
+		
+		bool Contains(const Agent* agent) const;
 		bool ContainsAnyExcept(const std::list<Agent*>& toExclude);
-		bool ContainsMurderWitness(const std::list<Agent*>& toExclude);
 
 		virtual Object* Clone();
 		virtual void Examine() override;
 		//virtual operator ObjectType ();
 
 		virtual ObjectType GetCompoundType() const override;
-		bool GetMurder();
+		bool GetIsMurderRoom();
 
 		void RemoveObject(Prop* obj);
 
@@ -72,8 +73,7 @@ namespace GOAP
 		std::set<Agent*> m_markedForDeletion;
 		std::set<Agent*> m_markedForAddition;
 
-		int m_numAgents;
-		bool m_isMurderRoom;
+		int m_numAgents;		
 
 		Room* m_left;
 		Room* m_right;
