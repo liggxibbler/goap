@@ -13,7 +13,7 @@ namespace GOAP
 		Shoot(const Shoot& other);
 		~Shoot();
 
-		virtual operator ActionType();
+		virtual ActionType GetActionType() const override;
 		virtual Shoot* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;

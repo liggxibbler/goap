@@ -46,7 +46,7 @@ ExecutionStatus WaitFor::ExecuteWorkhorse(int turn)
 	}
 }
 
-WaitFor::operator ActionType()
+ActionType WaitFor::GetActionType() const
 {
 	return ActionType::WAITFOR;
 }

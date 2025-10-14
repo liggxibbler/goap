@@ -18,7 +18,7 @@ Take::~Take()
 {
 }
 
-Take::operator ActionType()
+ActionType Take::GetActionType() const
 {
 	return ActionType::TAKE;
 }

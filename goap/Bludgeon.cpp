@@ -15,7 +15,7 @@ Bludgeon::~Bludgeon()
 {
 }
 
-Bludgeon::operator ActionType()
+ActionType Bludgeon::GetActionType() const
 {
 	return ActionType::BLUDGEON;
 }

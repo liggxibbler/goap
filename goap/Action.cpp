@@ -16,7 +16,7 @@ Action::~Action()
 {
 }
 
-Action::operator GOAP::ActionType()
+GOAP::ActionType Action::GetActionType() const
 {
 	return ActionType::ACTION;
 }
@@ -414,10 +414,10 @@ const std::list<Condition>& GOAP::Action::GetEffects() const
 
 void Action::DumpToFile(int turn)
 {
-	s_outFile << TURN2TIME(turn) << "\t" <<Express(0, 0) << std::endl;
+	s_outFile << TURN2TIME(turn) << "\t" <<Express(nullptr, nullptr) << std::endl;
 }
 
 Goal* Action::FollowupGoal()
 {
-	return 0;
+	return nullptr;
 }

@@ -362,7 +362,7 @@ void Agent::GiveStatement(const ActionManager& actionManager) const
 
 			if(m_isMurderer)
 			{
-				ActionType at = *ar.action;
+				ActionType at = ar.action->GetActionType();
 				int numWitness = ar.action->GetNumWitness();
 				int numSuspect = actionManager.GetSuspicion(at);
 				//actionIsSuspect = (numSuspect > 0); // XIBB

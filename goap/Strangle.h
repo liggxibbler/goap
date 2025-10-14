@@ -13,7 +13,7 @@ namespace GOAP
 		Strangle(const Strangle& other);
 		~Strangle();
 
-		virtual operator ActionType();
+		virtual ActionType GetActionType() const override;
 		virtual Strangle* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;

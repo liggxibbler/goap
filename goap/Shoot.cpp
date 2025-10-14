@@ -15,7 +15,7 @@ Shoot::~Shoot()
 {
 }
 
-Shoot::operator ActionType()
+ActionType Shoot::GetActionType() const
 {
 	return ActionType::SHOOT;
 }

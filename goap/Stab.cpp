@@ -15,7 +15,7 @@ Stab::~Stab()
 {
 }
 
-Stab::operator ActionType()
+ActionType Stab::GetActionType() const
 {
 	return ActionType::STAB;
 }

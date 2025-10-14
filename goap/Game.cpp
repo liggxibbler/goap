@@ -199,106 +199,9 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 
 void Game::Interview(const ActionManager& actionManager)
 {
-	//m_vecObject.clear();
-	//m_vecAgent.clear();
-
-	//cout << "========================\n\n";
-	//cout << "You are interviewing " << m_currentAgent->GetName() << ":\n";
-	//cout << "What/who would you like to ask about :\n";
-	//
-	//int item = 1;
-	//for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
-	//{
-	//	/*list objects*/
-	//	for(auto object((*room)->GetFirstObject());object != (*room)->GetLastObject(); ++object)
-	//	{
-	//		cout << item++ << ") " << (*object)->GetName() << endl;
-	//		m_vecObject.push_back(*object);
-	//	}
-	//}
-
-	//int iAgent = item;
-	//for(auto room(m_world->GetFirstRoom()); room != m_world->GetLastRoom(); ++room)
-	//{
-	//	/*list agents*/
-	//	for(auto agent((*room)->GetFirstAgent());agent != (*room)->GetLastAgent(); ++agent)
-	//	{
-	//		cout << item++ << ") " << (*agent)->GetName() << endl;
-	//		m_vecAgent.push_back(*agent);
-	//	}
-	//}
-
-	//int accuse = item;
-	///*accuse if available*/
-
-	///*go back (m_currentAgent = 0)*/
-	//cout << "\nEnter 0 to go back to roam\n>>>";;
-	//
-	//int answer;
-	//cin >> answer;
-
-	//if(answer == 0)
-	//{
-	//	m_roam = true;
-	//	m_currentAgent = 0;
-	//	return;
-	//}
-
-	//std::string wasChar, choiceTwo;
-	//QuestionType qt2;
-	//Object* qObject = 0;
-
-	//if(answer < iAgent)
-	//	// object
-	//{
-	//	wasChar = "it was";
-	//	choiceTwo = "Who had it";
-	//	qt2 = QuestionType::POSSESSION;
-	//	qObject = m_vecAgent[answer - 1];
-	//}
-	//else
-	//	// agent
-	//{
-	//	wasChar = "they were";
-	//	choiceTwo = "What they were doing";
-	//	qt2 = QuestionType::ACTION;
-	//	qObject = m_vecAgent[answer - iAgent];
-	//}
-
-	//cout << "\nYou can ask about\n";
-	//cout << "1) Where " <<  wasChar << "\n";
-	//cout << "2) " << choiceTwo << "\n";
-	//
-	//cout << ">>>";
-	//cin >> answer;
-
-	//QuestionType question;
-
-	//if(answer == 1)
-	//{
-	//	question = QuestionType::POSITION;
-	//}
-	//else
-	//{
-	//	question = qt2;
-	//}
-
-	/*int time;
-	cout << "\nEnter 0 to go back \n>>> ";
-	cin >> time;
-
-	if( time == 0 )
-	{
-		m_roam = true;
-		m_currentAgent = 0;
-		return;
-	}*/
-
-	//m_currentAgent->Answer(qObject, question, answer);
 	m_currentAgent->Answer(actionManager, nullptr, QuestionType::ACTION, 0);
 
 	// ACCUSE
-
 	m_roam = true;
 	m_currentAgent = nullptr;
 	return;
@@ -648,8 +551,8 @@ void Game::DisplayIntroduction(const GOAP::Roles& roles)
 
 	std::cout << "\n\n\tGood evening. I'm Constable Sauce. Redcurrant Sauce.\n\n\t\
 Thank you for helping Scotland Yard with this case.\n\n\t\
-We found " << m_actors[1]->GetName() << ", one of the residents of this manor,\n\n\t\
-dead in " << m_actors[1]->GetRoom()->GetName()<< ".\n\n\t\
+We found " << roles.victim->GetName() << ", one of the residents of this manor,\n\n\t\
+dead in " << roles.victim->GetRoom()->GetName()<< ".\n\n\t\
 The coroner times the death at " << TURN2INTERVAL(m_timeOfDeath) << ".\n\n\t\
 He believes that the victim was killed by " << murderWeapon.type << "\n\n\
 (like " << murderWeapon.example1 << " or " << murderWeapon.example2 << ").\n\n\t\
@@ -737,18 +640,17 @@ bool Game::Accuse(GOAP::Roles& roles)
 
 GOAP::MurderWeaponInfo Game::GetMurderWeaponInfo(const GOAP::Roles& roles) const
 {
-	for(auto record(roles.murderer->GetFirstActionRecord()); record != roles.murderer->GetLastActionRecord();
+	for(auto record(roles.victim->GetFirstActionRecord()); record != roles.victim->GetLastActionRecord();
 		++record)
 	{
-		Action* action = record->action;
-		ActionType actionType = *action;
+		Action* action = record->action;		
 
-		if ((actionType & ActionType::MURDER) != ActionType::NONE)// == ActionType::STAB || at == ActionType::BLUDGEON || at == ActionType::STRANGLE || at == ActionType::SHOOT)
+		if ((action->GetActionType() & ActionType::MURDER) != ActionType::NONE)
 		{
 			Object* murderWeaponObject = action->GetArg(SemanticRole::INSTRUMENT).instance;
 			Prop* murderWeapon = dynamic_cast<Prop*>(murderWeaponObject);
 
-			switch(actionType)
+			switch(action->GetActionType())
 			{
 			case ActionType::STAB:
 				return { murderWeapon, "a blade (stabbed)", "a knife", "a sword" };

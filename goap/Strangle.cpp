@@ -16,7 +16,7 @@ Strangle::~Strangle()
 {
 }
 
-Strangle::operator ActionType()
+ActionType Strangle::GetActionType() const
 {
 	return ActionType::STRANGLE;
 }

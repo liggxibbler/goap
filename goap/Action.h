@@ -36,7 +36,8 @@ namespace GOAP
 		virtual Action* Clone() = 0;
 		virtual ExecutionStatus Execute(const Op::OperatorManager& om, int turn) override;
 		ExecutionStatus GetStatus();
-		virtual operator ActionType() = 0;
+
+		virtual ActionType GetActionType() const;
 
 		Goal* GetPreconds();
 		Goal* GetGoal();
@@ -60,9 +61,6 @@ namespace GOAP
 		virtual std::string Express(const Agent* agent, const Room* room) const = 0;
 
 		virtual std::string GetName() const = 0;
-
-		/*virtual int GetCost() = 0;
-		virtual int GetRisk() = 0;*/
 
 		virtual float Cost(const RoomManager& rm) = 0;
 

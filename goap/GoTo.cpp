@@ -56,7 +56,7 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 	return ExecutionStatus::SUCCESS;
 }
 
-GoTo::operator ActionType()
+ActionType GoTo::GetActionType() const
 {
 	return ActionType::GOTO;
 }

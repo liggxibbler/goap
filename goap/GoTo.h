@@ -16,7 +16,7 @@ namespace GOAP
 		GoTo(Room* room, Agent* agent);
 		~GoTo();
 
-		virtual operator ActionType();
+		virtual ActionType GetActionType() const;
 		virtual GoTo* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;

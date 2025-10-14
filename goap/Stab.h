@@ -13,7 +13,7 @@ namespace GOAP
 		Stab(const Stab& other);
 		~Stab();
 
-		virtual operator ActionType();
+		virtual ActionType GetActionType() const override;
 		virtual Stab* Clone();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const override;
