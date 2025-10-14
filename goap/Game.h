@@ -53,17 +53,14 @@ public:
 	void SetGoalOfThief(GOAP::Roles& roles);
 
 private:
-	std::vector<GOAP::Prop*> m_vecObject;
-	std::vector<GOAP::Agent*> m_vecAgent;
-	std::vector<GOAP::Room*> m_vecRoom;
-
+	
 	std::map<std::string, GOAP::RoomName> m_roomEnumMap;
 	std::map<std::string, GOAP::ObjectType> m_propTypeMap;
 
 	/*databaseClassThing* m_database;*/
 
 	void LoadAgents();
-	void InitializeObjects();
+	void LoadProps();
 	void PopulateMaps();
 
 	GOAP::Planner m_planner;

@@ -57,16 +57,16 @@ void Game::Initialize()
 	
 	LoadAgents();
 	PopulateMaps();
-	InitializeObjects();
+	LoadProps();
 
 	m_currentRoom = m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM);
 }
 
 void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 {
-	m_vecAgent.clear();
-	m_vecObject.clear();
-	m_vecRoom.clear();
+	std::vector<GOAP::Prop*> vecObject;
+	std::vector<GOAP::Agent*> vecAgent;
+	std::vector<GOAP::Room*> vecRoom;
 
 	cout << "=======================================\n\n";
 	cout << "You are in " << m_currentRoom->GetName() << "\n\n";
@@ -81,7 +81,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 		std::cout.fill(' ');
 		std::cout.width(2);
 		cout << item++ << ". " << room->GetName() << "\n" << endl;
-		m_vecRoom.push_back(room);
+		vecRoom.push_back(room);
 	}
 
 	int iItem = item;
@@ -105,7 +105,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 				std::cout.fill(' ');
 				std::cout.width(2);
 				cout << item++ << ". " << prop->GetName() << "\n" << endl;
-				m_vecObject.push_back(prop);
+				vecObject.push_back(prop);
 			}
 		}
 	}
@@ -129,7 +129,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 				cout << " [DEAD]";
 			}
 			cout << "\n" << endl;
-			m_vecAgent.push_back(agent);
+			vecAgent.push_back(agent);
 		}
 	}
 	cout << "-----------------------\n";
@@ -152,11 +152,11 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 
 	if(answer>=iRoom && answer < iItem)//change room
 	{
-		m_currentRoom = m_vecRoom[answer - iRoom];
+		m_currentRoom = vecRoom[answer - iRoom];
 	}
 	else if(answer >= iItem && answer < witness )// examine
 	{
-		Prop* prop = m_vecObject[answer - iItem];
+		Prop* prop = vecObject[answer - iItem];
 		std::cout << "\n" << prop->GetName() << " : " << prop->GetDescription() << " Usually found in " <<
 			rm.GetRoom(prop->MayBeFoundIn())->GetName() << "." << std::endl;
 		std::cout << "\n--Press any key to continue\n";
@@ -165,7 +165,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 	}
 	else if(answer>=witness && answer <iMap)//agent
 	{
-		Agent* aWitness = m_vecAgent[answer - witness];
+		Agent* aWitness = vecAgent[answer - witness];
 		if(aWitness->GetAttrib(AttributeType::ALIVE) == true)
 		{
 			m_currentAgent = aWitness;
@@ -458,64 +458,17 @@ void Game::PopulateRooms(GOAP::RoomManager& roomManager, GOAP::Roles& roles)
 	}
 
 	//m_roomManager->GetRoom(RoomName::KITCHEN)->AddAgent(m_agents[0]);
-	for(int i=0; i<m_numberOfActors; ++i)
+	for(Agent* actor : m_actors)
 	{
-		roomManager.GetRoom(RoomName::BEDROOM, m_actors[i])->AddAgent(m_actors[i]);
+		roomManager.GetRoom(RoomName::BEDROOM, actor)->AddAgent(actor);
 	}
 
 	// Show everything to murderer and thief
-	roomManager.ShowEverything( m_actors[0] );
-	roomManager.ShowEverything( m_actors[2] );
+	roomManager.ShowEverything( roles.murderer );
+	roomManager.ShowEverything( roles.thief );
 }
 
 //hard-coding the characters by passing the variables to agent's initializer method
-void Game::LoadAgents()
-{
-	// TODO merge this with InitializeObjects
-
-	int MURDERER_ID = 0;
-
-	m_agents.clear();
-
-	std::ifstream ifs("entities.json");
-	Json::Reader reader;
-	Json::Value obj;
-	reader.parse(ifs, obj);
-	ifs.close();
-
-	const Json::Value& agents = obj["agents"];
-
-	for (const Json::Value& jsonAgent : agents)
-	{
-		GOAP::Agent* agent = new GOAP::Agent();
-		int room_count = jsonAgent["rooms"].size();
-		float* rooms = new float[room_count];
-		for (int j = 0; j < room_count; ++j)
-		{
-			rooms[j] = jsonAgent["rooms"][j].asFloat();
-		}
-
-		int action_count = jsonAgent["actions"].size();
-		std::string* actions = new string[action_count];
-		for (int k = 0; k < action_count; ++ k)
-		{
-			actions[k] = jsonAgent["actions"][k].asString();
-		}
-
-		Gender gender = jsonAgent["gender"].asString().compare("m") == 0 ? Gender::MALE : Gender::FEMALE;
-
-		agent->InitializeCharacter(
-		jsonAgent["name"].asString(),
-		gender,
-		jsonAgent["desc"].asString(),
-		rooms,
-		room_count,
-		actions,
-		action_count);
-
-		m_agents.push_back(agent);
-	}
-}
 
 void Game::DisplayRoomMap()
 {
@@ -588,13 +541,13 @@ bool Game::ReturnToConstable(GOAP::Roles& roles)
 	while(!done)
 	{
 		system("cls");
-		std::cout << "==================================\n";
-		std::cout << "\nYou are talking to Constable Sauce\n\n";
-		std::cout << "\nHe asks if you are ready to:\"\n\n";
-		std::cout << "1. Accuse someone\n\n";
-		std::cout << "2. Continue your investigation\n\n";
-		std::cout << "Or\n\n 0. Rage quit\n\n";
-		std::cout << ">>> ";
+		std::cout	<< "==================================\n"
+					<< "\nYou are talking to Constable Sauce\n\n"
+					<< "\nHe asks if you are ready to:\"\n\n"
+					<< "1. Accuse someone\n\n"
+					<< "2. Continue your investigation\n\n"
+					<< "Or\n\n 0. Rage quit\n\n"
+					<< ">>> ";
 		//accuse?
 		//leave?
 		//continue?
@@ -710,21 +663,56 @@ void Game::SetGoalOfThief(GOAP::Roles& roles)
 	}
 }
 
-void Game::PopulateMaps()
-{
-	m_roomEnumMap["LIVING_ROOM"] = RoomName::LIVING_ROOM;
-	m_roomEnumMap["DINING_ROOM"] = RoomName::DINING_ROOM;
-	m_roomEnumMap["KITCHEN"] = RoomName::KITCHEN;
-	m_roomEnumMap["BATHROOM"] = RoomName::BATHROOM;
 
-	m_propTypeMap["Prop"] = ObjectType::OBJECT | ObjectType::PROP;
-	m_propTypeMap["Blunt"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLUNT;
-	m_propTypeMap["Blade"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLADE;
-	m_propTypeMap["Squeezer"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::SQUEEZER;
-	m_propTypeMap["Projectile"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::PROJECTILE;
+void Game::LoadAgents()
+{
+	// TODO merge this with InitializeObjects
+
+	int MURDERER_ID = 0;
+
+	m_agents.clear();
+
+	std::ifstream ifs("entities.json");
+	Json::Reader reader;
+	Json::Value obj;
+	reader.parse(ifs, obj);
+	ifs.close();
+
+	const Json::Value& agents = obj["agents"];
+
+	for (const Json::Value& jsonAgent : agents)
+	{
+		GOAP::Agent* agent = new GOAP::Agent();
+		int room_count = jsonAgent["rooms"].size();
+		float* rooms = new float[room_count];
+		for (int j = 0; j < room_count; ++j)
+		{
+			rooms[j] = jsonAgent["rooms"][j].asFloat();
+		}
+
+		int action_count = jsonAgent["actions"].size();
+		std::string* actions = new string[action_count];
+		for (int k = 0; k < action_count; ++ k)
+		{
+			actions[k] = jsonAgent["actions"][k].asString();
+		}
+
+		Gender gender = jsonAgent["gender"].asString().compare("m") == 0 ? Gender::MALE : Gender::FEMALE;
+
+		agent->InitializeCharacter(
+		jsonAgent["name"].asString(),
+		gender,
+		jsonAgent["desc"].asString(),
+		rooms,
+		room_count,
+		actions,
+		action_count);
+
+		m_agents.push_back(agent);
+	}
 }
 
-void Game::InitializeObjects()
+void Game::LoadProps()
 {
 	m_objects.clear();
 
@@ -744,4 +732,18 @@ void Game::InitializeObjects()
 		prop->SetDescription(propField["desc"].asString());
 		m_objects.push_back(prop);
 	}
+}
+
+void Game::PopulateMaps()
+{
+	m_roomEnumMap["LIVING_ROOM"] = RoomName::LIVING_ROOM;
+	m_roomEnumMap["DINING_ROOM"] = RoomName::DINING_ROOM;
+	m_roomEnumMap["KITCHEN"] = RoomName::KITCHEN;
+	m_roomEnumMap["BATHROOM"] = RoomName::BATHROOM;
+
+	m_propTypeMap["Prop"] = ObjectType::OBJECT | ObjectType::PROP;
+	m_propTypeMap["Blunt"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLUNT;
+	m_propTypeMap["Blade"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::BLADE;
+	m_propTypeMap["Squeezer"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::SQUEEZER;
+	m_propTypeMap["Projectile"] = ObjectType::OBJECT | ObjectType::PROP | ObjectType::PROJECTILE;
 }
