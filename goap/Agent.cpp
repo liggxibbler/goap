@@ -504,6 +504,11 @@ bool Agent::IsVictim()
 	return m_isVictim;
 }
 
+bool GOAP::Agent::IsAlive()
+{
+	return m_isAlive;
+}
+
 const float* Agent::GetProbabilities() const
 {
 	return m_roomProbabilities;

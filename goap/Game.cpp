@@ -94,7 +94,7 @@ GOAP::Room* Game::Roam(const RoomManager& rm, GOAP::Roles& roles, GOAP::Room* cu
 	{
 		for(Prop* prop : currentRoom->GetObjects())
 		{
-			if (prop->GetAttrib(AttributeType::BEARER) != 0)
+			if (prop->GetBearer())
 			{
 				//item++;
 			}
@@ -122,7 +122,7 @@ GOAP::Room* Game::Roam(const RoomManager& rm, GOAP::Roles& roles, GOAP::Room* cu
 			std::cout.fill(' ');
 			std::cout.width(2);
 			cout << item++ << ". " << agent->GetName();
-			if(agent->GetAttrib(AttributeType::ALIVE) == false)
+			if(!agent->IsAlive())
 			{
 				cout << " [DEAD]";
 			}
@@ -164,7 +164,7 @@ GOAP::Room* Game::Roam(const RoomManager& rm, GOAP::Roles& roles, GOAP::Room* cu
 	else if(answer>=witness && answer <iMap)//agent
 	{
 		Agent* aWitness = vecAgent[answer - witness];
-		if(aWitness->GetAttrib(AttributeType::ALIVE) == true)
+		if(aWitness->IsAlive())
 		{
 			m_currentAgent = aWitness;
 			m_roam = false;
@@ -263,7 +263,7 @@ bool Game::GeneratePlot(GOAP::Roles& roles)
 
 			if (!murderRoom)
 			{
-				if (room->Contains(roles.victim) && !roles.victim->GetAttrib(AttributeType::ALIVE))
+				if (room->Contains(roles.victim) && !roles.victim->IsAlive())
 				{
 					murderRoom = room;
 				}
@@ -293,7 +293,7 @@ bool Game::GeneratePlot(GOAP::Roles& roles)
 		GETKEY;
 #endif
 		// Record time of death
-		if(roles.victim->GetAttrib(AttributeType::ALIVE) == false && m_timeOfDeath == 0)
+		if(!roles.victim->IsAlive() && m_timeOfDeath == 0)
 		{
 			m_timeOfDeath = m_turn;
 		}

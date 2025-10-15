@@ -89,6 +89,8 @@ namespace GOAP
 		void ResetVictimFlag();
 		bool IsVictim();
 
+		bool IsAlive();
+
 		const float* GetProbabilities() const;
 
 		void AddGoal(Goal* goal);
