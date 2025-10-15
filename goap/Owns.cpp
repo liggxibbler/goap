@@ -5,18 +5,7 @@ using namespace GOAP::Op;
 
 bool Owns::EvaluateOOB (const Argument* params) const
 {
-	if (params[1].instance == 0)
-	{
-		return false;
-	}
-	else if ( params[1].instance->GetOwner() == params[0].instance )
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return params[1].instance->GetOwner() == params[0].instance;
 }
 
 bool Owns::EvaluateOAVB (const Argument* params) const

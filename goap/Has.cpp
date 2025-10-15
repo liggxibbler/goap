@@ -5,14 +5,7 @@ using namespace GOAP::Op;
 
 bool Has::EvaluateOOB (const Argument* params) const
 {
-	if ( params[1].instance->GetAttrib(AttributeType::BEARER) == params[0].instance->GetID() )
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return params[1].instance->GetAttrib(AttributeType::BEARER) == params[0].instance->GetID();
 }
 
 bool Has::EvaluateOAVB (const Argument* params) const

@@ -26,9 +26,11 @@ namespace GOAP
 		Object(const Object& other);
 		~Object();
 
+	//private:
 		int GetAttrib(AttributeType at);
 		void SetAttribute(AttributeType at, int val);
 		int& operator [] (AttributeType at);
+	public:
 
 		int GetID() const;
 		Object* GetOwner();
