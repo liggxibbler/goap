@@ -58,18 +58,16 @@ void Game::Initialize()
 	LoadAgents();
 	PopulateMaps();
 	LoadProps();
-
-	m_currentRoom = m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM);
 }
 
-void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
+GOAP::Room* Game::Roam(const RoomManager& rm, GOAP::Roles& roles, GOAP::Room* currentRoom)
 {
 	std::vector<GOAP::Prop*> vecObject;
 	std::vector<GOAP::Agent*> vecAgent;
 	std::vector<GOAP::Room*> vecRoom;
 
 	cout << "=======================================\n\n";
-	cout << "You are in " << m_currentRoom->GetName() << "\n\n";
+	cout << "You are in " << currentRoom->GetName() << "\n\n";
 	int item = 1;
 
 	int iRoom = item;
@@ -88,13 +86,13 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 
 	cout << "-----------------------\n";
 	cout << "\n* You can examine:\n\n";
-	if(m_currentRoom->GetObjects().empty())
+	if(currentRoom->GetObjects().empty())
 	{
 		cout << "[NOTHING]\n";
 	}
 	else
 	{
-		for(Prop* prop : m_currentRoom->GetObjects())
+		for(Prop* prop : currentRoom->GetObjects())
 		{
 			if (prop->GetAttrib(AttributeType::BEARER) != 0)
 			{
@@ -113,13 +111,13 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 	int witness = item;
 	cout << "-----------------------\n";
 	cout << "\n* You can interview/examine:\n\n";
-	if(m_currentRoom->GetAgents().empty())
+	if(currentRoom->GetAgents().empty())
 	{
 		cout << "[NOBODY]\n";
 	}
 	else
 	{
-		for (Agent* agent : m_currentRoom->GetAgents())
+		for (Agent* agent : currentRoom->GetAgents())
 		{
 			std::cout.fill(' ');
 			std::cout.width(2);
@@ -152,7 +150,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 
 	if(answer>=iRoom && answer < iItem)//change room
 	{
-		m_currentRoom = vecRoom[answer - iRoom];
+		return vecRoom[answer - iRoom];
 	}
 	else if(answer >= iItem && answer < witness )// examine
 	{
@@ -194,7 +192,7 @@ void Game::Roam(const RoomManager& rm, GOAP::Roles& roles)
 	{
 		// bad answer, do over
 	}
-
+	return currentRoom;
 }
 
 void Game::Interview(const ActionManager& actionManager)
@@ -331,12 +329,14 @@ void Game::MainLoop(GOAP::Roles& roles)
 	MoveActorsToLivingRoom(m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM));
 	m_planner.GetRoomManager().UpdateAllRooms();
 
+	Room* currentRoom = m_planner.GetRoomManager().GetRoom(RoomName::LIVING_ROOM);
+
 	while(m_running)
 	{
 		if(m_roam)
 		{
 			system("cls");
-			Roam(m_planner.GetRoomManager(), roles);
+			Roam(m_planner.GetRoomManager(), roles, currentRoom);
 		}
 		else
 		{

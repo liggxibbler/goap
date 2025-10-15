@@ -150,13 +150,14 @@ namespace GOAP
 
 	enum class ExecutionStatus
 	{
+		UNKNOWN = 0,
+
 		INIT,
 		RUNNING,
 		FAIL,
 		SUCCESS,
 		SKIP,
 		PAUSED,
-		UNKNOWN,
 
 		MURDER,
 		NONE,

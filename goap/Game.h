@@ -33,7 +33,7 @@ public:
 
 	void Initialize();
 
-	void Roam(const GOAP::RoomManager& rm, GOAP::Roles& roles);
+	GOAP::Room* Roam(const GOAP::RoomManager& rm, GOAP::Roles& roles, GOAP::Room* currentRoom);
 	void Interview(const GOAP::ActionManager& actionManager);
 	bool Accuse(GOAP::Roles& roles);
 
@@ -67,13 +67,13 @@ private:
 
 	//GOAP::World* m_world;
 	bool m_roam = false;
-	GOAP::Room* m_currentRoom = nullptr;
+	//GOAP::Room* m_currentRoom = nullptr;
 	GOAP::Agent* m_currentAgent = nullptr;	
 
 	bool m_running = false;
 	
 	int m_turn = -1;
-	unsigned int m_seed;
+	unsigned int m_seed = 0;
 	std::vector<GOAP::Agent*>	m_agents;
 	std::vector<GOAP::Agent*>	m_actors;
 	std::vector<GOAP::Prop*>	m_objects;

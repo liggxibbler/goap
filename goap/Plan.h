@@ -35,11 +35,11 @@ namespace GOAP
 		virtual void Resume();
 
 	private:
-		Goal* m_plan;
-		PlanStatus m_status;
-		Goal* m_lastPlan;
-		ExecutionStatus m_execStat;
-		ExecutionStatus m_ExecStatStored;
+		Goal* m_plan = nullptr;
+		Goal* m_lastPlan = nullptr;
+		PlanStatus m_status = PlanStatus::UNKNOWN;
+		ExecutionStatus m_execStat = ExecutionStatus::UNKNOWN;
+		ExecutionStatus m_ExecStatStored = ExecutionStatus::UNKNOWN;
 	};
 }
 

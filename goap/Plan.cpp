@@ -5,8 +5,6 @@ using namespace GOAP;
 
 Plan::Plan()
 {
-	m_plan = nullptr;
-	m_lastPlan = nullptr;
 }
 
 Plan::Plan(Goal* goal) : m_plan(goal)
@@ -99,7 +97,7 @@ ExecutionStatus Plan::GetExecutionStatus()
 Goal* Plan::Validate(const Op::OperatorManager& om)
 {
 	// Make sure this plan will satisfy every precondition of every action when executed
-	if(m_plan != 0)
+	if(m_plan)
 	{
 		Goal* temp = new Goal(*m_plan);
 
