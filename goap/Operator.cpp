@@ -25,17 +25,17 @@ bool Operator::Evaluate(const Condition& ac) const
 	{
 	case OperatorLayoutType::OAOAB:
 		{
-			result = EvaluateOAOAB(params, negate);
+		result = EvaluateOAOAB(params);
 			break;
 		}
 	case OperatorLayoutType::OAVB:
 		{
-			result = EvaluateOAVB(params, negate);
+		result = EvaluateOAVB(params);
 			break;
 		}
 	case OperatorLayoutType::OOB:
 		{
-			result = EvaluateOOB(params, negate);
+		result = EvaluateOOB(params);
 			break;
 		}
 	case OperatorLayoutType::TRUE:

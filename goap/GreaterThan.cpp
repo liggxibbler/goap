@@ -3,7 +3,7 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool GreaterThan::EvaluateOAVB (const Argument* params, bool negate) const
+bool GreaterThan::EvaluateOAVB (const Argument* params) const
 {
 	bool result;
 	if ( (*(params[0].instance))[params[0].attrib] > params[0].value )
@@ -22,7 +22,7 @@ bool GreaterThan::EvaluateOAVB (const Argument* params, bool negate) const
 	return result;
 }
 
-bool GreaterThan::EvaluateOAOAB (const Argument* params, bool negate) const
+bool GreaterThan::EvaluateOAOAB (const Argument* params) const
 {
 	bool result;
 	if ( (*(params[0].instance))[params[0].attrib] > (*(params[1].instance))[params[1].attrib] )
@@ -36,7 +36,7 @@ bool GreaterThan::EvaluateOAOAB (const Argument* params, bool negate) const
 	
 	return result;
 }
-bool GreaterThan::EvaluateOOB (const Argument* params, bool negate) const
+bool GreaterThan::EvaluateOOB (const Argument* params) const
 {
 	// throw exception?
 	return false;

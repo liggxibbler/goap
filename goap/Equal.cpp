@@ -3,7 +3,7 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool Equal::EvaluateOAVB (const Argument* params, bool negate) const
+bool Equal::EvaluateOAVB (const Argument* params) const
 {
 	bool result;
 	if(params[0].instance == 0)
@@ -27,7 +27,7 @@ bool Equal::EvaluateOAVB (const Argument* params, bool negate) const
 
 	return result;
 }
-bool Equal::EvaluateOAOAB (const Argument* params, bool negate) const
+bool Equal::EvaluateOAOAB (const Argument* params) const
 {
 	bool result;
 	if ( (*(params[0].instance))[params[0].attrib] == (*(params[1].instance))[params[1].attrib] )
@@ -40,7 +40,7 @@ bool Equal::EvaluateOAOAB (const Argument* params, bool negate) const
 	}
 	return result;
 }
-bool Equal::EvaluateOOB (const Argument* params, bool negate) const
+bool Equal::EvaluateOOB (const Argument* params) const
 {
 	bool result;
 	if ( (params[0].instance) == (params[1].instance) )

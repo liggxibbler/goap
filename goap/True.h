@@ -10,9 +10,9 @@ namespace GOAP
 		class True : public Operator
 		{
 			virtual bool Evaluate(const Condition& cc) const override;
-			virtual bool EvaluateOAVB (const Argument* params, bool negate) const override;
-			virtual bool EvaluateOAOAB(const Argument* params, bool negate) const override;
-			virtual bool EvaluateOOB(const Argument* params, bool negate) const override;
+			virtual bool EvaluateOAVB(const Argument* params) const override;
+			virtual bool EvaluateOAOAB(const Argument* params) const override;
+			virtual bool EvaluateOOB(const Argument* params) const override;
 		};
 	}
 }

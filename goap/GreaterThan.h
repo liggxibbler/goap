@@ -9,9 +9,9 @@ namespace GOAP
 	{
 		class GreaterThan : public Operator
 		{
-			virtual bool EvaluateOAVB (const Argument* params, bool negate) const override;
-			virtual bool EvaluateOAOAB (const Argument* params, bool negate) const override;
-			virtual bool EvaluateOOB (const Argument* params, bool negate) const override;
+			virtual bool EvaluateOAVB(const Argument* params) const override;
+			virtual bool EvaluateOAOAB(const Argument* params) const override;
+			virtual bool EvaluateOOB(const Argument* params) const override;
 		};
 	}
 }

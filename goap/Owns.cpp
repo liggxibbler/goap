@@ -3,7 +3,7 @@
 using namespace GOAP;
 using namespace GOAP::Op;
 
-bool Owns::EvaluateOOB (const Argument* params, bool negate) const
+bool Owns::EvaluateOOB (const Argument* params) const
 {
 	if (params[1].instance == 0)
 	{
@@ -19,12 +19,12 @@ bool Owns::EvaluateOOB (const Argument* params, bool negate) const
 	}
 }
 
-bool Owns::EvaluateOAVB (const Argument* params, bool negate) const
+bool Owns::EvaluateOAVB (const Argument* params) const
 {
 	return false;
 }
 
-bool Owns::EvaluateOAOAB (const Argument* params, bool negate) const
+bool Owns::EvaluateOAOAB (const Argument* params) const
 {
 	return false;
 }

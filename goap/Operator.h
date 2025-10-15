@@ -20,9 +20,9 @@ namespace GOAP
 
 			virtual bool Evaluate(const Condition& cc) const;
 
-			virtual bool EvaluateOAVB (const Argument* params, bool negate) const = 0;
-			virtual bool EvaluateOAOAB (const Argument* params, bool negate) const = 0;
-			virtual bool EvaluateOOB (const Argument* params, bool negate) const = 0;
+			virtual bool EvaluateOAVB(const Argument* params) const = 0;
+			virtual bool EvaluateOAOAB(const Argument* params) const = 0;
+			virtual bool EvaluateOOB(const Argument* params) const = 0;
 
 		protected:			
 		};
