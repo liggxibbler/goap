@@ -62,8 +62,6 @@ namespace GOAP
 		virtual void Update(Planner & planner, int turn) override;
 		virtual void Examine() override;
 
-		virtual bool CanBeMurderWeapon(); // XXX
-
 		void Log(int turn, Action* action);
 
 		bool GetHasCommittedMurder();

@@ -279,11 +279,6 @@ void Agent::Examine()
 	Interview();
 }
 
-bool Agent::CanBeMurderWeapon()
-{
-	return false;
-}
-
 void Agent::Interview()
 {
 }
