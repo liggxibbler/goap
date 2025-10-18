@@ -1,5 +1,5 @@
 #include "Shoot.h"
-#include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -70,7 +70,7 @@ std::string Shoot::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " shot " << _patient << " with " << _instrument;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " shot " << _patient << " with " << _instrument;
 	return str.str();
 }
 

@@ -62,3 +62,11 @@ bool Operator::Evaluate(const Condition& ac) const
 
 	return result;
 }
+
+int& GOAP::Op::Operator::GetInstanceAttributeValue(const Argument& param)
+{
+	GOAP::Object* instance = param.instance;
+	GOAP::AttributeType attribute = param.attrib;
+	//return instance->GetAttribute(attribute);
+	return instance->operator[](attribute);
+}

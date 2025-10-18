@@ -25,7 +25,7 @@ namespace GOAP
 		void MayBeFoundIn(RoomName);
 		RoomName MayBeFoundIn();
 		bool CanBeMurderWeapon();
-		Object* GetBearer();
+		Object* GetBearer() const;
 		void SetBearer(Object* bearer);
 
 		virtual void IncreaseValue();

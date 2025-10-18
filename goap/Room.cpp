@@ -148,7 +148,7 @@ void Room::UpdateAgentPositions()
 	auto addIter = m_markedForAddition.begin();
 	while(addIter != m_markedForAddition.end())
 	{
-		if((*(*addIter))[AttributeType::ALIVE] != false)
+		if((*addIter)->IsAlive())
 		{
 			AddAgent(*(addIter++));
 			m_numAgents++;
@@ -166,7 +166,7 @@ void Room::UpdateAgentPositions()
 		if (m_markedForDeletion.find(*delIter) != m_markedForDeletion.end())
 		{
 			// post-increment operator returns a copy, then increment
-			if((*(*delIter))[AttributeType::ALIVE] != false)
+			if((*delIter)->IsAlive())
 			{
 				m_agents.erase(delIter++);
 				m_numAgents--;

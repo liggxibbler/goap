@@ -16,7 +16,13 @@ ExecutionStatus Murder::ExecuteWorkhorse(int turn)
 	{
 		DUMP("       ** " << Express(0, 0))
 
-			obj.instance->SetAttribute(AttributeType::ALIVE, false);
+
+		Agent* objectAgent = dynamic_cast<Agent*>(obj.instance);
+		
+		if (!objectAgent)
+			throw "Cannot kill non-agent";
+
+		objectAgent->SetIsAlive(false);
 		Agent* agent = (Agent*)(sub.instance);
 		agent->SetHasCommittedMurder(true);
 

@@ -1,11 +1,14 @@
 #include "Has.h"
 
+#include "Prop.h"
+
 using namespace GOAP;
 using namespace GOAP::Op;
 
 bool Has::EvaluateOOB (const Argument* params) const
 {
-	return params[1].instance->GetAttrib(AttributeType::BEARER) == params[0].instance->GetID();
+	const Prop* objProp = dynamic_cast<Prop*>(params[1].instance);
+	return objProp->GetBearer() == params[0].instance;
 }
 
 bool Has::EvaluateOAVB (const Argument* params) const

@@ -30,7 +30,7 @@ Prop::~Prop()
 {
 }
 
-Object* Prop::GetBearer()
+Object* Prop::GetBearer() const
 {
 	return m_bearer;
 }

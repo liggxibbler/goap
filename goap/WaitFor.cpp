@@ -153,7 +153,7 @@ std::string WaitFor::Express(const Agent* agent, const Room* room) const
 	}
 	
 	std::stringstream str;
-	str << _agent << " " << _verb << " " << _goal;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " " << _verb << " " << _goal;
 	return str.str();
 }
 

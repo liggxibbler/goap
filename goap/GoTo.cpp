@@ -30,9 +30,11 @@ ExecutionStatus GoTo::ExecuteWorkhorse(int turn)
 	Room* nextRoom = obj.instance->GetRoom();
 	//sub.instance->SetRoom(room);
 
-	if( nextRoom == 0 )
+	if( !nextRoom )
 	{
-		if(obj.instance->GetAttrib(AttributeType::BEARER) == sub.instance->GetID())
+		const Prop* objProp = dynamic_cast<Prop*>(obj.instance);
+		
+		if(objProp && objProp->GetBearer() == sub.instance)
 		{
 			return ExecutionStatus::SUCCESS;
 		}
@@ -163,7 +165,7 @@ std::string GoTo::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " " << _verb << " to " << _goal;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " " << _verb << " to " << _goal;
 	return str.str();
 }
 

@@ -3,6 +3,8 @@
 #include "Room.h"
 #include "Agent.h"
 
+
+
 using namespace GOAP;
 
 Drop::Drop()
@@ -27,10 +29,13 @@ ExecutionStatus Drop::ExecuteWorkhorse(int turn)
 	const Argument& _agent(GetArg(SemanticRole::AGENT));
 	const Argument& _patient(GetArg(SemanticRole::PATIENT));
 
-	Prop* patient = (Prop*)_patient.instance;
-	patient->SetBearer(0);
+	Prop* patient = dynamic_cast<Prop*>(_patient.instance);
+	patient->SetBearer(nullptr);
+
 	_agent.instance->GetRoom()->AddObject(patient);
-	_agent.instance->SetAttribute(AttributeType::INVENTORY, false);
+
+	Agent* agent = dynamic_cast<Agent*>(_agent.instance);
+	agent->SetInventory(false);
 
 	DUMP("       ** " << Express(0, 0))
 	return ExecutionStatus::SUCCESS;
@@ -158,7 +163,7 @@ std::string Drop::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " dropped " << _patient;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " dropped " << _patient;
 
 	return str.str();
 }

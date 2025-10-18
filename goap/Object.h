@@ -16,6 +16,7 @@ namespace GOAP
 	namespace Op
 	{
 		class OperatorManager;
+		class Operator;
 	}
 
 	class Object
@@ -26,9 +27,8 @@ namespace GOAP
 		Object(const Object& other);
 		~Object();
 
-	//private:
-		int GetAttrib(AttributeType at);
-		void SetAttribute(AttributeType at, int val);
+	private:
+		int GetAttribute(AttributeType at);
 		int& operator [] (AttributeType at);
 	public:
 
@@ -37,7 +37,7 @@ namespace GOAP
 
 		std::string GetName() const;
 
-		Room* GetRoom();
+		Room* GetRoom() const;
 		void SetRoom(Room* room);
 
 		void SetOwner(Object* owner);
@@ -62,6 +62,8 @@ namespace GOAP
 
 		Object* m_owner;
 		Room* m_roomInstance;
+	private:
+		friend class Op::Operator;
 	};
 }
 

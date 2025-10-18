@@ -11,7 +11,7 @@ namespace GOAP
 		{
 			virtual bool EvaluateOAVB(const Argument* params) const override;
 			virtual bool EvaluateOAOAB(const Argument* params) const override;
-			virtual bool EvaluateOOB(const Argument* params) const override;
+			virtual bool EvaluateOOB(const Argument* params) const override;			
 		};
 	}
 }

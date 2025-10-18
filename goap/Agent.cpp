@@ -464,8 +464,7 @@ void Agent::InitAttribMap()
 	Object::InitAttribMap();
 	m_attribs[AttributeType::HEIGHT] = &m_height;
 	m_attribs[AttributeType::WEIGHT] = &m_weight;
-	m_attribs[AttributeType::ALIVE] = &m_isAlive;
-	m_attribs[AttributeType::INVENTORY] = &m_inventory;
+	m_attribs[AttributeType::ALIVE] = &m_isAlive;	
 }
 
 void Agent::ResetUpdateFlag()
@@ -499,14 +498,29 @@ void Agent::ResetVictimFlag()
 {
 	m_isVictim= false;
 }
-bool Agent::IsVictim()
+bool Agent::IsVictim() const
 {
 	return m_isVictim;
 }
 
-bool GOAP::Agent::IsAlive()
+bool GOAP::Agent::IsAlive() const
 {
 	return m_isAlive;
+}
+
+void GOAP::Agent::SetIsAlive(bool isAlive)
+{
+	m_isAlive = isAlive;
+}
+
+bool GOAP::Agent::GetInventory() const
+{
+	return m_inventory;
+}
+
+void GOAP::Agent::SetInventory(bool value)
+{
+	m_inventory = value;
 }
 
 const float* Agent::GetProbabilities() const

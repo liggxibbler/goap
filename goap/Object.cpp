@@ -41,14 +41,9 @@ Object::~Object()
 }
 
 
-int Object::GetAttrib(AttributeType at)
+int Object::GetAttribute(AttributeType at)
 {
 	return *m_attribs[at];
-}
-
-void Object::SetAttribute(AttributeType at, int val)
-{
-	*m_attribs[at] = val;
 }
 
 //Object::operator GOAP::ObjectType() /// XXX = 0
@@ -94,7 +89,7 @@ void Object::SetRoom(Room* room)
 	}
 }
 
-Room* Object::GetRoom()
+Room* Object::GetRoom() const
 {
 	return m_roomInstance;
 }

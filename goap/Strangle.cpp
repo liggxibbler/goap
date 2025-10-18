@@ -71,7 +71,7 @@ std::string Strangle::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " strangled " << _patient << " with " << _instrument;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " strangled " << _patient << " with " << _instrument;
 	return str.str();
 }
 

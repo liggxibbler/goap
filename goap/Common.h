@@ -64,7 +64,6 @@ namespace GOAP
 		ALIVE,
 		NUM_AGENTS,
 		ID,
-		INVENTORY,
 		BEARER,
 		LAST = 0xffff
 	};

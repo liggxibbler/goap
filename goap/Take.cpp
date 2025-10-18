@@ -28,12 +28,14 @@ ExecutionStatus Take::ExecuteWorkhorse(int turn)
 	const Argument& _agent(GetArg(SemanticRole::AGENT));
 	const Argument& _patient(GetArg(SemanticRole::PATIENT));
 
-	Prop* patient = (Prop*)_patient.instance;
+	Prop* patient = dynamic_cast<Prop*>(_patient.instance);
 	patient->SetBearer(_agent.instance);
 	patient->GetRoom()->RemoveObject(patient);
 	patient->SetRoom(_agent.instance->GetRoom());
 	//_patient->instance->SetRoom(_agent->instance->GetRoom());
-	_agent.instance->SetAttribute(AttributeType::INVENTORY, true);
+
+	Agent* agent = dynamic_cast<Agent*>(_agent.instance);
+	agent->SetInventory(true);
 
 	DUMP("       ** " << Express(0, 0))
 	return ExecutionStatus::SUCCESS;
@@ -136,7 +138,7 @@ std::string Take::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " took " << _patient;
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " took " << _patient;
 
 	return str.str();
 }

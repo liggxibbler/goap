@@ -87,9 +87,14 @@ namespace GOAP
 
 		void SetAsVictim();
 		void ResetVictimFlag();
-		bool IsVictim();
+		bool IsVictim() const;
 
-		bool IsAlive();
+		bool IsAlive() const;
+		void SetIsAlive(bool isAlive);
+
+		bool GetInventory() const;
+		void SetInventory(bool value);
+
 
 		const float* GetProbabilities() const;
 
@@ -122,7 +127,7 @@ namespace GOAP
 		std::list<Goal*> m_goals;
 		std::list<ActionType> m_actions;
 
-		int m_inventory;
+		bool m_inventory;
 		std::map<int, Object*> m_objects;
 
 		int m_height;

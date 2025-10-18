@@ -1,5 +1,5 @@
 #include "Bludgeon.h"
-#include "RoomManager.h"
+#include "Room.h"
 
 using namespace GOAP;
 
@@ -70,7 +70,8 @@ std::string Bludgeon::Express(const Agent* agent, const Room* room) const
 	}
 
 	std::stringstream str;
-	str << _agent << " hit " << _patient << " in the head with " << _instrument;
+	
+	str << "[" << GetRoomDisplayName(room) << "] " << _agent << " hit " << _patient << " in the head with " << _instrument;
 	return str.str();
 }
 

@@ -24,6 +24,8 @@ namespace GOAP
 			virtual bool EvaluateOAOAB(const Argument* params) const = 0;
 			virtual bool EvaluateOOB(const Argument* params) const = 0;
 
+			static int& GetInstanceAttributeValue(const Argument& param);			
+
 		protected:			
 		};
 	}

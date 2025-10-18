@@ -25,6 +25,7 @@ namespace GOAP
 	}
 
 	class RoomManager;
+	class Room;
 
 	class Action : public IExecutable
 	{
@@ -59,6 +60,7 @@ namespace GOAP
 		virtual void UpdateConditionInstances();
 
 		virtual std::string Express(const Agent* agent, const Room* room) const = 0;
+		static std::string GetRoomDisplayName(const Room* room);
 
 		virtual std::string GetName() const = 0;
 
@@ -120,6 +122,8 @@ namespace GOAP
 
 		bool m_logged = false;
 		static std::ofstream s_outFile;
+	
+
 	};
 }
 #endif

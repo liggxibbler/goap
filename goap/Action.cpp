@@ -285,6 +285,11 @@ void Action::UpdateConditionInstances()
 	UpdatePrecondInstances();
 }
 
+std::string GOAP::Action::GetRoomDisplayName(const Room* room)
+{
+	return room ? room->GetName() : "-";
+}
+
 void Action::UpdateEffectInstances()
 {
 	for (Condition& effect : m_effects)
@@ -414,7 +419,15 @@ const std::list<Condition>& GOAP::Action::GetEffects() const
 
 void Action::DumpToFile(int turn)
 {
-	s_outFile << TURN2TIME(turn) << "\t" <<Express(nullptr, nullptr) << std::endl;
+	const Argument argument = GetArg(SemanticRole::AGENT);
+	const Agent* agent = dynamic_cast<Agent*>(argument.instance);
+	Room* room = nullptr;
+	if (agent)
+	{
+		room = agent->GetRoom();
+	}
+
+	s_outFile << TURN2TIME(turn) << "\t" << Express(nullptr, room) << std::endl;
 }
 
 Goal* Action::FollowupGoal()
