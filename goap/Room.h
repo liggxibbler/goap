@@ -51,7 +51,7 @@ namespace GOAP
 		bool Contains(const Agent* agent) const;
 		bool ContainsAnyExcept(const std::list<Agent*>& toExclude);
 
-		virtual Object* Clone();
+		virtual Object* Clone() const override;
 		virtual void Examine() override;
 		//virtual operator ObjectType ();
 

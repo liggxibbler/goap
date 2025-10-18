@@ -73,7 +73,7 @@ namespace GOAP
 
 		RoomName GetNextRoom();
 
-		virtual Object* Clone();
+		virtual Object* Clone() const override;
 
 		Gender GetGender();
 

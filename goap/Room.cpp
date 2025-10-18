@@ -213,7 +213,7 @@ bool GOAP::Room::ContainsAnyExcept(const std::list<Agent*>& toExclude)
 	return false;
 }
 
-Object* Room::Clone()
+Object* Room::Clone() const
 {
 	return new Room(*this);
 }

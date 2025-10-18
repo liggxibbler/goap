@@ -444,7 +444,7 @@ RoomName Agent::GetNextRoom()
 	return rooms[i-1];
 }
 
-Object* Agent::Clone()
+Object* Agent::Clone() const
 {
 	return new Agent(*this);
 }

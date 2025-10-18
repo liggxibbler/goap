@@ -20,7 +20,7 @@ namespace GOAP
 		void SetCompoundType(ObjectType compundType);
 
 		virtual void Examine() override;
-		virtual Object* Clone() override;
+		virtual Object* Clone() const override;
 
 		void MayBeFoundIn(RoomName);
 		RoomName MayBeFoundIn();

@@ -42,7 +42,7 @@ namespace GOAP
 
 		void SetOwner(Object* owner);
 
-		virtual Object* Clone() = 0;
+		virtual Object* Clone() const = 0;
 		//virtual operator ObjectType () = 0;
 		virtual void Update(Planner & planner, int turn) = 0;
 		virtual ObjectType GetCompoundType() const = 0;

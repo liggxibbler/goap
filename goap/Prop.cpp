@@ -47,7 +47,7 @@ void Prop::SetBearer(Object* bearer)
 	}
 }
 
-Object* Prop::Clone()
+Object* Prop::Clone() const
 {
 	return new Prop(*this);
 }
